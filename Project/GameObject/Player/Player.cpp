@@ -4,14 +4,16 @@ void Player::Initialize()
 {
 	model_ = make_unique<Model>();
 	model_->Initialize(new ModelSphereState);
-
-
 	texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
 	model_->SetTexHandle(texHandle);
 
 	reticleTestModel = make_unique<Model>();
 	reticleTestModel->Initialize(new ModelSphereState);
 	reticleTestModel->SetTexHandle(texHandle);
+	reticleTestModel->SetColor({ 0,0,0,1 });
+
+	PlaneModel_ = make_unique<Model>();
+	PlaneModel_->CreateFromObj("TestPlane");
 
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
@@ -22,9 +24,8 @@ void Player::Initialize()
 	PlaneworldTransform_.parent = &worldTransform_;
 	PlaneworldTransform_.scale = { 10,10,10, };
 
-	PlaneModel_ = make_unique<Model>();
-	PlaneModel_->CreateFromObj("TestPlane");
-
+	SetCollosionAttribute(kCollisionAttributePlayer);
+	SetCollisionMask(kCollisionAttributeEnemy);
 
 }
 
@@ -35,7 +36,7 @@ void Player::Update()
 	
 
 	ImGui::Begin("plane");
-	ImGui::Text("RPLERP : %f,%f,%f", RPLerp);
+	ImGui::Text("RPLERP : %f,%f,%f", RPNormalize);
 	ImGui::DragFloat3("rotate", &PlaneworldTransform_.rotation.x, 0.1f);
 	ImGui::End();
 	
@@ -49,6 +50,10 @@ void Player::Draw(ViewProjection view)
 	model_->Draw(worldTransform_, view);
 	reticleTestModel->Draw(reticleWorldTransform, view);
 	PlaneModel_->Draw(PlaneworldTransform_, view);
+}
+
+void Player::OnCollision()
+{
 }
 
 Vector3 Player::GetWorldPosition()
@@ -65,21 +70,20 @@ void Player::Move()
 	if (Input::GetInstance()->PushKey(DIK_A))
 	{
 		worldTransform_.rotation.y += 0.1f;
-	}
-	else if(Input::GetInstance()->PushKey(DIK_D))
+	}else if(Input::GetInstance()->PushKey(DIK_D))
 	{
 		worldTransform_.rotation.y -= 0.1f;
 	}
 
-
 	if (!MoveFlag&&Input::GetInstance()->PushKey(DIK_SPACE))
 	{
 		MoveFlag = true;
-		Velocity = RPLerp;
+		RPNormalize = VectorTransform::Multiply(RPNormalize, speed);
+		Velocity = RPNormalize;
 	}
-	
+
 	MoveCoolTime++;
-	if (MoveCoolTime > 300)
+	if (MoveCoolTime > MAX_MOVE_COOLTIME)
 	{
 		MoveCoolTime = 0;
 		MoveFlag = false;
@@ -92,16 +96,10 @@ void Player::Move()
 	worldTransform_.translate.y += Velocity.y;
 	worldTransform_.translate.z += Velocity.z;
 
-
 	ImGui::Begin("Debug");
 	ImGui::Text("Speed : %f  %f  %f", Velocity.x, Velocity.y, Velocity.z);
-	ImGui::Text("RPLerp : %f %f %f", RPLerp.x, RPLerp.y, RPLerp.z);
+	ImGui::Text("RPLerp : %f %f %f", RPNormalize.x, RPNormalize.y, RPNormalize.z);
 	ImGui::End();
-
-	//ˆÚ“®‰ÁŽZ
-	
-	
-	//‰ñ“]
 
 }
 
@@ -136,11 +134,11 @@ void Player::Reticle()
 			Rpos.y = reticleWorldTransform.matWorld.m[3][1];
 			Rpos.z = reticleWorldTransform.matWorld.m[3][2];
 
-			RPLerp.x = Rpos.x - Ppos.x;
-			RPLerp.y = Rpos.y - Ppos.y;
-			RPLerp.z = Rpos.z - Ppos.z;
+			RPNormalize.x = Rpos.x - Ppos.x;
+			RPNormalize.y = Rpos.y - Ppos.y;
+			RPNormalize.z = Rpos.z - Ppos.z;
 
-			RPLerp = VectorTransform::Normalize(RPLerp);
+			RPNormalize = VectorTransform::Normalize(RPNormalize);
 		}
 	}
 }

@@ -3,8 +3,12 @@
 #include"WorldTransform.h"
 #include"Input.h"
 #include"VectorTransform.h"
+#include"Collider.h"
+#include"ColliderConfig.h"
 
-class Player
+#define MAX_MOVE_COOLTIME 120
+
+class Player: public Collider
 {
 public:
 	Player() {};
@@ -15,9 +19,13 @@ public:
 	void Update();
 
 	void Draw(ViewProjection view);
+
+	void OnCollision()override;
+
 #pragma region get
 
-	Vector3 GetWorldPosition();
+	Vector3 GetWorldPosition()override;
+
 
 #pragma endregion
 
@@ -27,8 +35,6 @@ private:
 	void Move();
 	
 	void Reticle();
-
-	bool isSpeed();
 	
 	void FancFrictionCoefficient();
 	
@@ -45,18 +51,18 @@ private:
 	Vector3 Velocity = { 0.0f,0.0f,0.0f};
 	
 	/// <summary>
-	/// reticleトplayerの補間
+	/// reticleトplayerのベクトル
 	/// </summary>
-	Vector3 RPLerp = {};
+	Vector3 RPNormalize = {};
 
 	/// <summary>
 	/// 摩擦
 	/// </summary>
-	const float frictionCoefficient = 0.1f;
+	const float frictionCoefficient = 0.05f;
 
 	uint32_t MoveCoolTime = 0;
 	bool MoveFlag = false;
+	const float speed = 4.0f;
 
-	
 	uint32_t texHandle = 0;
 };
