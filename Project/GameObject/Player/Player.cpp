@@ -10,7 +10,7 @@ void Player::Initialize()
 	reticleTestModel = make_unique<Model>();
 	reticleTestModel->Initialize(new ModelSphereState);
 	reticleTestModel->SetTexHandle(texHandle);
-	reticleTestModel->SetColor({ 0,0,0,1 });
+	reticleTestModel->SetColor({ 0,1,0,1 });
 
 	PlaneModel_ = make_unique<Model>();
 	PlaneModel_->CreateFromObj("TestPlane");
