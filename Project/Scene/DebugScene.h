@@ -8,8 +8,7 @@
 #include"Audio.h"
 #include"FileLoader.h"
 
-#include"GameObject/PlayerSphere.h"
-#include"GameObject/EnemySphere.h"
+
 #include"CollisionManager.h"
 
 class DebugScene:public IScene

@@ -243,12 +243,6 @@
     <ClCompile Include="CLEYERA\Utility\FileLoader\FileLoader.cpp">
       <Filter>CLEYERA\Utility\FileLoader</Filter>
     </ClCompile>
-    <ClCompile Include="Project\GameObject\PlayerSphere.cpp">
-      <Filter>Project\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Project\GameObject\EnemySphere.cpp">
-      <Filter>Project\GameObject</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Utility\Pch\Pch.h">
@@ -403,12 +397,6 @@
     </ClInclude>
     <ClInclude Include="CLEYERA\Utility\FileLoader\FileLoader.h">
       <Filter>CLEYERA\Utility\FileLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\GameObject\PlayerSphere.h">
-      <Filter>Project\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\GameObject\EnemySphere.h">
-      <Filter>Project\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
