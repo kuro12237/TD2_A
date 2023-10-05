@@ -1,6 +1,7 @@
 #pragma once
 #include"IScene.h"
 #include"GameManager.h"
+#include "GameObject/TimeCount/TimeCount.h"
 
 class GameScene : public IScene
 {
@@ -16,5 +17,8 @@ public:
 
 private:
 	ViewProjection viewProjection{};
+
+	// êßå¿éûä‘
+	unique_ptr<TimeCount>timeCount_ = nullptr;
 };
 

@@ -118,6 +118,9 @@
     <Filter Include="Project\GameObject">
       <UniqueIdentifier>{bd50fd17-dc80-4453-abab-990b87bb4c34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\TimeCount">
+      <UniqueIdentifier>{68330595-2e4a-4fe1-982d-8cfcaa050c5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -242,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="CLEYERA\Utility\FileLoader\FileLoader.cpp">
       <Filter>CLEYERA\Utility\FileLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp">
+      <Filter>Project\GameObject\TimeCount</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +403,9 @@
     </ClInclude>
     <ClInclude Include="CLEYERA\Utility\FileLoader\FileLoader.h">
       <Filter>CLEYERA\Utility\FileLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h">
+      <Filter>Project\GameObject\TimeCount</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
