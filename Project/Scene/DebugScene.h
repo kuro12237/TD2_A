@@ -1,7 +1,6 @@
 #pragma once
 #include"IScene.h"
 #include"GameManager.h"
-#include"Cleyera.h"
 
 #include"GameScene.h"
 #include"Input.h"

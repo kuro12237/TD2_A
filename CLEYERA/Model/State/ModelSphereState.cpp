@@ -26,7 +26,6 @@ void ModelSphereState::Draw(Model* state, WorldTransform worldTransform, ViewPro
 	Material* materialData = nullptr;
 	uint32_t* indexData = nullptr;
 
-
 	resource_.Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	resource_.Material->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	resource_.Index->Map(0, nullptr, reinterpret_cast<void**>(&indexData));

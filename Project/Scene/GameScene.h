@@ -1,6 +1,9 @@
 #pragma once
 #include"IScene.h"
 #include"GameManager.h"
+#include"GameObject/Player/Player.h"
+#include"GameObject/Camera/MainCamera.h"
+#include"CollisionManager.h"
 
 class GameScene : public IScene
 {
@@ -15,6 +18,13 @@ public:
 	void Draw(GameManager* scene)override;
 
 private:
+	
+	void Collision();
+
 	ViewProjection viewProjection{};
+
+	unique_ptr<CollisionManager> collisionManager_ = nullptr;
+
+	unique_ptr<Player>player_ = nullptr;
 };
 
