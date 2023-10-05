@@ -34,7 +34,6 @@ void Player::Update()
 	Reticle();
 	Move();
 	
-
 	ImGui::Begin("plane");
 	ImGui::Text("RPLERP : %f,%f,%f", RPNormalize);
 	ImGui::DragFloat3("rotate", &PlaneworldTransform_.rotation.x, 0.1f);
