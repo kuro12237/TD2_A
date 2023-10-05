@@ -1,6 +1,8 @@
 #pragma once
 #include"IScene.h"
 #include"GameManager.h"
+#include"GameObject/Player/Player.h"
+#include"GameObject/Camera/MainCamera.h"
 
 class GameScene : public IScene
 {
@@ -16,5 +18,7 @@ public:
 
 private:
 	ViewProjection viewProjection{};
+
+	unique_ptr<Player>player_ = nullptr;
 };
 
