@@ -47,9 +47,7 @@ void Player::Update()
 void Player::Draw(ViewProjection view)
 {
 	model_->Draw(worldTransform_, view);
-	
 	reticleTestModel->Draw(reticleWorldTransform, view);
-
 	PlaneModel_->Draw(PlaneworldTransform_, view);
 }
 
@@ -73,29 +71,27 @@ void Player::Move()
 		worldTransform_.rotation.y -= 0.1f;
 	}
 
-	if (Input::GetInstance()->PushKey(DIK_SPACE))
+
+	if (!MoveFlag&&Input::GetInstance()->PushKey(DIK_SPACE))
 	{
-		Flag = true;
+		MoveFlag = true;
 		Velocity = RPLerp;
 	}
 	
+	MoveCoolTime++;
+	if (MoveCoolTime > 300)
+	{
+		MoveCoolTime = 0;
+		MoveFlag = false;
+	}
+
 	//‰ÁŽZˆ—
-	AddfrictionCoefficient();
+	FancFrictionCoefficient();
+
 	worldTransform_.translate.x += Velocity.x;
 	worldTransform_.translate.y += Velocity.y;
 	worldTransform_.translate.z += Velocity.z;
 
-
-	Vector3 Rv{};
-	Rv.x = Velocity.x;// / model_->GetSize();
-	Rv.y = Velocity.y;// / model_->GetSize();
-	Rv.z = Velocity.z;// / model_->GetSize();
-
-	float rotationSpeed = VectorTransform::Length(Rv);
-	
-	Matrix4x4 Rm = MatrixTransform::Identity();
-	Rm = MatrixTransform::RotateXYZMatrix(rotationSpeed, Rv.y, Rv.z);
-	
 
 	ImGui::Begin("Debug");
 	ImGui::Text("Speed : %f  %f  %f", Velocity.x, Velocity.y, Velocity.z);
@@ -111,9 +107,8 @@ void Player::Move()
 
 void Player::Reticle()
 {
-	if (!Flag)
+	if (!MoveFlag)
 	{
-
 		Vector3 Ppos{};
 		Ppos.x = worldTransform_.matWorld.m[3][0];
 		Ppos.y = worldTransform_.matWorld.m[3][1];
@@ -150,12 +145,7 @@ void Player::Reticle()
 	}
 }
 
-bool Player::isSpeed()
-{
-	return true;
-}
-
-void Player::AddfrictionCoefficient()
+void Player::FancFrictionCoefficient()
 {
 	if (Velocity.x > 0.0f)
 	{
@@ -174,13 +164,6 @@ void Player::AddfrictionCoefficient()
 	{
 		Velocity.z += 0.1f * -Velocity.z;
 	}
-
-	if (Velocity.x == 0.0f ||Velocity.y == 0.0f ||Velocity.z==0.0f)
-	{
-
-		//Flag = false;
-	}
-
 }
 
 Vector3 Player::NoramalizeLerp(Vector3 v1, Vector3 v2)

@@ -30,11 +30,10 @@ private:
 
 	bool isSpeed();
 	
-	void AddfrictionCoefficient();
+	void FancFrictionCoefficient();
 	
 	Vector3 NoramalizeLerp(Vector3 v1, Vector3 v2);
 
-	
 	unique_ptr<Model>model_ = nullptr;
 	unique_ptr<Model>PlaneModel_ = nullptr;
 	unique_ptr<Model>reticleTestModel = nullptr;
@@ -44,15 +43,20 @@ private:
 	WorldTransform PlaneworldTransform_ = {};
 
 	Vector3 Velocity = { 0.0f,0.0f,0.0f};
+	
+	/// <summary>
+	/// reticleƒgplayer‚Ì•âŠÔ
+	/// </summary>
 	Vector3 RPLerp = {};
+
 	/// <summary>
 	/// –€ŽC
 	/// </summary>
 	const float frictionCoefficient = 0.1f;
 
-	bool Flag = false;
+	uint32_t MoveCoolTime = 0;
+	bool MoveFlag = false;
 
-	uint32_t frictionCoefficientTimer = 0;
-
+	
 	uint32_t texHandle = 0;
 };
