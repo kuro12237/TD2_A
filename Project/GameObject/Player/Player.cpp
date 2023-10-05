@@ -15,13 +15,8 @@ void Player::Initialize()
 
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
-	worldTransform_.translate.y = 0.5;
-
+	
 	reticleWorldTransform.Initialize();
-
-	reticleWorldTransform.parent = &worldTransform_;
-	reticleWorldTransform.translate.z = reticleWorldTransform.translate.z + 5.0f;
-	reticleWorldTransform.translate.y = 0.5;
 	
 	PlaneworldTransform_.Initialize();
 	PlaneworldTransform_.parent = &worldTransform_;
@@ -35,14 +30,15 @@ void Player::Initialize()
 
 void Player::Update()
 {
-	Move();
 	Reticle();
+	Move();
+	
 
 	ImGui::Begin("plane");
 	ImGui::Text("RPLERP : %f,%f,%f", RPLerp);
 	ImGui::DragFloat3("rotate", &PlaneworldTransform_.rotation.x, 0.1f);
 	ImGui::End();
-
+	
 	PlaneworldTransform_.UpdateMatrix();
 	reticleWorldTransform.UpdateMatrix();
 	worldTransform_.UpdateMatrix();
@@ -77,63 +73,114 @@ void Player::Move()
 		worldTransform_.rotation.y -= 0.1f;
 	}
 
-	if (Input::GetInstance()->PushKeyPressed(DIK_SPACE))
+	if (Input::GetInstance()->PushKey(DIK_SPACE))
 	{
-		speed = RPLerp;
+		Flag = true;
+		Velocity = RPLerp;
 	}
 	
-	//–€ŽC
-	frictionCoefficientTimer++;
-	if (isSpeed())
-	{
-		if (frictionCoefficientTimer > 4)
-		{
-			AddfrictionCoefficient();
-			frictionCoefficientTimer = 0;
-		}
-	}
+	//‰ÁŽZˆ—
+	AddfrictionCoefficient();
+	worldTransform_.translate.x += Velocity.x;
+	worldTransform_.translate.y += Velocity.y;
+	worldTransform_.translate.z += Velocity.z;
+
+
+	Vector3 Rv{};
+	Rv.x = Velocity.x;// / model_->GetSize();
+	Rv.y = Velocity.y;// / model_->GetSize();
+	Rv.z = Velocity.z;// / model_->GetSize();
+
+	float rotationSpeed = VectorTransform::Length(Rv);
+	
+	Matrix4x4 Rm = MatrixTransform::Identity();
+	Rm = MatrixTransform::RotateXYZMatrix(rotationSpeed, Rv.y, Rv.z);
+	
+
+	ImGui::Begin("Debug");
+	ImGui::Text("Speed : %f  %f  %f", Velocity.x, Velocity.y, Velocity.z);
+	ImGui::Text("RPLerp : %f %f %f", RPLerp.x, RPLerp.y, RPLerp.z);
+	ImGui::End();
 
 	//ˆÚ“®‰ÁŽZ
-	worldTransform_.translate.x += speed.x;
-	worldTransform_.translate.z += speed.z;
-	//worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, speed);
+	
+	
 	//‰ñ“]
-	//worldTransform_.rotation.x += speed.z;
-	//worldTransform_.rotation.z += speed.x;
+
 }
 
 void Player::Reticle()
 {
-	//Vector3 Rpos = GetReticleWorldTransform();
-	Vector3 Ppos = GetWorldPosition();
+	if (!Flag)
+	{
 
- 	//RPLerp = NoramalizeLerp(Rpos, Ppos);
+		Vector3 Ppos{};
+		Ppos.x = worldTransform_.matWorld.m[3][0];
+		Ppos.y = worldTransform_.matWorld.m[3][1];
+		Ppos.z = worldTransform_.matWorld.m[3][2];
+		worldTransform_.UpdateMatrix();
+
+		{
+			const float kDistancePlayerTo3DReticle = 40.0f;
+			Vector3 offset = { 0.0f, 0.0f, 1.0f };
+
+			offset = VectorTransform::TransformNormal(offset, worldTransform_.matWorld);
+			offset = VectorTransform::Normalize(offset);
+
+			offset.x *= kDistancePlayerTo3DReticle;
+			offset.y *= kDistancePlayerTo3DReticle;
+			offset.z *= kDistancePlayerTo3DReticle;
+
+			reticleWorldTransform.translate.x = offset.x + Ppos.x;
+			reticleWorldTransform.translate.y = offset.y + Ppos.y;
+			reticleWorldTransform.translate.z = offset.z + Ppos.z;
+			reticleWorldTransform.UpdateMatrix();
+
+			Vector3 Rpos{};
+			Rpos.x = reticleWorldTransform.matWorld.m[3][0];
+			Rpos.y = reticleWorldTransform.matWorld.m[3][1];
+			Rpos.z = reticleWorldTransform.matWorld.m[3][2];
+
+			RPLerp.x = Rpos.x - Ppos.x;
+			RPLerp.y = Rpos.y - Ppos.y;
+			RPLerp.z = Rpos.z - Ppos.z;
+
+			RPLerp = VectorTransform::Normalize(RPLerp);
+		}
+	}
 }
 
 bool Player::isSpeed()
 {
-	if (speed.z>0.0f||speed.y>0.0f||speed.z>0.0f)
-	{
-		return true;
-	}
-
-	return false;
+	return true;
 }
 
 void Player::AddfrictionCoefficient()
 {
-	if (speed.x > 0.0f)
+	if (Velocity.x > 0.0f)
 	{
-		speed.x -= frictionCoefficient;
+		Velocity.x -= 0.1f * Velocity.x;
 	}
-	if (speed.y > 0.0f)
+	else if (Velocity.x< 0.0f)
 	{
-		speed.y -= frictionCoefficient;
+		Velocity.x += 0.1f * -Velocity.x;
 	}
-	if (speed.z > 0.0f)
+
+	if (Velocity.z > 0.0f)
 	{
-		speed.z -= frictionCoefficient;
+		Velocity.z -= 0.1f * Velocity.z;
 	}
+	else if (Velocity.z < 0.0f)
+	{
+		Velocity.z += 0.1f * -Velocity.z;
+	}
+
+	if (Velocity.x == 0.0f ||Velocity.y == 0.0f ||Velocity.z==0.0f)
+	{
+
+		//Flag = false;
+	}
+
 }
 
 Vector3 Player::NoramalizeLerp(Vector3 v1, Vector3 v2)

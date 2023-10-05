@@ -49,3 +49,4 @@ Vector3 VectorTransform::Lerp(const Vector3& v1, const Vector3& v2, float t)
 	result.z = v1.z + t * (v2.z - v1.z);
 	return result;
 }
+

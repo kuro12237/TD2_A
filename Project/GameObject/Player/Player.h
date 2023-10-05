@@ -43,14 +43,14 @@ private:
 	WorldTransform reticleWorldTransform{};
 	WorldTransform PlaneworldTransform_ = {};
 
-	Vector3 speed = { 0.0f,0.0f,0.0f};
+	Vector3 Velocity = { 0.0f,0.0f,0.0f};
 	Vector3 RPLerp = {};
 	/// <summary>
 	/// –€ŽC
 	/// </summary>
-	const float frictionCoefficient = 0.05f;
+	const float frictionCoefficient = 0.1f;
 
-	
+	bool Flag = false;
 
 	uint32_t frictionCoefficientTimer = 0;
 
