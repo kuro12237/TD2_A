@@ -14,7 +14,7 @@ void GameScene::Initialize()
 
 
 	MainCamera::Initialize();
-	//make_unique<
+	
 	collisionManager_ = make_unique<CollisionManager>();
 	mapWallManager_ = make_unique<MapWallManager>();
 	mapWallManager_->Initialize();
