@@ -443,9 +443,6 @@
     <ClInclude Include="Project\GameObject\MapWall\IMapWall.h">
       <Filter>Project\GameObject\MapWall</Filter>
     </ClInclude>
-    <ClInclude Include="Project\GameObject\MapWall\ヘッダー.h">
-      <Filter>CLEYERA\Utility\CollisionManager\Collider</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\ShapeObject3d.PS.hlsl">

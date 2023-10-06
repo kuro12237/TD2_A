@@ -1,4 +1,4 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 
 void Player::Initialize()
 {
@@ -118,9 +118,9 @@ void Player::Move()
 		MoveCoolTime = 0;
 		MoveFlag = false;
 	}
-	//–€C
+	//æ‘©æ“¦
 	FancFrictionCoefficient();
-	//‰ÁZˆ—
+	//åŠ ç®—å‡¦ç†
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
 
 	ImGui::Begin("Debug");
