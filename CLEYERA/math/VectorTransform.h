@@ -8,6 +8,9 @@ public:
 	static float Length(const Vector3& v);
 
 	static Vector3 Add(const Vector3 &v1, const Vector3 &v2);
+	static Vector3 Subtruct(const Vector3& v1, const Vector3& v2);
+
+
 
 	static Vector3 Multiply(const Vector3& v1, const float& v2);
 	static Vector3 Multiply(const Vector3& v1, const Vector3& v2);

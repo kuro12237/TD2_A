@@ -6,9 +6,13 @@ void GameScene::Initialize(GameManager* scene)
 	player_ = make_unique<Player>();
 	player_->Initialize();
 
+
 	LoadEnemyDate();
 	enemy_ = make_unique<Enemy>();
 	enemy_->Initialize({ 0,0,0 });
+  
+	mapwall_ = make_unique<MapWall>();
+	mapwall_->Initialize();
 
 	scene;
 	MainCamera::Initialize();
@@ -30,9 +34,13 @@ void GameScene::Update(GameManager* scene)
 	}
 
 	player_->Update();
+
 	enemy_->Update();
 	UpdateEnemyCommands();
 	
+
+	mapwall_->Update();
+
 	Collision();
 
 	MainCamera::Update();
@@ -44,7 +52,11 @@ void GameScene::Update(GameManager* scene)
 void GameScene::Draw(GameManager* scene)
 {
 	player_->Draw(viewProjection);
+
 	enemy_->Draw(viewProjection);
+  
+	mapwall_->Draw(viewProjection);
+
 	scene;
 }
 
@@ -60,52 +72,52 @@ void GameScene::Collision()
 
 }
 
-// “G‚Ìƒ[ƒhcsv‚Å
+// ï¿½Gï¿½Ìƒï¿½ï¿½[ï¿½hcsvï¿½ï¿½
 void GameScene::LoadEnemyDate() {
     fileLoad = FileLoader::CSVLoadFile("enemySpawn.csv");
 }
 
-// “G”­¶‚ÌXV
+// ï¿½Gï¿½ï¿½ï¿½ï¿½ï¿½ÌXï¿½V
 void GameScene::UpdateEnemyCommands() {
-	// ‘Ò‹@ˆ—
+	// ï¿½Ò‹@ï¿½ï¿½ï¿½ï¿½
 	if (wait) {
 		waitTimer--;
 		if (waitTimer <= 0) {
-			// ‘Ò‹@Š®—¹
+			// ï¿½Ò‹@ï¿½ï¿½ï¿½ï¿½
 			wait = false;
 		}
 		return;
 	}
 
-	// 1s•ª‚Ì•¶š—ñ‚ğ“ü‚ê‚é•Ï”
+	// 1ï¿½sï¿½ï¿½ï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïï¿½
 	std::string line;
 
-	// ƒRƒ}ƒ“ƒhÀsƒ‹[ƒv
+	// ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½sï¿½ï¿½ï¿½[ï¿½v
 	while (getline(fileLoad, line)) {
-		// 1s•ª‚Ì•¶š—ñ‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·‚µ‚Ä‰ğÍ‚µ‚â‚·‚­‚·‚é
+		// 1ï¿½sï¿½ï¿½ï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½É•ÏŠï¿½ï¿½ï¿½ï¿½Ä‰ï¿½Í‚ï¿½ï¿½â‚·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		std::istringstream line_stream(line);
 
 		std::string word;
-		// ,‹æØ‚è‚Ås‚Ìæ“ª•¶š—ñ‚ğæ“¾
+		// ,ï¿½ï¿½Ø‚ï¿½Åsï¿½Ìæ“ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
 		getline(line_stream, word, ',');
 
-		// "//"‚©‚çn‚Ü‚és‚ÍƒRƒƒ“ƒg
+		// "//"ï¿½ï¿½ï¿½ï¿½nï¿½Ü‚ï¿½sï¿½ÍƒRï¿½ï¿½ï¿½ï¿½ï¿½g
 		if (word.find("//") == 0) {
-			// ƒRƒƒ“ƒgs‚ğ”ò‚Î‚·
+			// ï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½gï¿½sï¿½ï¿½ï¿½Î‚ï¿½
 			continue;
 		}
 
-		// POPƒRƒ}ƒ“ƒh
+		// POPï¿½Rï¿½}ï¿½ï¿½ï¿½h
 		if (word.find("SPAWN") == 0) {
-			// xÀ•W
+			// xï¿½ï¿½ï¿½W
 			getline(line_stream, word, ',');
 			float x = (float)std::atof(word.c_str());
 
-			// yÀ•W
+			// yï¿½ï¿½ï¿½W
 			getline(line_stream, word, ',');
 			float y = (float)std::atof(word.c_str());
 
-			// zÀ•W
+			// zï¿½ï¿½ï¿½W
 			getline(line_stream, word, ',');
 			float z = (float)std::atof(word.c_str());
 
@@ -116,21 +128,21 @@ void GameScene::UpdateEnemyCommands() {
 		else if (word.find("WAIT") == 0) {
 			getline(line_stream, word, ',');
 
-			// ‘Ò‚¿ŠÔ
+			// ï¿½Ò‚ï¿½ï¿½ï¿½ï¿½ï¿½
 			int32_t waitTime = atoi(word.c_str());
 
-			// ‘Ò‹@ŠJn
+			// ï¿½Ò‹@ï¿½Jï¿½n
 			wait = true;
 			waitTimer = waitTime;
 
-			// ƒRƒ}ƒ“ƒhƒ‹[ƒv‚ğ”²‚¯‚é
+			// ï¿½Rï¿½}ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½[ï¿½vï¿½ğ”²‚ï¿½ï¿½ï¿½
 			break;
 		}
 	}
 
 }
 
-// “G‚Ì”­¶
+// ï¿½Gï¿½Ì”ï¿½ï¿½ï¿½
 void GameScene::EnemySpawn(const Vector3& position) {
 	enemy_ = make_unique<Enemy>();
 	enemy_->Initialize(position);

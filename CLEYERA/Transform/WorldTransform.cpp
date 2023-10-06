@@ -6,6 +6,14 @@ void WorldTransform::Initialize()
 	
 }
 
+void WorldTransform::SRTSetting(Vector3 s, Vector3 r, Vector3 t)
+{
+	scale = s;
+	rotation = r;
+	translate = t;
+	UpdateMatrix();
+}
+
 void WorldTransform::UpdateMatrix()
 {
 	matWorld = MatrixTransform::AffineMatrix(scale, rotation, translate);

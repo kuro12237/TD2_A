@@ -5,7 +5,10 @@
 #include"GameObject/Enemy/Enemy.h"
 #include"GameObject/Camera/MainCamera.h"
 #include"CollisionManager.h"
+
 #include"FileLoader.h"
+#include"GameObject/MapWall/MapWall.h"
+
 
 class GameScene : public IScene
 {
@@ -20,7 +23,7 @@ public:
 	void Draw(GameManager* scene)override;
 
 	/// <summary>
-	/// “G”­¶
+	/// ï¿½Gï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	void LoadEnemyDate();
 	void UpdateEnemyCommands();
@@ -36,10 +39,14 @@ private:
 
 	unique_ptr<Player>player_ = nullptr;
 
-	unique_ptr<Enemy>enemy_ = nullptr; // “G
-	bool wait = false; // ‘Ò‹@’†ƒtƒ‰ƒO
-	uint32_t waitTimer = 0; // ‘Ò‹@’†ƒ^ƒCƒ}[
+
+	unique_ptr<Enemy>enemy_ = nullptr; // ï¿½G
+	bool wait = false; // ï¿½Ò‹@ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½O
+	uint32_t waitTimer = 0; // ï¿½Ò‹@ï¿½ï¿½ï¿½^ï¿½Cï¿½}ï¿½[
 	stringstream fileLoad;
+
+	unique_ptr<MapWall>mapwall_ = nullptr;
+
 };
 
 
