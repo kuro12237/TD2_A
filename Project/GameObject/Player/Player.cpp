@@ -1,4 +1,4 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 
 void Player::Initialize()
 {
@@ -25,17 +25,17 @@ void Player::Initialize()
 
 	SetCollosionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionAttributeEnemy);
-
+	
+	SetSize(model_->GetSize());
 }
 
 void Player::Update()
 {
 	Reticle();
-	FildLimit();
+	SetVelosity(Velocity);
 	Move();
 	
 	
-
 	LineWorldTransform_.UpdateMatrix();
 	reticleWorldTransform.UpdateMatrix();
 	worldTransform_.UpdateMatrix();
@@ -50,6 +50,42 @@ void Player::Draw(ViewProjection view)
 
 void Player::OnCollision()
 {
+}
+
+void Player::OnTopWall()
+{
+	if (worldTransform_.translate.z > static_cast<float>(FILD_MAP_SIZE_Z))
+	{
+    	worldTransform_.translate.z = worldTransform_.translate.z - 0.1f;
+	}
+	Velocity.z = Velocity.z * -1;
+}
+
+void Player::OnBottomWall()
+{
+	if (worldTransform_.translate.z > static_cast<float>(FILD_MAP_SIZE_Z))
+	{
+		worldTransform_.translate.z = worldTransform_.translate.z + 0.1f;
+	}
+	Velocity.z = Velocity.z * -1;
+}
+
+void Player::OnLeftWall()
+{
+	if (worldTransform_.translate.x > static_cast<float>(FILD_MAP_SIZE_X))
+	{
+		worldTransform_.translate.x = worldTransform_.translate.x + 0.1f;
+	}
+	Velocity.x = Velocity.x * -1;	
+}
+
+void Player::OnRightWall()
+{
+	if (worldTransform_.translate.x > -static_cast<float>(FILD_MAP_SIZE_X))
+	{
+		worldTransform_.translate.x = worldTransform_.translate.x - 0.1f;
+	}
+	Velocity.x = Velocity.x * -1;	
 }
 
 Vector3 Player::GetWorldPosition()
@@ -82,9 +118,9 @@ void Player::Move()
 		MoveCoolTime = 0;
 		MoveFlag = false;
 	}
-	//–€ŽC
+	//æ‘©æ“¦
 	FancFrictionCoefficient();
-	//‰ÁŽZˆ—
+	//åŠ ç®—å‡¦ç†
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
 
 	ImGui::Begin("Debug");
@@ -94,29 +130,7 @@ void Player::Move()
 
 }
 
-void Player::FildLimit()
-{
-	if (GetWorldPosition().z + model_->GetSize() >= static_cast<float>(FILD_MAP_SIZE_Z))
-	{
-		worldTransform_.translate.z = worldTransform_.translate.z - 0.1f;
-		Velocity.z = Velocity.z * -1;
-	}
-	if (GetWorldPosition().z-model_->GetSize()<=-static_cast<float>(FILD_MAP_SIZE_Z))
-	{
-		worldTransform_.translate.z = worldTransform_.translate.z + 0.1f;
-		Velocity.z = Velocity.z * -1;
-	}
-	if (GetWorldPosition().x + model_->GetSize() >= static_cast<float>(FILD_MAP_SIZE_X))
-	{
-		worldTransform_.translate.x = worldTransform_.translate.x - 0.1f;
-		Velocity.x = Velocity.x * -1;
-	}
-	if (GetWorldPosition().x - model_->GetSize() <= -static_cast<float>(FILD_MAP_SIZE_X))
-	{
-		worldTransform_.translate.x = worldTransform_.translate.x + 0.1f;
-		Velocity.x = Velocity.x * -1;
-	}
-}
+
 
 void Player::Reticle()
 {
