@@ -118,6 +118,9 @@
     <Filter Include="Project\GameObject">
       <UniqueIdentifier>{bd50fd17-dc80-4453-abab-990b87bb4c34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\Enemy">
+      <UniqueIdentifier>{2bbaabcf-00ff-486f-928c-6f01d14ec6ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -247,9 +250,6 @@
       <Filter>Project\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="Project\GameObject\Camera\MainCamera.cpp">
-      <Filter>Project\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Project\GameObject\MapWall\MapWall.cpp">
       <Filter>Project\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
@@ -413,7 +413,13 @@
     <ClInclude Include="Project\GameObject\Camera\MainCamera.h">
       <Filter>Project\GameObject</Filter>
     </ClInclude>
+
+    <ClInclude Include="..\プログラム\Enemy.h">
+      <Filter>Project\GameObject\Enemy</Filter>
+    </ClInclude>
+
     <ClInclude Include="Project\GameObject\MapWall\MapWall.h" />
+
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\ShapeObject3d.PS.hlsl">

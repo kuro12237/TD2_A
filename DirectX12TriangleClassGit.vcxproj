@@ -24,6 +24,7 @@
     <None Include="Resources\Shader\SpriteObject3d.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\プログラム\Enemy.cpp" />
     <ClCompile Include="CLEYERA\Audio\Audio.cpp" />
     <ClCompile Include="CLEYERA\base\DX\DirectXCommon.cpp" />
     <ClCompile Include="CLEYERA\Base\Win\WinApp.cpp" />
@@ -81,6 +82,7 @@
     <ClCompile Include="Project\Scene\GameScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\プログラム\Enemy.h" />
     <ClInclude Include="CLEYERA\Audio\Audio.h" />
     <ClInclude Include="CLEYERA\base\DX\DirectXCommon.h" />
     <ClInclude Include="CLEYERA\Base\Win\WinApp.h" />
