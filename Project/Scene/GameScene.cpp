@@ -1,6 +1,6 @@
 ﻿#include "GameScene.h"
 
-void GameScene::Initialize(GameManager* scene)
+void GameScene::Initialize()
 {
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
 	player_ = make_unique<Player>();
@@ -11,14 +11,13 @@ void GameScene::Initialize(GameManager* scene)
 	enemy_ = make_unique<Enemy>();
 	enemy_->Initialize({ 0,0,0 });
   
-	mapwall_ = make_unique<MapWall>();
-	mapwall_->Initialize();
 
-	scene;
+
 	MainCamera::Initialize();
 	//make_unique<
 	collisionManager_ = make_unique<CollisionManager>();
-	
+	mapWallManager_ = make_unique<MapWallManager>();
+	mapWallManager_->Initialize();
 }
 
 void GameScene::Update(GameManager* scene)
@@ -32,15 +31,14 @@ void GameScene::Update(GameManager* scene)
 		scene->ChangeState(new DebugScene);
 		return;
 	}
-
+	
+	MapWallCollision();
+	
 	player_->Update();
-
 	enemy_->Update();
 	UpdateEnemyCommands();
 	
-
-	mapwall_->Update();
-
+	mapWallManager_->Update();
 	Collision();
 
 	MainCamera::Update();
@@ -49,15 +47,13 @@ void GameScene::Update(GameManager* scene)
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
 }
 
-void GameScene::Draw(GameManager* scene)
+void GameScene::Draw()
 {
 	player_->Draw(viewProjection);
-
 	enemy_->Draw(viewProjection);
-  
-	mapwall_->Draw(viewProjection);
 
-	scene;
+	mapWallManager_->Draw(viewProjection);
+	
 }
 
 void GameScene::Collision()
@@ -70,6 +66,13 @@ void GameScene::Collision()
 	//Check
 	collisionManager_->CheckAllCollision();
 
+}
+
+void GameScene::MapWallCollision()
+{
+	mapWallManager_->ListClear();
+	mapWallManager_->SetObject(player_.get());
+	mapWallManager_->CheckMapWall();
 }
 
 // �G�̃��[�hcsv��

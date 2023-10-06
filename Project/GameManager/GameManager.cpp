@@ -4,7 +4,7 @@ GameManager::GameManager()
 {
 	Cleyera::Initialize();
 	Scene_ = new GameScene();
-	Scene_->Initialize(this);
+	Scene_->Initialize();
 
 	Grid* grid = new Grid();
 	grid->Initialize();
@@ -37,7 +37,7 @@ void GameManager::Run()
 	
 		DebugTools::DrawExecute(0);
 		DebugTools::DrawExecute(1);
-		Scene_->Draw(this);
+		Scene_->Draw();
 
 		Cleyera::EndFlame();
 	}
@@ -48,6 +48,6 @@ void GameManager::ChangeState(IScene *newScene)
 	TextureManager::AllUnTexture();
 	delete Scene_;
 	Scene_ = newScene;
-	Scene_->Initialize(this);
+	Scene_->Initialize();
 
 }

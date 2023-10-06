@@ -20,7 +20,7 @@ void MapWall::Initialize()
 	Bottom_.model->CreateFromObj("TestWallHeight");
 	Bottom_.worldTransform.Initialize();
 	Bottom_.worldTransform.scale = { 0.1f,2,2 };
-	Bottom_.worldTransform.translate.x = -MaxFild.x;
+	Bottom_.worldTransform.translate.x = -(MaxFild.x);
 
 	Right_.model = make_unique<Model>();
 	Right_.model->CreateFromObj("TestWallWidth");
@@ -32,7 +32,7 @@ void MapWall::Initialize()
 	Left_.model->CreateFromObj("TestWallWidth");
 	Left_.worldTransform.Initialize();
 	Left_.worldTransform.scale = { 2,2,0.1f };
-	Left_.worldTransform.translate.z = -MaxFild.y;
+	Left_.worldTransform.translate.z = -(MaxFild.y);
 
 }
 

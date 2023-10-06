@@ -1,4 +1,4 @@
-#include "ModelSphereState.h"
+ï»¿#include "ModelSphereState.h"
 
 
 
@@ -30,13 +30,13 @@ void ModelSphereState::Draw(Model* state, WorldTransform worldTransform, ViewPro
 	resource_.Material->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	resource_.Index->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
 
-#pragma region ‹…‚ÌÀ•Wˆ—
+#pragma region çƒã®åº§æ¨™å‡¦ç†
 	const float LON_EVERY = float(std::numbers::pi) * 2.0f / float(VertexNum);
 
 	const float LAT_EVERY = float(std::numbers::pi) / float(VertexNum);
 	{
 		for (int latIndex = 0; latIndex < VertexNum; ++latIndex) {
-			//ƒÆ
+			//Î¸
 			float lat = -float(std::numbers::pi) / 2.0f + LAT_EVERY * latIndex;
 
 			for (int lonIndex = 0; lonIndex < VertexNum; ++lonIndex) {
@@ -134,7 +134,7 @@ void ModelSphereState::CommandCall(Model*state)
 	
 	PSO = GraphicsPipelineManager::GetInstance()->GetPso().shape;
 
-	//ƒeƒNƒXƒ`ƒƒ‚ª‚ ‚éê‡
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãŒã‚ã‚‹å ´åˆ
 	if (!state->GetTexHandle() == 0) {
 		PSO = GraphicsPipelineManager::GetInstance()->GetPso().Sprite3d.none;
 	}

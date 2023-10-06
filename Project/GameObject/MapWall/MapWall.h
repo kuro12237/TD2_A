@@ -31,6 +31,5 @@ private:
 	sWall Left_ = {};
 	sWall Right_ = {};
 
-
 };
 

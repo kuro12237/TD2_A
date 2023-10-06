@@ -5,11 +5,10 @@ DebugScene::~DebugScene()
 	Audio::SoundUnLoad();	
 }
 
-void DebugScene::Initialize(GameManager* Scene)
+void DebugScene::Initialize()
 {
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
 	soundHandle_ = Audio::SoundLoadWave("Resources/Select.wav");
-	Scene;
 	
 	sprite_ = make_unique<Sprite>();
 
@@ -113,12 +112,10 @@ void DebugScene::Update(GameManager* Scene)
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
 }
 
-void DebugScene::Draw(GameManager* Scene)
+void DebugScene::Draw()
 {
 	sprite2_->Draw(sprite2WorldTransform_);
 	sprite_->Draw(spriteWorldTransform_);
-
-	Scene;
 }
 
 

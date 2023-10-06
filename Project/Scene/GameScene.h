@@ -8,7 +8,7 @@
 
 #include"FileLoader.h"
 #include"GameObject/MapWall/MapWall.h"
-
+#include"GameObject/MapWall/MapWallManager.h"
 
 class GameScene : public IScene
 {
@@ -16,11 +16,11 @@ public:
 	GameScene() {};
 	~GameScene() {};
 
-	void Initialize(GameManager* scene)override;
+	void Initialize()override;
 
 	void Update(GameManager* scene)override;
 
-	void Draw(GameManager* scene)override;
+	void Draw()override;
 
 	/// <summary>
 	/// �G����
@@ -32,6 +32,8 @@ public:
 private:
 	
 	void Collision();
+
+	void MapWallCollision();
 
 	ViewProjection viewProjection{};
 
@@ -45,8 +47,7 @@ private:
 	uint32_t waitTimer = 0; // �ҋ@���^�C�}�[
 	stringstream fileLoad;
 
-	unique_ptr<MapWall>mapwall_ = nullptr;
-
+	unique_ptr<MapWallManager>mapWallManager_ = nullptr;
 };
 
 

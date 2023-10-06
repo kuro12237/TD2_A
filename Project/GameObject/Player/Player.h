@@ -6,10 +6,11 @@
 #include"Collider.h"
 #include"ColliderConfig.h"
 #include"GameObject/MapWall/MapWall.h"
+#include"GameObject/MapWall/IMapWall.h"
 
 #define MAX_MOVE_COOLTIME 120
 
-class Player: public Collider
+class Player: public Collider, public IMapWall
 {
 public:
 	Player() {};
@@ -20,8 +21,14 @@ public:
 	void Update();
 
 	void Draw(ViewProjection view);
+	//void SetVelocity(){ SetVelosity(Velocity); }
 
 	void OnCollision()override;
+
+	void OnTopWall()override;
+	void OnBottomWall()override;
+	void OnLeftWall()override;
+	void OnRightWall()override;
 
 #pragma region get
 
@@ -34,7 +41,6 @@ public:
 private:
 
 	void Move();
-	void FildLimit();
 
     void Reticle();
 	
@@ -61,7 +67,7 @@ private:
 	/// <summary>
 	/// –€ŽC
 	/// </summary>
-	const float frictionCoefficient = 0.01f;
+	const float frictionCoefficient = 0.1f;
 
 	uint32_t MoveCoolTime = 0;
 	bool MoveFlag = false;
