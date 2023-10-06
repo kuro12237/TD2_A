@@ -5,7 +5,11 @@ void GameScene::Initialize(GameManager* scene)
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
 	player_ = make_unique<Player>();
 	player_->Initialize();
+
 	LoadEnemyDate();
+	enemy_ = make_unique<Enemy>();
+	enemy_->Initialize({ 0,0,0 });
+
 	scene;
 	MainCamera::Initialize();
 	//make_unique<
