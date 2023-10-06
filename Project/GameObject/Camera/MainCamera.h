@@ -1,5 +1,6 @@
 #pragma once
 #include"ViewProjection.h"
+#include"WorldTransform.h"
 
 class MainCamera
 {
@@ -11,11 +12,13 @@ public:
 
 	static void Update();
 
-	static ViewProjection GetViewProjection() { return MainCamera::GetInstance()->viewProjection; }
+	static ViewProjection GetViewProjection(){ return MainCamera::GetInstance()->viewProjection; }
 
+	static void SetParent(const WorldTransform* worldTransform) { MainCamera::GetInstance()->worldTransform_.parent = worldTransform; }
 private:
 
-	ViewProjection viewProjection;
+	ViewProjection viewProjection{};
+	WorldTransform worldTransform_{};
 
 	//Singleton
 	MainCamera() = default;

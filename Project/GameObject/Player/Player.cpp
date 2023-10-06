@@ -9,20 +9,19 @@ void Player::Initialize()
 
 	reticleTestModel = make_unique<Model>();
 	reticleTestModel->Initialize(new ModelSphereState);
-	reticleTestModel->SetTexHandle(texHandle);
 	reticleTestModel->SetColor({ 0,1,0,1 });
 
-	PlaneModel_ = make_unique<Model>();
-	PlaneModel_->CreateFromObj("TestPlane");
+	LineModel_ = make_unique<Model>();
+	LineModel_->Initialize(new ModelLineState, { 0,0,0,1 }, { 0,0,4,1 });
 
 	worldTransform_.Initialize();
-	worldTransform_.scale = { 1.0f,1.0f,1.0f };
-	
+	worldTransform_.SRTSetting({ 1,1,1 }, { 0,0,0 }, { 0,0.5f,0 });
+
 	reticleWorldTransform.Initialize();
 	
-	PlaneworldTransform_.Initialize();
-	PlaneworldTransform_.parent = &worldTransform_;
-	PlaneworldTransform_.scale = { 10,10,10, };
+	LineWorldTransform_.Initialize();
+	LineWorldTransform_.parent = &worldTransform_;
+	LineWorldTransform_.translate.y = 0.5f;
 
 	SetCollosionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionAttributeEnemy);
@@ -32,14 +31,12 @@ void Player::Initialize()
 void Player::Update()
 {
 	Reticle();
+	FildLimit();
 	Move();
 	
-	ImGui::Begin("plane");
-	ImGui::Text("RPLERP : %f,%f,%f", RPNormalize);
-	ImGui::DragFloat3("rotate", &PlaneworldTransform_.rotation.x, 0.1f);
-	ImGui::End();
 	
-	PlaneworldTransform_.UpdateMatrix();
+
+	LineWorldTransform_.UpdateMatrix();
 	reticleWorldTransform.UpdateMatrix();
 	worldTransform_.UpdateMatrix();
 }
@@ -47,8 +44,8 @@ void Player::Update()
 void Player::Draw(ViewProjection view)
 {
 	model_->Draw(worldTransform_, view);
+	LineModel_->Draw(worldTransform_, view);
 	reticleTestModel->Draw(reticleWorldTransform, view);
-	PlaneModel_->Draw(PlaneworldTransform_, view);
 }
 
 void Player::OnCollision()
@@ -66,19 +63,17 @@ Vector3 Player::GetWorldPosition()
 
 void Player::Move()
 {
-	if (Input::GetInstance()->PushKey(DIK_A))
-	{
-		worldTransform_.rotation.y += 0.1f;
-	}else if(Input::GetInstance()->PushKey(DIK_D))
-	{
-		worldTransform_.rotation.y -= 0.1f;
+	if (Input::GetInstance()->PushKey(DIK_A)){
+		worldTransform_.rotation.y -= rotateSpeed;
+	}else if(Input::GetInstance()->PushKey(DIK_D)){
+		worldTransform_.rotation.y += rotateSpeed;
 	}
 
 	if (!MoveFlag&&Input::GetInstance()->PushKey(DIK_SPACE))
 	{
 		MoveFlag = true;
-		RPNormalize = VectorTransform::Multiply(RPNormalize, speed);
 		Velocity = RPNormalize;
+		Velocity = VectorTransform::Multiply(Velocity, speed);
 	}
 
 	MoveCoolTime++;
@@ -87,13 +82,10 @@ void Player::Move()
 		MoveCoolTime = 0;
 		MoveFlag = false;
 	}
-
-	//‰ÁŽZˆ—
+	//–€ŽC
 	FancFrictionCoefficient();
-
-	worldTransform_.translate.x += Velocity.x;
-	worldTransform_.translate.y += Velocity.y;
-	worldTransform_.translate.z += Velocity.z;
+	//‰ÁŽZˆ—
+	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
 
 	ImGui::Begin("Debug");
 	ImGui::Text("Speed : %f  %f  %f", Velocity.x, Velocity.y, Velocity.z);
@@ -102,64 +94,81 @@ void Player::Move()
 
 }
 
+void Player::FildLimit()
+{
+	if (GetWorldPosition().z + model_->GetSize() >= static_cast<float>(FILD_MAP_SIZE_Z))
+	{
+		worldTransform_.translate.z = worldTransform_.translate.z - 0.1f;
+		Velocity.z = Velocity.z * -1;
+	}
+	if (GetWorldPosition().z-model_->GetSize()<=-static_cast<float>(FILD_MAP_SIZE_Z))
+	{
+		worldTransform_.translate.z = worldTransform_.translate.z + 0.1f;
+		Velocity.z = Velocity.z * -1;
+	}
+	if (GetWorldPosition().x + model_->GetSize() >= static_cast<float>(FILD_MAP_SIZE_X))
+	{
+		worldTransform_.translate.x = worldTransform_.translate.x - 0.1f;
+		Velocity.x = Velocity.x * -1;
+	}
+	if (GetWorldPosition().x - model_->GetSize() <= -static_cast<float>(FILD_MAP_SIZE_X))
+	{
+		worldTransform_.translate.x = worldTransform_.translate.x + 0.1f;
+		Velocity.x = Velocity.x * -1;
+	}
+}
+
 void Player::Reticle()
 {
-	if (!MoveFlag)
+	if (MoveFlag)
 	{
-		Vector3 Ppos{};
-		Ppos.x = worldTransform_.matWorld.m[3][0];
-		Ppos.y = worldTransform_.matWorld.m[3][1];
-		Ppos.z = worldTransform_.matWorld.m[3][2];
-		worldTransform_.UpdateMatrix();
-
-		{
-			const float kDistancePlayerTo3DReticle = 40.0f;
-			Vector3 offset = { 0.0f, 0.0f, 1.0f };
-
-			offset = VectorTransform::TransformNormal(offset, worldTransform_.matWorld);
-			offset = VectorTransform::Normalize(offset);
-
-			offset.x *= kDistancePlayerTo3DReticle;
-			offset.y *= kDistancePlayerTo3DReticle;
-			offset.z *= kDistancePlayerTo3DReticle;
-
-			reticleWorldTransform.translate.x = offset.x + Ppos.x;
-			reticleWorldTransform.translate.y = offset.y + Ppos.y;
-			reticleWorldTransform.translate.z = offset.z + Ppos.z;
-			reticleWorldTransform.UpdateMatrix();
-
-			Vector3 Rpos{};
-			Rpos.x = reticleWorldTransform.matWorld.m[3][0];
-			Rpos.y = reticleWorldTransform.matWorld.m[3][1];
-			Rpos.z = reticleWorldTransform.matWorld.m[3][2];
-
-			RPNormalize.x = Rpos.x - Ppos.x;
-			RPNormalize.y = Rpos.y - Ppos.y;
-			RPNormalize.z = Rpos.z - Ppos.z;
-
-			RPNormalize = VectorTransform::Normalize(RPNormalize);
-		}
+		return;
 	}
+	Vector3 Ppos{};
+   	Ppos.x = worldTransform_.matWorld.m[3][0];
+	Ppos.y = worldTransform_.matWorld.m[3][1];
+	Ppos.z = worldTransform_.matWorld.m[3][2];
+	worldTransform_.UpdateMatrix();
+
+	const float kDistancePlayerTo3DReticle = 40.0f;
+	Vector3 offset = { 0.0f, 0.0f, 1.0f };
+
+	offset = VectorTransform::TransformNormal(offset, worldTransform_.matWorld);
+	offset = VectorTransform::Normalize(offset);
+	offset = VectorTransform::Multiply(offset, kDistancePlayerTo3DReticle);
+
+	reticleWorldTransform.translate = VectorTransform::Add(offset, Ppos);
+	reticleWorldTransform.UpdateMatrix();
+
+	Vector3 Rpos{};
+	Rpos.x = reticleWorldTransform.matWorld.m[3][0];
+	Rpos.y = reticleWorldTransform.matWorld.m[3][1];
+	Rpos.z = reticleWorldTransform.matWorld.m[3][2];
+
+	RPNormalize = VectorTransform::Subtruct(Rpos, Ppos);
+	RPNormalize = VectorTransform::Normalize(RPNormalize);
+		
 }
 
 void Player::FancFrictionCoefficient()
 {
+	//x
 	if (Velocity.x > 0.0f)
 	{
-		Velocity.x -= 0.1f * Velocity.x;
+		Velocity.x -= frictionCoefficient * Velocity.x;
 	}
 	else if (Velocity.x< 0.0f)
 	{
-		Velocity.x += 0.1f * -Velocity.x;
+		Velocity.x += frictionCoefficient * -Velocity.x;
 	}
-
+	//z
 	if (Velocity.z > 0.0f)
 	{
-		Velocity.z -= 0.1f * Velocity.z;
+		Velocity.z -= frictionCoefficient * Velocity.z;
 	}
 	else if (Velocity.z < 0.0f)
 	{
-		Velocity.z += 0.1f * -Velocity.z;
+		Velocity.z += frictionCoefficient * -Velocity.z;
 	}
 }
 
