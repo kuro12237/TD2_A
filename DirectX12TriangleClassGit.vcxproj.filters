@@ -252,6 +252,10 @@
     <ClCompile Include="Project\GameObject\Camera\MainCamera.cpp">
       <Filter>Project\GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="Project\GameObject\MapWall\MapWall.cpp" />
+    <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp">
+      <Filter>Project\GameObject\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Utility\Pch\Pch.h">
@@ -413,13 +417,10 @@
     <ClInclude Include="Project\GameObject\Camera\MainCamera.h">
       <Filter>Project\GameObject</Filter>
     </ClInclude>
-
-    <ClInclude Include="..\プログラム\Enemy.h">
+    <ClInclude Include="Project\GameObject\MapWall\MapWall.h" />
+    <ClInclude Include="Project\GameObject\Enemy\Enemy.h">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClInclude>
-
-    <ClInclude Include="Project\GameObject\MapWall\MapWall.h" />
-
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\ShapeObject3d.PS.hlsl">
