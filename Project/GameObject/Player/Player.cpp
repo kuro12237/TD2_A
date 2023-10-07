@@ -105,6 +105,8 @@ void Player::Move()
 		worldTransform_.rotation.y += rotateSpeed;
 	}
 
+
+
 	if (!MoveFlag&&Input::GetInstance()->PushKey(DIK_SPACE))
 	{
 		MoveFlag = true;
@@ -129,8 +131,6 @@ void Player::Move()
 	ImGui::End();
 
 }
-
-
 
 void Player::Reticle()
 {
