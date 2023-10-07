@@ -2,6 +2,8 @@
 #include"IParticleState.h"
 #include"CreateResource.h"
 
+
+
 class ParticlePlaneState: public IParticleState
 {
 public:
@@ -14,6 +16,8 @@ public:
 
 
 private:
+
+
 
 	list<SModelData>modelData_ = {};
 
