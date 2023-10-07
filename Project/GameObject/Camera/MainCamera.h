@@ -1,6 +1,8 @@
 #pragma once
 #include"ViewProjection.h"
 #include"WorldTransform.h"
+#include"Input.h"
+#include"VectorTransform.h"
 
 class MainCamera
 {
@@ -10,7 +12,7 @@ public:
 
 	static void Initialize();
 
-	static void Update();
+	static void Update(WorldTransform w);
 
 	static ViewProjection GetViewProjection(){ return MainCamera::GetInstance()->viewProjection; }
 
@@ -19,6 +21,9 @@ private:
 
 	ViewProjection viewProjection{};
 	WorldTransform worldTransform_{};
+	
+	float rotate = 0;
+	const float speed = 0.2f;
 
 	//Singleton
 	MainCamera() = default;

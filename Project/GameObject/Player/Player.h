@@ -34,6 +34,7 @@ public:
 
 	Vector3 GetWorldPosition()override;
 
+	const WorldTransform &GetWorldTransform()const { return worldTransform_; }
 
 #pragma endregion
 
@@ -67,11 +68,11 @@ private:
 	/// <summary>
 	/// –€ŽC
 	/// </summary>
-	const float frictionCoefficient = 0.1f;
+	const float frictionCoefficient = 0.01f;
 
 	uint32_t MoveCoolTime = 0;
 	bool MoveFlag = false;
-	const float speed = 4.0f;
+	const float speed = 3.0f;
 	const float rotateSpeed = 0.1f;
 
 	uint32_t texHandle = 0;

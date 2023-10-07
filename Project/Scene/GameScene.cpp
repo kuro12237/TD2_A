@@ -10,11 +10,8 @@ void GameScene::Initialize()
 	LoadEnemyDate();
 	enemy_ = make_unique<Enemy>();
 	enemy_->Initialize({ 0,0,0 });
-  
-
-
 	MainCamera::Initialize();
-	
+
 	collisionManager_ = make_unique<CollisionManager>();
 	mapWallManager_ = make_unique<MapWallManager>();
 	mapWallManager_->Initialize();
@@ -41,7 +38,7 @@ void GameScene::Update(GameManager* scene)
 	mapWallManager_->Update();
 	Collision();
 
-	MainCamera::Update();
+	MainCamera::Update(player_->GetWorldTransform());
 
 	viewProjection = MainCamera::GetViewProjection();
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
