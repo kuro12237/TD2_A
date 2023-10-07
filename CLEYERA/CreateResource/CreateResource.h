@@ -43,6 +43,7 @@ struct ResourcePeroperty
 	ComPtr<ID3D12Resource> Material;
 	ComPtr<ID3D12Resource> wvpResource;
 	ComPtr<ID3D12Resource> Light;
+	ComPtr<ID3D12Resource> instancingresource;
 };
 
 struct  Material
