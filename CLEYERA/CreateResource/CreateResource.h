@@ -57,8 +57,6 @@ class CreateResources
 {
 public:
 
-
-
 	/// <summary>
 	/// Resource‚ğì¬
 	/// </summary>

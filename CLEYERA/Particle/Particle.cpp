@@ -1,9 +1,10 @@
 #include"Particle/Particle.h"
 
 
-void Particle::Initialize(IParticleState* state)
+void Particle::Initialize(IParticleState* state, const uint32_t NumInstance)
 {
 	state_ = state;
+	NumInstance_ = NumInstance;
 
 	state_->Initialize(this);
 
