@@ -70,6 +70,9 @@ private:
 	static void CreateRTV();
 	static void CreateFence();
 
+	static void CreateFixFPS();
+	static void UpdateFixFPS();
+
 	//DXGI+ID3D12‚ÍŠî–{Comptr‚É•Ï‚¦‚é
 
     ComPtr<IDXGIFactory7> m_pDxgiFactory_ = nullptr;
@@ -87,9 +90,11 @@ private:
 	HANDLE fenceEvent = {};
 	D3D12_RESOURCE_BARRIER barrier{};
 
+	chrono::steady_clock::time_point reference_ = {};
+
+//Singleton
 	DirectXCommon() = default;
 	~DirectXCommon() = default;
 	DirectXCommon(const  DirectXCommon&) = delete;
 	const  DirectXCommon& operator=(const DirectXCommon&) = delete;
 };
-
