@@ -46,6 +46,7 @@ void DirectXCommon::initialize()
 	CreateSwapChainResource();
     CreateRTV();
 	CreateFence();
+	CreateFixFPS();
 }
 
 void DirectXCommon::Finalize()
@@ -58,6 +59,7 @@ void DirectXCommon::Finalize()
 
 void DirectXCommon::BeginFlame()
 {
+	UpdateFixFPS();
 	SwapChain swapChain = DirectXCommon::GetInstance()->swapChain;
 	Commands commands = DirectXCommon::GetInstance()->commands;
 
@@ -99,8 +101,6 @@ D3D12_VIEWPORT DirectXCommon::viewportSetting(int32_t kClientWidth, int32_t kCli
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 
-
-
 	return viewport;
 }
 
@@ -115,9 +115,7 @@ D3D12_RECT DirectXCommon::scissorRectSetting(int32_t kClientWidth, int32_t kClie
 	scissorRect.top = 0;
 	scissorRect.bottom = kClientHeight;
 
-
 	return scissorRect;
-
 }
 
 void DirectXCommon::ScissorViewCommand(const int32_t kClientWidth, const int32_t kClientHeight)
@@ -135,7 +133,6 @@ void DirectXCommon::ScissorViewCommand(const int32_t kClientWidth, const int32_t
 
 	commands.m_pList->RSSetViewports(1, &viewport); //
 	commands.m_pList->RSSetScissorRects(1, &scissorRect);
-
 }
 
 void DirectXCommon::EndFlame()
@@ -379,5 +376,35 @@ void DirectXCommon::CreateFence()
 	DirectXCommon::GetInstance()->m_pFence_ = fence;
 	DirectXCommon::GetInstance()->fenceEvent = fenceEvent;
 	DirectXCommon::GetInstance()->fenceValue = fenceValue;
+}
+
+void DirectXCommon::CreateFixFPS()
+{
+	DirectXCommon::GetInstance()->reference_ = steady_clock::now();
+}
+
+void DirectXCommon::UpdateFixFPS()
+{
+	//1/60ぴったの時間
+	const microseconds kMinTime(uint64_t(1000000.0f / 60.0f));
+	//上より少し短い時間
+	const microseconds kMinCheckTime(uint64_t(1000000.0f / 65.0f));
+	//現在時間のget
+	steady_clock::time_point now = steady_clock::now();
+	//前回からの経過時間
+	microseconds elapsed =
+		duration_cast<microseconds>(now - DirectXCommon::GetInstance()->reference_);
+	//1/60秒　経っていない場合
+	if (elapsed < kMinTime)
+	{
+		//時間に達するまでループを串良エス
+		while (steady_clock::now() - DirectXCommon::GetInstance()->reference_ < kMinCheckTime)
+		{
+			this_thread::sleep_for(microseconds(1));
+		}
+	}
+	//現在の時間を記録
+	DirectXCommon::GetInstance()->reference_ = steady_clock::now();
+
 }
 
