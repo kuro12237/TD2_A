@@ -10,6 +10,7 @@
 
 #include"CollisionManager.h"
 
+#include"Particle/Particle.h"
 class DebugScene:public IScene
 {
 public:
@@ -46,4 +47,7 @@ private:
 	bool SubtractFlag = false;
 	bool ScreenFlag = false;
 
+
+	unique_ptr<Particle>particle_ = nullptr;
+	WorldTransform particleWorldTransform{};
 };

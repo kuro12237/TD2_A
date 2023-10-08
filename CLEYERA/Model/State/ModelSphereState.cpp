@@ -154,7 +154,7 @@ void ModelSphereState::CommandCall(Model*state)
 
 	if (!state->GetTexHandle() == 0)
 	{
-		TextureManager::texCommand(state->GetTexHandle());
+		TextureManager::texCommand(2,state->GetTexHandle());
 	}
 	commands.m_pList->SetGraphicsRootConstantBufferView(1, resource_.wvpResource->GetGPUVirtualAddress());
 	if (state->GetUseLight()!=NONE)

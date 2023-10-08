@@ -2,7 +2,9 @@
 #include"IParticleState.h"
 #include"CreateResource.h"
 
-
+#include"GraphicsPipelineManager.h"
+#include"Particle/Particle.h"
+#include"Graphics/TextureManager/TextureManager.h"
 
 class ParticlePlaneState: public IParticleState
 {
@@ -12,15 +14,21 @@ public:
 
 	void Initialize(Particle* state)override;
 
-	void Draw(Particle* state)override;
+	void Draw(Particle* state, WorldTransform worldTransform, ViewProjection viewprojection)override;
 
 
 private:
 
+	void CommandCall(uint32_t TexHandle);
+	
+	uint32_t instansingIndex = 0;
 
+	Vector3 testRotate = { };
+	Vector3 testTrans = {};
 
-	list<SModelData>modelData_ = {};
-
+	const uint32_t VertexSize = 4;
+	const uint32_t IndexSize = 6;
+	ResourcePeroperty resource_ = {};
 
 };
 

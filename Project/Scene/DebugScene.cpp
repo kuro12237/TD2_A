@@ -24,6 +24,13 @@ void DebugScene::Initialize()
 	sprite2WorldTransform_.Initialize();
 	spriteWorldTransform_.Initialize();
 	sprite2WorldTransform_.parent= &spriteWorldTransform_;
+
+
+	particle_ = make_unique<Particle>();
+	particle_->SetTexHandle(SpriteTexHandle);
+	particle_->Initialize(new ParticlePlaneState);
+	particleWorldTransform.Initialize();
+
 }
 
 void DebugScene::Update(GameManager* Scene)
@@ -107,15 +114,21 @@ void DebugScene::Update(GameManager* Scene)
 	
 	spriteWorldTransform_.UpdateMatrix();
 	sprite2WorldTransform_.UpdateMatrix();
+	particleWorldTransform.UpdateMatrix();
+
+
 
 	viewProjection.UpdateMatrix();
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
+
 }
 
 void DebugScene::Draw()
 {
-	sprite2_->Draw(sprite2WorldTransform_);
-	sprite_->Draw(spriteWorldTransform_);
+	//sprite2_->Draw(sprite2WorldTransform_);
+	//sprite_->Draw(spriteWorldTransform_);
+
+	particle_->Draw(particleWorldTransform, viewProjection);
 }
 
 

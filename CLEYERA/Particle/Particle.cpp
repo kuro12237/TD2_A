@@ -14,4 +14,6 @@ void Particle::Draw(WorldTransform worldTransform, ViewProjection viewProjection
 {
 	worldTransform;
 	viewProjection;
+	state_->Draw(this, worldTransform, viewProjection);
+
 }
