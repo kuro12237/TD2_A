@@ -66,6 +66,7 @@ void GameScene::Collision()
 
 	//Set
 	collisionManager_->ClliderPush(player_.get());
+	collisionManager_->ClliderPush(enemy_.get());
 
 	//Check
 	collisionManager_->CheckAllCollision();
