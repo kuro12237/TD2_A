@@ -19,7 +19,7 @@ void TimeCount::Initialize() {
 
 
 	// スプライト
-	for (int index = 0; index < 3; index++) {
+	for (int index = 0; index < 1; index++) {
 		sprite_[index] = make_unique<Sprite>();
 		position_[index] = { 10.0f, 10.0f };
 		sprite_[index]->Initialize(new SpriteBoxState, position_[index], { 1.0f, 1.0f });
@@ -52,15 +52,7 @@ void TimeCount::Update() {
 	AddTimeCount();
 
 
-	/*ImGui::Begin("TimeCount");
-	ImGui::Text("nowTimer = %d", nowLimitTime_);
-	ImGui::Text("onehundPlace = %d", eachTime_[0]);
-	ImGui::Text("    tenPlace = %d", eachTime_[1]);
-	ImGui::Text("    oneplace = %d", eachTime_[2]);
-	ImGui::Text("sprite_[0].texturehandle = %d", sprite_[0].get()->GetTexHandle());
-	ImGui::Text("sprite_[1].texturehandle = %d", sprite_[1].get()->GetTexHandle());
-	ImGui::Text("sprite_[2].texturehandle = %d", sprite_[2].get()->GetTexHandle());
-	ImGui::End();*/
+
 }
 
 
