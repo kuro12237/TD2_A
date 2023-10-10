@@ -67,17 +67,21 @@ public:
 private:
 
 	// スプライト
-	unique_ptr<Sprite>sprite_[3];
+	unique_ptr<Sprite>timerSprite_[3];
+	unique_ptr<Sprite>timeUpUISprite_;
 
 	// テクスチャ
 	uint32_t numTextureHD_[10]{};
+	uint32_t timeUpUITextureHD_{};
 
 	// テクスチャカラー
 	Vector4 textureColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	// 描画座標
-	Vector2 position_[3];
-	WorldTransform worldTransform_[3];
+	Vector2 timerPosition_[3];
+	WorldTransform timerWorldTransform_[3];
+	Vector2 timeUpUIPosition_;
+	WorldTransform timeUpUIWorldTransform_;
 
 	// 制限時間
 	uint32_t nowLimitTime_;
