@@ -11,8 +11,8 @@
 class Enemy : public Collider {
 public:
 
-	Enemy();
-	~Enemy();
+	Enemy() {};
+	~Enemy() {};
 
 	/// <summary>
 	/// ‰Šú‰»
@@ -33,6 +33,8 @@ public:
 	void EnemyMove();
 
 	Vector3 GetWorldPosition()override;
+
+	void SetPlayer(Player* player) { player_ = player; }
 
 	void OnCollision()override;
 

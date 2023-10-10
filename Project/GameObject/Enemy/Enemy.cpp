@@ -1,8 +1,5 @@
 #include "Enemy.h"
 
-Enemy::Enemy(){}
-Enemy::~Enemy(){}
-
 /// <summary>
 /// ‰Šú‰»
 /// </summary>
@@ -14,6 +11,7 @@ void Enemy::Initialize(const Vector3& position) {
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
 	worldTransform_.translate = position;
+	worldTransform_.UpdateMatrix();
 
 	SetCollosionAttribute(kCollisionAttributeEnemy);
 	SetCollisionMask(kCollisionAttributePlayer);
@@ -36,6 +34,7 @@ void Enemy::Draw(ViewProjection viewProjection){
 }
 
 void Enemy::EnemyMove() {
+
 	if (isMove_) {
 		velocity = PhysicsFanc::VelocityDecomposition(0.5f, player_->GetWorldPosition(), GetWorldPosition());
 	}

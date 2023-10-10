@@ -39,6 +39,7 @@ private:
 
 	unique_ptr<Player>player_ = nullptr;
 
+	Player* player;
 
 	unique_ptr<Enemy>enemy_ = nullptr; // �G
 	bool wait = false; // �ҋ@���t���O

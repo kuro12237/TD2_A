@@ -34,7 +34,7 @@ void GameScene::Update(GameManager* scene)
 	}
 
 	player_->Update();
-
+	enemy_->SetPlayer(player_.get());
 	enemy_->Update();
 	UpdateEnemyCommands();
 	
@@ -148,5 +148,6 @@ void GameScene::UpdateEnemyCommands() {
 void GameScene::EnemySpawn(const Vector3& position) {
 	enemy_ = make_unique<Enemy>();
 	enemy_->Initialize(position);
+	enemy_->SetPlayer(player);
 }
 
