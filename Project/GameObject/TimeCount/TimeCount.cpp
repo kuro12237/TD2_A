@@ -1,11 +1,11 @@
-#include "TimeCount.h"
+ï»¿#include "TimeCount.h"
 
 
 
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 void TimeCount::Initialize() {
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	numTextureHD_[0] = TextureManager::LoadTexture("Resources/Number/0.png");
 	numTextureHD_[1] = TextureManager::LoadTexture("Resources/Number/1.png");
 	numTextureHD_[2] = TextureManager::LoadTexture("Resources/Number/2.png");
@@ -25,32 +25,32 @@ void TimeCount::Initialize() {
 		sprite_[index]->SetTexHandle(numTextureHD_[0]);
 	}
 
-	// ƒ[ƒ‹ƒhƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+	// ãƒ¯ãƒ¼ãƒ«ãƒ‰ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
 	for (int index = 0; index < 3; index++) {
 		worldTransform_[index].Initialize();
 		worldTransform_[index].translate = { position_[index].x, position_[index].y, 0.0f };
 	}
 
-	// §ŒÀŠÔ‚ğİ’è‚·‚é
+	// åˆ¶é™æ™‚é–“ã‚’è¨­å®šã™ã‚‹
 	nowLimitTime_ = kSetLimitTime_;
 	frame_ = 0;
 }
 
 
 
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 void TimeCount::Update() {
 
-	// §ŒÀŠÔ‚ÌŒ¸Zˆ—
+	// åˆ¶é™æ™‚é–“ã®æ¸›ç®—å‡¦ç†
 	SubtructTimer();
 
-	// §ŒÀŠÔ‚Ì‰ÁZˆ—
+	// åˆ¶é™æ™‚é–“ã®åŠ ç®—å‡¦ç†
 	AddTimeCount();
 
-	// §ŒÀŠÔ‚ÌŠeˆÊ‚Ì’l‚ğ‹‚ß‚é
+	// åˆ¶é™æ™‚é–“ã®å„ä½ã®å€¤ã‚’æ±‚ã‚ã‚‹
 	CalcTimerPlace(nowLimitTime_);
 
-	// ŠeˆÊ‚É‡‚Á‚½ƒeƒNƒXƒ`ƒƒ‚ğİ’è‚·‚é
+	// å„ä½ã«åˆã£ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’è¨­å®šã™ã‚‹
 	SetNumberTexture();
 
 
@@ -72,32 +72,32 @@ void TimeCount::Update() {
 
 
 
-// ƒ^ƒCƒ}[‚ğŒ¸‚ç‚·
+// ã‚¿ã‚¤ãƒãƒ¼ã‚’æ¸›ã‚‰ã™
 void TimeCount::SubtructTimer() {
 
-	// ƒtƒŒ[ƒ€‚ğ‘‚â‚·
+	// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’å¢—ã‚„ã™
 	frame_++;
 
-	// 60ƒtƒŒ[ƒ€
+	// 60ãƒ•ãƒ¬ãƒ¼ãƒ 
 	if (frame_ >= 60) {
 
-		// ƒ^ƒCƒ}[‚É1•bŒ¸‚ç‚·
+		// ã‚¿ã‚¤ãƒãƒ¼ã«1ç§’æ¸›ã‚‰ã™
 		nowLimitTime_ = nowLimitTime_ - 1;
-		// ƒtƒŒ[ƒ€‚ğ0‚É–ß‚·
+		// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’0ã«æˆ»ã™
 		frame_ = 0;
 	}
 }
 
 
 
-// ŠÔ‚Ì’Ç‰Áˆ—
+// æ™‚é–“ã®è¿½åŠ å‡¦ç†
 void TimeCount::AddTimeCount() {
 
-	// ƒL[‚Åƒ^ƒCƒ€•Ï‰»
-	// 1ƒL[ = +10s
-	// 2ƒL[ = +20s
-	// 3ƒL[ = +30s
-	// ã‰ºƒL[ = +1s
+	// ã‚­ãƒ¼ã§ã‚¿ã‚¤ãƒ å¤‰åŒ–
+	// 1ã‚­ãƒ¼ = +10s
+	// 2ã‚­ãƒ¼ = +20s
+	// 3ã‚­ãƒ¼ = +30s
+	// ä¸Šä¸‹ã‚­ãƒ¼ = +1s
 	if (Input::GetInstance()->PushKeyPressed(DIK_1)) {
 		nowLimitTime_ = nowLimitTime_ + 10;
 	}
@@ -117,23 +117,23 @@ void TimeCount::AddTimeCount() {
 
 
 
-// §ŒÀŠÔ‚ÌŠeˆÊ‚ğ‹‚ß‚é
+// åˆ¶é™æ™‚é–“ã®å„ä½ã‚’æ±‚ã‚ã‚‹
 void TimeCount::CalcTimerPlace(uint32_t nowTimer) {
 
-	// 100‚ÌˆÊ
+	// 100ã®ä½
 	eachTime_[0] = (nowTimer % 1000) / 100;
-	// 10‚ÌˆÊ
+	// 10ã®ä½
 	eachTime_[1] = (nowTimer % 100) / 10;
-	// 1‚ÌˆÊ
+	// 1ã®ä½
 	eachTime_[2] = (nowTimer % 10) / 1;
 }
 
 
 
-// ŠeˆÊ‚É‡‚Á‚½ƒeƒNƒXƒ`ƒƒ‚ğİ’è‚·‚é
+// å„ä½ã«åˆã£ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’è¨­å®šã™ã‚‹
 void TimeCount::SetNumberTexture() {
 
-	// ŠeˆÊ‚Ì’l‚É‚ ‚Á‚½ƒeƒNƒXƒ`ƒƒ‚ğİ’è‚·‚é
+	// å„ä½ã®å€¤ã«ã‚ã£ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’è¨­å®šã™ã‚‹
 	sprite_[0]->SetTexHandle(numTextureHD_[eachTime_[0]]);
 	sprite_[1]->SetTexHandle(numTextureHD_[eachTime_[1]]);
 	sprite_[2]->SetTexHandle(numTextureHD_[eachTime_[2]]);
@@ -141,7 +141,7 @@ void TimeCount::SetNumberTexture() {
 
 
 
-// •`‰æˆ—
+// æç”»å‡¦ç†
 void TimeCount::Draw() {
 
 	for (int index = 0; index < 3; index++) {

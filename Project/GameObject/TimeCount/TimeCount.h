@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Sprite/Sprite.h"
 #include "WorldTransform.h"
 #include "Graphics/TextureManager/TextureManager.h"
@@ -7,64 +7,64 @@
 
 
 /// <summary>
-/// ƒ^ƒCƒ€ƒJƒEƒ“ƒgƒNƒ‰ƒX
+/// ã‚¿ã‚¤ãƒ ã‚«ã‚¦ãƒ³ãƒˆã‚¯ãƒ©ã‚¹
 /// </summary>
 class TimeCount {
 
 public:
 	~TimeCount() {};
 	/// <summary>
-	/// ‰Šú‰»ˆ—
+	/// åˆæœŸåŒ–å‡¦ç†
 	/// </summary>
 	void Initialize();
 
 	/// <summary>
-	/// XVˆ—
+	/// æ›´æ–°å‡¦ç†
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// •`‰æˆ—
+	/// æç”»å‡¦ç†
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// ƒ^ƒCƒ}[‚ğŒ¸‚ç‚·
+	/// ã‚¿ã‚¤ãƒãƒ¼ã‚’æ¸›ã‚‰ã™
 	/// </summary>
 	void SubtructTimer();
 
 	/// <summary>
-	/// ŠÔ‚Ì’Ç‰Áˆ—
+	/// æ™‚é–“ã®è¿½åŠ å‡¦ç†
 	/// </summary>
 	void AddTimeCount();
 
 	/// <summary>
-	/// §ŒÀŠÔ‚ÌŠeˆÊ‚ğ‹‚ß‚é
+	/// åˆ¶é™æ™‚é–“ã®å„ä½ã‚’æ±‚ã‚ã‚‹
 	/// </summary>
 	void CalcTimerPlace(uint32_t nowTimer);
 
 	/// <summary>
-	/// ŠeˆÊ‚É‡‚Á‚½ƒeƒNƒXƒ`ƒƒ‚ğİ’è‚·‚é
+	/// å„ä½ã«åˆã£ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’è¨­å®šã™ã‚‹
 	/// </summary>
 	void SetNumberTexture();
 
 
 private:
 
-	// ƒXƒvƒ‰ƒCƒg
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	unique_ptr<Sprite>sprite_[3];
 
-	// ƒeƒNƒXƒ`ƒƒ
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	uint32_t numTextureHD_[10]{};
 
-	// ƒeƒNƒXƒ`ƒƒƒJƒ‰[
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚«ãƒ©ãƒ¼
 	Vector4 textureColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-	// •`‰æÀ•W
+	// æç”»åº§æ¨™
 	Vector2 position_[3];
 	WorldTransform worldTransform_[3];
 
-	// §ŒÀŠÔ
+	// åˆ¶é™æ™‚é–“
 	uint32_t nowLimitTime_;
 	const uint32_t kSetLimitTime_ = 30;
 	uint32_t eachTime_[3]{};
