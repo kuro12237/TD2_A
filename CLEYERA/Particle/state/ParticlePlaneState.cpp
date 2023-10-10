@@ -11,7 +11,7 @@ void ParticlePlaneState::Initialize(Particle* state)
 	NumInstansing = state->GetNumInstance();
 	NumInstansingLock = true;
 
-	resource_.instancingResource = CreateResources::CreateBufferResource(sizeof(TransformationMatrix) * NumInstansing);
+	resource_.instancingResource = CreateResources::CreateBufferResource(sizeof(ParticleData) * NumInstansing);
 
 	resource_.Vertex = CreateResources::CreateBufferResource(sizeof(VertexData) * VertexSize);
 	resource_.BufferView = CreateResources::VertexCreateBufferView(sizeof(VertexData) * VertexSize, resource_.Vertex.Get(), VertexSize);
@@ -19,7 +19,7 @@ void ParticlePlaneState::Initialize(Particle* state)
 	resource_.Index = CreateResources::CreateBufferResource(sizeof(uint32_t) * IndexSize);
 	resource_.IndexBufferView = CreateResources::IndexCreateBufferView(sizeof(uint32_t) * IndexSize, resource_.Index.Get());
 
-	dsvIndex = TextureManager::CreateSRV(2,resource_.instancingResource);
+	dsvIndex = TextureManager::CreateSRV(2,resource_.instancingResource,sizeof(ParticleData));
 }
 
 void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, ViewProjection viewprojection)
@@ -27,7 +27,7 @@ void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, Vi
 	VertexData* vertexData = nullptr;
 	Material* materialData = nullptr;
 	uint32_t* indexData = nullptr;
-	TransformationMatrix* instansingData = nullptr;
+	ParticleData* instansingData = nullptr;
 
 	resource_.Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	resource_.Material->Map(0, nullptr, reinterpret_cast<void**>(&materialData));

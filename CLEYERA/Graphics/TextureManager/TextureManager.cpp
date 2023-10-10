@@ -173,7 +173,7 @@ void TextureManager::AllUnTexture()
 	indexTex = 0;
 }
 
-uint32_t TextureManager::CreateSRV(uint32_t NumInstansing,ComPtr<ID3D12Resource>&resource)
+uint32_t TextureManager::CreateSRV(uint32_t NumInstansing,ComPtr<ID3D12Resource>&resource,UINT size)
 {
 	indexTex++;
 	D3D12_SHADER_RESOURCE_VIEW_DESC instansingSrvDesc;
@@ -183,7 +183,7 @@ uint32_t TextureManager::CreateSRV(uint32_t NumInstansing,ComPtr<ID3D12Resource>
 	instansingSrvDesc.Buffer.FirstElement = 0;
 	instansingSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;;
 	instansingSrvDesc.Buffer.NumElements = NumInstansing;
-	instansingSrvDesc.Buffer.StructureByteStride = sizeof(TransformationMatrix);
+	instansingSrvDesc.Buffer.StructureByteStride = size;
 	
 	TextureManager::GetInstance()->tex[indexTex].SrvHandleCPU = GetCPUDescriptorHandle(
 		DirectXCommon::GetInstance()->GetSrvHeap().Get(), descripterSize_.SRV, indexTex

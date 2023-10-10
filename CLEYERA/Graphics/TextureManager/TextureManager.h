@@ -42,7 +42,7 @@ public:
 	/// <returns></returns>
 	static void AllUnTexture();
 
-	static uint32_t CreateSRV(uint32_t NumInstansing, ComPtr<ID3D12Resource>& resource);
+	static uint32_t CreateSRV(uint32_t NumInstansing, ComPtr<ID3D12Resource>& resource, UINT size);
 
 	static void rootParamerterCommand(UINT rootPatramerterIndex,uint32_t texhandle);
 private:
