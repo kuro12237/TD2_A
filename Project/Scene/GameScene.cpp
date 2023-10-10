@@ -32,21 +32,20 @@ void GameScene::Update(GameManager* scene)
 	}
 	
 	MapWallCollision();
-	
-	player_->Update();
-	enemy_->Update();
+
+	timeCount_->Update();
+	// 時間切れ時の処理
+	if (timeCount_->GetIsTimeUp() == false) {
+		player_->Update();
+		enemy_->Update();
+	}
+
 	UpdateEnemyCommands();
 	
 	mapWallManager_->Update();
 	Collision();
 
 	MainCamera::Update(player_->GetWorldTransform());
-
-	timeCount_->Update();
-	// 時間切れ時の処理
-	if (timeCount_->GetIsTimeUp()) {
-
-	}
 
 	viewProjection.UpdateMatrix();
 
