@@ -22,5 +22,6 @@ private:
 
 	const int VertexNum = 16;
 	ResourcePeroperty resource_ = {};
+	
 };
 

@@ -1,7 +1,6 @@
 #pragma once
 #include"IScene.h"
 #include"GameManager.h"
-#include"Cleyera.h"
 
 #include"GameScene.h"
 #include"Input.h"
@@ -18,11 +17,11 @@ public:
 	~DebugScene();
 
 
-	void Initialize(GameManager* Scene)override;
+	void Initialize()override;
 
 	void Update(GameManager* Scene)override;
 
-	void Draw(GameManager* Scene)override;
+	void Draw()override;
 
 private:
 	void TestCsvFile();

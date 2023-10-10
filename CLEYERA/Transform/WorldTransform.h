@@ -20,7 +20,12 @@ struct WorldTransform
 	Matrix4x4 matWorld = {};
 	const WorldTransform* parent = {};
 
+	/// <summary>
+	/// ’PˆÊs—ñ‚Å‰Šú‰»
+	/// </summary>
 	void Initialize();
+
+	void SRTSetting(Vector3 s = { 1,1,1 }, Vector3 r = { 0,0,0 }, Vector3 t = {0,0,0});
 
 	void UpdateMatrix();
 

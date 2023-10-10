@@ -1,7 +1,7 @@
 #pragma once
 #include"DebugTools/Commands/ICommand.h"
 #include"Model.h"
-#define XYGridLine_Max 50
+#define XYGridLine_Max 64
 #include"VectorTransform.h"
 
 class Grid :public ICommand

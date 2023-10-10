@@ -120,6 +120,17 @@
     </Filter>
     <Filter Include="Project\GameObject\TimeCount">
       <UniqueIdentifier>{68330595-2e4a-4fe1-982d-8cfcaa050c5b}</UniqueIdentifier>
+    <Filter Include="Project\GameObject\Enemy">
+      <UniqueIdentifier>{2bbaabcf-00ff-486f-928c-6f01d14ec6ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\MapWall">
+      <UniqueIdentifier>{34d0a305-b8a4-4edb-b825-3924ebe18f73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\Player">
+      <UniqueIdentifier>{22443243-08ca-43a5-a1e0-b95ba92507ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\Camera">
+      <UniqueIdentifier>{80e06f10-efdc-4c7a-ad74-e2b2633a3a98}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -248,6 +259,20 @@
     </ClCompile>
     <ClCompile Include="Project\Scene\GameScene.cpp">
       <Filter>Project\Scene</Filter>
+    <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp">
+      <Filter>Project\GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Player\Player.cpp">
+      <Filter>Project\GameObject\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Camera\MainCamera.cpp">
+      <Filter>Project\GameObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\MapWall\MapWall.cpp">
+      <Filter>Project\GameObject\MapWall</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\MapWall\MapWallManager.cpp">
+      <Filter>Project\GameObject\MapWall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,6 +431,23 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h">
       <Filter>Project\GameObject\TimeCount</Filter>
+    <ClInclude Include="Project\GameObject\Enemy\Enemy.h">
+      <Filter>Project\GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Player\Player.h">
+      <Filter>Project\GameObject\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Camera\MainCamera.h">
+      <Filter>Project\GameObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\MapWall\MapWall.h">
+      <Filter>Project\GameObject\MapWall</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\MapWall\MapWallManager.h">
+      <Filter>Project\GameObject\MapWall</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\MapWall\IMapWall.h">
+      <Filter>Project\GameObject\MapWall</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

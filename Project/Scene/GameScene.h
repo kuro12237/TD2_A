@@ -1,7 +1,17 @@
-#pragma once
+ï»¿#pragma once
 #include"IScene.h"
 #include"GameManager.h"
+
 #include "GameObject/TimeCount/TimeCount.h"
+#include"GameObject/Player/Player.h"
+#include"GameObject/Enemy/Enemy.h"
+#include"GameObject/Camera/MainCamera.h"
+
+#include"CollisionManager.h"
+#include"FileLoader.h"
+#include"GameObject/MapWall/MapWall.h"
+#include"GameObject/MapWall/MapWallManager.h"
+
 
 class GameScene : public IScene
 {
@@ -9,16 +19,38 @@ public:
 	GameScene() {};
 	~GameScene() {};
 
-	void Initialize(GameManager* scene)override;
+	void Initialize()override;
 
 	void Update(GameManager* scene)override;
 
-	void Draw(GameManager* scene)override;
+	void Draw()override;
 
+	/// <summary>
+	/// ï¿½Gï¿½ï¿½ï¿½ï¿½
+	/// </summary>
+	void LoadEnemyDate();
+	void UpdateEnemyCommands();
+	void EnemySpawn(const Vector3& position);			
+	
 private:
+	
+	void Collision();
+
+	void MapWallCollision();
+
 	ViewProjection viewProjection{};
 
-	// §ŒÀŠÔ
 	unique_ptr<TimeCount>timeCount_ = nullptr;
+	unique_ptr<CollisionManager> collisionManager_ = nullptr;
+
+	unique_ptr<Player>player_ = nullptr;
+	unique_ptr<Enemy>enemy_ = nullptr; // ï¿½G
+	bool wait = false; // ï¿½Ò‹@ï¿½ï¿½ï¿½tï¿½ï¿½ï¿½O
+	uint32_t waitTimer = 0; // ï¿½Ò‹@ï¿½ï¿½ï¿½^ï¿½Cï¿½}ï¿½[
+	stringstream fileLoad;
+
+	unique_ptr<MapWallManager>mapWallManager_ = nullptr;
+
 };
+
 

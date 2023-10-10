@@ -9,8 +9,10 @@
 #include<numbers>
 #include<fstream>
 #include<sstream>
+#include<chrono>
 
 #include<Windows.h>
+#pragma comment(lib,"winmm.lib")
 
 #include"imgui.h"
 #include"imgui_impl_dx12.h"
@@ -44,6 +46,7 @@
 
 using Microsoft::WRL::ComPtr;
 using namespace std;
+using namespace std::chrono;
 
 #include"Vector2.h"
 #include"Vector3.h"

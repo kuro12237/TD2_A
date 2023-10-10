@@ -36,7 +36,7 @@ void WinApp::Initialize()
 
 	ShowWindow(WinApp::GetInstance()->hwnd_, SW_SHOW);
 
-
+	timeBeginPeriod(1);
 }
 
 bool WinApp::WinMsg()
