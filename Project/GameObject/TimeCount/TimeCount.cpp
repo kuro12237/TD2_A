@@ -59,12 +59,9 @@ void TimeCount::Update() {
 	ImGui::Begin("TimeCount");
 	ImGui::Text("frame_ = %d", frame_);
 	ImGui::Text("nowTimer = %d", nowLimitTime_);
-	ImGui::Text("onehundPlace = %d", eachTime_[0]);
-	ImGui::Text("    tenPlace = %d", eachTime_[1]);
-	ImGui::Text("    onePlace = %d", eachTime_[2]);
-	ImGui::DragFloat3("trans[0]", &worldTransform_[0].translate.x, 1.0f);
-	ImGui::DragFloat3("trans[1]", &worldTransform_[1].translate.x, 1.0f);
-	ImGui::DragFloat3("trans[2]", &worldTransform_[2].translate.x, 1.0f);
+	ImGui::Text("100 = %d", eachTime_[0]);
+	ImGui::Text(" 10 = %d", eachTime_[1]);
+	ImGui::Text("  1 = %d", eachTime_[2]);
 	ImGui::End();
 
 #endif // DEBUG
