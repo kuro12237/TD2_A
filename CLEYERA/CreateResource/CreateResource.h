@@ -22,6 +22,11 @@ struct TransformationMatrix {
 	Matrix4x4 world;
 };
 
+struct ParticleData{
+	Matrix4x4 WVP;
+	Matrix4x4 world;
+	Vector4 color;
+};
 struct MaterialData
 {
 	string textureFilePath;
@@ -43,6 +48,7 @@ struct ResourcePeroperty
 	ComPtr<ID3D12Resource> Material;
 	ComPtr<ID3D12Resource> wvpResource;
 	ComPtr<ID3D12Resource> Light;
+	ComPtr<ID3D12Resource> instancingResource;
 };
 
 struct  Material
@@ -55,8 +61,6 @@ struct  Material
 class CreateResources
 {
 public:
-
-
 
 	/// <summary>
 	/// Resource‚ğì¬

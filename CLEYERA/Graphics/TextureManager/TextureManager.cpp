@@ -173,10 +173,37 @@ void TextureManager::AllUnTexture()
 	indexTex = 0;
 }
 
-void TextureManager::texCommand(uint32_t texhandle)
+uint32_t TextureManager::CreateSRV(uint32_t NumInstansing,ComPtr<ID3D12Resource>&resource,UINT size)
+{
+	indexTex++;
+	D3D12_SHADER_RESOURCE_VIEW_DESC instansingSrvDesc;
+	instansingSrvDesc.Format = DXGI_FORMAT_UNKNOWN;
+	instansingSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	instansingSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
+	instansingSrvDesc.Buffer.FirstElement = 0;
+	instansingSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;;
+	instansingSrvDesc.Buffer.NumElements = NumInstansing;
+	instansingSrvDesc.Buffer.StructureByteStride = size;
+	
+	TextureManager::GetInstance()->tex[indexTex].SrvHandleCPU = GetCPUDescriptorHandle(
+		DirectXCommon::GetInstance()->GetSrvHeap().Get(), descripterSize_.SRV, indexTex
+	);
+	TextureManager::GetInstance()->tex[indexTex].SrvHandleGPU = GetGPUDescriptorHandle(
+		DirectXCommon::GetInstance()->GetSrvHeap().Get(), descripterSize_.SRV, indexTex
+	);
+
+	TextureManager::GetInstance()->tex[indexTex].SrvHandleCPU.ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	TextureManager::GetInstance()->tex[indexTex].SrvHandleGPU.ptr += DirectXCommon::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(resource.Get(), &instansingSrvDesc, TextureManager::GetInstance()->tex[indexTex].SrvHandleCPU);
+
+	return indexTex;
+}
+
+void TextureManager::rootParamerterCommand(UINT rootPatramerterIndex,uint32_t texhandle)
 {
 	Commands command = DirectXCommon::GetInstance()->GetCommands();
 
-	command.m_pList->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->tex[texhandle].SrvHandleGPU);
+	command.m_pList->SetGraphicsRootDescriptorTable(rootPatramerterIndex, TextureManager::GetInstance()->tex[texhandle].SrvHandleGPU);
 
 }

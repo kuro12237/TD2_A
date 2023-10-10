@@ -21,6 +21,7 @@
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig" />
     <None Include="Resources\Shader\Harf_LambertLightObject.hlsli" />
+    <None Include="Resources\Shader\ParticleObject3d.hlsli" />
     <None Include="Resources\Shader\SpriteObject3d.hlsli" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +65,8 @@
     <ClCompile Include="CLEYERA\Model\State\ModelObjState.cpp" />
     <ClCompile Include="CLEYERA\Model\State\ModelPlaneState.cpp" />
     <ClCompile Include="CLEYERA\Model\State\ModelSphereState.cpp" />
+    <ClCompile Include="CLEYERA\Particle\Particle.cpp" />
+    <ClCompile Include="CLEYERA\Particle\state\ParticlePlaneState.cpp" />
     <ClCompile Include="CLEYERA\Sprite\Sprite.cpp" />
     <ClCompile Include="CLEYERA\Sprite\state\SpriteBoxState.cpp" />
     <ClCompile Include="CLEYERA\Transform\ViewProjection.cpp" />
@@ -119,6 +122,9 @@
     <ClInclude Include="CLEYERA\Model\State\ModelObjState.h" />
     <ClInclude Include="CLEYERA\Model\State\ModelPlaneState.h" />
     <ClInclude Include="CLEYERA\Model\State\ModelSphereState.h" />
+    <ClInclude Include="CLEYERA\Particle\Particle.h" />
+    <ClInclude Include="CLEYERA\Particle\state\IParticleState.h" />
+    <ClInclude Include="CLEYERA\Particle\state\ParticlePlaneState.h" />
     <ClInclude Include="CLEYERA\Sprite\Sprite.h" />
     <ClInclude Include="CLEYERA\Sprite\state\ISpriteState.h" />
     <ClInclude Include="CLEYERA\Sprite\state\SpriteBoxState.h" />
@@ -149,6 +155,22 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
     <FxCompile Include="Resources\Shader\Harf_LambertLightObject.VS.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ParticleObject3d.PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ParticleObject3d.VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>

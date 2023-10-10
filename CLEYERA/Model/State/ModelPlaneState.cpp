@@ -26,6 +26,7 @@ void ModelPlaneState::Draw(Model* state, WorldTransform worldTransform, ViewProj
 	resource_.Vertex->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	resource_.Material->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	resource_.Index->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
+
 	Vector4 pos = state->GetCenterPos();
 	float size = state->GetSize();
 
@@ -52,6 +53,8 @@ void ModelPlaneState::Draw(Model* state, WorldTransform worldTransform, ViewProj
 
 	materialData->color = state->GetColor();
 	materialData->uvTransform = MatrixTransform::AffineMatrix(state->GetuvScale(), state->GetuvRotate(), state->GetuvTranslate());
+
+
 
 
 	worldTransform.TransfarMatrix(resource_.wvpResource,viewprojection);
@@ -94,7 +97,7 @@ void ModelPlaneState::CommandCall(uint32_t texHandle)
 
 	if (!texHandle==0)
 	{
-		TextureManager::texCommand(texHandle);
+		TextureManager::rootParamerterCommand(2,texHandle);
 	}
 
 	//描画(DrawCall/ドローコール)。

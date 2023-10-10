@@ -76,9 +76,6 @@
     <Filter Include="CLEYERA\DebugTools\DebugGrid">
       <UniqueIdentifier>{910d38c5-eed0-437d-b10d-55ce3a3c775d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CLEYERA\Utility\GameObject">
-      <UniqueIdentifier>{8e3763ee-ab75-4802-b3ed-6bf968714386}</UniqueIdentifier>
-    </Filter>
     <Filter Include="CLEYERA\Model\Sphere">
       <UniqueIdentifier>{0f0d6265-9cf3-40ad-acfb-38de0182afa2}</UniqueIdentifier>
     </Filter>
@@ -132,6 +129,12 @@
     <Filter Include="Project\GameObject\Camera">
       <UniqueIdentifier>{80e06f10-efdc-4c7a-ad74-e2b2633a3a98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CLEYERA\Particle">
+      <UniqueIdentifier>{a1953971-8498-4760-908a-050a824fd6b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\Particle\Plane">
+      <UniqueIdentifier>{d4e33b06-983c-45e6-ba8d-26e07f095231}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -141,6 +144,9 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="Resources\Shader\Harf_LambertLightObject.hlsli">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="Resources\Shader\ParticleObject3d.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
@@ -273,6 +279,12 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\MapWall\MapWallManager.cpp">
       <Filter>Project\GameObject\MapWall</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\Particle\Particle.cpp">
+      <Filter>CLEYERA\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\Particle\state\ParticlePlaneState.cpp">
+      <Filter>CLEYERA\Particle\Plane</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -449,6 +461,15 @@
     <ClInclude Include="Project\GameObject\MapWall\IMapWall.h">
       <Filter>Project\GameObject\MapWall</Filter>
     </ClInclude>
+    <ClInclude Include="CLEYERA\Particle\Particle.h">
+      <Filter>CLEYERA\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Particle\state\ParticlePlaneState.h">
+      <Filter>CLEYERA\Particle\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Particle\state\IParticleState.h">
+      <Filter>CLEYERA\Particle\Plane</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\ShapeObject3d.PS.hlsl">
@@ -467,6 +488,12 @@
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shader\Harf_LambertLightObject.VS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ParticleObject3d.PS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ParticleObject3d.VS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
   </ItemGroup>

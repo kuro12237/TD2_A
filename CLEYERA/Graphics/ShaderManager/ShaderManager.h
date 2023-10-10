@@ -18,6 +18,7 @@ struct SShaders
 	SShaderMode shape;
 	SShaderMode sprite;
 	SShaderMode light;
+	SShaderMode Particle;
 
 };
 
@@ -51,7 +52,9 @@ private:
 	static void ShapeShader();
 	static void SpriteShader();
 	static void LightShader();
-		 
+	static void ParticleShader();
+
+
 	SDXCProperty dxc = {};
 	SShaders shaders_ = {};
 
