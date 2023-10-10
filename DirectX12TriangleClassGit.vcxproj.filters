@@ -224,9 +224,6 @@
     <ClCompile Include="Project\Scene\DebugScene.cpp">
       <Filter>Project\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Project\Scene\GameScene.cpp">
-      <Filter>Project\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="CLEYERA\Input\Input.cpp">
       <Filter>CLEYERA\Input</Filter>
     </ClCompile>
@@ -248,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp">
       <Filter>Project\GameObject\TimeCount</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Scene\GameScene.cpp">
+      <Filter>Project\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
