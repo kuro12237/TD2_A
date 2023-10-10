@@ -39,6 +39,11 @@ public:
 	void AddTimeCount();
 
 	/// <summary>
+	/// 制限時間をリセットする
+	/// </summary>
+	void ReSetTimer();
+
+	/// <summary>
 	/// 制限時間の各位を求める
 	/// </summary>
 	void CalcTimerPlace(uint32_t nowTimer);
@@ -47,6 +52,16 @@ public:
 	/// 各位に合ったテクスチャを設定する
 	/// </summary>
 	void SetNumberTexture();
+
+
+#pragma region get
+
+	/// <summary>
+	/// 時間切れのフラグの取得
+	/// </summary>
+	bool GetIsTimeUp() { return isTimeUp_; }
+
+#pragma endregion
 
 
 private:
@@ -69,4 +84,5 @@ private:
 	const uint32_t kSetLimitTime_ = 30;
 	uint32_t eachTime_[3]{};
 	uint32_t frame_;
+	bool isTimeUp_ = false;
 };

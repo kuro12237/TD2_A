@@ -53,6 +53,9 @@ void TimeCount::Update() {
 	// 各位に合ったテクスチャを設定する
 	SetNumberTexture();
 
+	// 制限時間をリセットする
+	ReSetTimer();
+
 
 #ifdef _DEBUG
 
@@ -62,6 +65,8 @@ void TimeCount::Update() {
 	ImGui::Text("100 = %d", eachTime_[0]);
 	ImGui::Text(" 10 = %d", eachTime_[1]);
 	ImGui::Text("  1 = %d", eachTime_[2]);
+	ImGui::Text("isTimeUp_ = %d", isTimeUp_);
+	ImGui::Text("R-key : ResetTimer");
 	ImGui::End();
 
 #endif // DEBUG
@@ -72,16 +77,30 @@ void TimeCount::Update() {
 // タイマーを減らす
 void TimeCount::SubtructTimer() {
 
-	// フレームを増やす
-	frame_++;
+	// 制限時間が残っているとき
+	if (isTimeUp_ == false) {
 
-	// 60フレーム
-	if (frame_ >= 60) {
+		// フレームを増やす
+		frame_++;
 
-		// タイマーに1秒減らす
-		nowLimitTime_ = nowLimitTime_ - 1;
-		// フレームを0に戻す
+		// 60フレーム
+		if (frame_ >= 60) {
+
+			// タイマーに1秒減らす
+			nowLimitTime_ = nowLimitTime_ - 1;
+			// フレームを0に戻す
+			frame_ = 0;
+		}
+	}
+
+	// 制限時間が0になったら
+	if (nowLimitTime_ <= 0) {
+
+		// 0で固定
 		frame_ = 0;
+		nowLimitTime_ = 0;
+		// 制限時間切れのフラグを立てる
+		isTimeUp_ = true;
 	}
 }
 
@@ -109,6 +128,27 @@ void TimeCount::AddTimeCount() {
 	}
 	else if (Input::GetInstance()->PushKey(DIK_DOWN)) {
 		nowLimitTime_ -= 1;
+	}
+}
+
+
+
+// 制限時間をリセットする
+void TimeCount::ReSetTimer() {
+
+	// 時間切れのフラグが立ったら
+	if (isTimeUp_) {
+
+		// Rキーでリセット
+		if (Input::GetInstance()->PushKey(DIK_R)) {
+
+			// 制限時間を再設定する
+			nowLimitTime_ = kSetLimitTime_;
+			frame_ = 0;
+
+			// フラグを折る
+			isTimeUp_ = false;
+		}
 	}
 }
 
