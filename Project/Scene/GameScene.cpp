@@ -4,7 +4,7 @@ void GameScene::Initialize()
 {
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
 
-	scene;
+	
 	timeCount_ = make_unique<TimeCount>();
 	timeCount_->Initialize();
 
@@ -59,7 +59,6 @@ void GameScene::Draw()
 {
 
 	timeCount_->Draw();
-	scene;
 
 	player_->Draw(viewProjection);
 	enemy_->Draw(viewProjection);
