@@ -12,7 +12,6 @@
 class TimeCount {
 
 public:
-	TimeCount() {};
 	~TimeCount() {};
 	/// <summary>
 	/// 初期化処理
@@ -30,6 +29,11 @@ public:
 	void Draw();
 
 	/// <summary>
+	/// タイマーを減らす
+	/// </summary>
+	void SubtructTimer();
+
+	/// <summary>
 	/// 時間の追加処理
 	/// </summary>
 	void AddTimeCount();
@@ -44,6 +48,7 @@ public:
 	/// </summary>
 	void SetNumberTexture();
 
+
 private:
 
 	// スプライト
@@ -56,11 +61,12 @@ private:
 	Vector4 textureColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	// 描画座標
-	Vector2 position_[2];
-	WorldTransform worldTransform_[2];
+	Vector2 position_[3];
+	WorldTransform worldTransform_[3];
 
 	// 制限時間
 	uint32_t nowLimitTime_;
 	const uint32_t kSetLimitTime_ = 30;
 	uint32_t eachTime_[3]{};
+	uint32_t frame_;
 };
