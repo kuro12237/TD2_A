@@ -3,6 +3,11 @@
 void GameScene::Initialize()
 {
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
+
+	scene;
+	timeCount_ = make_unique<TimeCount>();
+	timeCount_->Initialize();
+
 	player_ = make_unique<Player>();
 	player_->Initialize();
 
@@ -15,14 +20,11 @@ void GameScene::Initialize()
 	collisionManager_ = make_unique<CollisionManager>();
 	mapWallManager_ = make_unique<MapWallManager>();
 	mapWallManager_->Initialize();
+
 }
 
 void GameScene::Update(GameManager* scene)
 {
-	ImGui::Begin("ChangeDebugScene");
-	ImGui::Text("9 key");
-	ImGui::End();
-
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
 		scene->ChangeState(new DebugScene);
@@ -40,17 +42,31 @@ void GameScene::Update(GameManager* scene)
 
 	MainCamera::Update(player_->GetWorldTransform());
 
+	timeCount_->Update();
+
+	viewProjection.UpdateMatrix();
+
 	viewProjection = MainCamera::GetViewProjection();
+
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
+
+	/*ImGui::Begin("ChangeDebugScene");
+	ImGui::Text("9 key");
+	ImGui::End();*/
 }
 
 void GameScene::Draw()
 {
+
+	timeCount_->Draw();
+	scene;
+
 	player_->Draw(viewProjection);
 	enemy_->Draw(viewProjection);
 
 	mapWallManager_->Draw(viewProjection);
 	
+
 }
 
 void GameScene::Collision()

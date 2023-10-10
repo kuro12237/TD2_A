@@ -118,6 +118,8 @@
     <Filter Include="Project\GameObject">
       <UniqueIdentifier>{bd50fd17-dc80-4453-abab-990b87bb4c34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\TimeCount">
+      <UniqueIdentifier>{68330595-2e4a-4fe1-982d-8cfcaa050c5b}</UniqueIdentifier>
     <Filter Include="Project\GameObject\Enemy">
       <UniqueIdentifier>{2bbaabcf-00ff-486f-928c-6f01d14ec6ff}</UniqueIdentifier>
     </Filter>
@@ -233,9 +235,6 @@
     <ClCompile Include="Project\Scene\DebugScene.cpp">
       <Filter>Project\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Project\Scene\GameScene.cpp">
-      <Filter>Project\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="CLEYERA\Input\Input.cpp">
       <Filter>CLEYERA\Input</Filter>
     </ClCompile>
@@ -255,6 +254,11 @@
     <ClCompile Include="CLEYERA\Utility\FileLoader\FileLoader.cpp">
       <Filter>CLEYERA\Utility\FileLoader</Filter>
     </ClCompile>
+    <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp">
+      <Filter>Project\GameObject\TimeCount</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Scene\GameScene.cpp">
+      <Filter>Project\Scene</Filter>
     <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClCompile>
@@ -425,6 +429,8 @@
     <ClInclude Include="CLEYERA\Utility\FileLoader\FileLoader.h">
       <Filter>CLEYERA\Utility\FileLoader</Filter>
     </ClInclude>
+    <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h">
+      <Filter>Project\GameObject\TimeCount</Filter>
     <ClInclude Include="Project\GameObject\Enemy\Enemy.h">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClInclude>
