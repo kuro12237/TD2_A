@@ -23,5 +23,5 @@ private:
 	//‘ŠŽè
 	uint32_t CollisionMask_ = 0xffffffff;
 
-	float radious_ = 0.2f;
+	float radious_ = 0.5f;
 };

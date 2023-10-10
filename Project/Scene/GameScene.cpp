@@ -9,7 +9,7 @@ void GameScene::Initialize(GameManager* scene)
 
 	LoadEnemyDate();
 	enemy_ = make_unique<Enemy>();
-	enemy_->Initialize({ 0,0,0 });
+	enemy_->Initialize({ 2,0.5,2 });
   
 	mapwall_ = make_unique<MapWall>();
 	mapwall_->Initialize();

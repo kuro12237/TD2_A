@@ -36,7 +36,6 @@ public:
 	void OnCollision()override;
 	
 	// ベクトル分解
-	
 	void VelocityDecomposition(Vector3 velo, float angle); // velo = playerの速度, angle = playerとenemyの角度
 
 

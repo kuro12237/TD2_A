@@ -10,7 +10,7 @@ void Enemy::Initialize(const Vector3& position) {
 
 	model_ = make_unique<Model>();
 	model_->Initialize(new ModelSphereState);
-	isMove_ = false;
+	//isMove_ = false;
 
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
@@ -38,6 +38,7 @@ void Enemy::Draw(ViewProjection viewProjection){
 
 void Enemy::VelocityDecomposition(Vector3 velo, float angle) {
 	speed = sqrt(velo.x * velo.x + velo.y * velo.y + velo.z * velo.z); // ‘ÎŠpü‚Ì’·‚³
+	angle;
 }
 
 void Enemy::EnemyMove() {
@@ -60,4 +61,5 @@ Vector3 Enemy::GetWorldPosition() {
 
 void Enemy::OnCollision(){
 	isMove_ = true;
+	model_->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 }
