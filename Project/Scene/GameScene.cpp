@@ -62,14 +62,13 @@ void GameScene::Update(GameManager* scene)
 void GameScene::Draw()
 {
 
-	timeCount_->Draw();
-
 	player_->Draw(viewProjection);
 	enemy_->Draw(viewProjection);
 
 	mapWallManager_->Draw(viewProjection);
-	
 
+	timeCount_->Draw();
+	
 }
 
 void GameScene::Collision()
