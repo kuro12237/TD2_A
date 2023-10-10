@@ -6,6 +6,7 @@
 #include"ColliderConfig.h"
 #include"VectorTransform.h"
 #include"GameObject/Player/Player.h"
+#include"GameObject/PhysicsFanc.h"
 
 class Enemy : public Collider {
 public:
@@ -34,10 +35,6 @@ public:
 	Vector3 GetWorldPosition()override;
 
 	void OnCollision()override;
-	
-	// ベクトル分解
-	void VelocityDecomposition(Vector3 velo, float angle); // velo = playerの速度, angle = playerとenemyの角度
-
 
 private:
 
@@ -47,5 +44,5 @@ private:
 	float speed = 3.0f;
 	Vector3 velocity;
 	Player* player_;
-	bool isMove_;
+	bool isMove_ = false;
 };

@@ -9,7 +9,7 @@ void GameScene::Initialize(GameManager* scene)
 
 	LoadEnemyDate();
 	enemy_ = make_unique<Enemy>();
-	enemy_->Initialize({ 2,0.5,2 });
+	enemy_->Initialize({ 5,0.5,0 });
   
 	mapwall_ = make_unique<MapWall>();
 	mapwall_->Initialize();
@@ -74,6 +74,7 @@ void GameScene::Collision()
 }
 
 // �G�̃��[�hcsv��
+
 void GameScene::LoadEnemyDate() {
     fileLoad = FileLoader::CSVLoadFile("enemySpawn.csv");
 }

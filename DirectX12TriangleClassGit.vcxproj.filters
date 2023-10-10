@@ -121,6 +121,9 @@
     <Filter Include="Project\GameObject\Enemy">
       <UniqueIdentifier>{2bbaabcf-00ff-486f-928c-6f01d14ec6ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\Physics">
+      <UniqueIdentifier>{e81173da-9538-4cbe-a5ae-0a728389cd05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -255,6 +258,9 @@
     <ClCompile Include="Project\GameObject\MapWall\MapWall.cpp" />
     <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp">
       <Filter>Project\GameObject\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\PhysicsFanc.cpp">
+      <Filter>Project\GameObject\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -420,6 +426,9 @@
     <ClInclude Include="Project\GameObject\MapWall\MapWall.h" />
     <ClInclude Include="Project\GameObject\Enemy\Enemy.h">
       <Filter>Project\GameObject\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\PhysicsFanc.h">
+      <Filter>Project\GameObject\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

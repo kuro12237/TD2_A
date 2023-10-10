@@ -27,8 +27,6 @@ public:
 
 	Vector3 GetWorldPosition()override;
 
-	Vector3 GetVelocity() const { return Velocity; }
-
 #pragma endregion
 
 

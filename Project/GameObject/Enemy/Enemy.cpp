@@ -10,7 +10,6 @@ void Enemy::Initialize(const Vector3& position) {
 
 	model_ = make_unique<Model>();
 	model_->Initialize(new ModelSphereState);
-	//isMove_ = false;
 
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
@@ -25,7 +24,7 @@ void Enemy::Initialize(const Vector3& position) {
 /// </summary>
 void Enemy::Update() {
 
-	//EnemyMove();
+	EnemyMove();
 	worldTransform_.UpdateMatrix();
 }
 
@@ -36,19 +35,12 @@ void Enemy::Draw(ViewProjection viewProjection){
 	model_->Draw(worldTransform_, viewProjection);
 }
 
-void Enemy::VelocityDecomposition(Vector3 velo, float angle) {
-	speed = sqrt(velo.x * velo.x + velo.y * velo.y + velo.z * velo.z); // 対角線の長さ
-	angle;
-}
-
 void Enemy::EnemyMove() {
-	/*
-	if(isMove_){
-		velocity = VectorTransform::Normalize(player_->GetVelocity()); // playerの移動ベクトルを正規化して代入
-		velocity = VectorTransform::Multiply(velocity, speed); // 移動ベクトルと速度をかける
-		worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, velocity); // 移動
+	if (isMove_) {
+		velocity = PhysicsFanc::VelocityDecomposition(0.5f, player_->GetWorldPosition(), GetWorldPosition());
 	}
-	*/
+
+	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, velocity);
 }
 
 Vector3 Enemy::GetWorldPosition() {
@@ -61,5 +53,4 @@ Vector3 Enemy::GetWorldPosition() {
 
 void Enemy::OnCollision(){
 	isMove_ = true;
-	model_->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 }
