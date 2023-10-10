@@ -16,7 +16,6 @@ GameManager::GameManager()
 	DebugTools::addCommand(debugcamera,"DebugCamera");
 }
 
-
 GameManager::~GameManager()
 {
 	DebugTools::ClearCommand();
