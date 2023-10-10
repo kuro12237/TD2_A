@@ -97,7 +97,7 @@ void ModelPlaneState::CommandCall(uint32_t texHandle)
 
 	if (!texHandle==0)
 	{
-		TextureManager::texCommand(2,texHandle);
+		TextureManager::rootParamerterCommand(2,texHandle);
 	}
 
 	//描画(DrawCall/ドローコール)。

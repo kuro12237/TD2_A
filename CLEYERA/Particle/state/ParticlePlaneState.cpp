@@ -20,7 +20,7 @@ void ParticlePlaneState::Initialize(Particle* state)
 
 void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, ViewProjection viewprojection)
 {
-
+	worldTransform;
 	VertexData* vertexData = nullptr;
 	Material* materialData = nullptr;
 	//LightData* lightData = nullptr;
@@ -32,24 +32,23 @@ void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, Vi
 	resource_.Index->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
 	resource_.instancingResource->Map(0, nullptr, reinterpret_cast<void**>(&instansingData));
 
-	Vector4 pos = { 0,0,0,1 };
-	float size = 0.5f;
+	
 
-	vertexData[0].position = { pos.x - size,pos.y,pos.z + size,pos.w };
-	vertexData[0].texcoord = { 0.0f,1.0f };
+	vertexData[0].position = { pos.x - size,pos.y + size,pos.z ,pos.w };
+	vertexData[0].texcoord = { 0.0f,0.0f };
 	vertexData[0].normal = { 0.0f,1.0f,0.0f };
 
-	vertexData[1].position = { pos.x - size,pos.y,pos.z - size,pos.w };
-	vertexData[1].texcoord = { 0.0f,0.0f };
+	vertexData[1].position = { pos.x + size,pos.y + size,pos.z ,pos.w };
+	vertexData[1].texcoord = { 1.0f,0.0f };
 	vertexData[1].normal = { 0.0f,1.0f,0.0f };
 
 
-	vertexData[2].position = { pos.x + size,pos.y,pos.z + size,pos.w };
-	vertexData[2].texcoord = { 1.0f,1.0f };
+	vertexData[2].position = { pos.x - size,pos.y - size,pos.z,pos.w };
+	vertexData[2].texcoord = { 0.0f,1.0f };
 	vertexData[2].normal = { 0.0f,1.0f,0.0f };
 
-	vertexData[3].position = { pos.x + size,pos.y,pos.z - size,pos.w };
-	vertexData[3].texcoord = { 1.0f,0.0f };
+	vertexData[3].position = { pos.x + size,pos.y - size,pos.z,pos.w };
+	vertexData[3].texcoord = { 1.0f,1.0f };
 	vertexData[3].normal = { 0.0f,1.0f,0.0f };
 
 
@@ -59,28 +58,22 @@ void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, Vi
 	materialData->color = { 1,1,1,1 };
 	materialData->uvTransform = MatrixTransform::AffineMatrix({1,1,1}, {0,0,0},{0,0,0});
 
+	Matrix4x4   matWorld = MatrixTransform::Multiply(state->GetWorldTransform().matWorld, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
 
-    Matrix4x4 matWorld = MatrixTransform::Multiply(worldTransform.matWorld, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
-	matWorld;
 
-	ImGui::Begin("rotate");
-	ImGui::DragFloat3("r", &testRotate.x, 0.1f);
-	ImGui::DragFloat3("t", &testTrans.x, 0.1f);
-	ImGui::End();
-
-	Matrix4x4 a = MatrixTransform::Identity();
-
-	a = MatrixTransform::AffineMatrix({ 1,1,1 }, testRotate, { 0,0,0 });
-
-	instansingData[0].WVP =a;
+	instansingData[0].WVP =matWorld;
 	instansingData[0].world = MatrixTransform::Identity();
 	
-	a = MatrixTransform::AffineMatrix({ 1,1,1 }, testRotate, testTrans);
+	ImGui::Begin("b");
+	ImGui::DragFloat3("r", &testTrans.x, -0.1f);
+	ImGui::End();
 
-	instansingData[1].WVP = a;
+	Matrix4x4 TestMat = MatrixTransform::AffineMatrix(state->GetWorldTransform().scale, {0,0,0}, testTrans);
+	TestMat = MatrixTransform::Multiply(TestMat, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
+
+
+	instansingData[1].WVP = TestMat;
 	instansingData[1].world = MatrixTransform::Identity();
-	
-
 	
 	CommandCall(state->GetTexhandle());
 }
@@ -102,9 +95,9 @@ void ParticlePlaneState::CommandCall(uint32_t TexHandle)
 	//ƒ}ƒeƒŠƒAƒ‹CBuffer‚ÌêŠ‚ðÝ’è
 	commands.m_pList->SetGraphicsRootConstantBufferView(0, resource_.Material->GetGPUVirtualAddress());
 
-	TextureManager::texCommand(1, instansingIndex);
-	TextureManager::texCommand(2,TexHandle);
+	TextureManager::rootParamerterCommand(1, instansingIndex);
+	TextureManager::rootParamerterCommand(2,TexHandle);
 	
 
-	commands.m_pList->DrawIndexedInstanced(IndexSize, 5, 0, 0, 0);
+	commands.m_pList->DrawIndexedInstanced(IndexSize, 3, 0, 0, 0);
 }

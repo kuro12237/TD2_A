@@ -26,6 +26,9 @@ private:
 	Vector3 testRotate = { };
 	Vector3 testTrans = {};
 
+	Vector4 pos = { 0,0,0,1 };
+	float size = 0.5f;
+
 	const uint32_t VertexSize = 4;
 	const uint32_t IndexSize = 6;
 	ResourcePeroperty resource_ = {};

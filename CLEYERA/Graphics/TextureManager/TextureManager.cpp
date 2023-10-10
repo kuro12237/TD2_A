@@ -200,7 +200,7 @@ uint32_t TextureManager::CreateSRV(uint32_t NumInstansing,ComPtr<ID3D12Resource>
 	return indexTex;
 }
 
-void TextureManager::texCommand(UINT rootPatramerterIndex,uint32_t texhandle)
+void TextureManager::rootParamerterCommand(UINT rootPatramerterIndex,uint32_t texhandle)
 {
 	Commands command = DirectXCommon::GetInstance()->GetCommands();
 

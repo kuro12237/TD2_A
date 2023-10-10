@@ -21,6 +21,7 @@ public:
 
 	uint32_t GetTexhandle() { return texhandle; }
 	const uint32_t GetNumInstance() const{ return NumInstance_; }
+	WorldTransform GetWorldTransform() { return worldTransform_; }
 
 #pragma endregion 
 private:

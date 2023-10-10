@@ -44,7 +44,7 @@ public:
 
 	static uint32_t CreateSRV(uint32_t NumInstansing, ComPtr<ID3D12Resource>& resource);
 
-	static void texCommand(UINT rootPatramerterIndex,uint32_t texhandle);
+	static void rootParamerterCommand(UINT rootPatramerterIndex,uint32_t texhandle);
 private:
 
 	static ComPtr<ID3D12Resource> CreateTexResource(const DirectX::TexMetadata& metadata);
