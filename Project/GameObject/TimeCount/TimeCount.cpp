@@ -146,6 +146,7 @@ void TimeCount::Draw() {
 
 	for (int index = 0; index < 3; index++) {
 		sprite_[index]->Draw(worldTransform_[index]);
+
 	}
 }
 
