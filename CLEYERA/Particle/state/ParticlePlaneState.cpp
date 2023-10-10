@@ -3,27 +3,30 @@
 void ParticlePlaneState::Initialize(Particle* state)
 {
 
-	resource_.instancingResource = CreateResources::CreateBufferResource(sizeof(TransformationMatrix) * 2);
+	if (NumInstansing)
+	{
+		//NumInstansingInitializeが二回呼び出されたらErrorを出す
+		LogManager::Log("Particle Instansing Error");
+		assert(0);
+	}
+	NumInstansing = state->GetNumInstance();
+	NumInstansingLock = true;
+
+	resource_.instancingResource = CreateResources::CreateBufferResource(sizeof(TransformationMatrix) * NumInstansing);
+
 	resource_.Vertex = CreateResources::CreateBufferResource(sizeof(VertexData) * VertexSize);
 	resource_.BufferView = CreateResources::VertexCreateBufferView(sizeof(VertexData) * VertexSize, resource_.Vertex.Get(), VertexSize);
-
 	resource_.Material = CreateResources::CreateBufferResource(sizeof(Material));
 	resource_.Index = CreateResources::CreateBufferResource(sizeof(uint32_t) * IndexSize);
 	resource_.IndexBufferView = CreateResources::IndexCreateBufferView(sizeof(uint32_t) * IndexSize, resource_.Index.Get());
 
-	//
-	instansingIndex = TextureManager::CreateSRV(2,resource_.instancingResource);
-
-	state;
-
+	dsvIndex = TextureManager::CreateSRV(2,resource_.instancingResource);
 }
 
 void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, ViewProjection viewprojection)
 {
-	worldTransform;
 	VertexData* vertexData = nullptr;
 	Material* materialData = nullptr;
-	//LightData* lightData = nullptr;
 	uint32_t* indexData = nullptr;
 	TransformationMatrix* instansingData = nullptr;
 
@@ -31,8 +34,6 @@ void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, Vi
 	resource_.Material->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	resource_.Index->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
 	resource_.instancingResource->Map(0, nullptr, reinterpret_cast<void**>(&instansingData));
-
-	
 
 	vertexData[0].position = { pos.x - size,pos.y + size,pos.z ,pos.w };
 	vertexData[0].texcoord = { 0.0f,0.0f };
@@ -42,7 +43,6 @@ void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, Vi
 	vertexData[1].texcoord = { 1.0f,0.0f };
 	vertexData[1].normal = { 0.0f,1.0f,0.0f };
 
-
 	vertexData[2].position = { pos.x - size,pos.y - size,pos.z,pos.w };
 	vertexData[2].texcoord = { 0.0f,1.0f };
 	vertexData[2].normal = { 0.0f,1.0f,0.0f };
@@ -51,15 +51,18 @@ void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, Vi
 	vertexData[3].texcoord = { 1.0f,1.0f };
 	vertexData[3].normal = { 0.0f,1.0f,0.0f };
 
-
 	indexData[0] = 0; indexData[1] = 1; indexData[2] = 2;
 	indexData[3] = 1; indexData[4] = 3; indexData[5] = 2;
 
-	materialData->color = { 1,1,1,1 };
+	ImGui::Begin("testColorChange");
+	ImGui::DragFloat4("Testcolor", &testColor.x, -0.01f);
+	ImGui::End();
+
+	materialData->color = testColor;
 	materialData->uvTransform = MatrixTransform::AffineMatrix({1,1,1}, {0,0,0},{0,0,0});
 
-	Matrix4x4   matWorld = MatrixTransform::Multiply(state->GetWorldTransform().matWorld, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
-
+	Matrix4x4  matWorld = MatrixTransform::Multiply(state->GetWorldTransform().matWorld, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
+	worldTransform;
 
 	instansingData[0].WVP =matWorld;
 	instansingData[0].world = MatrixTransform::Identity();
@@ -70,7 +73,6 @@ void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, Vi
 
 	Matrix4x4 TestMat = MatrixTransform::AffineMatrix(state->GetWorldTransform().scale, {0,0,0}, testTrans);
 	TestMat = MatrixTransform::Multiply(TestMat, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
-
 
 	instansingData[1].WVP = TestMat;
 	instansingData[1].world = MatrixTransform::Identity();
@@ -95,9 +97,8 @@ void ParticlePlaneState::CommandCall(uint32_t TexHandle)
 	//マテリアルCBufferの場所を設定
 	commands.m_pList->SetGraphicsRootConstantBufferView(0, resource_.Material->GetGPUVirtualAddress());
 
-	TextureManager::rootParamerterCommand(1, instansingIndex);
+	TextureManager::rootParamerterCommand(1, dsvIndex);
 	TextureManager::rootParamerterCommand(2,TexHandle);
 	
-
-	commands.m_pList->DrawIndexedInstanced(IndexSize, 3, 0, 0, 0);
+	commands.m_pList->DrawIndexedInstanced(IndexSize, 2, 0, 0, 0);
 }

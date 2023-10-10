@@ -21,7 +21,12 @@ private:
 
 	void CommandCall(uint32_t TexHandle);
 	
-	uint32_t instansingIndex = 0;
+	uint32_t NumInstansing = 0;
+	bool NumInstansingLock = false;
+
+	uint32_t dsvIndex = 0;
+
+	Vector4 testColor = { 1,1,1,1 };
 
 	Vector3 testRotate = { };
 	Vector3 testTrans = {};

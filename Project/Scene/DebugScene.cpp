@@ -28,7 +28,7 @@ void DebugScene::Initialize()
 
 	particle_ = make_unique<Particle>();
 	particle_->SetTexHandle(SpriteTexHandle);
-	particle_->Initialize(new ParticlePlaneState);
+	particle_->Initialize(new ParticlePlaneState,10);
 	particleWorldTransform.Initialize();
 
 }
