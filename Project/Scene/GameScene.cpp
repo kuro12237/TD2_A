@@ -17,7 +17,7 @@ void GameScene::Update(GameManager* scene)
 	}
 
 
-	//timeCount_->Update();
+	timeCount_->Update();
 
 	viewProjection.UpdateMatrix();
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
@@ -29,6 +29,6 @@ void GameScene::Update(GameManager* scene)
 
 void GameScene::Draw(GameManager* scene)
 {
-	//timeCount_->Draw();
+	timeCount_->Draw();
 	scene;
 }
