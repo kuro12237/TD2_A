@@ -17,7 +17,7 @@ void TimeCount::Initialize() {
 	numTextureHD_[8] = TextureManager::LoadTexture("Resources/Number/8.png");
 	numTextureHD_[9] = TextureManager::LoadTexture("Resources/Number/9.png");
 
-	for (int index = 0; index < 3; index++) {
+	for (int index = 0; index < 1; index++) {
 		sprite_[index] = make_unique<Sprite>();
 		position_[index] = { 540.0f + (50.0f * index), 10.0f };
 		sprite_[index]->Initialize(new SpriteBoxState, position_[index], { 100.0f, 100.0f });
