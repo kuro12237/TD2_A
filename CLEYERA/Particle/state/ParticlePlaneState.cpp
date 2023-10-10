@@ -2,7 +2,6 @@
 
 void ParticlePlaneState::Initialize(Particle* state)
 {
-
 	if (NumInstansing)
 	{
 		//NumInstansingInitialize‚ª“ñ‰ñŒÄ‚Ño‚³‚ê‚½‚çError‚ğo‚·
