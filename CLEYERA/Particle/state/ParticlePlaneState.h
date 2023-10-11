@@ -19,6 +19,8 @@ public:
 
 private:
 
+	void RotateCamera(ViewProjection view);
+
 	void CommandCall(uint32_t TexHandle);
 	
 	uint32_t NumInstansing = 0;
@@ -37,7 +39,9 @@ private:
 	const uint32_t VertexSize = 4;
 	const uint32_t IndexSize = 6;
 	ResourcePeroperty resource_ = {};
-
+	
+	Matrix4x4 backToFrontMatrix{};
+	Matrix4x4 billboardMatrix{};
 };
 
 

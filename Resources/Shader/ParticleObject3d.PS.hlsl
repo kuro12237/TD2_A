@@ -6,7 +6,6 @@ struct Material
 	float32_t4x4 uvTransform;
 };
 ConstantBuffer<Material>gMaterial :register(b0);
-
 Texture2D<float32_t4>gTexture : register(t0);
 SamplerState gSampler : register(s0);
 
@@ -25,9 +24,8 @@ PixelShaderOutput main(VertexShaderOutput input) {
 	{
 		discard;
 	}
-
-	output.color.rgb = gMaterial.color.rgb * textureColor.rgb;
-	output.color.a = gMaterial.color.a * textureColor.a;
+	output.color.rgb = gMaterial.color.rgb * textureColor.rgb * input.color.rgb;
+	output.color.a = gMaterial.color.a * textureColor.a * input.color.a;
 
 	return output;
 }

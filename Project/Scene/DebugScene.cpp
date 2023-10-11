@@ -7,7 +7,7 @@ DebugScene::~DebugScene()
 
 void DebugScene::Initialize()
 {
-	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
+	viewProjection.Initialize({0,0,0.0f }, { 0.0f,0.0f,-10.0f });
 	soundHandle_ = Audio::SoundLoadWave("Resources/Select.wav");
 	
 	sprite_ = make_unique<Sprite>();
