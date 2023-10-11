@@ -71,11 +71,10 @@ void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, Vi
 	//•½sˆÚ“®‚ðo‚·
 	Matrix4x4 tMat = MatrixTransform::TranslateMatrix(state->GetWorldTransform().translate);
 	
-	Matrix4x4 m = MatrixTransform::RotateXYZMatrix(-viewprojection.rotation_.x, -viewprojection.rotation_.y, -viewprojection.rotation_.z);
 	//‰ñ“]
 	backToFrontMatrix = MatrixTransform::Identity();
 	billboardMatrix = MatrixTransform::Multiply(backToFrontMatrix,viewprojection.matView_);
-	billboardMatrix = MatrixTransform::Multiply(billboardMatrix, m);
+
 
 	billboardMatrix.m[3][0] = 0.0f;
 	billboardMatrix.m[3][1] = 0.0f;
