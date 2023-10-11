@@ -38,7 +38,6 @@ void GameScene::Update(GameManager* scene)
 	enemy_->Update();
 	UpdateEnemyCommands();
 	
-
 	mapwall_->Update();
 
 	Collision();
@@ -54,7 +53,7 @@ void GameScene::Draw(GameManager* scene)
 	player_->Draw(viewProjection);
 
 	enemy_->Draw(viewProjection);
-  
+	
 	mapwall_->Draw(viewProjection);
 
 	scene;

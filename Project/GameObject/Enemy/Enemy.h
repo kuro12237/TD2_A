@@ -40,11 +40,10 @@ public:
 
 private:
 
-	
-	WorldTransform worldTransform_;
-	unique_ptr<Model>model_;
-	float speed = 3.0f;
-	Vector3 velocity;
-	Player* player_;
+
+	WorldTransform worldTransform_ = {};
+	unique_ptr<Model>model_ = nullptr;
+	Vector3 velocity = {};
+	Player* player_ = nullptr;
 	bool isMove_ = false;
 };

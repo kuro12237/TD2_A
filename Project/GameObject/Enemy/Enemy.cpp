@@ -36,7 +36,7 @@ void Enemy::Draw(ViewProjection viewProjection){
 void Enemy::EnemyMove() {
 
 	if (isMove_) {
-		velocity = PhysicsFanc::VelocityDecomposition(0.5f, player_->GetWorldPosition(), GetWorldPosition());
+		velocity = PhysicsFanc::Repulsiveforce(0.01f, player_->GetWorldPosition(), GetWorldPosition());
 	}
 
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, velocity);
