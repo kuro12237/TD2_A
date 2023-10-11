@@ -19,12 +19,13 @@ void ParticlePlaneState::Initialize(Particle* state)
 	resource_.Material = CreateResources::CreateBufferResource(sizeof(Material));
 	resource_.Index = CreateResources::CreateBufferResource(sizeof(uint32_t) * IndexSize);
 	resource_.IndexBufferView = CreateResources::IndexCreateBufferView(sizeof(uint32_t) * IndexSize, resource_.Index.Get());
-
 	dsvIndex = TextureManager::CreateSRV(2,resource_.instancingResource,sizeof(ParticleData));
 }
 
 void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, ViewProjection viewprojection)
 {
+	worldTransform;
+
 	VertexData* vertexData = nullptr;
 	Material* materialData = nullptr;
 	uint32_t* indexData = nullptr;
@@ -61,29 +62,28 @@ void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, Vi
 	materialData->color = testColor;
 	materialData->uvTransform = MatrixTransform::AffineMatrix({1,1,1}, {0,0,0},{0,0,0});
 	
-	worldTransform;
-	//ここから
-	
-	Matrix4x4  matWorld = MatrixTransform::Identity();
 
-	
+	//ここから
+	Matrix4x4  matWorld = MatrixTransform::Identity();
 	//スケールを出す
-	Matrix4x4 s = MatrixTransform::ScaleMatrix(state->GetWorldTransform().scale);
+	Matrix4x4 sMat = MatrixTransform::ScaleMatrix(state->GetWorldTransform().scale);
 	
 	//平行移動を出す
-	Matrix4x4 t = MatrixTransform::TranslateMatrix(state->GetWorldTransform().translate);
+	Matrix4x4 tMat = MatrixTransform::TranslateMatrix(state->GetWorldTransform().translate);
 	
+	Matrix4x4 m = MatrixTransform::RotateXYZMatrix(-viewprojection.rotation_.x, -viewprojection.rotation_.y, -viewprojection.rotation_.z);
 	//回転
 	backToFrontMatrix = MatrixTransform::Identity();
 	billboardMatrix = MatrixTransform::Multiply(backToFrontMatrix,viewprojection.matView_);
+	billboardMatrix = MatrixTransform::Multiply(billboardMatrix, m);
+
 	billboardMatrix.m[3][0] = 0.0f;
 	billboardMatrix.m[3][1] = 0.0f;
 	billboardMatrix.m[3][2] = 0.0f;
-	//billboardMatrix = billboardMatrix;
-
-	////Affine変換
-	matWorld = MatrixTransform::Multiply(s,MatrixTransform::Multiply(billboardMatrix,t));
 	
+	//Affine変換
+	matWorld = MatrixTransform::Multiply(sMat,MatrixTransform::Multiply(billboardMatrix,tMat));
+	//view変換
 	matWorld = MatrixTransform::Multiply(matWorld, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
 
 	//代入
@@ -105,11 +105,6 @@ void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, Vi
 	CommandCall(state->GetTexhandle());
 }
 
-void ParticlePlaneState::RotateCamera(ViewProjection view)
-{
-	
-	view;
-}
 
 void ParticlePlaneState::CommandCall(uint32_t TexHandle)
 {

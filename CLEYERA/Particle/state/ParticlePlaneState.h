@@ -5,6 +5,8 @@
 #include"GraphicsPipelineManager.h"
 #include"Particle/Particle.h"
 #include"Graphics/TextureManager/TextureManager.h"
+#include"Model.h"
+
 
 class ParticlePlaneState: public IParticleState
 {
@@ -31,7 +33,7 @@ private:
 	Vector4 testColor = { 1,1,1,1 };
 
 	Vector3 testRotate = { };
-	Vector3 testTrans = {};
+	Vector3 testTrans = {0,3,0};
 
 	Vector4 pos = { 0,0,0,1 };
 	float size = 0.5f;
@@ -42,6 +44,8 @@ private:
 	
 	Matrix4x4 backToFrontMatrix{};
 	Matrix4x4 billboardMatrix{};
+
+	
 };
 
 
