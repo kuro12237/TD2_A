@@ -180,6 +180,7 @@ void DebugScene::Testparticle()
 	particle_->begin();
 	Particle_param p1{};
 	p1.worldTransform_.Initialize();
+
 	p1.color_ = { 1,1,1,1 };
 	particle_->SetList(p1);
 	
