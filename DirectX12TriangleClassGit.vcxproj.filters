@@ -124,6 +124,9 @@
     <Filter Include="Project\GameObject\Physics">
       <UniqueIdentifier>{e81173da-9538-4cbe-a5ae-0a728389cd05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\FadeProcess">
+      <UniqueIdentifier>{7ab85bd8-1c00-431a-b045-66a52195c511}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -135,6 +138,7 @@
     <None Include="Resources\Shader\Harf_LambertLightObject.hlsli">
       <Filter>Shader</Filter>
     </None>
+    <None Include="Resources\Shader\ParticleObject3d.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CLEYERA\Cleyera.cpp">
@@ -259,8 +263,12 @@
     <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Project\GameObject\PhysicsFanc.cpp">
-      <Filter>Project\GameObject\Physics</Filter>
+    <ClCompile Include="CLEYERA\Particle\Particle.cpp" />
+    <ClCompile Include="CLEYERA\Particle\state\ParticlePlaneState.cpp" />
+    <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp" />
+    <ClCompile Include="Project\GameObject\MapWall\MapWallManager.cpp" />
+    <ClCompile Include="Project\GameObject\FadeProcess\FadeProcess.cpp">
+      <Filter>Project\GameObject\FadeProcess</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -427,8 +435,14 @@
     <ClInclude Include="Project\GameObject\Enemy\Enemy.h">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Project\GameObject\PhysicsFanc.h">
-      <Filter>Project\GameObject\Physics</Filter>
+    <ClInclude Include="CLEYERA\Particle\Particle.h" />
+    <ClInclude Include="CLEYERA\Particle\state\IParticleState.h" />
+    <ClInclude Include="CLEYERA\Particle\state\ParticlePlaneState.h" />
+    <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h" />
+    <ClInclude Include="Project\GameObject\MapWall\IMapWall.h" />
+    <ClInclude Include="Project\GameObject\MapWall\MapWallManager.h" />
+    <ClInclude Include="Project\GameObject\FadeProcess\FadeProcess.h">
+      <Filter>Project\GameObject\FadeProcess</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -450,6 +464,8 @@
     <FxCompile Include="Resources\Shader\Harf_LambertLightObject.VS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shader\ParticleObject3d.PS.hlsl" />
+    <FxCompile Include="Resources\Shader\ParticleObject3d.VS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CLEYERA\externals\imgui\LICENSE.txt">
