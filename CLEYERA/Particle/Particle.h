@@ -17,7 +17,7 @@ public:
 
 	void Initialize(IParticleState *state ,const uint32_t NumInstance = 1);
 
-	void Draw(WorldTransform worldTransform,ViewProjection viewProjection);
+	void Draw(list<Particle_param>particles,ViewProjection viewProjection);
 
 	void SetTexHandle(uint32_t tex) { texhandle = tex; }
 
@@ -41,6 +41,7 @@ private:
 
 	uint32_t texhandle = 0;
 	
+	Particle_param particleWorldTransform = {};
 	list<Particle_param> particles_{};
 
 };

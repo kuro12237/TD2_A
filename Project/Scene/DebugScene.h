@@ -49,5 +49,6 @@ private:
 
 
 	unique_ptr<Particle>particle_ = nullptr;
-	WorldTransform particleWorldTransform{};
+	Particle_param particleWorldTransform_{};
+	list<Particle_param> listParticle{};
 };

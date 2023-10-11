@@ -64,18 +64,21 @@ void ParticlePlaneState::Draw(Particle* state,ViewProjection viewprojection)
 	//Billbord‚ÌŒvŽZ
 	CarmeraBillbord(viewprojection, state);
 	
-	//Affine•ÏŠ·
-	Matrix4x4 matWorld = MatrixTransform::Multiply(sMat,MatrixTransform::Multiply(billboardMatrix,tMat));
-	//view•ÏŠ·
-	matWorld = MatrixTransform::Multiply(matWorld, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
+	for (list<Particle_param>::iterator particleIterator = state->GetParticles().begin();
+		particleIterator != state->GetParticles().end(); ++particleIterator)
+	{
+		//Affine•ÏŠ·
+		Matrix4x4 matWorld = MatrixTransform::Multiply(sMat, MatrixTransform::Multiply(billboardMatrix, tMat));
+		//view•ÏŠ·
+		matWorld = MatrixTransform::Multiply(matWorld, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
 
-	
 
-	//‘ã“ü
-	instansingData[0].WVP = matWorld;
-	instansingData[0].world = MatrixTransform::Identity();
-	instansingData[0].color = testColor;
 
+		//‘ã“ü
+		instansingData[0].WVP = matWorld;
+		instansingData[0].world = MatrixTransform::Identity();
+		instansingData[0].color = testColor;
+	}
 
 	Matrix4x4 TestMat = MatrixTransform::AffineMatrix(state->GetWorldTransform().scale, {0,0,0}, testTrans);
 	TestMat = MatrixTransform::Multiply(TestMat, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));

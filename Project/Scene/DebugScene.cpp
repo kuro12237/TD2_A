@@ -29,7 +29,11 @@ void DebugScene::Initialize()
 	particle_ = make_unique<Particle>();
 	particle_->SetTexHandle(SpriteTexHandle);
 	particle_->Initialize(new ParticlePlaneState,10);
-	particleWorldTransform.Initialize();
+	
+	particleWorldTransform_.worldTransform_.Initialize();
+	particleWorldTransform_.color_ = { 1,1,1,1 };
+
+	listParticle.push_back(particleWorldTransform_);
 
 }
 
@@ -57,47 +61,48 @@ void DebugScene::Update(GameManager* Scene)
 
 
 #pragma region 
-	if (NoneFlag)
 	{
-		sprite_->SetBlendMode(BlendNone);
-		AddFlag = false;
-		SubtractFlag = false;
-		MultiplyFlag = false;
-		ScreenFlag = false;
+		if (NoneFlag)
+		{
+			sprite_->SetBlendMode(BlendNone);
+			AddFlag = false;
+			SubtractFlag = false;
+			MultiplyFlag = false;
+			ScreenFlag = false;
+		}
+		if (AddFlag)
+		{
+			sprite_->SetBlendMode(BlendAdd);
+			NoneFlag = false;
+			SubtractFlag = false;
+			MultiplyFlag = false;
+			ScreenFlag = false;
+		}
+		if (SubtractFlag)
+		{
+			sprite_->SetBlendMode(BlendSubtruct);
+			AddFlag = false;
+			NoneFlag = false;
+			MultiplyFlag = false;
+			ScreenFlag = false;
+		}
+		if (MultiplyFlag)
+		{
+			sprite_->SetBlendMode(BlendMultiply);
+			AddFlag = false;
+			SubtractFlag = false;
+			NoneFlag = false;
+			ScreenFlag = false;
+		}
+		if (ScreenFlag)
+		{
+			sprite_->SetBlendMode(BlendScreen);
+			AddFlag = false;
+			SubtractFlag = false;
+			MultiplyFlag = false;
+			NoneFlag = false;
+		}
 	}
-	if (AddFlag)
-	{
-		sprite_->SetBlendMode(BlendAdd);
-		NoneFlag = false;
-		SubtractFlag = false;
-		MultiplyFlag = false;
-		ScreenFlag = false;
-	}
-	if (SubtractFlag)
-	{
-		sprite_->SetBlendMode(BlendSubtruct);
-		AddFlag = false;
-		NoneFlag = false;
-		MultiplyFlag = false;
-		ScreenFlag = false;
-	}
-	if (MultiplyFlag)
-	{
-		sprite_->SetBlendMode(BlendMultiply);
-		AddFlag = false;
-		SubtractFlag = false;
-		NoneFlag = false;
-		ScreenFlag = false;
-	}
-	if (ScreenFlag)
-	{
-		sprite_->SetBlendMode(BlendScreen);
-		AddFlag = false;
-		SubtractFlag = false;
-		MultiplyFlag = false;
-		NoneFlag=false;
-	}
-
 #pragma endregion
 
 	sprite_->SetColor(color);
@@ -158,7 +163,7 @@ void DebugScene::Update(GameManager* Scene)
 
 	spriteWorldTransform_.UpdateMatrix();
 	sprite2WorldTransform_.UpdateMatrix();
-	particleWorldTransform.UpdateMatrix();
+	
 
 	viewProjection.UpdateMatrix();
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
@@ -170,7 +175,7 @@ void DebugScene::Draw()
 	//sprite2_->Draw(sprite2WorldTransform_);
 	//sprite_->Draw(spriteWorldTransform_);
 
-	particle_->Draw(particleWorldTransform, viewProjection);
+	particle_->Draw(listParticle, viewProjection);
 }
 
 
