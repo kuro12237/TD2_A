@@ -89,4 +89,8 @@ private:
 	uint32_t eachTime_[3]{};
 	uint32_t frame_;
 	bool isTimeUp_ = false;
+
+	// デバッグフラグ　
+	bool isDebug_ = false;
+
 };

@@ -61,20 +61,24 @@ void TimeCount::Initialize() {
 // 更新処理
 void TimeCount::Update() {
 
-	// 制限時間の減算処理
-	SubtructTimer();
 
-	// 制限時間の加算処理
-	AddTimeCount();
+	if (isDebug_ == false) {
 
-	// 制限時間の各位の値を求める
-	CalcTimerPlace(nowLimitTime_);
+		// 制限時間の減算処理
+		SubtructTimer();
 
-	// 各位に合ったテクスチャを設定する
-	SetNumberTexture();
+		// 制限時間の加算処理
+		AddTimeCount();
 
-	// 制限時間をリセットする
-	ReSetTimer();
+		// 制限時間の各位の値を求める
+		CalcTimerPlace(nowLimitTime_);
+
+		// 各位に合ったテクスチャを設定する
+		SetNumberTexture();
+
+		// 制限時間をリセットする
+		ReSetTimer();
+	}
 
 
 #ifdef _DEBUG
@@ -87,6 +91,7 @@ void TimeCount::Update() {
 	ImGui::Text("  1 = %d", eachTime_[2]);
 	ImGui::Text("isTimeUp_ = %d", isTimeUp_);
 	ImGui::Text("R-key : ResetTimer");
+	ImGui::Checkbox("isDebugMode", &isDebug_);
 	ImGui::End();
 
 #endif // DEBUG
