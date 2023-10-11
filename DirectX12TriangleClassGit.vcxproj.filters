@@ -125,7 +125,7 @@
       <UniqueIdentifier>{e81173da-9538-4cbe-a5ae-0a728389cd05}</UniqueIdentifier>
     </Filter>
     <Filter Include="CLEYERA\Particle">
-      <UniqueIdentifier>{823f4dbb-f1cf-4325-8787-f3e69b241ebd}</UniqueIdentifier>
+      <UniqueIdentifier>{efaa3838-3aa8-48b6-8460-43d30a48c24c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,9 +138,7 @@
     <None Include="Resources\Shader\Harf_LambertLightObject.hlsli">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Resources\Shader\ParticleObject3d.hlsli">
-      <Filter>Shader</Filter>
-    </None>
+    <None Include="Resources\Shader\ParticleObject3d.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CLEYERA\Cleyera.cpp">
@@ -470,12 +468,8 @@
     <FxCompile Include="Resources\Shader\Harf_LambertLightObject.VS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\Shader\ParticleObject3d.PS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shader\ParticleObject3d.VS.hlsl">
-      <Filter>Shader</Filter>
-    </FxCompile>
+    <FxCompile Include="Resources\Shader\ParticleObject3d.PS.hlsl" />
+    <FxCompile Include="Resources\Shader\ParticleObject3d.VS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CLEYERA\externals\imgui\LICENSE.txt">

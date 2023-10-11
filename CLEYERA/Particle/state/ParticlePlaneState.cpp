@@ -22,9 +22,8 @@ void ParticlePlaneState::Initialize(Particle* state)
 	dsvIndex = TextureManager::CreateSRV(2,resource_.instancingResource,sizeof(ParticleData));
 }
 
-void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, ViewProjection viewprojection)
+void ParticlePlaneState::Draw(Particle* state,ViewProjection viewprojection)
 {
-	worldTransform;
 
 	VertexData* vertexData = nullptr;
 	Material* materialData = nullptr;
@@ -62,40 +61,21 @@ void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, Vi
 	materialData->color = testColor;
 	materialData->uvTransform = MatrixTransform::AffineMatrix({1,1,1}, {0,0,0},{0,0,0});
 	
-
-	//ここから
-	Matrix4x4  matWorld = MatrixTransform::Identity();
-	//スケールを出す
-	Matrix4x4 sMat = MatrixTransform::ScaleMatrix(state->GetWorldTransform().scale);
-	
-	//平行移動を出す
-	Matrix4x4 tMat = MatrixTransform::TranslateMatrix(state->GetWorldTransform().translate);
-	
-	//回転
-	backToFrontMatrix = MatrixTransform::Identity();
-
-	Matrix4x4 rm = MatrixTransform::RotateXYZMatrix(viewprojection.rotation_.x, viewprojection.rotation_.y, viewprojection.rotation_.z);
-
-	billboardMatrix = MatrixTransform::Multiply(backToFrontMatrix,rm);
-
-
-	billboardMatrix.m[3][0] = 0.0f;
-	billboardMatrix.m[3][1] = 0.0f;
-	billboardMatrix.m[3][2] = 0.0f;
+	//Billbordの計算
+	CarmeraBillbord(viewprojection, state);
 	
 	//Affine変換
-	matWorld = MatrixTransform::Multiply(sMat,MatrixTransform::Multiply(billboardMatrix,tMat));
+	Matrix4x4 matWorld = MatrixTransform::Multiply(sMat,MatrixTransform::Multiply(billboardMatrix,tMat));
 	//view変換
 	matWorld = MatrixTransform::Multiply(matWorld, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
+
+	
 
 	//代入
 	instansingData[0].WVP = matWorld;
 	instansingData[0].world = MatrixTransform::Identity();
 	instansingData[0].color = testColor;
 
-	ImGui::Begin("t_1");
-	ImGui::DragFloat3("r", &testTrans.x, -0.1f);
-	ImGui::End();
 
 	Matrix4x4 TestMat = MatrixTransform::AffineMatrix(state->GetWorldTransform().scale, {0,0,0}, testTrans);
 	TestMat = MatrixTransform::Multiply(TestMat, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
@@ -107,6 +87,24 @@ void ParticlePlaneState::Draw(Particle* state, WorldTransform worldTransform, Vi
 	CommandCall(state->GetTexhandle());
 }
 
+
+void ParticlePlaneState::CarmeraBillbord(ViewProjection view,Particle *state)
+{
+	//スケールを出す
+	sMat = MatrixTransform::ScaleMatrix(state->GetWorldTransform().scale);
+	//平行移動移動
+	tMat = MatrixTransform::TranslateMatrix(state->GetWorldTransform().translate);
+
+	//回転
+	Matrix4x4 backToFrontMatrix = MatrixTransform::Identity();
+	Matrix4x4 rm = MatrixTransform::RotateXYZMatrix(view.rotation_.x, view.rotation_.y, view.rotation_.z);
+
+	billboardMatrix = MatrixTransform::Multiply(backToFrontMatrix, rm);
+	billboardMatrix.m[3][0] = 0.0f;
+	billboardMatrix.m[3][1] = 0.0f;
+	billboardMatrix.m[3][2] = 0.0f;
+
+}
 
 void ParticlePlaneState::CommandCall(uint32_t TexHandle)
 {

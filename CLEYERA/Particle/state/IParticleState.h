@@ -11,7 +11,7 @@ public:
 
 	virtual void Initialize(Particle *state) = 0;
 
-	virtual void Draw(Particle *state, WorldTransform worldTransform, ViewProjection viewprojection) = 0;
+	virtual void Draw(Particle *state,ViewProjection viewprojection) = 0;
 
 private:
 

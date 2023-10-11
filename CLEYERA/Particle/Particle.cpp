@@ -12,9 +12,10 @@ void Particle::Initialize(IParticleState* state, const uint32_t NumInstance)
 
 void Particle::Draw(WorldTransform worldTransform, ViewProjection viewProjection)
 {
-	viewProjection;
+	
+
 	worldTransform_ = worldTransform;
 
-	state_->Draw(this, worldTransform_, viewProjection);
+	state_->Draw(this,viewProjection);
 
 }

@@ -16,12 +16,12 @@ public:
 
 	void Initialize(Particle* state)override;
 
-	void Draw(Particle* state, WorldTransform worldTransform, ViewProjection viewprojection)override;
+	void Draw(Particle* state, ViewProjection viewprojection)override;
 
 
 private:
 
-	void RotateCamera(ViewProjection view);
+	void CarmeraBillbord(ViewProjection view, Particle* state);
 
 	void CommandCall(uint32_t TexHandle);
 	
@@ -42,9 +42,12 @@ private:
 	const uint32_t IndexSize = 6;
 	ResourcePeroperty resource_ = {};
 	
-	Matrix4x4 backToFrontMatrix{};
+
 	Matrix4x4 billboardMatrix{};
 
+
+	Matrix4x4 sMat{};
+	Matrix4x4 tMat{};
 	
 };
 

@@ -6,6 +6,7 @@
 struct Particle_param
 {
 	WorldTransform worldTransform_;
+	Vector4 color_;
 };
 
 class Particle
@@ -27,6 +28,8 @@ public:
 	WorldTransform GetWorldTransform() { return worldTransform_; }
 	const uint32_t NumInstancig() { return NumInstance_; }
 
+	list<Particle_param>GetParticles() { return particles_; }
+
 #pragma endregion 
 private:
 
@@ -38,7 +41,8 @@ private:
 
 	uint32_t texhandle = 0;
 	
-	
+	list<Particle_param> particles_{};
+
 };
 
 

@@ -1468,7 +1468,7 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dNone(ComPtr<ID3D12Device> 
 	HRESULT hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&ParticlePSO.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
-
+	
 	return ParticlePSO;
 }
 
@@ -1519,7 +1519,6 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dAdd(ComPtr<ID3D12Device> d
 	rootParameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[2].DescriptorTable.pDescriptorRanges = descriptorRange;
 	rootParameters[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
-
 
 
 	//SamplerÇÃê›íË
