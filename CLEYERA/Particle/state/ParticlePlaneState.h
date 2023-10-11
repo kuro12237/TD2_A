@@ -16,16 +16,17 @@ public:
 
 	void Initialize(Particle* state)override;
 
-	void Draw(Particle* state, ViewProjection viewprojection)override;
+	void Draw(Particle* state, list<Particle_param>param, ViewProjection viewprojection)override;
 
 
 private:
 
-	void CarmeraBillbord(ViewProjection view, Particle* state);
+	void CarmeraBillbord(ViewProjection view);
 
 	void CommandCall(uint32_t TexHandle);
 	
 	uint32_t NumInstansing = 0;
+	uint32_t NumDrawInstansing = 0;
 	bool NumInstansingLock = false;
 
 	uint32_t dsvIndex = 0;

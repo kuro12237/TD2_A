@@ -29,6 +29,8 @@ private:
 
 	void CheckAllCollision();
 	
+	void Testparticle();
+
 	ViewProjection viewProjection{};
 	uint32_t soundHandle_  = 0;
 
@@ -49,6 +51,6 @@ private:
 
 
 	unique_ptr<Particle>particle_ = nullptr;
-	Particle_param particleWorldTransform_{};
-	list<Particle_param> listParticle{};
+	
+	
 };

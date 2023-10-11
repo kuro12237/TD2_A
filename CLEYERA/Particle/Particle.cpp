@@ -9,16 +9,20 @@ void Particle::Initialize(IParticleState* state, const uint32_t NumInstance)
 
 }
 
-void Particle::Draw(list<Particle_param>particles, ViewProjection viewProjection)
+void Particle::Draw(ViewProjection viewProjection)
 {
 	
-	if (particles.size() >=NumInstance_ )
+	if (particles_.size() >=NumInstance_ )
 	{
+		//Instanceの数よりリストの数が増えるとエラー
 		LogManager::Log("particles_Error");
 		assert(0);
 	}
 
-	particles_ = particles;
-	state_->Draw(this,viewProjection);
+	state_->Draw(this,particles_,viewProjection);
+}
 
+void Particle::begin()
+{
+	particles_.clear();
 }

@@ -19,7 +19,7 @@ void DebugScene::Initialize()
 	sprite2_ = make_unique<Sprite>();
 	sprite2_->SetTexHandle(SpriteTexHandle);
 	sprite2_->Initialize(new SpriteBoxState,{640,0},{320,320});
-
+	
 	
 	sprite2WorldTransform_.Initialize();
 	spriteWorldTransform_.Initialize();
@@ -28,12 +28,9 @@ void DebugScene::Initialize()
 
 	particle_ = make_unique<Particle>();
 	particle_->SetTexHandle(SpriteTexHandle);
-	particle_->Initialize(new ParticlePlaneState,10);
+	particle_->Initialize(new ParticlePlaneState,5);
 	
-	particleWorldTransform_.worldTransform_.Initialize();
-	particleWorldTransform_.color_ = { 1,1,1,1 };
 
-	listParticle.push_back(particleWorldTransform_);
 
 }
 
@@ -163,7 +160,7 @@ void DebugScene::Update(GameManager* Scene)
 
 	spriteWorldTransform_.UpdateMatrix();
 	sprite2WorldTransform_.UpdateMatrix();
-	
+	Testparticle();
 
 	viewProjection.UpdateMatrix();
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
@@ -172,10 +169,32 @@ void DebugScene::Update(GameManager* Scene)
 
 void DebugScene::Draw()
 {
-	//sprite2_->Draw(sprite2WorldTransform_);
-	//sprite_->Draw(spriteWorldTransform_);
+	sprite2_->Draw(sprite2WorldTransform_);
+	sprite_->Draw(spriteWorldTransform_);
 
-	particle_->Draw(listParticle, viewProjection);
+	particle_->Draw(viewProjection);
+}
+
+void DebugScene::Testparticle()
+{
+	particle_->begin();
+	Particle_param p1{};
+	p1.worldTransform_.Initialize();
+	p1.color_ = { 1,1,1,1 };
+	particle_->SetList(p1);
+	
+	Particle_param p2{};
+	p2.worldTransform_.Initialize();
+	p2.worldTransform_.translate.y = 2;
+	p2.color_ = { 1,0,0,1 };
+	particle_->SetList(p2);
+
+	Particle_param p3{};
+	p3.worldTransform_.Initialize();
+	p3.worldTransform_.translate.y = 1;
+	p3.color_ = { 1,1,1,1 };
+	particle_->SetList(p3);
+
 }
 
 

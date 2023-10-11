@@ -448,6 +448,9 @@
     <ClInclude Include="CLEYERA\Particle\state\IParticleState.h">
       <Filter>CLEYERA\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="CLEYERA\Particle\SParticle.h">
+      <Filter>CLEYERA\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\ShapeObject3d.PS.hlsl">

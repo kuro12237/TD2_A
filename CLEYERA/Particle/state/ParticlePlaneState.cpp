@@ -9,20 +9,21 @@ void ParticlePlaneState::Initialize(Particle* state)
 		LogManager::Log("Particle Instansing Error");
 		assert(0);
 	}
-	NumInstansing = state->GetNumInstance();
+	NumInstansing = state->GetNumInstancing();
 	NumInstansingLock = true;
 
 	resource_.instancingResource = CreateResources::CreateBufferResource(sizeof(ParticleData) * NumInstansing);
+	dsvIndex = TextureManager::CreateSRV(NumInstansing, resource_.instancingResource, sizeof(ParticleData));
 
 	resource_.Vertex = CreateResources::CreateBufferResource(sizeof(VertexData) * VertexSize);
 	resource_.BufferView = CreateResources::VertexCreateBufferView(sizeof(VertexData) * VertexSize, resource_.Vertex.Get(), VertexSize);
 	resource_.Material = CreateResources::CreateBufferResource(sizeof(Material));
 	resource_.Index = CreateResources::CreateBufferResource(sizeof(uint32_t) * IndexSize);
 	resource_.IndexBufferView = CreateResources::IndexCreateBufferView(sizeof(uint32_t) * IndexSize, resource_.Index.Get());
-	dsvIndex = TextureManager::CreateSRV(2,resource_.instancingResource,sizeof(ParticleData));
+
 }
 
-void ParticlePlaneState::Draw(Particle* state,ViewProjection viewprojection)
+void ParticlePlaneState::Draw(Particle* state,list<Particle_param>param,ViewProjection viewprojection)
 {
 
 	VertexData* vertexData = nullptr;
@@ -54,47 +55,41 @@ void ParticlePlaneState::Draw(Particle* state,ViewProjection viewprojection)
 	indexData[0] = 0; indexData[1] = 1; indexData[2] = 2;
 	indexData[3] = 1; indexData[4] = 3; indexData[5] = 2;
 
-	ImGui::Begin("testColorChange");
-	ImGui::DragFloat4("Testcolor", &testColor.x, -0.01f);
-	ImGui::End();
 	materialData->color = { 1,1,1,1 };
 	materialData->color = testColor;
 	materialData->uvTransform = MatrixTransform::AffineMatrix({1,1,1}, {0,0,0},{0,0,0});
 	
 	//Billbordの計算
-	CarmeraBillbord(viewprojection, state);
+	CarmeraBillbord(viewprojection);
 	
-	for (list<Particle_param>::iterator particleIterator = state->GetParticles().begin();
-		particleIterator != state->GetParticles().end(); ++particleIterator)
+	NumDrawInstansing = 0;
+
+	for (list<Particle_param>::iterator particleIterator = param.begin();
+		particleIterator != param.end(); ++particleIterator)
 	{
+		particleIterator;
+
+		//スケールを出す
+		sMat = MatrixTransform::ScaleMatrix((*particleIterator).worldTransform_.scale);
+		//平行移動移動
+		tMat = MatrixTransform::TranslateMatrix((*particleIterator).worldTransform_.translate);
 		//Affine変換
 		Matrix4x4 matWorld = MatrixTransform::Multiply(sMat, MatrixTransform::Multiply(billboardMatrix, tMat));
 		//view変換
 		matWorld = MatrixTransform::Multiply(matWorld, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
 		//代入
-		instansingData[0].WVP = matWorld;
-		instansingData[0].world = MatrixTransform::Identity();
-		instansingData[0].color = testColor;
+		instansingData[NumDrawInstansing].WVP = matWorld;
+		instansingData[NumDrawInstansing].world = MatrixTransform::Identity();
+		instansingData[NumDrawInstansing].color = (*particleIterator).color_;
+		NumDrawInstansing++;
 	}
-
-	Matrix4x4 TestMat = MatrixTransform::AffineMatrix(state->GetWorldTransform().scale, {0,0,0}, testTrans);
-	TestMat = MatrixTransform::Multiply(TestMat, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
-
-	instansingData[1].WVP = TestMat;
-	instansingData[1].world = MatrixTransform::Identity();
-	instansingData[1].color = { 1,0,0,1 };
 
 	CommandCall(state->GetTexhandle());
 }
 
 
-void ParticlePlaneState::CarmeraBillbord(ViewProjection view,Particle *state)
+void ParticlePlaneState::CarmeraBillbord(ViewProjection view)
 {
-	//スケールを出す
-	sMat = MatrixTransform::ScaleMatrix(state->GetWorldTransform().scale);
-	//平行移動移動
-	tMat = MatrixTransform::TranslateMatrix(state->GetWorldTransform().translate);
-
 	//回転
 	Matrix4x4 backToFrontMatrix = MatrixTransform::Identity();
 	Matrix4x4 rm = MatrixTransform::RotateXYZMatrix(view.rotation_.x, view.rotation_.y, view.rotation_.z);
@@ -126,5 +121,5 @@ void ParticlePlaneState::CommandCall(uint32_t TexHandle)
 	TextureManager::rootParamerterCommand(1, dsvIndex);
 	TextureManager::rootParamerterCommand(2,TexHandle);
 	
-	commands.m_pList->DrawIndexedInstanced(IndexSize, 2, 0, 0, 0);
+	commands.m_pList->DrawIndexedInstanced(IndexSize,NumDrawInstansing, 0, 0, 0);
 }
