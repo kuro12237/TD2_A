@@ -71,9 +71,6 @@ void ParticlePlaneState::Draw(Particle* state,ViewProjection viewprojection)
 		Matrix4x4 matWorld = MatrixTransform::Multiply(sMat, MatrixTransform::Multiply(billboardMatrix, tMat));
 		//view•ÏŠ·
 		matWorld = MatrixTransform::Multiply(matWorld, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
-
-
-
 		//‘ã“ü
 		instansingData[0].WVP = matWorld;
 		instansingData[0].world = MatrixTransform::Identity();
