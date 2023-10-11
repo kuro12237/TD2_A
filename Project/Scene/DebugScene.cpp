@@ -112,11 +112,53 @@ void DebugScene::Update(GameManager* Scene)
 		Audio::AudioPlayWave(soundHandle_);
 	}
 	
+	if (Input::GetInstance()->PushKey(DIK_W))
+	{
+		viewProjection.translation_.z += 0.01f;
+	}
+	if (Input::GetInstance()->PushKey(DIK_S))
+	{
+		viewProjection.translation_.z -= 0.01f;
+	}
+
+	if (Input::GetInstance()->PushKey(DIK_R))
+	{
+		viewProjection.translation_.y += 0.01f;
+	}
+	if (Input::GetInstance()->PushKey(DIK_F))
+	{
+		viewProjection.translation_.y -= 0.01f;
+	}
+
+
+	if (Input::GetInstance()->PushKey(DIK_A))
+	{
+		viewProjection.translation_.x += 0.01f;
+	}if (Input::GetInstance()->PushKey(DIK_D))
+	{
+		viewProjection.translation_.x -= 0.01f;
+	}
+
+
+	if (Input::GetInstance()->PushKey(DIK_O))
+	{
+		viewProjection.rotation_.x += 0.01f;
+	}if (Input::GetInstance()->PushKey(DIK_L))
+	{
+		viewProjection.rotation_.x -= 0.01f;
+	}
+
+	if (Input::GetInstance()->PushKey(DIK_LEFT))
+	{
+		viewProjection.rotation_.y -= 0.01f;
+	}if (Input::GetInstance()->PushKey(DIK_RIGHT))
+	{
+		viewProjection.rotation_.y += 0.01f;
+	}
+
 	spriteWorldTransform_.UpdateMatrix();
 	sprite2WorldTransform_.UpdateMatrix();
 	particleWorldTransform.UpdateMatrix();
-
-
 
 	viewProjection.UpdateMatrix();
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);

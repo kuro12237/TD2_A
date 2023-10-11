@@ -1489,7 +1489,6 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dAdd(ComPtr<ID3D12Device> d
 	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[0].Descriptor.ShaderRegister = 0;
 
-
 	//
 	//Vertex
 	D3D12_DESCRIPTOR_RANGE descriptorRangeForInstancing[1] = {};

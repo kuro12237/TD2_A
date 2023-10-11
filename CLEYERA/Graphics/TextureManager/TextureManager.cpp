@@ -27,9 +27,7 @@ void TextureManager::Initialize()
 
 void TextureManager::Finalize()
 {
-
 	CoUninitialize();
-
 }
 TextureManager* TextureManager::GetInstance()
 {
