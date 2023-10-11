@@ -84,6 +84,7 @@
     <ClCompile Include="Project\GameObject\MapWall\MapWall.cpp" />
     <ClCompile Include="Project\GameObject\MapWall\MapWallManager.cpp" />
     <ClCompile Include="Project\GameObject\Player\Player.cpp" />
+    <ClCompile Include="Project\GameObject\TransitionProcess\TransitionProcess.cpp" />
     <ClCompile Include="Project\Scene\DebugScene.cpp" />
     <ClCompile Include="Project\Scene\GameScene.cpp" />
   </ItemGroup>
@@ -147,6 +148,7 @@
     <ClInclude Include="Project\GameObject\MapWall\MapWall.h" />
     <ClInclude Include="Project\GameObject\MapWall\MapWallManager.h" />
     <ClInclude Include="Project\GameObject\Player\Player.h" />
+    <ClInclude Include="Project\GameObject\TransitionProcess\TransitionProcess.h" />
     <ClInclude Include="Project\Scene\DebugScene.h" />
     <ClInclude Include="Project\Scene\GameScene.h" />
     <ClInclude Include="Project\Scene\IScene.h" />

@@ -127,6 +127,9 @@
     <Filter Include="Project\GameObject\FadeProcess">
       <UniqueIdentifier>{7ab85bd8-1c00-431a-b045-66a52195c511}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\TransitionProcess">
+      <UniqueIdentifier>{0e3f302b-6f54-44ee-9d62-a446447cc090}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -269,6 +272,9 @@
     <ClCompile Include="Project\GameObject\MapWall\MapWallManager.cpp" />
     <ClCompile Include="Project\GameObject\FadeProcess\FadeProcess.cpp">
       <Filter>Project\GameObject\FadeProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\TransitionProcess\TransitionProcess.cpp">
+      <Filter>Project\GameObject\TransitionProcess</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -443,6 +449,9 @@
     <ClInclude Include="Project\GameObject\MapWall\MapWallManager.h" />
     <ClInclude Include="Project\GameObject\FadeProcess\FadeProcess.h">
       <Filter>Project\GameObject\FadeProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\TransitionProcess\TransitionProcess.h">
+      <Filter>Project\GameObject\TransitionProcess</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
