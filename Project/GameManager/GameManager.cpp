@@ -3,17 +3,8 @@
 GameManager::GameManager()
 {
 	Cleyera::Initialize();
-	Scene_ = new DebugScene();
+	Scene_ = new GameScene();
 	Scene_->Initialize();
-
-	Grid* grid = new Grid();
-	grid->Initialize();
-	//GridCommand‚ðƒZƒbƒg
-	DebugTools::addCommand(grid,"Grid");
-
-	DebugCamera* debugcamera = new DebugCamera();
-	debugcamera->Initialize();
-	DebugTools::addCommand(debugcamera,"DebugCamera");
 }
 
 GameManager::~GameManager()
@@ -23,20 +14,17 @@ GameManager::~GameManager()
 	Cleyera::Finalize();
 }
 
-
 void GameManager::Run()
 {
 	while (WinApp::WinMsg())
 	{
 		Cleyera::BeginFlame();
 	
-		DebugTools::UpdateExecute(0);
-		DebugTools::UpdateExecute(1);
 		Scene_->Update(this);
 	
-		DebugTools::DrawExecute(0);
-		DebugTools::DrawExecute(1);
-		Scene_->Draw();
+		Scene_->Back2dSpriteDraw();
+		Scene_->Object3dDraw();
+		Scene_->Flont2dSpriteDraw();
 
 		Cleyera::EndFlame();
 	}
@@ -44,6 +32,7 @@ void GameManager::Run()
 
 void GameManager::ChangeState(IScene *newScene)
 {
+	DebugTools::ClearCommand();
 	TextureManager::AllUnTexture();
 	delete Scene_;
 	Scene_ = newScene;

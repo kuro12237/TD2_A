@@ -22,8 +22,10 @@ public:
 
 	void Update(GameManager* Scene)override;
 
-	void Draw()override;
-
+	void Back2dSpriteDraw()override;
+	void Object3dDraw()override;
+	void Flont2dSpriteDraw()override;
+	
 private:
 	void TestCsvFile();
 

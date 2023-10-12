@@ -5,7 +5,9 @@ void PlayerParticle::Initialize()
 	texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
 	particle_ = make_unique<Particle>();
 	particle_->SetTexHandle(texHandle);
+	particle_->SetName("PlayerParticle");
 	particle_->Initialize(new ParticlePlaneState, 60);
+	particle_->Initialize(new ParticlePlaneState, 20);
 }
 
 void PlayerParticle::Update(Vector3 position)

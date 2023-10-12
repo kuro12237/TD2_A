@@ -2,7 +2,6 @@
 
 void ParticlePlaneState::Initialize(Particle* state)
 {
-
 	if (NumInstansing)
 	{
 		//NumInstansingInitializeが二回呼び出されたらErrorを出す
@@ -20,12 +19,10 @@ void ParticlePlaneState::Initialize(Particle* state)
 	resource_.Material = CreateResources::CreateBufferResource(sizeof(Material));
 	resource_.Index = CreateResources::CreateBufferResource(sizeof(uint32_t) * IndexSize);
 	resource_.IndexBufferView = CreateResources::IndexCreateBufferView(sizeof(uint32_t) * IndexSize, resource_.Index.Get());
-
 }
 
 void ParticlePlaneState::Draw(Particle* state,list<Particle_param>param,ViewProjection viewprojection)
 {
-
 	VertexData* vertexData = nullptr;
 	Material* materialData = nullptr;
 	uint32_t* indexData = nullptr;
@@ -65,8 +62,8 @@ void ParticlePlaneState::Draw(Particle* state,list<Particle_param>param,ViewProj
 	NumDrawInstansing = 0;
 
 	for (list<Particle_param>::iterator particleIterator = param.begin();
-		particleIterator != param.end(); ++particleIterator)
-	{
+		particleIterator != param.end(); ++particleIterator){
+
 		//スケールを出す
 		sMat = MatrixTransform::ScaleMatrix((*particleIterator).worldTransform_.scale);
 		//平行移動移動
@@ -99,7 +96,6 @@ void ParticlePlaneState::CarmeraBillbord(ViewProjection view)
 	billboardMatrix.m[3][0] = 0.0f;
 	billboardMatrix.m[3][1] = 0.0f;
 	billboardMatrix.m[3][2] = 0.0f;
-
 }
 
 void ParticlePlaneState::CommandCall(uint32_t TexHandle)
@@ -107,8 +103,8 @@ void ParticlePlaneState::CommandCall(uint32_t TexHandle)
 	Commands commands = DirectXCommon::GetInstance()->GetCommands();
 	SPSO pso = GraphicsPipelineManager::GetInstance()->GetPso();
 
-	commands.m_pList->SetGraphicsRootSignature(pso.Particle3d.none.rootSignature.Get());
-	commands.m_pList->SetPipelineState(pso.Particle3d.none.GraphicsPipelineState.Get());
+	commands.m_pList->SetGraphicsRootSignature(pso.Particle3d.Add.rootSignature.Get());
+	commands.m_pList->SetPipelineState(pso.Particle3d.Add.GraphicsPipelineState.Get());
 
 	commands.m_pList->IASetVertexBuffers(0, 1, &resource_.BufferView);
 	commands.m_pList->IASetIndexBuffer(&resource_.IndexBufferView);

@@ -13,6 +13,7 @@ void Player::Initialize()
 
 	reticleTestModel = make_unique<Model>();
 	reticleTestModel->Initialize(new ModelSphereState);
+	
 	reticleTestModel->SetColor({ 0,1,0,1 });
 
 	LineModel_ = make_unique<Model>();
