@@ -110,7 +110,7 @@ void SpriteBoxState::CommandCall(uint32_t texHandle,Sprite* state)
 
 	if (!texHandle == 0)
 	{
-		TextureManager::texCommand(texHandle);
+		TextureManager::rootParamerterCommand(2,texHandle);
 	}
 
 	//描画(DrawCall/ドローコール)。

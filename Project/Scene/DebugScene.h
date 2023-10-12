@@ -10,6 +10,7 @@
 
 #include"CollisionManager.h"
 
+#include"Particle/Particle.h"
 class DebugScene:public IScene
 {
 public:
@@ -17,17 +18,19 @@ public:
 	~DebugScene();
 
 
-	void Initialize(GameManager* Scene)override;
+	void Initialize()override;
 
 	void Update(GameManager* Scene)override;
 
-	void Draw(GameManager* Scene)override;
+	void Draw()override;
 
 private:
 	void TestCsvFile();
 
 	void CheckAllCollision();
 	
+	void Testparticle();
+
 	ViewProjection viewProjection{};
 	uint32_t soundHandle_  = 0;
 
@@ -46,4 +49,10 @@ private:
 	bool SubtractFlag = false;
 	bool ScreenFlag = false;
 
+
+	unique_ptr<Particle>particle_ = nullptr;
+	
+	Vector3 TestParticlesTranslate = {};
+	Vector4 TestParticleColor = {1,1,1,1};
+	
 };

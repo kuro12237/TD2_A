@@ -1,8 +1,8 @@
 #pragma once
 #include"Model.h"
 
-#define FILD_MAP_SIZE_X 16
-#define FILD_MAP_SIZE_Z 16
+#define FILD_MAP_SIZE_X 32
+#define FILD_MAP_SIZE_Z 32
 
 struct sWall
 {
@@ -30,7 +30,6 @@ private:
 	sWall Bottom_ = {};
 	sWall Left_ = {};
 	sWall Right_ = {};
-
 
 };
 

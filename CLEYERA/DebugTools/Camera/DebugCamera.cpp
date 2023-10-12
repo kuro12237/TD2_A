@@ -1,4 +1,4 @@
-#include "DebugCamera.h"
+ï»¿#include "DebugCamera.h"
 
 DebugCamera* DebugCamera::GetInstance()
 {
@@ -35,21 +35,21 @@ void DebugCamera::TranslateMove()
 {
 	Vector3 speed = DebugCamera::GetInstance()->CemeraMoveSpeed_;
 
-	//©
+	//â†
 	if (Input::GetInstance()->PushKey(DIK_A))
 	{
 		DebugCamera::GetInstance()->offset_.x -= speed.x; 
-	}//¨
+	}//â†’
 	else if (Input::GetInstance()->PushKey(DIK_D))
 	{
 		DebugCamera::GetInstance()->offset_.x += speed.x;
 	}
 
-	//ª
+	//â†‘
 	if (Input::GetInstance()->PushKey(DIK_W))
 	{
 		DebugCamera::GetInstance()->offset_.y += speed.y;
-	}//«
+	}//â†“
 	else if (Input::GetInstance()->PushKey(DIK_S))
 	{
 		DebugCamera::GetInstance()->offset_.y -= speed.y;
@@ -61,21 +61,21 @@ void DebugCamera::RotateMove()
 	Matrix4x4 matRotate = MatrixTransform::Identity();
 	Vector3 speed = DebugCamera::GetInstance()->CemaraRotateSpeed_;
     
-	//©‚Ì‰ñ“]
+	//â†ã®å›žè»¢
 	if (Input::GetInstance()->PushKey(DIK_LEFT))
 	{
 		matRotate = MatrixTransform::Multiply(matRotate, MatrixTransform::RotateYMatrix(speed.y));
-	}//¨‚Ì‰ñ“]
+	}//â†’ã®å›žè»¢
 	else if(Input::GetInstance()->PushKey(DIK_RIGHT))
 	{
 		matRotate = MatrixTransform::Multiply(matRotate, MatrixTransform::RotateYMatrix(-speed.y));
 	}
 
-	//ª‚Ì‰ñ“]
+	//â†‘ã®å›žè»¢
 	if (Input::GetInstance()->PushKey(DIK_UP))
 	{
 		matRotate = MatrixTransform::Multiply(matRotate, MatrixTransform::RotateXMatrix(speed.x));
-	}//«‚Ì‰ñ“]
+	}//â†“ã®å›žè»¢
 	else if (Input::GetInstance()->PushKey(DIK_DOWN))
 	{
 		matRotate = MatrixTransform::Multiply(matRotate, MatrixTransform::RotateXMatrix(-speed.x));
@@ -97,20 +97,20 @@ void DebugCamera::UpdateExecute()
 
 	IsUseDebugCameraViewProjection();
 
-	//’†S’n“_‚©‚ç‚¸‚ç‚·
+	//ä¸­å¿ƒåœ°ç‚¹ã‹ã‚‰ãšã‚‰ã™
 	Vector3 offset = DebugCamera::GetInstance()->offset_;
 	offset = VectorTransform::TransformNormal(offset, DebugCamera::GetInstance()->matRotate_);
 	DebugCamera::GetInstance()->worldTransform_.translate = offset;
 
 
-#pragma region XVˆ—
-	//Translate‚ÌXV
+#pragma region æ›´æ–°å‡¦ç†
+	//Translateã®æ›´æ–°
 	Matrix4x4 translateMatrix =
 		MatrixTransform::TranslateMatrix(DebugCamera::GetInstance()->worldTransform_.translate);
-	//worldTransform‚ÌXV
+	//worldTransformã®æ›´æ–°
 	DebugCamera::GetInstance()->worldTransform_.matWorld =
 		MatrixTransform::Multiply(DebugCamera::GetInstance()->matRotate_, translateMatrix);
-	//views—ñ‚ÌXV
+	//viewè¡Œåˆ—ã®æ›´æ–°
 	DebugCamera::GetInstance()->DebugViewProjection_.matView_ =
 		MatrixTransform::Multiply(MatrixTransform::Inverse(translateMatrix),
 			MatrixTransform::Inverse(DebugCamera::GetInstance()->matRotate_));

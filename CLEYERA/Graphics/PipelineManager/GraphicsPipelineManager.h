@@ -28,6 +28,7 @@ struct SPSO
 	SPSOProperty Line;
 	SBlendPSO Sprite2d;
 	SBlendPSO Sprite3d;
+	SBlendPSO Particle3d;
 	SPSOProperty Herf_Lambert;
 };
 
@@ -112,6 +113,7 @@ private:
 	static void CreatePSO(SPSO &pso);
 	static void Create2dSpritePSOs(SPSO &pso);
 	static void Create3dSpritePSOs(SPSO& pso);
+	static void Create3dParticlePSOs(SPSO& pso);
 
 	static SPSOProperty CreateShape(ComPtr<ID3D12Device>device,Commands command,SShaderMode shader);
 	static SPSOProperty CreateLine(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
@@ -124,6 +126,9 @@ private:
 	static SPSOProperty CreateSprite2dScreen(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
 
 	static SPSOProperty CreateHerf_Lambert(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
+
+	static SPSOProperty CreateParticle3dNone(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
+	static SPSOProperty CreateParticle3dAdd(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
 
 	SPSO pso = {};
 

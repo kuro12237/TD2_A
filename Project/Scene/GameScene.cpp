@@ -1,62 +1,82 @@
 ﻿#include "GameScene.h"
 
-void GameScene::Initialize(GameManager* scene)
+void GameScene::Initialize()
 {
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
+
+	
+	timeCount_ = make_unique<TimeCount>();
+	timeCount_->Initialize();
+
 	player_ = make_unique<Player>();
 	player_->Initialize();
 
 
 	LoadEnemyDate();
 	enemy_ = make_unique<Enemy>();
+
 	enemy_->Initialize({ 5,0.5,0 });
   
 	mapwall_ = make_unique<MapWall>();
 	mapwall_->Initialize();
 
 	scene;
+
 	MainCamera::Initialize();
-	//make_unique<
+
 	collisionManager_ = make_unique<CollisionManager>();
-	
+	mapWallManager_ = make_unique<MapWallManager>();
+	mapWallManager_->Initialize();
+
 }
 
 void GameScene::Update(GameManager* scene)
 {
-	ImGui::Begin("ChangeDebugScene");
-	ImGui::Text("9 key");
-	ImGui::End();
-
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
 		scene->ChangeState(new DebugScene);
 		return;
 	}
+	
+	MapWallCollision();
 
-	player_->Update();
-	enemy_->SetPlayer(player_.get());
-	enemy_->Update();
-	EnemyReset();
+
+	timeCount_->Update();
+	// 時間切れ時の処理
+	if (timeCount_->GetIsTimeUp() == false) {
+		player_->Update();
+		enemy_->Update();
+	}
+
 	UpdateEnemyCommands();
-	mapwall_->Update();
+	
+	mapWallManager_->Update();
 
 	Collision();
 
-	MainCamera::Update();
+	MainCamera::Update(player_->GetWorldTransform());
+
+	viewProjection.UpdateMatrix();
 
 	viewProjection = MainCamera::GetViewProjection();
+
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
+
+	/*ImGui::Begin("ChangeDebugScene");
+	ImGui::Text("9 key");
+	ImGui::End();*/
 }
 
-void GameScene::Draw(GameManager* scene)
+void GameScene::Draw()
 {
+
 	player_->Draw(viewProjection);
-
 	enemy_->Draw(viewProjection);
-	
-	mapwall_->Draw(viewProjection);
 
-	scene;
+	mapWallManager_->Draw(viewProjection);
+
+	timeCount_->Draw();
+	
 }
 
 void GameScene::Collision()
@@ -70,6 +90,13 @@ void GameScene::Collision()
 	//Check
 	collisionManager_->CheckAllCollision();
 
+}
+
+void GameScene::MapWallCollision()
+{
+	mapWallManager_->ListClear();
+	mapWallManager_->SetObject(player_.get());
+	mapWallManager_->CheckMapWall();
 }
 
 // �G�̃��[�hcsv��
