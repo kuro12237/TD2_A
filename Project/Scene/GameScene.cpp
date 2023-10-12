@@ -17,10 +17,8 @@ void GameScene::Initialize()
 
 	enemy_->Initialize({ 5,0.5,0 });
   
-	mapwall_ = make_unique<MapWall>();
-	mapwall_->Initialize();
 
-	scene;
+	
 
 	MainCamera::Initialize();
 
@@ -174,7 +172,7 @@ void GameScene::UpdateEnemyCommands() {
 void GameScene::EnemySpawn(const Vector3& position) {
 	enemy_ = make_unique<Enemy>();
 	enemy_->Initialize(position);
-	enemy_->SetPlayer(player);
+	enemy_->SetPlayer(player_.get());
 }
 
 void GameScene::EnemyReset() {
