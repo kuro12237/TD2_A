@@ -8,6 +8,7 @@
 #include"GameObject/Player/Player.h"
 #include"GameObject/PhysicsFanc.h"
 
+
 class Enemy : public Collider {
 public:
 
