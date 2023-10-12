@@ -104,6 +104,7 @@ void DebugScene::Update(GameManager* Scene)
 
 	sprite_->SetColor(color);
 
+
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
 		Scene->ChangeState(new GameScene);
@@ -113,49 +114,51 @@ void DebugScene::Update(GameManager* Scene)
 	{
 		Audio::AudioPlayWave(soundHandle_);
 	}
-	
-	if (Input::GetInstance()->PushKey(DIK_W))
-	{
-		viewProjection.translation_.z += 0.01f;
-	}
-	if (Input::GetInstance()->PushKey(DIK_S))
-	{
-		viewProjection.translation_.z -= 0.01f;
-	}
 
-	if (Input::GetInstance()->PushKey(DIK_R))
-	{
-		viewProjection.translation_.y += 0.01f;
+	{//TestTranslate
+		if (Input::GetInstance()->PushKey(DIK_W))
+		{
+			viewProjection.translation_.z += 0.01f;
+		}
+		if (Input::GetInstance()->PushKey(DIK_S))
+		{
+			viewProjection.translation_.z -= 0.01f;
+		}
+
+		if (Input::GetInstance()->PushKey(DIK_R))
+		{
+			viewProjection.translation_.y += 0.01f;
+		}
+		if (Input::GetInstance()->PushKey(DIK_F))
+		{
+			viewProjection.translation_.y -= 0.01f;
+		}
 	}
-	if (Input::GetInstance()->PushKey(DIK_F))
-	{
-		viewProjection.translation_.y -= 0.01f;
-	}
+	{//TestRotate
+		if (Input::GetInstance()->PushKey(DIK_A))
+		{
+			viewProjection.translation_.x += 0.01f;
+		}if (Input::GetInstance()->PushKey(DIK_D))
+		{
+			viewProjection.translation_.x -= 0.01f;
+		}
 
 
-	if (Input::GetInstance()->PushKey(DIK_A))
-	{
-		viewProjection.translation_.x += 0.01f;
-	}if (Input::GetInstance()->PushKey(DIK_D))
-	{
-		viewProjection.translation_.x -= 0.01f;
-	}
+		if (Input::GetInstance()->PushKey(DIK_O))
+		{
+			viewProjection.rotation_.x += 0.01f;
+		}if (Input::GetInstance()->PushKey(DIK_L))
+		{
+			viewProjection.rotation_.x -= 0.01f;
+		}
 
-
-	if (Input::GetInstance()->PushKey(DIK_O))
-	{
-		viewProjection.rotation_.x += 0.01f;
-	}if (Input::GetInstance()->PushKey(DIK_L))
-	{
-		viewProjection.rotation_.x -= 0.01f;
-	}
-
-	if (Input::GetInstance()->PushKey(DIK_LEFT))
-	{
-		viewProjection.rotation_.y -= 0.01f;
-	}if (Input::GetInstance()->PushKey(DIK_RIGHT))
-	{
-		viewProjection.rotation_.y += 0.01f;
+		if (Input::GetInstance()->PushKey(DIK_LEFT))
+		{
+			viewProjection.rotation_.y -= 0.01f;
+		}if (Input::GetInstance()->PushKey(DIK_RIGHT))
+		{
+			viewProjection.rotation_.y += 0.01f;
+		}
 	}
 
 	spriteWorldTransform_.UpdateMatrix();
@@ -178,7 +181,8 @@ void DebugScene::Draw()
 void DebugScene::Testparticle()
 {
 	ImGui::Begin("SpownParticle");
-	ImGui::DragFloat3("translate", &TestParticlesTranslate.x, -0.1f, 0.1f);
+	ImGui::DragFloat3("translate", &TestParticlesTranslate.x, 0.1f, -0.1f);
+	ImGui::SliderFloat4("color", &TestParticleColor.x, 0.01f, -0.01f);
 	ImGui::End();
 
 	if (Input::GetInstance()->PushKeyPressed(DIK_P))
@@ -186,7 +190,7 @@ void DebugScene::Testparticle()
 		Particle_param p1{};
 		p1.worldTransform_.Initialize();
 		p1.worldTransform_.translate = TestParticlesTranslate;
-		p1.color_ = { 1,1,1,1 };
+		p1.color_ = TestParticleColor;
 		particle_->SetList(p1);
 	}
 

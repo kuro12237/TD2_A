@@ -53,5 +53,6 @@ private:
 	unique_ptr<Particle>particle_ = nullptr;
 	
 	Vector3 TestParticlesTranslate = {};
+	Vector4 TestParticleColor = {1,1,1,1};
 	
 };
