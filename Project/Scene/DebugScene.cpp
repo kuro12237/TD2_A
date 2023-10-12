@@ -29,8 +29,6 @@ void DebugScene::Initialize()
 	particle_ = make_unique<Particle>();
 	particle_->SetTexHandle(SpriteTexHandle);
 	particle_->Initialize(new ParticlePlaneState,20);
-	
-
 
 }
 
@@ -191,7 +189,7 @@ void DebugScene::Testparticle()
 		p1.worldTransform_.Initialize();
 		p1.worldTransform_.translate = TestParticlesTranslate;
 		p1.color_ = TestParticleColor;
-		particle_->SetList(p1);
+		particle_->PushList(p1);
 	}
 
 }

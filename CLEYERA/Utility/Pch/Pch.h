@@ -10,6 +10,7 @@
 #include<fstream>
 #include<sstream>
 #include<chrono>
+#include<random>
 
 #include<Windows.h>
 #pragma comment(lib,"winmm.lib")

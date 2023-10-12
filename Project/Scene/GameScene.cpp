@@ -23,6 +23,11 @@ void GameScene::Initialize()
 	mapWallManager_ = make_unique<MapWallManager>();
 	mapWallManager_->Initialize();
 
+	texHandle = TextureManager::LoadTexture("Resources/mob.png");
+	testSprite = make_unique<Sprite>();
+	testSprite->SetTexHandle(texHandle);
+	testSprite->Initialize(new SpriteBoxState,{0,0},{320,320});
+	testSpriteWorldTransform.Initialize();
 }
 
 void GameScene::Update(GameManager* scene)
@@ -44,10 +49,7 @@ void GameScene::Update(GameManager* scene)
 	}
 	
 	EnemyReset();
-	ImGui::Begin("e");
-	ImGui::Text("t %f   %f   %f ", enemy_->GetWorldPosition().x, enemy_->GetWorldPosition().y, enemy_->GetWorldPosition().z);
-	ImGui::End();
-
+	
 	UpdateEnemyCommands();
 	
 	mapWallManager_->Update();
@@ -62,21 +64,17 @@ void GameScene::Update(GameManager* scene)
 
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
 
-	/*ImGui::Begin("ChangeDebugScene");
-	ImGui::Text("9 key");
-	ImGui::End();*/
 }
 
 void GameScene::Draw()
 {
-
 	player_->Draw(viewProjection);
 	enemy_->Draw(viewProjection);
 
 	mapWallManager_->Draw(viewProjection);
 
 	timeCount_->Draw();
-	
+	testSprite->Draw(testSpriteWorldTransform);
 }
 
 void GameScene::Collision()

@@ -48,5 +48,5 @@ void GameManager::ChangeState(IScene *newScene)
 	delete Scene_;
 	Scene_ = newScene;
 	Scene_->Initialize();
-
+	return;
 }
