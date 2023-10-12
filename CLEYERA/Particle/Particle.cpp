@@ -22,7 +22,9 @@ void Particle::Draw(ViewProjection viewProjection)
 	state_->Draw(this,particles_,viewProjection);
 }
 
-void Particle::begin()
+list<Particle_param> Particle::begin()
 {
+	list<Particle_param> p = particles_;
 	particles_.clear();
+	return p;
 }

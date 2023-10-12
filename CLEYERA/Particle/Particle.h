@@ -15,13 +15,13 @@ public:
 
 	void Draw(ViewProjection viewProjection);
 
-	void begin();
+	list<Particle_param>begin();
 
 #pragma region Set
 	void SetTexHandle(uint32_t tex) { texhandle = tex; }
-	void SetList(Particle_param particle) { particles_.push_back(particle);}
+	void PushList(Particle_param particle) { particles_.push_back(particle);}
 
-	void SetListparticles(list<Particle_param> particles) { particles_ = particles; }
+	void SetListParticles(list<Particle_param> particles) { particles_ = particles; }
 #pragma endregion 
 
 #pragma region get
@@ -30,6 +30,7 @@ public:
 	const uint32_t GetNumInstancing() const{ return NumInstance_; }
 
 	list<Particle_param> GetParticles() { return particles_; }
+
 #pragma endregion 
 private:
 

@@ -4,6 +4,7 @@
 
 struct Particle_param
 {
+	bool IsAllive_;
 	WorldTransform worldTransform_;
 	Vector4 color_;
 };

@@ -2,6 +2,7 @@
 
 #include"Particle/Particle.h"
 #include"Graphics/TextureManager/TextureManager.h"
+#include"VectorTransform.h"
 
 class PlayerParticle
 {
@@ -18,13 +19,12 @@ public:
 
 
 private:
-
-
 	list<Particle_param> particles_param_{};
 	unique_ptr<Particle>particle_{};
 
-	uint32_t spownTime = 0;
+	random_device seedGenerator;
 
+	uint32_t spownTime = 0;
 	uint32_t texHandle = 0;
 };
 
