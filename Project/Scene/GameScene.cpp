@@ -67,14 +67,10 @@ void GameScene::Update(GameManager* scene)
 
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
 
-	/*ImGui::Begin("ChangeDebugScene");
-	ImGui::Text("9 key");
-	ImGui::End();*/
 }
 
 void GameScene::Draw()
 {
-	
 	player_->Draw(viewProjection);
 	enemy_->Draw(viewProjection);
 
