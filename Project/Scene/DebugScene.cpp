@@ -28,7 +28,7 @@ void DebugScene::Initialize()
 
 	particle_ = make_unique<Particle>();
 	particle_->SetTexHandle(SpriteTexHandle);
-	particle_->Initialize(new ParticlePlaneState,5);
+	particle_->Initialize(new ParticlePlaneState,20);
 	
 
 
@@ -177,24 +177,18 @@ void DebugScene::Draw()
 
 void DebugScene::Testparticle()
 {
-	particle_->begin();
-	Particle_param p1{};
-	p1.worldTransform_.Initialize();
+	ImGui::Begin("SpownParticle");
+	ImGui::DragFloat3("translate", &TestParticlesTranslate.x, -0.1f, 0.1f);
+	ImGui::End();
 
-	p1.color_ = { 1,1,1,1 };
-	particle_->SetList(p1);
-	
-	Particle_param p2{};
-	p2.worldTransform_.Initialize();
-	p2.worldTransform_.translate.y = 2;
-	p2.color_ = { 1,0,0,1 };
-	particle_->SetList(p2);
-
-	Particle_param p3{};
-	p3.worldTransform_.Initialize();
-	p3.worldTransform_.translate.y = 1;
-	p3.color_ = { 1,1,1,1 };
-	particle_->SetList(p3);
+	if (Input::GetInstance()->PushKeyPressed(DIK_P))
+	{
+		Particle_param p1{};
+		p1.worldTransform_.Initialize();
+		p1.worldTransform_.translate = TestParticlesTranslate;
+		p1.color_ = { 1,1,1,1 };
+		particle_->SetList(p1);
+	}
 
 }
 

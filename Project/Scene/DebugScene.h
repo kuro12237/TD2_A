@@ -52,5 +52,6 @@ private:
 
 	unique_ptr<Particle>particle_ = nullptr;
 	
+	Vector3 TestParticlesTranslate = {};
 	
 };
