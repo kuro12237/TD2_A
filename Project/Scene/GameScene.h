@@ -5,7 +5,6 @@
 #include"GameObject/Enemy/Enemy.h"
 #include"GameObject/Camera/MainCamera.h"
 #include"CollisionManager.h"
-
 #include"FileLoader.h"
 #include"GameObject/MapWall/MapWall.h"
 
@@ -27,7 +26,8 @@ public:
 	/// </summary>
 	void LoadEnemyDate();
 	void UpdateEnemyCommands();
-	void EnemySpawn(const Vector3& position);			
+	void EnemySpawn(const Vector3& position);
+	void EnemyReset();
 	
 private:
 	

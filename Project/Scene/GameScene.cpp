@@ -36,8 +36,8 @@ void GameScene::Update(GameManager* scene)
 	player_->Update();
 	enemy_->SetPlayer(player_.get());
 	enemy_->Update();
+	EnemyReset();
 	UpdateEnemyCommands();
-	
 	mapwall_->Update();
 
 	Collision();
@@ -148,5 +148,14 @@ void GameScene::EnemySpawn(const Vector3& position) {
 	enemy_ = make_unique<Enemy>();
 	enemy_->Initialize(position);
 	enemy_->SetPlayer(player);
+}
+
+void GameScene::EnemyReset() {
+	if (Input::GetInstance()->PushKeyPressed(DIK_R)) {
+		enemy_.reset();
+		LoadEnemyDate();
+		enemy_ = make_unique<Enemy>();
+		enemy_->Initialize({ 5,0.5,0 });
+	}
 }
 

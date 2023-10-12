@@ -68,7 +68,7 @@ private:
 
 	uint32_t MoveCoolTime = 0;
 	bool MoveFlag = false;
-	const float speed = 4.0f;
+	const float speed = 2.0f;
 	const float rotateSpeed = 0.1f;
 
 	uint32_t texHandle = 0;
