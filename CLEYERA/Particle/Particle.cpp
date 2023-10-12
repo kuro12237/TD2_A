@@ -5,7 +5,7 @@ void Particle::Initialize(IParticleState* state, const uint32_t NumInstance)
 	if (InitializeLock){
 		//Initialize‚ª“ñ‰ñŒÄ‚Ño‚³‚ê‚Ä‚¢‚é
 		LogManager::Log("Particle Initialize ERROR " + name_+"\n");
-		//assert(0);
+		assert(0);
 	}
 	state_ = state;
 	NumInstance_ = NumInstance;
