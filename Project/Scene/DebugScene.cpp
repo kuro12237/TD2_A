@@ -181,8 +181,8 @@ void DebugScene::Draw()
 void DebugScene::Testparticle()
 {
 	ImGui::Begin("SpownParticle");
-	ImGui::DragFloat3("translate", &TestParticlesTranslate.x, 0.1f, -0.1f);
-	ImGui::SliderFloat4("color", &TestParticleColor.x, 1.0f, -1.0f);
+	ImGui::SliderFloat3("translate", &TestParticlesTranslate.x, 3.0f, -3.0f);
+	ImGui::SliderFloat4("color", &TestParticleColor.x, 1.0f, -0.0f);
 	ImGui::End();
 
 	if (Input::GetInstance()->PushKeyPressed(DIK_P))
