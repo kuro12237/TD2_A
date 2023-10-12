@@ -7,6 +7,10 @@ void Player::Initialize()
 	texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
 	model_->SetTexHandle(texHandle);
 
+	MoveEffect = make_unique<PlayerParticle>();
+	MoveEffect->Initialize();
+
+
 	reticleTestModel = make_unique<Model>();
 	reticleTestModel->Initialize(new ModelSphereState);
 	reticleTestModel->SetColor({ 0,1,0,1 });
@@ -34,7 +38,7 @@ void Player::Update()
 	Reticle();
 	SetVelosity(Velocity);
 	Move();
-	
+	MoveEffect->Update(worldTransform_.translate);
 	
 	LineWorldTransform_.UpdateMatrix();
 	reticleWorldTransform.UpdateMatrix();
@@ -46,6 +50,7 @@ void Player::Draw(ViewProjection view)
 	model_->Draw(worldTransform_, view);
 	LineModel_->Draw(worldTransform_, view);
 	reticleTestModel->Draw(reticleWorldTransform, view);
+	MoveEffect->Draw(view);
 }
 
 void Player::OnCollision()

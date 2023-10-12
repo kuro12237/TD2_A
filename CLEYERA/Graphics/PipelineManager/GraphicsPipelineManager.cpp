@@ -1590,7 +1590,7 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dAdd(ComPtr<ID3D12Device> d
 	SettingDepth(
 		despthStencilDesc,
 		true,
-		D3D12_DEPTH_WRITE_MASK_ALL,
+		D3D12_DEPTH_WRITE_MASK_ZERO,
 		D3D12_COMPARISON_FUNC_LESS_EQUAL
 	);
 

@@ -45,8 +45,12 @@ private:
 	unique_ptr<CollisionManager> collisionManager_ = nullptr;
 
 	unique_ptr<Player>player_ = nullptr;
+	unique_ptr<Enemy>enemy_ = nullptr;
 
-	unique_ptr<Enemy>enemy_ = nullptr; // �G
+	unique_ptr<Sprite>testSprite = nullptr;
+	uint32_t texHandle = 0;
+	WorldTransform testSpriteWorldTransform{};
+
 	bool wait = false; // �ҋ@���t���O
 	uint32_t waitTimer = 0; // �ҋ@���^�C�}�[
 	stringstream fileLoad;

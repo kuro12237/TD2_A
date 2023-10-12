@@ -7,6 +7,7 @@
 #include"ColliderConfig.h"
 #include"GameObject/MapWall/MapWall.h"
 #include"GameObject/MapWall/IMapWall.h"
+#include"PlayerParticle.h"
 
 #define MAX_MOVE_COOLTIME 120
 
@@ -58,6 +59,8 @@ private:
 	unique_ptr<Model>PlaneModel_ = nullptr;
 	unique_ptr<Model>reticleTestModel = nullptr;
 	unique_ptr<Model>LineModel_ = nullptr;
+
+	unique_ptr < PlayerParticle > MoveEffect= nullptr;
 
 	WorldTransform worldTransform_ = {};
 	WorldTransform reticleWorldTransform{};

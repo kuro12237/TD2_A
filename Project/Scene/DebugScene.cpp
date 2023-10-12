@@ -29,8 +29,6 @@ void DebugScene::Initialize()
 	particle_ = make_unique<Particle>();
 	particle_->SetTexHandle(SpriteTexHandle);
 	particle_->Initialize(new ParticlePlaneState,20);
-	
-
 
 }
 
