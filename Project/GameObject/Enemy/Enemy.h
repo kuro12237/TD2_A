@@ -44,6 +44,7 @@ private:
 
 	WorldTransform worldTransform_ = {};
 	unique_ptr<Model>model_ = nullptr;
+	uint32_t texHandle_ = 0;
 	Vector3 velocity = {};
 	Player* player_ = nullptr;
 	bool isMove_ = false;
