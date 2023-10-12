@@ -23,6 +23,11 @@ void PlayerParticle::Update(Vector3 position)
 		spownTime = 0;
 	}
 
+	particles_param_ = particle_->GetParticles();
+
+	particle_->SetListParticles(particles_param_);
+
+
 }
 
 void PlayerParticle::Draw(ViewProjection view)
