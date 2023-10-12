@@ -23,7 +23,7 @@ void GameScene::Initialize()
 	mapWallManager_ = make_unique<MapWallManager>();
 	mapWallManager_->Initialize();
 
-	texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
+	texHandle = TextureManager::LoadTexture("Resources/mob.png");
 	testSprite = make_unique<Sprite>();
 	testSprite->SetTexHandle(texHandle);
 	testSprite->Initialize(new SpriteBoxState,{0,0},{320,320});
@@ -49,10 +49,7 @@ void GameScene::Update(GameManager* scene)
 	}
 	
 	EnemyReset();
-	ImGui::Begin("e");
-	ImGui::Text("t %f   %f   %f ", enemy_->GetWorldPosition().x, enemy_->GetWorldPosition().y, enemy_->GetWorldPosition().z);
-	ImGui::End();
-
+	
 	UpdateEnemyCommands();
 	
 	mapWallManager_->Update();

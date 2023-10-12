@@ -2,17 +2,16 @@
 
 void PlayerParticle::Initialize()
 {
-	texHandle = TextureManager::LoadTexture("Resources/circle.png");
+	texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
 	particle_ = make_unique<Particle>();
 	particle_->SetTexHandle(texHandle);
-	particle_->Initialize(new ParticlePlaneState, 600);
-
+	particle_->Initialize(new ParticlePlaneState, 60);
 }
 
 void PlayerParticle::Update(Vector3 position)
 {
+	//•¦‚«ˆ—
 	spownTime++;
-
 	if (spownTime>2)
 	{
 		Particle_param p1{};
@@ -23,13 +22,19 @@ void PlayerParticle::Update(Vector3 position)
 		Vector3 randpos = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 		p1.worldTransform_.translate = VectorTransform::Add(position, randpos);
 		p1.color_ = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) ,1 };
-		p1.IsAllive_ = false;
+		
+		p1.uvTransform_.scale = { 0.5f,0.5f,0.5f };
+		
+
 		particle_->PushList(p1);
 		spownTime = 0;
 	}
-	//
-	particles_param_ = particle_->begin();
 
+	//XVˆ—
+	particles_param_ = particle_->begin();
+	ImGui::Begin("Particle_Param");
+	ImGui::Text("size : %d", particles_param_.size());
+	ImGui::End();
 	for (Particle_param particle : particles_param_)
 	{
 		particle.worldTransform_.translate.y += 0.1f;
@@ -41,15 +46,9 @@ void PlayerParticle::Update(Vector3 position)
 		}
 		particle_->PushList(particle);
 	}
-
-
-	//particle_->SetListParticles(particles_param_);
-
-
 }
 
 void PlayerParticle::Draw(ViewProjection view)
 {
 	particle_->Draw(view);
-
 }

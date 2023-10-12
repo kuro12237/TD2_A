@@ -58,6 +58,8 @@ Matrix4x4 MatrixTransform::Multiply(Matrix4x4 m1, Matrix4x4 m2)
 	return result;
 }
 
+
+
 Matrix4x4 MatrixTransform::Identity()
 {
 	Matrix4x4 result =
@@ -72,6 +74,8 @@ Matrix4x4 MatrixTransform::Identity()
 
 	return result;
 }
+
+
 
 Matrix4x4 MatrixTransform::Inverse(Matrix4x4 m)
 {

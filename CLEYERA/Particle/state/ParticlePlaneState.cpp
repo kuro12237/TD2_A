@@ -37,19 +37,19 @@ void ParticlePlaneState::Draw(Particle* state,list<Particle_param>param,ViewProj
 	resource_.instancingResource->Map(0, nullptr, reinterpret_cast<void**>(&instansingData));
 
 	vertexData[0].position = { pos.x - size,pos.y + size,pos.z ,pos.w };
-	vertexData[0].texcoord = { 0.0f,0.0f };
+	vertexData[0].texcoord = { 0.0f,0.0f };//00
 	vertexData[0].normal = { 0.0f,1.0f,0.0f };
 
 	vertexData[1].position = { pos.x + size,pos.y + size,pos.z ,pos.w };
-	vertexData[1].texcoord = { 1.0f,0.0f };
+	vertexData[1].texcoord = { 1.0f,0.0f };//10
 	vertexData[1].normal = { 0.0f,1.0f,0.0f };
 
 	vertexData[2].position = { pos.x - size,pos.y - size,pos.z,pos.w };
-	vertexData[2].texcoord = { 0.0f,1.0f };
+	vertexData[2].texcoord = { 0.0f,1.0f };//01
 	vertexData[2].normal = { 0.0f,1.0f,0.0f };
 
 	vertexData[3].position = { pos.x + size,pos.y - size,pos.z,pos.w };
-	vertexData[3].texcoord = { 1.0f,1.0f };
+	vertexData[3].texcoord = { 1.0f,1.0f };//11
 	vertexData[3].normal = { 0.0f,1.0f,0.0f };
 
 	indexData[0] = 0; indexData[1] = 1; indexData[2] = 2;
@@ -67,8 +67,6 @@ void ParticlePlaneState::Draw(Particle* state,list<Particle_param>param,ViewProj
 	for (list<Particle_param>::iterator particleIterator = param.begin();
 		particleIterator != param.end(); ++particleIterator)
 	{
-		particleIterator;
-
 		//スケールを出す
 		sMat = MatrixTransform::ScaleMatrix((*particleIterator).worldTransform_.scale);
 		//平行移動移動
@@ -77,10 +75,13 @@ void ParticlePlaneState::Draw(Particle* state,list<Particle_param>param,ViewProj
 		Matrix4x4 matWorld = MatrixTransform::Multiply(sMat, MatrixTransform::Multiply(billboardMatrix, tMat));
 		//view変換
 		matWorld = MatrixTransform::Multiply(matWorld, MatrixTransform::Multiply(viewprojection.matView_, viewprojection.matProjection_));
+		//uvのAffine
+		(*particleIterator).uvTransform_.UpdateMatrix();
 		//代入
 		instansingData[NumDrawInstansing].WVP = matWorld;
 		instansingData[NumDrawInstansing].world = MatrixTransform::Identity();
 		instansingData[NumDrawInstansing].color = (*particleIterator).color_;
+		instansingData[NumDrawInstansing].uvTransform = (*particleIterator).uvTransform_.matWorld;
 		NumDrawInstansing++;
 	}
 
@@ -106,8 +107,8 @@ void ParticlePlaneState::CommandCall(uint32_t TexHandle)
 	Commands commands = DirectXCommon::GetInstance()->GetCommands();
 	SPSO pso = GraphicsPipelineManager::GetInstance()->GetPso();
 
-	commands.m_pList->SetGraphicsRootSignature(pso.Particle3d.Add.rootSignature.Get());
-	commands.m_pList->SetPipelineState(pso.Particle3d.Add.GraphicsPipelineState.Get());
+	commands.m_pList->SetGraphicsRootSignature(pso.Particle3d.none.rootSignature.Get());
+	commands.m_pList->SetPipelineState(pso.Particle3d.none.GraphicsPipelineState.Get());
 
 	commands.m_pList->IASetVertexBuffers(0, 1, &resource_.BufferView);
 	commands.m_pList->IASetIndexBuffer(&resource_.IndexBufferView);
