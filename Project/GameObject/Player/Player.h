@@ -73,7 +73,7 @@ private:
 	/// <summary>
 	/// –€ŽC
 	/// </summary>
-	const float frictionCoefficient = 0.01f;
+	const float frictionCoefficient = 0.08f;
 
 	uint32_t MoveCoolTime = 0;
 	bool MoveFlag = false;

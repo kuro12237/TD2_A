@@ -36,8 +36,16 @@ void Enemy::Draw(ViewProjection viewProjection){
 void Enemy::EnemyMove() {
 
 	if (isMove_) {
-		velocity = PhysicsFanc::Repulsiveforce(0.01f, player_->GetWorldPosition(), GetWorldPosition());
+		velocity = PhysicsFanc::Repulsiveforce(-0.1f, player_->GetWorldPosition(), GetWorldPosition());
+		isMove_ = false;
+		int a=0;
+		a;
 	}
+	ImGui::Begin("Enemy");
+	ImGui::Text("%f %f %f", velocity.x, velocity.y, velocity.z);
+	ImGui::End();
+
+
 
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, velocity);
 }

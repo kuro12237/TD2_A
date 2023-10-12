@@ -45,6 +45,9 @@ void GameScene::Update(GameManager* scene)
 		player_->Update();
 		enemy_->Update();
 	}
+	ImGui::Begin("e");
+	ImGui::Text("t %f   %f   %f ", enemy_->GetWorldPosition().x, enemy_->GetWorldPosition().y, enemy_->GetWorldPosition().z);
+	ImGui::End();
 
 	UpdateEnemyCommands();
 	
