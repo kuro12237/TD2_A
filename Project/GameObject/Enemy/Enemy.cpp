@@ -11,6 +11,7 @@ void Enemy::Initialize(const Vector3& position) {
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
 	worldTransform_.translate = position;
+	isMove_ = false;
 	worldTransform_.UpdateMatrix();
 
 	SetCollosionAttribute(kCollisionAttributeEnemy);
@@ -36,10 +37,8 @@ void Enemy::Draw(ViewProjection viewProjection){
 void Enemy::EnemyMove() {
 
 	if (isMove_) {
-		velocity = PhysicsFanc::Repulsiveforce(-0.1f, player_->GetWorldPosition(), GetWorldPosition());
+		velocity = PhysicsFanc::Repulsiveforce(-0.3f, player_->GetWorldPosition(), GetWorldPosition());
 		isMove_ = false;
-		int a=0;
-		a;
 	}
 	ImGui::Begin("Enemy");
 	ImGui::Text("%f %f %f", velocity.x, velocity.y, velocity.z);
