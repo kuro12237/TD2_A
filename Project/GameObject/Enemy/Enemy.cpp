@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 /// <summary>
-/// 初期化
+/// ﾂ鞘ｰﾅﾃｺ窶ｰﾂｻ
 /// </summary>
 void Enemy::Initialize(const Vector3& position) {
 
@@ -11,6 +11,7 @@ void Enemy::Initialize(const Vector3& position) {
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
 	worldTransform_.translate = position;
+	isMove_ = false;
 	worldTransform_.UpdateMatrix();
 
 	SetCollosionAttribute(kCollisionAttributeEnemy);
@@ -18,7 +19,7 @@ void Enemy::Initialize(const Vector3& position) {
 }
 
 /// <summary>
-/// 更新
+/// ﾂ更ﾂ新
 /// </summary>
 void Enemy::Update() {
 
@@ -27,7 +28,7 @@ void Enemy::Update() {
 }
 
 /// <summary>
-/// 描画
+/// 窶｢`窶ｰﾃｦ
 /// </summary>
 void Enemy::Draw(ViewProjection viewProjection){
 	model_->Draw(worldTransform_, viewProjection);
@@ -38,7 +39,7 @@ void Enemy::EnemyMove() {
 	if (isMove_) {
 		velocity = PhysicsFanc::Repulsiveforce(-0.5f, player_->GetWorldPosition(), GetWorldPosition());
 		isMove_ = false;
-		
+
 	}
 
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, velocity);

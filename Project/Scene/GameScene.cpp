@@ -16,9 +16,6 @@ void GameScene::Initialize()
 	enemy_ = make_unique<Enemy>();
 
 	enemy_->Initialize({ 5,0.5,0 });
-  
-
-	
 
 	MainCamera::Initialize();
 
@@ -45,6 +42,8 @@ void GameScene::Update(GameManager* scene)
 		player_->Update();
 		enemy_->Update();
 	}
+	
+	EnemyReset();
 	ImGui::Begin("e");
 	ImGui::Text("t %f   %f   %f ", enemy_->GetWorldPosition().x, enemy_->GetWorldPosition().y, enemy_->GetWorldPosition().z);
 	ImGui::End();
@@ -101,53 +100,45 @@ void GameScene::MapWallCollision()
 	mapWallManager_->CheckMapWall();
 }
 
-// �G�̃��[�hcsv��
-
+// enemyのデータをロード(CSVで)
 void GameScene::LoadEnemyDate() {
     fileLoad = FileLoader::CSVLoadFile("enemySpawn.csv");
 }
 
-// �G�����̍X�V
+// データを読み込む
 void GameScene::UpdateEnemyCommands() {
 	// �ҋ@����
 	if (wait) {
 		waitTimer--;
 		if (waitTimer <= 0) {
-			// �ҋ@����
 			wait = false;
 		}
 		return;
 	}
 
-	// 1�s���̕����������ϐ�
 	std::string line;
 
-	// �R�}���h���s���[�v
 	while (getline(fileLoad, line)) {
-		// 1�s���̕�������X�g���[���ɕϊ����ĉ�͂��₷������
+	
 		std::istringstream line_stream(line);
 
 		std::string word;
-		// ,��؂�ōs�̐擪��������擾
+		
 		getline(line_stream, word, ',');
 
-		// "//"����n�܂�s�̓R�����g
 		if (word.find("//") == 0) {
-			// �R�����g�s���΂�
+			
 			continue;
 		}
 
-		// POP�R�}���h
 		if (word.find("SPAWN") == 0) {
-			// x���W
+	
 			getline(line_stream, word, ',');
 			float x = (float)std::atof(word.c_str());
 
-			// y���W
 			getline(line_stream, word, ',');
 			float y = (float)std::atof(word.c_str());
 
-			// z���W
 			getline(line_stream, word, ',');
 			float z = (float)std::atof(word.c_str());
 
@@ -158,27 +149,25 @@ void GameScene::UpdateEnemyCommands() {
 		else if (word.find("WAIT") == 0) {
 			getline(line_stream, word, ',');
 
-			// �҂�����
 			int32_t waitTime = atoi(word.c_str());
 
-			// �ҋ@�J�n
 			wait = true;
 			waitTimer = waitTime;
 
-			// �R�}���h���[�v�𔲂���
 			break;
 		}
 	}
 
 }
 
-// �G�̔���
+// enemy発生
 void GameScene::EnemySpawn(const Vector3& position) {
 	enemy_ = make_unique<Enemy>();
 	enemy_->Initialize(position);
 	enemy_->SetPlayer(player_.get());
 }
 
+// enemyのreset
 void GameScene::EnemyReset() {
 	if (Input::GetInstance()->PushKeyPressed(DIK_R)) {
 		enemy_.reset();
