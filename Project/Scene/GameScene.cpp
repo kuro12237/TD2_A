@@ -14,7 +14,14 @@ void GameScene::Initialize()
 
 	LoadEnemyDate();
 	enemy_ = make_unique<Enemy>();
-	enemy_->Initialize({ 0,0,0 });
+
+	enemy_->Initialize({ 5,0.5,0 });
+  
+	mapwall_ = make_unique<MapWall>();
+	mapwall_->Initialize();
+
+	scene;
+
 	MainCamera::Initialize();
 
 	collisionManager_ = make_unique<CollisionManager>();
@@ -33,6 +40,7 @@ void GameScene::Update(GameManager* scene)
 	
 	MapWallCollision();
 
+
 	timeCount_->Update();
 	// 時間切れ時の処理
 	if (timeCount_->GetIsTimeUp() == false) {
@@ -43,6 +51,7 @@ void GameScene::Update(GameManager* scene)
 	UpdateEnemyCommands();
 	
 	mapWallManager_->Update();
+
 	Collision();
 
 	MainCamera::Update(player_->GetWorldTransform());
@@ -76,6 +85,7 @@ void GameScene::Collision()
 
 	//Set
 	collisionManager_->ClliderPush(player_.get());
+	collisionManager_->ClliderPush(enemy_.get());
 
 	//Check
 	collisionManager_->CheckAllCollision();
@@ -90,6 +100,7 @@ void GameScene::MapWallCollision()
 }
 
 // �G�̃��[�hcsv��
+
 void GameScene::LoadEnemyDate() {
     fileLoad = FileLoader::CSVLoadFile("enemySpawn.csv");
 }
@@ -163,5 +174,15 @@ void GameScene::UpdateEnemyCommands() {
 void GameScene::EnemySpawn(const Vector3& position) {
 	enemy_ = make_unique<Enemy>();
 	enemy_->Initialize(position);
+	enemy_->SetPlayer(player);
+}
+
+void GameScene::EnemyReset() {
+	if (Input::GetInstance()->PushKeyPressed(DIK_R)) {
+		enemy_.reset();
+		LoadEnemyDate();
+		enemy_ = make_unique<Enemy>();
+		enemy_->Initialize({ 5,0.5,0 });
+	}
 }
 

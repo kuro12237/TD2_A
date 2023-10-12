@@ -263,6 +263,8 @@
     <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Project\GameObject\PhysicsFanc.cpp">
+      <Filter>Project\GameObject\Physics</Filter>
     <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp" />
     <ClCompile Include="Project\GameObject\MapWall\MapWallManager.cpp" />
     <ClCompile Include="CLEYERA\Particle\Particle.cpp">
