@@ -123,6 +123,7 @@
     <ClInclude Include="CLEYERA\Model\State\ModelPlaneState.h" />
     <ClInclude Include="CLEYERA\Model\State\ModelSphereState.h" />
     <ClInclude Include="CLEYERA\Particle\Particle.h" />
+    <ClInclude Include="CLEYERA\Particle\SParticle.h" />
     <ClInclude Include="CLEYERA\Particle\state\IParticleState.h" />
     <ClInclude Include="CLEYERA\Particle\state\ParticlePlaneState.h" />
     <ClInclude Include="CLEYERA\Sprite\Sprite.h" />

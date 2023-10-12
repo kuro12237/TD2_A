@@ -177,6 +177,8 @@ void GraphicsPipelineManager::Create3dParticlePSOs(SPSO& pso)
 	SShaders shader = ShaderManager::Getinstance()->GetShader();
 
 	pso.Particle3d.none = CreateParticle3dNone(device, commands, shader.Particle);
+	pso.Particle3d.Add = CreateParticle3dAdd(device, commands, shader.Particle);
+
 }
 
 SPSOProperty GraphicsPipelineManager::CreateShape(ComPtr<ID3D12Device> device, Commands command, SShaderMode shader)
@@ -1386,7 +1388,7 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dNone(ComPtr<ID3D12Device> 
 	CreateRootSignature(device, descriptionRootSignature, ParticlePSO);
 
 	//InputLayoutの設定
-	D3D12_INPUT_ELEMENT_DESC inputElementDescs[2] = {};
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs[3] = {};
 	//Position
 	SettingInputElementDesc(
 		inputElementDescs[0],
@@ -1403,7 +1405,13 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dNone(ComPtr<ID3D12Device> 
 		DXGI_FORMAT_R32G32_FLOAT,
 		D3D12_APPEND_ALIGNED_ELEMENT
 	);
-
+	SettingInputElementDesc(
+		inputElementDescs[2],
+		"COLOR",
+		0,
+		DXGI_FORMAT_R32G32B32A32_FLOAT,
+		D3D12_APPEND_ALIGNED_ELEMENT
+	);
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
 	inputLayoutDesc.pInputElementDescs = inputElementDescs;
 	inputLayoutDesc.NumElements = _countof(inputElementDescs);
@@ -1418,6 +1426,162 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dNone(ComPtr<ID3D12Device> 
 	SettingRasterizer(
 		rasterizerDesc,
 		D3D12_CULL_MODE_BACK,
+		D3D12_FILL_MODE_SOLID
+	);
+
+	//深度設定
+	D3D12_DEPTH_STENCIL_DESC despthStencilDesc{};
+	SettingDepth(
+		despthStencilDesc,
+		true,
+		D3D12_DEPTH_WRITE_MASK_ALL,
+		D3D12_COMPARISON_FUNC_LESS_EQUAL
+	);
+
+	//PSOの生成
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
+
+	graphicsPipelineStateDesc.pRootSignature = ParticlePSO.rootSignature.Get(); //RootSignature
+	graphicsPipelineStateDesc.InputLayout = inputLayoutDesc; //InputLayout
+	graphicsPipelineStateDesc.VS = { shader.vertexBlob->GetBufferPointer(),
+	shader.vertexBlob->GetBufferSize() }; //VertexShader
+	graphicsPipelineStateDesc.PS = { shader.pixelBlob->GetBufferPointer(),
+	shader.pixelBlob->GetBufferSize() }; //PixeShader
+	graphicsPipelineStateDesc.BlendState = blendDesc; //BlendState
+	graphicsPipelineStateDesc.RasterizerState = rasterizerDesc; //RasterizerState
+	graphicsPipelineStateDesc.DepthStencilState = despthStencilDesc;
+	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+
+
+	//書き込むRTVの情報
+	graphicsPipelineStateDesc.NumRenderTargets = 1;
+	graphicsPipelineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+
+	//利用するトポロジ(形状)のタイプ。三角形
+	graphicsPipelineStateDesc.PrimitiveTopologyType =
+		D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+
+	//どのように画面に色を打ち込むかの設定(気にしなくて良い)
+	graphicsPipelineStateDesc.SampleDesc.Count = 1;
+	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+
+	HRESULT hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+		IID_PPV_ARGS(&ParticlePSO.GraphicsPipelineState));
+	assert(SUCCEEDED(hr));
+	
+	return ParticlePSO;
+}
+
+SPSOProperty GraphicsPipelineManager::CreateParticle3dAdd(ComPtr<ID3D12Device> device, Commands commands, SShaderMode shader)
+{
+	SPSOProperty ParticlePSO;
+
+	//RootSignature作成
+	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
+
+	//descriptionRootSignature = CreateDescriptRootSignature();
+	descriptionRootSignature.Flags =
+		D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+	//Material設定
+	D3D12_ROOT_PARAMETER rootParameters[3] = {};
+	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameters[0].Descriptor.ShaderRegister = 0;
+
+	//
+	//Vertex
+	D3D12_DESCRIPTOR_RANGE descriptorRangeForInstancing[1] = {};
+	descriptorRangeForInstancing[0].BaseShaderRegister = 0;
+	descriptorRangeForInstancing[0].NumDescriptors = 1;
+	descriptorRangeForInstancing[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRangeForInstancing[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+
+
+	//VertexのTransform
+	rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+	rootParameters[1].DescriptorTable.pDescriptorRanges = descriptorRangeForInstancing;
+	rootParameters[1].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeForInstancing);
+	//
+
+
+	//PixcelDescriptorRanged
+	D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
+	descriptorRange[0].BaseShaderRegister = 0;
+	descriptorRange[0].NumDescriptors = 1;
+	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	//rootPrameterに入れる
+	rootParameters[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameters[2].DescriptorTable.pDescriptorRanges = descriptorRange;
+	rootParameters[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+
+
+	//Samplerの設定
+	{
+		D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
+		staticSamplers[0].Filter = D3D12_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+		staticSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+		staticSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+		staticSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+
+		staticSamplers[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+		staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;
+		staticSamplers[0].ShaderRegister = 0;
+		staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+
+		descriptionRootSignature.pStaticSamplers = staticSamplers;
+		descriptionRootSignature.NumStaticSamplers = _countof(staticSamplers);
+	}
+	descriptionRootSignature.pParameters = rootParameters;
+	descriptionRootSignature.NumParameters = _countof(rootParameters);
+
+	//RootSignature作成
+	CreateRootSignature(device, descriptionRootSignature, ParticlePSO);
+
+	//InputLayoutの設定
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs[3] = {};
+	//Position
+	SettingInputElementDesc(
+		inputElementDescs[0],
+		"POSITION",
+		0,
+		DXGI_FORMAT_R32G32B32A32_FLOAT,
+		D3D12_APPEND_ALIGNED_ELEMENT
+	);
+	//Texcoord
+	SettingInputElementDesc(
+		inputElementDescs[1],
+		"TEXCOORD",
+		0,
+		DXGI_FORMAT_R32G32_FLOAT,
+		D3D12_APPEND_ALIGNED_ELEMENT
+	);
+	SettingInputElementDesc(
+		inputElementDescs[2],
+		"COLOR",
+		0,
+		DXGI_FORMAT_R32G32B32A32_FLOAT,
+		D3D12_APPEND_ALIGNED_ELEMENT
+	);
+	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
+	inputLayoutDesc.pInputElementDescs = inputElementDescs;
+	inputLayoutDesc.NumElements = _countof(inputElementDescs);
+
+	//BlendStateの設定
+	D3D12_BLEND_DESC blendDesc{};
+	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = blendDesc.RenderTarget[0];
+	SettingBlendState(blenddesc, BlendAdd);
+
+	//RasterrizerStateぼ設定
+	D3D12_RASTERIZER_DESC rasterizerDesc{};
+	SettingRasterizer(
+		rasterizerDesc,
+	    D3D12_CULL_MODE_BACK,
 		D3D12_FILL_MODE_SOLID
 	);
 
