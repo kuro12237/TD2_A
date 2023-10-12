@@ -7,8 +7,10 @@
 #include"VectorTransform.h"
 #include"GameObject/Player/Player.h"
 #include"GameObject/PhysicsFanc.h"
+#include"GameObject/MapWall/IMapWall.h"
 
-class Enemy : public Collider {
+class Enemy : public Collider , public IMapWall
+{
 public:
 
 	Enemy() {};
@@ -37,6 +39,11 @@ public:
 	void SetPlayer(Player* player) { player_ = player; }
 
 	void OnCollision()override;
+
+	void OnTopWall()override;
+	void OnBottomWall()override;
+	void OnLeftWall()override;
+	void OnRightWall()override;
 
 private:
 
