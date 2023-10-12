@@ -22,10 +22,8 @@ void PlayerParticle::Update(Vector3 position)
 		Vector3 randpos = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) };
 		p1.worldTransform_.translate = VectorTransform::Add(position, randpos);
 		p1.color_ = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) ,1 };
-		
 		p1.uvTransform_.scale = { 0.5f,0.5f,0.5f };
 		
-
 		particle_->PushList(p1);
 		spownTime = 0;
 	}
