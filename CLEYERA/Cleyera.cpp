@@ -3,7 +3,6 @@
 Cleyera* Cleyera::CreateInstance()
 {
 	static Cleyera instance;
-
 	return &instance;
 }
 

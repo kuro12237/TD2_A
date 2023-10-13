@@ -4,7 +4,7 @@
 #include"WinApp.h"
 #include"CreateResource.h"
 #include"Graphics/DescripterManager/DescriptorManager.h"
-#define TEXTURE_LOAD_MAX 32
+#define TEXTURE_LOAD_MAX 64
 
 class TextureManager
 {
@@ -52,9 +52,14 @@ private:
 	/// <returns></returns>
 	static D3D12_HEAP_PROPERTIES SettingHeap();
 
-
 	ComPtr<ID3D12Resource> Resource[TEXTURE_LOAD_MAX];
 	uint32_t NumLoadTextureIndex = 0;
+
+	//Singleton
+	TextureManager() = default;
+	~TextureManager() = default;
+	TextureManager(const TextureManager&) = delete;
+	const TextureManager& operator=(const TextureManager&) = delete;
 
 };
 

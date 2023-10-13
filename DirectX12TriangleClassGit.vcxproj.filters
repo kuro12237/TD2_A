@@ -133,6 +133,9 @@
     <Filter Include="CLEYERA\Graphics\Descripter">
       <UniqueIdentifier>{c6223008-4680-4514-835d-bd0ef37c7f6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\TimeCount">
+      <UniqueIdentifier>{1bd2f468-e466-4edf-81d3-0ff2dba38ad3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -270,7 +273,6 @@
     <ClCompile Include="Project\GameObject\PhysicsFanc.cpp">
       <Filter>Project\GameObject\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp" />
     <ClCompile Include="Project\GameObject\Player\PlayerParticle.cpp">
       <Filter>Project\GameObject\PlayerParticle</Filter>
     </ClCompile>
@@ -291,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="CLEYERA\Graphics\DescripterManager\DescriptorManager.cpp">
       <Filter>CLEYERA\Graphics\Descripter</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp">
+      <Filter>Project\TimeCount</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -456,7 +461,6 @@
     <ClInclude Include="Project\GameObject\PhysicsFanc.h">
       <Filter>Project\GameObject\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h" />
     <ClInclude Include="Project\GameObject\Player\PlayerParticle.h">
       <Filter>Project\GameObject\PlayerParticle</Filter>
     </ClInclude>
@@ -486,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="CLEYERA\Graphics\DescripterManager\DescriptorManager.h">
       <Filter>CLEYERA\Graphics\Descripter</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h">
+      <Filter>Project\TimeCount</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
