@@ -19,7 +19,7 @@ struct ViewProjection {
 	Matrix4x4 matProjection_{};
 
 	float fov_ = 0.45f;
-	float aspectRatio_ = float(WinApp::GetkCilientWidth()) / float(WinApp::WinApp::GetkCilientHeight());
+	float aspectRatio_ = float(WinApp::GetkCilientWidth()) / float(WinApp::GetkCilientHeight());
 	
 	float nearClip_ = 0.1f;
 	float farClip_ = 1000.0f;

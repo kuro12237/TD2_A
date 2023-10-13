@@ -1,21 +1,24 @@
 #include"Particle/Particle.h"
 
-
 void Particle::Initialize(IParticleState* state, const uint32_t NumInstance)
 {
+	if (InitializeLock){
+		//Initializeが二回呼び出されている
+		LogManager::Log("Particle Initialize ERROR " + name_+"\n");
+		assert(0);
+	}
 	state_ = state;
 	NumInstance_ = NumInstance;
 	state_->Initialize(this);
-
+	InitializeLock = true;
 }
 
 void Particle::Draw(ViewProjection viewProjection)
 {
-	
-	if (particles_.size() >=NumInstance_ )
+	if (particles_.size() >= NumInstance_ )
 	{
 		//Instanceの数よりリストの数が増えるとエラー
-		LogManager::Log("particles_Error");
+		LogManager::Log("Particle Draw ERROR "+ name_+"\n");
 		assert(0);
 	}
 
@@ -24,6 +27,8 @@ void Particle::Draw(ViewProjection viewProjection)
 
 list<Particle_param> Particle::begin()
 {
+	//今リストに登録してある物をうつしてリストを消去
+	//また登録しなおす
 	list<Particle_param> p = particles_;
 	particles_.clear();
 	return p;

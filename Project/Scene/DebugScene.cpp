@@ -168,12 +168,18 @@ void DebugScene::Update(GameManager* Scene)
 
 }
 
-void DebugScene::Draw()
+void DebugScene::Back2dSpriteDraw()
+{
+}
+
+void DebugScene::Object3dDraw()
+{
+	particle_->Draw(viewProjection);
+}
+void DebugScene::Flont2dSpriteDraw()
 {
 	sprite2_->Draw(sprite2WorldTransform_);
 	sprite_->Draw(spriteWorldTransform_);
-
-	particle_->Draw(viewProjection);
 }
 
 void DebugScene::Testparticle()

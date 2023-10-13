@@ -8,7 +8,6 @@ DirectXCommon* DirectXCommon::GetInstance(){
 void DirectXCommon::initialize()
 {
 #ifdef _DEBUG
-	
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&DirectXCommon::GetInstance()->m_pDebugController))))
 	{
 		DirectXCommon::GetInstance()->m_pDebugController->EnableDebugLayer();
@@ -17,7 +16,6 @@ void DirectXCommon::initialize()
 #endif
 	CreateFactory();
 	CreateDevice();
-
 #ifdef _DEBUG
 	ComPtr<ID3D12InfoQueue> infoQueue = nullptr;
 
@@ -90,7 +88,6 @@ void DirectXCommon::BeginFlame()
 
 D3D12_VIEWPORT DirectXCommon::viewportSetting(int32_t kClientWidth, int32_t kClientHeight)
 {
-
 	D3D12_VIEWPORT viewport = {};
 
 	//クライアント領域のサイズを一緒にして画面全体に表示
@@ -121,17 +118,14 @@ D3D12_RECT DirectXCommon::scissorRectSetting(int32_t kClientWidth, int32_t kClie
 void DirectXCommon::ScissorViewCommand(const int32_t kClientWidth, const int32_t kClientHeight)
 {
 	D3D12_VIEWPORT viewport{};
-
 	viewport = viewportSetting(kClientWidth, kClientHeight);
-
 	//シザー矩形
 	D3D12_RECT scissorRect{};
 	scissorRect = scissorRectSetting(kClientWidth, kClientHeight);
 
 	//コマンドを積む
 	Commands commands = DirectXCommon::GetInstance()->commands;
-
-	commands.m_pList->RSSetViewports(1, &viewport); //
+	commands.m_pList->RSSetViewports(1, &viewport);
 	commands.m_pList->RSSetScissorRects(1, &scissorRect);
 }
 
@@ -141,7 +135,6 @@ void DirectXCommon::EndFlame()
 	D3D12_RESOURCE_BARRIER barrier = DirectXCommon::GetInstance()->barrier;
 	ComPtr<ID3D12Fence> fence = DirectXCommon::GetInstance()->m_pFence_;
 	SwapChain swapChain = DirectXCommon::GetInstance()->swapChain;
-
 
 	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
@@ -405,6 +398,5 @@ void DirectXCommon::UpdateFixFPS()
 	}
 	//現在の時間を記録
 	DirectXCommon::GetInstance()->reference_ = steady_clock::now();
-
 }
 

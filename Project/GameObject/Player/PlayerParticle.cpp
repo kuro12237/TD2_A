@@ -5,7 +5,9 @@ void PlayerParticle::Initialize()
 	texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
 	particle_ = make_unique<Particle>();
 	particle_->SetTexHandle(texHandle);
-	particle_->Initialize(new ParticlePlaneState, 60);
+	particle_->SetName("PlayerParticle");
+	particle_->Initialize(new ParticlePlaneState, 600);
+
 }
 
 void PlayerParticle::Update(Vector3 position)
@@ -35,7 +37,7 @@ void PlayerParticle::Update(Vector3 position)
 	ImGui::End();
 	for (Particle_param particle : particles_param_)
 	{
-		particle.worldTransform_.translate.y += 0.1f;
+		//particle.worldTransform_.translate.y += 0.1f;
 		particle.color_.w -= 0.01f;
 
 		if (particle.color_.w<=0.0f)
