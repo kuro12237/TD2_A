@@ -12,7 +12,7 @@ void ParticlePlaneState::Initialize(Particle* state)
 	NumInstansingLock = true;
 
 	resource_.instancingResource = CreateResources::CreateBufferResource(sizeof(ParticleData) * NumInstansing);
-	dsvIndex = TextureManager::CreateSRV(NumInstansing, resource_.instancingResource, sizeof(ParticleData));
+	dsvIndex = DescriptorManager::CreateInstancingSRV(NumInstansing, resource_.instancingResource, sizeof(ParticleData));
 
 	resource_.Vertex = CreateResources::CreateBufferResource(sizeof(VertexData) * VertexSize);
 	resource_.BufferView = CreateResources::VertexCreateBufferView(sizeof(VertexData) * VertexSize, resource_.Vertex.Get(), VertexSize);
@@ -115,8 +115,8 @@ void ParticlePlaneState::CommandCall(uint32_t TexHandle)
 	//ƒ}ƒeƒŠƒAƒ‹CBuffer‚ÌêŠ‚ðÝ’è
 	commands.m_pList->SetGraphicsRootConstantBufferView(0, resource_.Material->GetGPUVirtualAddress());
 
-	TextureManager::rootParamerterCommand(1, dsvIndex);
-	TextureManager::rootParamerterCommand(2,TexHandle);
+	DescriptorManager::rootParamerterCommand(1, dsvIndex);
+	DescriptorManager::rootParamerterCommand(2, TexHandle);
 	
 	commands.m_pList->DrawIndexedInstanced(IndexSize,NumDrawInstansing, 0, 0, 0);
 }

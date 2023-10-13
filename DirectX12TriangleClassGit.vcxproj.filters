@@ -130,6 +130,9 @@
     <Filter Include="Project\GameObject\MapWall">
       <UniqueIdentifier>{61ab91aa-cdc6-4eaf-b84c-a1fb2e844308}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CLEYERA\Graphics\Descripter">
+      <UniqueIdentifier>{c6223008-4680-4514-835d-bd0ef37c7f6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -285,6 +288,9 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\MapWall\MapWallManager.cpp">
       <Filter>Project\GameObject\MapWall</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\Graphics\DescripterManager\DescriptorManager.cpp">
+      <Filter>CLEYERA\Graphics\Descripter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -477,6 +483,9 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\MapWall\MapWallManager.h">
       <Filter>Project\GameObject\MapWall</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Graphics\DescripterManager\DescriptorManager.h">
+      <Filter>CLEYERA\Graphics\Descripter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -54,6 +54,7 @@
     <ClCompile Include="CLEYERA\externals\imgui\imgui_widgets.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MinSpace</Optimization>
     </ClCompile>
+    <ClCompile Include="CLEYERA\Graphics\DescripterManager\DescriptorManager.cpp" />
     <ClCompile Include="CLEYERA\Graphics\PipelineManager\GraphicsPipelineManager.cpp" />
     <ClCompile Include="CLEYERA\Graphics\ShaderManager\ShaderManager.cpp" />
     <ClCompile Include="CLEYERA\Graphics\TextureManager\TextureManager.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="CLEYERA\externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="CLEYERA\externals\imgui\imstb_textedit.h" />
     <ClInclude Include="CLEYERA\externals\imgui\imstb_truetype.h" />
+    <ClInclude Include="CLEYERA\Graphics\DescripterManager\DescriptorManager.h" />
     <ClInclude Include="CLEYERA\Graphics\PipelineManager\GraphicsPipelineManager.h" />
     <ClInclude Include="CLEYERA\Graphics\ShaderManager\ShaderManager.h" />
     <ClInclude Include="CLEYERA\Graphics\TextureManager\TextureManager.h" />

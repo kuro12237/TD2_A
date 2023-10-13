@@ -20,8 +20,13 @@ void GameManager::Run()
 	{
 		Cleyera::BeginFlame();
 	
+		ImGui::Begin("usedescripter");
+		ImGui::Text("descripterIndex %d", DescriptorManager::GetIndex());
+		ImGui::Text("tex %d", TextureManager::NumLoadTexture());
+		ImGui::End();
+
 		Scene_->Update(this);
-	
+		
 		Scene_->Back2dSpriteDraw();
 		Scene_->Object3dDraw();
 		Scene_->Flont2dSpriteDraw();
@@ -34,6 +39,8 @@ void GameManager::ChangeState(IScene *newScene)
 {
 	DebugTools::ClearCommand();
 	TextureManager::AllUnTexture();
+	DescriptorManager::Clear();
+
 	delete Scene_;
 	Scene_ = newScene;
 	Scene_->Initialize();
