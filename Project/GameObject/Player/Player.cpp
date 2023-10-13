@@ -39,7 +39,6 @@ void Player::Update()
 	Reticle();
 	SetVelosity(Velocity);
 	Move();
-	MoveEffect->Update(worldTransform_.translate);
 	
 	LineWorldTransform_.UpdateMatrix();
 	reticleWorldTransform.UpdateMatrix();
@@ -143,6 +142,7 @@ void Player::Reticle()
 {
 	if (MoveFlag)
 	{
+		MoveEffect->Update(worldTransform_.translate);
 		return;
 	}
 	Vector3 Ppos{};
@@ -169,6 +169,8 @@ void Player::Reticle()
 	RPNormalize = VectorTransform::Subtruct(Rpos, Ppos);
 	RPNormalize = VectorTransform::Normalize(RPNormalize);
 		
+	
+
 }
 
 void Player::FancFrictionCoefficient()

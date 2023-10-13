@@ -15,7 +15,7 @@ void Particle::Initialize(IParticleState* state, const uint32_t NumInstance)
 
 void Particle::Draw(ViewProjection viewProjection)
 {
-	if (particles_.size() >=NumInstance_ )
+	if (particles_.size() >= NumInstance_ )
 	{
 		//Instanceの数よりリストの数が増えるとエラー
 		LogManager::Log("Particle Draw ERROR "+ name_+"\n");
