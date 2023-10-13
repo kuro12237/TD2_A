@@ -11,6 +11,7 @@
 #include"Sprite/Sprite.h"
 #include"Input.h"
 #include"Audio.h"
+#include"Graphics/DescripterManager/DescriptorManager.h"
 
 class Cleyera
 {
@@ -18,7 +19,7 @@ public:
 	Cleyera() {};
 	~Cleyera() {};
 
-	static Cleyera* GetInstance();
+	static Cleyera* CreateInstance();
 
 	static void Initialize();
 	static void Finalize();
@@ -28,6 +29,5 @@ public:
 private:
 
 	D3DResourceLeakChecker leakCheck;
-	
 };
 

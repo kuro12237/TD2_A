@@ -37,6 +37,8 @@ void GameScene::Initialize()
 
 void GameScene::Update(GameManager* scene)
 {
+
+
 	DebugTools::UpdateExecute(0);
 	DebugTools::UpdateExecute(1);
 
@@ -48,7 +50,8 @@ void GameScene::Update(GameManager* scene)
 	
 	timeCount_->Update();
 	// 時間切れ時の処理
-	if (!timeCount_->GetIsTimeUp()) {
+	if (!timeCount_->GetIsTimeUp()) 
+	{
 		//GameObjectの基本更新
 		//時間切れになったらifを抜ける
 		player_->Update();
