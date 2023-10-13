@@ -10,10 +10,8 @@ void Player::Initialize()
 	MoveEffect = make_unique<PlayerParticle>();
 	MoveEffect->Initialize();
 
-
 	reticleTestModel = make_unique<Model>();
 	reticleTestModel->Initialize(new ModelSphereState);
-	
 	reticleTestModel->SetColor({ 0,1,0,1 });
 
 	LineModel_ = make_unique<Model>();
@@ -39,7 +37,8 @@ void Player::Update()
 	Reticle();
 	SetVelosity(Velocity);
 	Move();
-	
+	MoveEffect->Update(worldTransform_.translate);
+
 	LineWorldTransform_.UpdateMatrix();
 	reticleWorldTransform.UpdateMatrix();
 	worldTransform_.UpdateMatrix();
@@ -110,8 +109,6 @@ void Player::Move()
 		worldTransform_.rotation.y += rotateSpeed;
 	}
 
-
-
 	if (!MoveFlag&&Input::GetInstance()->PushKey(DIK_SPACE))
 	{
 		MoveFlag = true;
@@ -142,7 +139,7 @@ void Player::Reticle()
 {
 	if (MoveFlag)
 	{
-		MoveEffect->Update(worldTransform_.translate);
+		
 		return;
 	}
 	Vector3 Ppos{};
