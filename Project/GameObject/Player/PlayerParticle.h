@@ -13,7 +13,9 @@ public:
 
 	void Initialize();
 
-	void Update(Vector3 position);
+	void Spown(Vector3 position);
+
+	void Update();
 
 	void Draw(ViewProjection view);
 

@@ -10,11 +10,11 @@ void PlayerParticle::Initialize()
 
 }
 
-void PlayerParticle::Update(Vector3 position)
+void PlayerParticle::Spown(Vector3 position)
 {
 	//•¦‚«ˆ—
 	spownTime++;
-	if (spownTime>2)
+	if (spownTime > 2)
 	{
 		Particle_param p1{};
 		p1.worldTransform_.Initialize();
@@ -25,11 +25,15 @@ void PlayerParticle::Update(Vector3 position)
 		p1.worldTransform_.translate = VectorTransform::Add(position, randpos);
 		p1.color_ = { distribution(randomEngine),distribution(randomEngine) ,distribution(randomEngine) ,1 };
 		p1.uvTransform_.scale = { 0.5f,0.5f,0.5f };
-		
+
 		particle_->PushList(p1);
 		spownTime = 0;
 	}
 
+}
+
+void PlayerParticle::Update()
+{
 	//XVˆ—
 	particles_param_ = particle_->begin();
 	ImGui::Begin("Particle_Param");

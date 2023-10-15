@@ -9,7 +9,7 @@
 #include"GameObject/MapWall/IMapWall.h"
 #include"PlayerParticle.h"
 
-#define MAX_MOVE_COOLTIME 120
+#define MAX_MOVE_COOLTIME 300
 
 class Player: public Collider, public IMapWall
 {

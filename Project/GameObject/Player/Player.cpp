@@ -37,7 +37,11 @@ void Player::Update()
 	Reticle();
 	SetVelosity(Velocity);
 	Move();
-	MoveEffect->Update(worldTransform_.translate);
+	if (MoveFlag)
+	{
+		MoveEffect->Spown(worldTransform_.translate);
+	}
+	MoveEffect->Update();
 
 	LineWorldTransform_.UpdateMatrix();
 	reticleWorldTransform.UpdateMatrix();
@@ -117,10 +121,17 @@ void Player::Move()
 	}
 
 	MoveCoolTime++;
+    
+	if (abs(Velocity.x)<0.05f && abs(Velocity.y)<0.05f && abs(Velocity.z)<0.05f)
+	{
+		MoveFlag = false;
+	}
+
 	if (MoveCoolTime > MAX_MOVE_COOLTIME)
 	{
 		MoveCoolTime = 0;
-		MoveFlag = false;
+		
+		//MoveFlag = false;
 	}
 	//摩擦
 	FancFrictionCoefficient();
@@ -139,7 +150,6 @@ void Player::Reticle()
 {
 	if (MoveFlag)
 	{
-		
 		return;
 	}
 	Vector3 Ppos{};
