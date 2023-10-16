@@ -21,6 +21,8 @@ public:
 	void SetUvTranslate(Vector3 uvTranslate) { uvTranslate_ = uvTranslate; }
 	void SetColor(Vector4 color) { color_ = color; }
 	void SetBlendMode(BlendMode blendMode) { blendMode_ = blendMode; }
+	void SetSrc(Vector2 TR, Vector2 BR, Vector2 TL, Vector2 BL);
+
 #pragma endregion 
 
 #pragma region get
@@ -31,7 +33,6 @@ public:
 	Vector3 GetuvScale() { return uvScale_; }
 	Vector3 GetuvRotate() { return uvRotate_; }
 	Vector3 GetuvTranslate() { return uvTranslate_; }
-
 	BlendMode GetBlendMode() {return blendMode_; }
 
 	/// <summary>
@@ -47,6 +48,12 @@ public:
 	/// 色コードをVector4に変換関数
 	/// </summary>
 	static Vector4 ColorConversion(uint32_t rgbaValue);
+
+	Vector2 GetSrcTR() { return srcTR; }
+	Vector2 GetSrcBR() { return srcBR; }
+	Vector2 GetSrcTL() { return srcTL; }
+	Vector2 GetSrcBL() { return srcBL; }
+
 
 #pragma endregion
 
@@ -66,6 +73,11 @@ private:
 	BlendMode blendMode_= BlendNone;
 
 	ISpriteState* state_ = {};
+
+	Vector2 srcTR = { 1.0f,0.0f };
+	Vector2 srcBR = { 1.0f,1.0f };
+	Vector2 srcTL = { 0.0f,0.0f };
+	Vector2 srcBL = {0.0f, 1.0f };
 };
 
 
