@@ -38,6 +38,7 @@ void GameManager::Run()
 void GameManager::ChangeState(IScene *newScene)
 {
 	DebugTools::ClearCommand();
+	Audio::SoundUnLoad();
 	TextureManager::AllUnTexture();
 	DescriptorManager::Clear();
 
