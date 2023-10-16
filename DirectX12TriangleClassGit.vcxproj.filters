@@ -270,6 +270,15 @@
     <ClCompile Include="Project\GameObject\TransitionProcess\TransitionProcess.cpp">
       <Filter>Project\GameObject\TransitionProcess</Filter>
     </ClCompile>
+    <ClCompile Include="Project\Scene\TitleScene.cpp">
+      <Filter>Project\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Scene\ResultScene.cpp">
+      <Filter>Project\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Scene\TutorialScene.cpp">
+      <Filter>Project\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Utility\Pch\Pch.h">
@@ -443,6 +452,15 @@
     <ClInclude Include="Project\GameObject\MapWall\MapWallManager.h" />
     <ClInclude Include="Project\GameObject\TransitionProcess\TransitionProcess.h">
       <Filter>Project\GameObject\TransitionProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Scene\TitleScene.h">
+      <Filter>Project\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Scene\ResultScene.h">
+      <Filter>Project\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Scene\TutorialScene.h">
+      <Filter>Project\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

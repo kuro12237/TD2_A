@@ -7,6 +7,7 @@ void GameScene::Initialize()
 	
 	timeCount_ = make_unique<TimeCount>();
 	timeCount_->Initialize();
+	//TransitionProcess::Initialize();
 
 	player_ = make_unique<Player>();
 	player_->Initialize();
@@ -39,6 +40,7 @@ void GameScene::Update(GameManager* scene)
 		player_->Update();
 		enemy_->Update();
 	}
+	//TransitionProcess::Update();
 
 	UpdateEnemyCommands();
 	
@@ -67,6 +69,8 @@ void GameScene::Draw()
 	mapWallManager_->Draw(viewProjection);
 
 	timeCount_->Draw();
+
+	//TransitionProcess::Draw();
 	
 }
 

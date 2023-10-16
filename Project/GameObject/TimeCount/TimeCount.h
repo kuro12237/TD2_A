@@ -78,19 +78,18 @@ private:
 	Vector4 textureColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	// 描画座標
-	Vector2 timerPosition_[3];
-	WorldTransform timerWorldTransform_[3];
+	Vector2 timerPosition_[3]{};
+	WorldTransform timerWorldTransform_[3]{};
 	Vector2 timeUpUIPosition_;
-	WorldTransform timeUpUIWorldTransform_;
+	WorldTransform timeUpUIWorldTransform_{};
 
 	// 制限時間
-	uint32_t nowLimitTime_;
+	uint32_t nowLimitTime_ = 0;
 	const uint32_t kSetLimitTime_ = 30;
 	uint32_t eachTime_[3]{};
-	uint32_t frame_;
+	uint32_t frame_ = 0;
 	bool isTimeUp_ = false;
 
 	// デバッグフラグ　
-	bool isDebug_ = false;
-
+	bool isDebug_ = true;
 };
