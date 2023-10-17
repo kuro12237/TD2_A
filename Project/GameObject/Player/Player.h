@@ -9,7 +9,7 @@
 #include"GameObject/MapWall/IMapWall.h"
 #include"PlayerParticle.h"
 
-#define MAX_MOVE_COOLTIME 120
+#define MAX_MOVE_COOLTIME 300
 
 class Player: public Collider, public IMapWall
 {
@@ -76,7 +76,7 @@ private:
 	/// <summary>
 	/// –€ŽC
 	/// </summary>
-	const float frictionCoefficient = 0.01f;
+	const float frictionCoefficient = 0.015f;
 
 	uint32_t MoveCoolTime = 0;
 	bool MoveFlag = false;

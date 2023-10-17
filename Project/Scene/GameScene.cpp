@@ -35,8 +35,6 @@ void GameScene::Initialize()
 
 void GameScene::Update(GameManager* scene)
 {
-
-
 	DebugTools::UpdateExecute(0);
 	DebugTools::UpdateExecute(1);
 

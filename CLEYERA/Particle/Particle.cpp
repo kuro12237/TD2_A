@@ -27,6 +27,17 @@ void Particle::Draw(ViewProjection viewProjection)
 
 list<Particle_param> Particle::begin()
 {
+	//生存フラグがtrueになったらリストから解放
+	for (list<Particle_param>::iterator p=particles_.begin(); p != particles_.end();)
+	{
+		if ((*p).isAlive)
+		{
+			particles_.erase(p);
+		}
+		else {
+			++p;
+		}
+	}
 	//今リストに登録してある物をうつしてリストを消去
 	//また登録しなおす
 	list<Particle_param> p = particles_;
