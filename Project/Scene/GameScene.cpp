@@ -117,7 +117,10 @@ void GameScene::MapWallCollision()
 {
 	mapWallManager_->ListClear();
 	mapWallManager_->SetObject(player_.get());
-	mapWallManager_->SetObject(enemy_.get());
+
+	for (shared_ptr<Enemy>& enemy : enemys_) {
+		mapWallManager_->SetObject(enemy.get());
+	}
 	mapWallManager_->CheckMapWall();
 }
 
