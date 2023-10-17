@@ -54,15 +54,13 @@ public:
 	Vector2 GetSrcTL() { return srcTL; }
 	Vector2 GetSrcBL() { return srcBL; }
 
-
 #pragma endregion
 
 private:
 	Vector2 Pos_ = { 0,0};
 	Vector2 size_ = {};
-
-
 	Vector4 color_ = { 1,1,1,1 };
+
 	WorldTransform worldTransform_ = {};
 	uint32_t texHandle_ = 0;
 
@@ -70,14 +68,13 @@ private:
 	Vector3 uvRotate_ = { 0,0,0 };
 	Vector3 uvTranslate_ = { 0,0,0 };
 
-	BlendMode blendMode_= BlendNone;
-
-	ISpriteState* state_ = {};
-
 	Vector2 srcTR = { 1.0f,0.0f };
 	Vector2 srcBR = { 1.0f,1.0f };
 	Vector2 srcTL = { 0.0f,0.0f };
 	Vector2 srcBL = { 0.0f,1.0f };
+
+	BlendMode blendMode_= BlendNone;
+	ISpriteState* state_ = {};
 };
 
 
