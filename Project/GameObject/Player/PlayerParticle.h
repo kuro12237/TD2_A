@@ -4,6 +4,15 @@
 #include"Graphics/TextureManager/TextureManager.h"
 #include"VectorTransform.h"
 
+
+enum SParticleUV
+{
+	RT,
+	RB,
+	LT,
+	LB
+};
+
 class PlayerParticle
 {
 public:
@@ -18,9 +27,10 @@ public:
 	void Update();
 
 	void Draw(ViewProjection view);
-
-
 private:
+
+	void ParticleUV(Vector3& s, Vector3& t);
+
 	list<Particle_param> particles_param_{};
 	unique_ptr<Particle>particle_{};
 
@@ -28,6 +38,7 @@ private:
 
 	uint32_t spownTime = 0;
 	uint32_t texHandle = 0;
+	
 };
 
 
