@@ -23,17 +23,17 @@ void SpriteBoxState::Draw(Sprite* state, WorldTransform worldTransform)
 	Vector2 size = state->GetSize();
 
 	vertexData[0].position = { pos.x,pos.y+size.y,0,1 };
-	vertexData[0].texcoord = { 0.0f,1.0f };
+	vertexData[0].texcoord = state->GetSrcBL();
 	
 	vertexData[1].position = { pos.x ,pos.y,0,1 };
-	vertexData[1].texcoord = { 0.0f,0.0f };
+	vertexData[1].texcoord = state->GetSrcTL();
 
 
 	vertexData[2].position = { pos.x + size.x,pos.y+size.y,0,1 };
-	vertexData[2].texcoord = { 1.0f,1.0f };
+	vertexData[2].texcoord = state->GetSrcBR();
 
 	vertexData[3].position = { pos.x + size.x,pos.y,0,1 };
-	vertexData[3].texcoord = { 1.0f,0.0f };
+	vertexData[3].texcoord = state->GetSrcTR();
 
 
 	indexData[0] = 0; indexData[1] = 1; indexData[2] = 2;
@@ -110,7 +110,7 @@ void SpriteBoxState::CommandCall(uint32_t texHandle,Sprite* state)
 
 	if (!texHandle == 0)
 	{
-		TextureManager::rootParamerterCommand(2,texHandle);
+		DescriptorManager::rootParamerterCommand(2, texHandle);
 	}
 
 	//描画(DrawCall/ドローコール)。

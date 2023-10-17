@@ -17,17 +17,17 @@ public:
 	~Enemy() {};
 
 	/// <summary>
-	/// 初期化
+	/// ﾂ鞘ｰﾅﾃｺ窶ｰﾂｻ
 	/// </summary>
 	void Initialize(const Vector3& position);
 
 	/// <summary>
-	/// 更新
+	/// ﾂ更ﾂ新
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// 描画
+	/// 窶｢`窶ｰﾃｦ
 	/// </summary>
 	/// <param name="viewProjection"></param>
 	void Draw(ViewProjection viewProjection);
@@ -50,6 +50,7 @@ private:
 
 	WorldTransform worldTransform_ = {};
 	unique_ptr<Model>model_ = nullptr;
+	uint32_t texHandle_ = 0;
 	Vector3 velocity = {};
 	Player* player_ = nullptr;
 	bool isMove_ = false;

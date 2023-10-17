@@ -3,31 +3,18 @@
 #include"DirectXCommon.h"
 #include"WinApp.h"
 #include"CreateResource.h"
-struct texResourceProperty
-{
-	D3D12_CPU_DESCRIPTOR_HANDLE SrvHandleCPU{};
-	D3D12_GPU_DESCRIPTOR_HANDLE SrvHandleGPU{};
-	ComPtr<ID3D12Resource> Resource;
-};
-
-struct DescriptorSize
-{
-	uint32_t SRV;
-	uint32_t RTV;
-	uint32_t DSV;
-};
+#include"Graphics/DescripterManager/DescriptorManager.h"
+#define TEXTURE_LOAD_MAX 64
 
 class TextureManager
 {
 public:
-
-	TextureManager();
-	~TextureManager();
+	
+	static TextureManager* GetInstance();
 
 	static void Initialize();
 	static void Finalize();
 
-	static TextureManager* GetInstance();
 	/// <summary>
 	/// 実際に使う処理
 	/// </summary>
@@ -42,9 +29,8 @@ public:
 	/// <returns></returns>
 	static void AllUnTexture();
 
-	static uint32_t CreateSRV(uint32_t NumInstansing, ComPtr<ID3D12Resource>& resource, UINT size);
+	static uint32_t NumLoadTexture() { return TextureManager::GetInstance()->NumLoadTextureIndex; }
 
-	static void rootParamerterCommand(UINT rootPatramerterIndex,uint32_t texhandle);
 private:
 
 	static ComPtr<ID3D12Resource> CreateTexResource(const DirectX::TexMetadata& metadata);
@@ -52,10 +38,6 @@ private:
 	static DirectX::ScratchImage CreateMipImage(const std::string& filePath);
 
 	static void UploadTexData(const DirectX::ScratchImage& mipImage);
-
-	static D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ComPtr<ID3D12DescriptorHeap> descripterHeap, uint32_t desiripterSize, uint32_t index);
-
-	static D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ComPtr<ID3D12DescriptorHeap> descripterHeap, uint32_t desiripterSize, uint32_t index);
 
 	/// <summary>
 	///	リソースの設定 
@@ -70,8 +52,15 @@ private:
 	/// <returns></returns>
 	static D3D12_HEAP_PROPERTIES SettingHeap();
 
-	const static uint32_t TexLoadMax = 256;
-	texResourceProperty tex[TexLoadMax];
+	ComPtr<ID3D12Resource> Resource[TEXTURE_LOAD_MAX];
+	uint32_t NumLoadTextureIndex = 0;
+
+	//Singleton
+	TextureManager() = default;
+	~TextureManager() = default;
+	TextureManager(const TextureManager&) = delete;
+	const TextureManager& operator=(const TextureManager&) = delete;
+
 };
 
 

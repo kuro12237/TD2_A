@@ -29,8 +29,6 @@ void DebugScene::Initialize()
 	particle_ = make_unique<Particle>();
 	particle_->SetTexHandle(SpriteTexHandle);
 	particle_->Initialize(new ParticlePlaneState,20);
-	
-
 
 }
 
@@ -170,12 +168,18 @@ void DebugScene::Update(GameManager* Scene)
 
 }
 
-void DebugScene::Draw()
+void DebugScene::Back2dSpriteDraw()
+{
+}
+
+void DebugScene::Object3dDraw()
+{
+	particle_->Draw(viewProjection);
+}
+void DebugScene::Flont2dSpriteDraw()
 {
 	sprite2_->Draw(sprite2WorldTransform_);
 	sprite_->Draw(spriteWorldTransform_);
-
-	particle_->Draw(viewProjection);
 }
 
 void DebugScene::Testparticle()
@@ -191,7 +195,7 @@ void DebugScene::Testparticle()
 		p1.worldTransform_.Initialize();
 		p1.worldTransform_.translate = TestParticlesTranslate;
 		p1.color_ = TestParticleColor;
-		particle_->SetList(p1);
+		particle_->PushList(p1);
 	}
 
 }

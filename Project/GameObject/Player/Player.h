@@ -7,8 +7,9 @@
 #include"ColliderConfig.h"
 #include"GameObject/MapWall/MapWall.h"
 #include"GameObject/MapWall/IMapWall.h"
+#include"PlayerParticle.h"
 
-#define MAX_MOVE_COOLTIME 120
+#define MAX_MOVE_COOLTIME 300
 
 class Player: public Collider, public IMapWall
 {
@@ -59,6 +60,8 @@ private:
 	unique_ptr<Model>reticleTestModel = nullptr;
 	unique_ptr<Model>LineModel_ = nullptr;
 
+	unique_ptr < PlayerParticle > MoveEffect= nullptr;
+
 	WorldTransform worldTransform_ = {};
 	WorldTransform reticleWorldTransform{};
 	WorldTransform LineWorldTransform_ = {};
@@ -73,7 +76,7 @@ private:
 	/// <summary>
 	/// –€ŽC
 	/// </summary>
-	const float frictionCoefficient = 0.08f;
+	const float frictionCoefficient = 0.015f;
 
 	uint32_t MoveCoolTime = 0;
 	bool MoveFlag = false;
