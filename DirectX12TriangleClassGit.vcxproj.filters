@@ -452,9 +452,6 @@
     <ClInclude Include="CLEYERA\Utility\FileLoader\FileLoader.h">
       <Filter>CLEYERA\Utility\FileLoader</Filter>
     </ClInclude>
-    <ClInclude Include="Project\GameObject\Camera\MainCamera.h">
-      <Filter>Project\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Project\GameObject\Enemy\Enemy.h">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClInclude>
@@ -493,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h">
       <Filter>Project\TimeCount</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Camera\MainCamera.h">
+      <Filter>Project\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
