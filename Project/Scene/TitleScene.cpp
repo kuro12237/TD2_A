@@ -19,6 +19,7 @@ void TitleScene::Initialize() {
 	title_Sprite_->SetTexHandle(title_TexHD_);
 	title_Sprite_->SetColor(title_TexColor_);
 
+	TransitionProcess::Initialize();
 
 }
 
