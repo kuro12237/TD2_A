@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 /// <summary>
-/// 初期化
+/// ﾂ鞘ｰﾅﾃｺ窶ｰﾂｻ
 /// </summary>
 void Enemy::Initialize(const Vector3& position) {
 
@@ -22,7 +22,7 @@ void Enemy::Initialize(const Vector3& position) {
 }
 
 /// <summary>
-/// 更新
+/// ﾂ更ﾂ新
 /// </summary>
 void Enemy::Update() {
 
@@ -31,7 +31,7 @@ void Enemy::Update() {
 }
 
 /// <summary>
-/// 描画
+/// 窶｢`窶ｰﾃｦ
 /// </summary>
 void Enemy::Draw(ViewProjection viewProjection){
 	model_->Draw(worldTransform_, viewProjection);
@@ -40,14 +40,10 @@ void Enemy::Draw(ViewProjection viewProjection){
 void Enemy::EnemyMove() {
 
 	if (isMove_) {
-		velocity = PhysicsFanc::Repulsiveforce(-0.3f, player_->GetWorldPosition(), GetWorldPosition());
+		velocity = PhysicsFanc::Repulsiveforce(-0.5f, player_->GetWorldPosition(), GetWorldPosition());
 		isMove_ = false;
+
 	}
-	ImGui::Begin("Enemy");
-	ImGui::Text("%f %f %f", velocity.x, velocity.y, velocity.z);
-	ImGui::End();
-
-
 
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, velocity);
 }
@@ -62,4 +58,40 @@ Vector3 Enemy::GetWorldPosition() {
 
 void Enemy::OnCollision(){
 	isMove_ = true;
+}
+
+void Enemy::OnTopWall()
+{
+	if (worldTransform_.translate.z > static_cast<float>(FILD_MAP_SIZE_Z))
+	{
+		worldTransform_.translate.z = worldTransform_.translate.z - 0.1f;
+	}
+	velocity.z = velocity.z * -1;
+}
+
+void Enemy::OnBottomWall()
+{
+	if (worldTransform_.translate.z > static_cast<float>(FILD_MAP_SIZE_Z))
+	{
+		worldTransform_.translate.z = worldTransform_.translate.z + 0.1f;
+	}
+	velocity.z = velocity.z * -1;
+}
+
+void Enemy::OnLeftWall()
+{
+	if (worldTransform_.translate.x > static_cast<float>(FILD_MAP_SIZE_X))
+	{
+		worldTransform_.translate.x = worldTransform_.translate.x + 0.1f;
+	}
+	velocity.x = velocity.x * -1;
+}
+
+void Enemy::OnRightWall()
+{
+	if (worldTransform_.translate.x > -static_cast<float>(FILD_MAP_SIZE_X))
+	{
+		worldTransform_.translate.x = worldTransform_.translate.x - 0.1f;
+	}
+	velocity.x = velocity.x * -1;
 }

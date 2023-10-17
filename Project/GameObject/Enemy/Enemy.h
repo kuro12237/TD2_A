@@ -7,26 +7,27 @@
 #include"VectorTransform.h"
 #include"GameObject/Player/Player.h"
 #include"GameObject/PhysicsFanc.h"
+#include"GameObject/MapWall/IMapWall.h"
 
-
-class Enemy : public Collider {
+class Enemy : public Collider , public IMapWall
+{
 public:
 
 	Enemy() {};
 	~Enemy() {};
 
 	/// <summary>
-	/// 初期化
+	/// ﾂ鞘ｰﾅﾃｺ窶ｰﾂｻ
 	/// </summary>
 	void Initialize(const Vector3& position);
 
 	/// <summary>
-	/// 更新
+	/// ﾂ更ﾂ新
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// 描画
+	/// 窶｢`窶ｰﾃｦ
 	/// </summary>
 	/// <param name="viewProjection"></param>
 	void Draw(ViewProjection viewProjection);
@@ -38,6 +39,11 @@ public:
 	void SetPlayer(Player* player) { player_ = player; }
 
 	void OnCollision()override;
+
+	void OnTopWall()override;
+	void OnBottomWall()override;
+	void OnLeftWall()override;
+	void OnRightWall()override;
 
 private:
 
