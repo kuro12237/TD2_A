@@ -7,6 +7,9 @@ void Player::Initialize()
 	texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
 	model_->SetTexHandle(texHandle);
 
+	MoveEffect = make_unique<PlayerParticle>();
+	MoveEffect->Initialize();
+
 	reticleTestModel = make_unique<Model>();
 	reticleTestModel->Initialize(new ModelSphereState);
 	reticleTestModel->SetColor({ 0,1,0,1 });
@@ -34,8 +37,8 @@ void Player::Update()
 	Reticle();
 	SetVelosity(Velocity);
 	Move();
-	
-	
+	MoveEffect->Update(worldTransform_.translate);
+
 	LineWorldTransform_.UpdateMatrix();
 	reticleWorldTransform.UpdateMatrix();
 	worldTransform_.UpdateMatrix();
@@ -46,6 +49,7 @@ void Player::Draw(ViewProjection view)
 	model_->Draw(worldTransform_, view);
 	LineModel_->Draw(worldTransform_, view);
 	reticleTestModel->Draw(reticleWorldTransform, view);
+	MoveEffect->Draw(view);
 }
 
 void Player::OnCollision()
@@ -105,8 +109,6 @@ void Player::Move()
 		worldTransform_.rotation.y += rotateSpeed;
 	}
 
-
-
 	if (!MoveFlag&&Input::GetInstance()->PushKey(DIK_SPACE))
 	{
 		MoveFlag = true;
@@ -125,9 +127,10 @@ void Player::Move()
 	//加算処理
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
 
-	ImGui::Begin("Debug");
-	ImGui::Text("Speed : %f  %f  %f", Velocity.x, Velocity.y, Velocity.z);
-	ImGui::Text("RPLerp : %f %f %f", RPNormalize.x, RPNormalize.y, RPNormalize.z);
+	ImGui::Begin("Player_param");
+	ImGui::Text("WorldPos : %f %f %f", worldTransform_.translate.x, worldTransform_.translate.y, worldTransform_.translate.z);
+	ImGui::Text("Normalize : %f %f %f", RPNormalize.x, RPNormalize.y, RPNormalize.z);
+	ImGui::Text("Velocity : %f %f %f", Velocity.x, Velocity.y, Velocity.z);
 	ImGui::End();
 
 }
@@ -136,6 +139,7 @@ void Player::Reticle()
 {
 	if (MoveFlag)
 	{
+		
 		return;
 	}
 	Vector3 Ppos{};
@@ -162,6 +166,8 @@ void Player::Reticle()
 	RPNormalize = VectorTransform::Subtruct(Rpos, Ppos);
 	RPNormalize = VectorTransform::Normalize(RPNormalize);
 		
+	
+
 }
 
 void Player::FancFrictionCoefficient()

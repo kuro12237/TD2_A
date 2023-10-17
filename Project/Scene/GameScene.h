@@ -23,7 +23,9 @@ public:
 
 	void Update(GameManager* scene)override;
 
-	void Draw()override;
+	void Back2dSpriteDraw()override;
+	void Object3dDraw()override;
+	void Flont2dSpriteDraw()override;
 
 	/// <summary>
 	/// �G����
@@ -45,11 +47,17 @@ private:
 	unique_ptr<CollisionManager> collisionManager_ = nullptr;
 
 	unique_ptr<Player>player_ = nullptr;
+	unique_ptr<Enemy>enemy_ = nullptr;
+
+	unique_ptr<Sprite>testSprite = nullptr;
+	uint32_t texHandle = 0;
+	WorldTransform testSpriteWorldTransform{};
 
 	std::list<shared_ptr<Enemy>>enemys_;
 
 	bool wait = false; 
 	uint32_t waitTimer = 0;
+
 	stringstream fileLoad;
 
 	unique_ptr<MapWallManager>mapWallManager_ = nullptr;
