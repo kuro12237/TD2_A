@@ -39,17 +39,22 @@ void Enemy::Draw(ViewProjection viewProjection){
 
 void Enemy::EnemyMove() {
 
+	pos_ = pos2_;
+	playerPos_ = player_->GetWorldPosition();
+	angle = atan2((pos_.z - playerPos_.z), (pos_.x, -playerPos_.x));
+	angle2 = atan2((playerPos_.z - pos_.z), (playerPos_.x - pos_.x));
+	angle = angle * 180.0f / (float)M_PI;
+	angle2 = angle2 * 180.0f / (float)M_PI;
+
 	if (isMove_) {
-		velocity = PhysicsFunc::Repulsiveforce(-0.3f, player_->GetWorldPosition(), GetWorldPosition());
+		velocity_ = PhysicsFunc::SpeedComposition(playerPos_, pos_, angle, angle2);
+		speed_ = get<1>(velocity_);
+		speed_ = VectorTransform::Normalize(speed_);
+
 		isMove_ = false;
 	}
-	ImGui::Begin("Enemy");
-	ImGui::Text("%f %f %f", velocity.x, velocity.y, velocity.z);
-	ImGui::End();
 
-
-
-	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, velocity);
+	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate,speed_ );
 }
 
 Vector3 Enemy::GetWorldPosition() {
@@ -61,5 +66,6 @@ Vector3 Enemy::GetWorldPosition() {
 }
 
 void Enemy::OnCollision(){
+	pos2_ = VectorTransform::Add(worldTransform_.translate, GetNamingLerp());
 	isMove_ = true;
 }

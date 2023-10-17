@@ -41,11 +41,16 @@ public:
 
 private:
 
-
+	Vector3 pos_;
+	Vector3 playerPos_;
 	WorldTransform worldTransform_ = {};
+	Vector3 pos2_ = {};
 	unique_ptr<Model>model_ = nullptr;
 	uint32_t texHandle_ = 0;
-	Vector3 velocity = {};
+	tuple<Vector3, Vector3> velocity_ = {};
+	Vector3 speed_ = {};
+	float angle = 0;
+	float angle2 = 0;
 	Player* player_ = nullptr;
 	bool isMove_ = false;
 };
