@@ -53,8 +53,11 @@ private:
 	uint32_t texHandle = 0;
 	WorldTransform testSpriteWorldTransform{};
 
-	bool wait = false; // �ҋ@���t���O
-	uint32_t waitTimer = 0; // �ҋ@���^�C�}�[
+	std::list<shared_ptr<Enemy>>enemys_;
+
+	bool wait = false; 
+	uint32_t waitTimer = 0;
+
 	stringstream fileLoad;
 
 	unique_ptr<MapWallManager>mapWallManager_ = nullptr;

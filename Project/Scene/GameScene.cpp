@@ -19,8 +19,6 @@ void GameScene::Initialize()
 	player_->Initialize();
 
 	LoadEnemyDate();
-	enemy_ = make_unique<Enemy>();
-	enemy_->Initialize({ 5,0.5,0 });
 
 	MainCamera::Initialize();
 
@@ -55,10 +53,14 @@ void GameScene::Update(GameManager* scene)
 		//GameObjectの基本更新
 		//時間切れになったらifを抜ける
 		player_->Update();
-		enemy_->Update();
+		for (shared_ptr<Enemy>& enemy : enemys_) {
+			enemy->SetPlayer(player_.get());
+			enemy->Update();
+		}
 	}
 	
 	EnemyReset();
+
 	UpdateEnemyCommands();
 	//マップの壁との当たり判定
 	MapWallCollision();
@@ -84,7 +86,12 @@ void GameScene::Object3dDraw()
 	DebugTools::DrawExecute(1);
 
 	player_->Draw(viewProjection);
-	enemy_->Draw(viewProjection);
+
+	// 敵
+	for (shared_ptr<Enemy>& enemy : enemys_) {
+		enemy->Draw(viewProjection);
+	}
+
 	mapWallManager_->Draw(viewProjection);
 }
 
@@ -99,7 +106,11 @@ void GameScene::Collision()
 	collisionManager_->ClliderClear();
 	//Set
 	collisionManager_->ClliderPush(player_.get());
-	collisionManager_->ClliderPush(enemy_.get());
+
+	for (shared_ptr<Enemy>& enemy : enemys_) {
+		collisionManager_->ClliderPush(enemy.get());
+	}
+
 	//Check
 	collisionManager_->CheckAllCollision();
 }
@@ -113,12 +124,11 @@ void GameScene::MapWallCollision()
 
 // enemyのデータをロード(CSVで)
 void GameScene::LoadEnemyDate() {
-    fileLoad = FileLoader::CSVLoadFile("enemySpawn.csv");
+    fileLoad = FileLoader::CSVLoadFile("resources/enemySpawn.csv");
 }
 
 // データを読み込む
 void GameScene::UpdateEnemyCommands() {
-	// �ҋ@����
 	if (wait) {
 		waitTimer--;
 		if (waitTimer <= 0) {
@@ -170,18 +180,24 @@ void GameScene::UpdateEnemyCommands() {
 
 // enemy発生
 void GameScene::EnemySpawn(const Vector3& position) {
-	enemy_ = make_unique<Enemy>();
-	enemy_->Initialize(position);
-	enemy_->SetPlayer(player_.get());
+
+	shared_ptr<Enemy> enemy = make_shared<Enemy>();
+	enemy->Initialize(position);
+	enemy->SetPlayer(player_.get());
+	enemys_.push_back(enemy);
 }
 
 // enemyのreset
 void GameScene::EnemyReset() {
 	if (Input::GetInstance()->PushKeyPressed(DIK_R)) {
-		enemy_.reset();
+		enemys_.clear();
+		for (shared_ptr<Enemy>& enemy : enemys_) {
+		
+			enemy = make_shared<Enemy>();
+			enemy->Initialize({ 0,0.5,0 });
+		}
+
 		LoadEnemyDate();
-		enemy_ = make_unique<Enemy>();
-		enemy_->Initialize({ 5,0.5,0 });
 	}
 }
 
