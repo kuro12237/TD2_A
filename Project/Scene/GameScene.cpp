@@ -7,7 +7,7 @@ void GameScene::Initialize()
 	
 	timeCount_ = make_unique<TimeCount>();
 	timeCount_->Initialize();
-	//TransitionProcess::Initialize();
+	TransitionProcess::Initialize();
 
 	player_ = make_unique<Player>();
 	player_->Initialize();
@@ -28,7 +28,7 @@ void GameScene::Update(GameManager* scene)
 {
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
-		scene->ChangeState(new DebugScene);
+		scene->ChangeState(new ResultScene);
 		return;
 	}
 	
@@ -40,7 +40,7 @@ void GameScene::Update(GameManager* scene)
 		player_->Update();
 		enemy_->Update();
 	}
-	//TransitionProcess::Update();
+	TransitionProcess::Update();
 
 	UpdateEnemyCommands();
 	
@@ -70,7 +70,7 @@ void GameScene::Draw()
 
 	timeCount_->Draw();
 
-	//TransitionProcess::Draw();
+	TransitionProcess::Draw();
 	
 }
 

@@ -3,7 +3,7 @@
 GameManager::GameManager()
 {
 	Cleyera::Initialize();
-	Scene_ = new TutorialScene();
+	Scene_ = new GameScene();
 	Scene_->Initialize();
 
 	Grid* grid = new Grid();

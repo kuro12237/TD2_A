@@ -3,8 +3,20 @@
 #include "Graphics/TextureManager/TextureManager.h"
 #include "Sprite/Sprite.h"
 #include "Input.h"
+#include "VectorTransform.h"
 
 
+
+struct Frame {
+	int Now;
+	int End;
+};
+
+struct Value {
+	float useVal;
+	float Start;
+	float Goal;
+};
 
 
 /// <summary>
@@ -35,9 +47,19 @@ public: // メンバ関数
 	static void Draw();
 
 	/// <summary>
+	/// フェードインの初期化処理
+	/// </summary>
+	static void Fade_In_Init();
+
+	/// <summary>
 	/// フェードイン処理
 	/// </summary>
 	static void Fade_In();
+
+	/// <summary>
+	/// フェードアウトの初期化処理
+	/// </summary>
+	static void Fade_Out_Init();
 
 	/// <summary>
 	/// フェードアウト処理
@@ -62,21 +84,6 @@ private: // メンバ関数
 	/// </summary>
 	static void EaseProcess();
 
-	/// <summary>
-	/// イージング開始時処理
-	/// </summary>
-	static void EaseStartPreparation();
-
-	/// <summary>
-	/// イージング実行時処理
-	/// </summary>
-	static void EaseContentProcess();
-
-	/// <summary>
-	/// イージング終了時処理
-	/// </summary>
-	static void EaseEndPreparation();
-
 
 	static float EaseOutQuint(float& val);
 	
@@ -90,7 +97,7 @@ private: // メンバ変数
 	// ハンドル
 	uint32_t BG_TexHD_;
 	// ハンドル
-	Vector4 BG_TexColor_ = { 0.0f, 0.0f, 0.0f, 1.0f };
+	Vector4 BG_TexColor_ = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 
 	/* ----- 座標系 ----- */
@@ -105,18 +112,11 @@ private: // メンバ変数
 
 
 	/* ----- イージング ----- */
-	// 現在のフレーム
-	float ease_NowFrame_ = 0;
-	// 終了フレーム
-	float ease_EndFrame_ = 0;
-	// イージング開始フラグ
-	bool ease_isStart_ = 0;
-	// イージング処理内で使う値
-	float ease_val_ = 0;
-	// イージングタイプ
-	int ease_Type_ = 0;
-	// スタート地点
-	float ease_StartVal_ = 0;
-	// ゴール地点
-	float easse_EndVal_ = 0;
+	// フレーム
+	Frame frame_;
+	// 終始の値
+	Value value_;
+	// イージングの実行フラグ
+	bool ease_isStart_;
+
 };

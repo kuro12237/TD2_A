@@ -28,7 +28,7 @@ void ResultScene::Update(GameManager* scene) {
 	// シーン遷移
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
-		scene->ChangeState(new DebugScene);
+		scene->ChangeState(new GameScene);
 		return;
 	}
 
@@ -36,7 +36,7 @@ void ResultScene::Update(GameManager* scene) {
 #ifdef _DEBUG
 
 	ImGui::Begin("ResultScene");
-	ImGui::Text("9 key = ChangeScene() -> DebugScene");
+	ImGui::Text("9 key = ChangeScene() -> GameScene");
 	ImGui::End();
 
 #endif

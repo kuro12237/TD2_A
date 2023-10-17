@@ -18,6 +18,8 @@ void TitleScene::Initialize() {
 	title_Sprite_->Initialize(new SpriteBoxState, title_Position_, { 1280,720 });
 	title_Sprite_->SetTexHandle(title_TexHD_);
 	title_Sprite_->SetColor(title_TexColor_);
+
+
 }
 
 
@@ -28,14 +30,14 @@ void TitleScene::Update(GameManager* scene) {
 	// シーン遷移
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
-		scene->ChangeState(new DebugScene);
+		scene->ChangeState(new TutorialScene);
 		return;
 	}
 
 #ifdef _DEBUG
 
 	ImGui::Begin("TitleScene");
-	ImGui::Text("9 key = ChangeScene() -> DebugScene");
+	ImGui::Text("9 key = ChangeScene() -> TutorialScene");
 	ImGui::End();
 
 #endif

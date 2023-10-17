@@ -30,61 +30,35 @@ void TransitionProcess::Initialize() {
 	TransitionProcess::GetInstance()->BG_Sprite_->SetTexHandle(TransitionProcess::GetInstance()->BG_TexHD_);
 
 	/// イージングの各値の初期化
-	// イージングタイプ
-	TransitionProcess::GetInstance()->ease_Type_ = 1;
-	// イージング開始フラグ
+	TransitionProcess::GetInstance()->frame_ = { 0, 60 };
+	TransitionProcess::GetInstance()->value_ = { 0.0f, 0.0f };
 	TransitionProcess::GetInstance()->ease_isStart_ = false;
-	// 現在のフレーム
-	TransitionProcess::GetInstance()->ease_NowFrame_ = 0.0f;
-	// 終了フレーム
-	TransitionProcess::GetInstance()->ease_EndFrame_ = 0.0f;
-	// イージング処理内で使う値
-	TransitionProcess::GetInstance()->ease_val_ = 0.0f;
-	// スタート地点
-	TransitionProcess::GetInstance()->ease_StartVal_ = 0.0f;
-	// ゴール地点
-	TransitionProcess::GetInstance()->easse_EndVal_ = 0.0f;
-
-
-	TransitionProcess::Fade_Out();
 }
 
 
 // 更新処理
 void TransitionProcess::Update() {
 
+	if (Input::GetInstance()->PushKeyPressed(DIK_O))
+	{
+		Fade_Out_Init();
+	}
+	if (Input::GetInstance()->PushKeyPressed(DIK_I))
+	{
+		Fade_In_Init();
+	}
+	Fade_Out();
+	Fade_In();
+
 #ifdef _DEBUG
 
-	// Eキーをしながら上下キーでイージングのタイプを変える
-	if (Input::GetInstance()->PushKey(DIK_E)) {
-
-		if (Input::GetInstance()->PushKeyPressed(DIK_UP)) {
-			TransitionProcess::GetInstance()->ease_Type_ = TransitionProcess::GetInstance()->ease_Type_ + 1;
-		}
-		else if (Input::GetInstance()->PushKeyPressed(DIK_DOWN)) {
-			TransitionProcess::GetInstance()->ease_Type_ = TransitionProcess::GetInstance()->ease_Type_ - 1;
-		}
-
-		if (Input::GetInstance()->PushKeyPressed(DIK_O)) {
-			TransitionProcess::Fade_Out();
-		}
-	}
-
-
 	ImGui::Begin("Transition");
-	ImGui::Checkbox("isDraw", &TransitionProcess::GetInstance()->BG_isDraw_);
-	ImGui::Text("ease_Type = %d", TransitionProcess::GetInstance()->ease_Type_);
-	ImGui::Text("ease_IsStart = %d", TransitionProcess::GetInstance()->ease_isStart_);
-	ImGui::Text("ease_nowFrame = %.2f", TransitionProcess::GetInstance()->ease_NowFrame_);
-	ImGui::Text("ease_endFrame = %.2f", TransitionProcess::GetInstance()->ease_EndFrame_);
-	ImGui::Text("ease_val = %.2f", TransitionProcess::GetInstance()->ease_val_);
-	ImGui::Text("ease_startVal = %.2f", TransitionProcess::GetInstance()->ease_StartVal_);
-	ImGui::Text("ease_endVal = %.2f", TransitionProcess::GetInstance()->easse_EndVal_);
-
+	ImGui::Checkbox("BlackBG_isDraw", &TransitionProcess::GetInstance()->BG_isDraw_);
+	ImGui::Text("tex_Color.alpha = %.5f", TransitionProcess::GetInstance()->BG_Sprite_->GetColor().w);
+	ImGui::Text("nowFrame = %d", TransitionProcess::GetInstance()->frame_.Now);
 	ImGui::End();
 
 #endif // DEBUG
-
 }
 
 
@@ -98,145 +72,82 @@ void TransitionProcess::Draw() {
 }
 
 
+// フェードインの初期化処理
+void TransitionProcess::Fade_In_Init() {
+	// イージングのスタートとゴールの値を設定する　黒 -> 透明
+	TransitionProcess::GetInstance()->value_.Start = 1.0f;
+	TransitionProcess::GetInstance()->value_.Goal = 0.0f;
+
+	// 進行度０でスタート
+	TransitionProcess::GetInstance()->frame_.Now = 0;
+
+	// イージングの処理の実行フラグを立てる
+	TransitionProcess::GetInstance()->ease_isStart_ = true;
+}
+
+
 // フェードイン処理
 void TransitionProcess::Fade_In() {
+	EaseProcess();
+}
 
 
+// フェードアウトの初期化処理
+void TransitionProcess::Fade_Out_Init() {
+
+	// イージングのスタートとゴールの値を設定する　黒 -> 透明
+	TransitionProcess::GetInstance()->value_.Start = 0.0f;
+	TransitionProcess::GetInstance()->value_.Goal = 1.0f;
+
+	// 進行度０でスタート
+	TransitionProcess::GetInstance()->frame_.Now = 0;
+
+	// イージングの処理の実行フラグを立てる
+	TransitionProcess::GetInstance()->ease_isStart_ = true;
 }
 
 
 // フェードアウト処理
 void TransitionProcess::Fade_Out() {
-	// スタート地点を設定
-	TransitionProcess::GetInstance()->ease_StartVal_ = 1.0f;
-	// ゴール地点を設定
-	TransitionProcess::GetInstance()->easse_EndVal_ = 0.0f;
-
-	// イージング開始
-	TransitionProcess::EaseProcess();
+	EaseProcess();
 }
 
 
-// イージング処理をまとめたもの
+// イージング処理
 void TransitionProcess::EaseProcess() {
 
-	/* --- 開始時処理 --- */
-	if (TransitionProcess::GetInstance()->ease_isStart_ == false) {
+	Frame frame = TransitionProcess::GetInstance()->frame_;
+	Value value = TransitionProcess::GetInstance()->value_;
+	Vector4 color{};
+	bool isStart = TransitionProcess::GetInstance()->ease_isStart_;
 
-		// イージング開始のフラグを立てる
-		TransitionProcess::GetInstance()->ease_isStart_ = true;
-		// 進行度０でスタート
-		TransitionProcess::GetInstance()->ease_NowFrame_ = 0;
-		// 終了フレームを設定
-		TransitionProcess::GetInstance()->ease_EndFrame_ = 60;
-	}
+	// 処理の実行フラグがtrueのとき
+	if (isStart) {
 
+		// フレームを増やす
+		frame.Now++;
 
-	/* --- 実行時処理 --- */
-	Vector4 newColor{};
-	float startVal = TransitionProcess::GetInstance()->ease_StartVal_;
-	float endVal = TransitionProcess::GetInstance()->easse_EndVal_;
-	float val = TransitionProcess::GetInstance()->ease_val_;
-
-	// 終了フレームに追いつくまでwhile文で回す
-		// イージングの開始フラグが立っていたら
-	if (TransitionProcess::GetInstance()->ease_isStart_) {
-
-		while (TransitionProcess::GetInstance()->ease_NowFrame_ == TransitionProcess::GetInstance()->ease_EndFrame_) {
-
-			// 進行度を増やす
-			TransitionProcess::GetInstance()->ease_NowFrame_++;
-
-			// フレーム進行 : 0->開始 1->終了
-			val = TransitionProcess::GetInstance()->ease_NowFrame_ / TransitionProcess::GetInstance()->ease_EndFrame_;
-
-			if (TransitionProcess::GetInstance()->ease_Type_ == 1) {
-				// イージング実行
-
-				newColor.w = startVal + (endVal - startVal) * TransitionProcess::EaseOutQuint(val);
-				// イージングで求めたカラーをセットする
-				TransitionProcess::GetInstance()->BG_Sprite_->SetColor(newColor);
-			}
+		// フレームが目標値になったら実行フラグを折る
+		if (frame.Now == frame.End) {
+			isStart = false;
 		}
-	}
-
-	TransitionProcess::GetInstance()->ease_StartVal_ = startVal;
-	TransitionProcess::GetInstance()->easse_EndVal_ = endVal;
-	TransitionProcess::GetInstance()->ease_val_ = val;
-
-
-	/* --- 終了時処理 --- */
-	if (TransitionProcess::GetInstance()->ease_NowFrame_ == TransitionProcess::GetInstance()->ease_EndFrame_) {
-
-		// イージング開始のフラグを折る
-		TransitionProcess::GetInstance()->ease_isStart_ = false;
-	}
-}
-
-
-// イージング開始時処理
-void TransitionProcess::EaseStartPreparation() {
-
-	if (TransitionProcess::GetInstance()->ease_isStart_ == false) {
-
-		// イージング開始のフラグを立てる
-		TransitionProcess::GetInstance()->ease_isStart_ = true;
-		// 進行度０でスタート
-		TransitionProcess::GetInstance()->ease_NowFrame_ = 0;
-		// 終了フレームを設定
-		TransitionProcess::GetInstance()->ease_EndFrame_ = 60;
-	}
-}
-
-
-// イージング実行処理
-void TransitionProcess::EaseContentProcess() {
-
-	Vector4 newColor{};
-	float startVal = TransitionProcess::GetInstance()->ease_StartVal_;
-	float endVal = TransitionProcess::GetInstance()->easse_EndVal_;
-	float val = TransitionProcess::GetInstance()->ease_val_;
-
-
-	// イージングの開始フラグが立っていたら
-	if (TransitionProcess::GetInstance()->ease_isStart_) {
-
-		// 進行度を増やす
-		TransitionProcess::GetInstance()->ease_NowFrame_++;
-
-		// フレーム進行 : 0->開始 1->終了
-		val = TransitionProcess::GetInstance()->ease_NowFrame_ / TransitionProcess::GetInstance()->ease_EndFrame_;
-
-		if (TransitionProcess::GetInstance()->ease_Type_ == 1) {
-			// イージング実行
-
-			newColor.w = startVal + (endVal - startVal) * TransitionProcess::EaseOutQuint(val);
-			// イージングで求めたカラーをセットする
-			TransitionProcess::GetInstance()->BG_Sprite_->SetColor(newColor);
-		}
-	}
-
-	TransitionProcess::GetInstance()->ease_StartVal_ = startVal;
-	TransitionProcess::GetInstance()->easse_EndVal_ = endVal;
-	TransitionProcess::GetInstance()->ease_val_ = val;
-}
-
-
-// イージング終了時処理
-void TransitionProcess::EaseEndPreparation() {
-
-	// 終了フレームに追いついたら、終了時処理に入る
-	if (TransitionProcess::GetInstance()->ease_NowFrame_ == TransitionProcess::GetInstance()->ease_EndFrame_) {
-
-		// イージング開始のフラグを折る
-		TransitionProcess::GetInstance()->ease_isStart_ = false;
 	}
 	else {
-		// 終了しなかったら再帰
-		TransitionProcess::EaseContentProcess();
+		//color = { 0.0f, 0.0f, 0.0f, 0.0f };
 	}
-}
 
+	// イージングに入れる値
+	value.useVal = static_cast<float>(frame.Now) / static_cast<float>(frame.End);
+
+
+	// イージング処理
+	color.w = value.Start + (value.Goal - value.Start) * TransitionProcess::EaseOutQuint(value.useVal);
+
+	TransitionProcess::GetInstance()->BG_Sprite_->SetColor(color);
+	TransitionProcess::GetInstance()->ease_isStart_ = isStart;
+	TransitionProcess::GetInstance()->frame_ = frame;
+	TransitionProcess::GetInstance()->value_ = value;
+}
 
 
 float TransitionProcess::EaseOutQuint(float& val) {
