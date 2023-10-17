@@ -40,7 +40,7 @@ void Enemy::Draw(ViewProjection viewProjection){
 void Enemy::EnemyMove() {
 
 	if (isMove_) {
-		velocity = PhysicsFanc::Repulsiveforce(-0.3f, player_->GetWorldPosition(), GetWorldPosition());
+		velocity = PhysicsFunc::Repulsiveforce(-0.3f, player_->GetWorldPosition(), GetWorldPosition());
 		isMove_ = false;
 	}
 	ImGui::Begin("Enemy");

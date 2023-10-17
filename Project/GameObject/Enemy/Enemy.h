@@ -6,7 +6,7 @@
 #include"ColliderConfig.h"
 #include"VectorTransform.h"
 #include"GameObject/Player/Player.h"
-#include"GameObject/PhysicsFanc.h"
+#include"GameObject/PhysicsFunc/PhysicsFunc.h"
 
 
 class Enemy : public Collider {

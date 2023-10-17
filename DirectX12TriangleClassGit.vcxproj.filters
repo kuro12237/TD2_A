@@ -270,7 +270,7 @@
     <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Project\GameObject\PhysicsFanc.cpp">
+    <ClCompile Include="Project\GameObject\PhysicsFunc.cpp">
       <Filter>Project\GameObject\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Project\GameObject\Player\PlayerParticle.cpp">
@@ -458,7 +458,7 @@
     <ClInclude Include="Project\GameObject\Enemy\Enemy.h">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Project\GameObject\PhysicsFanc.h">
+    <ClInclude Include="Project\GameObject\PhysicsFunc.h">
       <Filter>Project\GameObject\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Project\GameObject\Player\PlayerParticle.h">
