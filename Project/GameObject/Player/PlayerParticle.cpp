@@ -84,5 +84,4 @@ void PlayerParticle::ParticleUV(Vector3& s, Vector3& t)
 	{
 		t = { 0.0f,0.5f,0 };
 	}
-
 }
