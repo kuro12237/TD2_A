@@ -74,10 +74,10 @@ private:
 
 	ISpriteState* state_ = {};
 
-	Vector2 srcTR = { 0.5f,0.0f };
-	Vector2 srcBR = { 0.5f,0.5f };
+	Vector2 srcTR = { 1.0f,0.0f };
+	Vector2 srcBR = { 1.0f,1.0f };
 	Vector2 srcTL = { 0.0f,0.0f };
-	Vector2 srcBL = { 0.0f,0.5f };
+	Vector2 srcBL = { 0.0f,1.0f };
 };
 
 
