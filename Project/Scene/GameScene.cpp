@@ -31,6 +31,9 @@ void GameScene::Initialize()
 	testSprite->SetTexHandle(texHandle);
 	testSprite->Initialize(new SpriteBoxState,{0,0},{320,320});
 	testSpriteWorldTransform.Initialize();
+
+	hitparticle_ = make_unique<HitParticle>();
+	hitparticle_->Initialize();
 }
 
 void GameScene::Update(GameManager* scene)
@@ -56,7 +59,15 @@ void GameScene::Update(GameManager* scene)
 			enemy->Update();
 		}
 	}
-	
+	testTime++;
+	if (testTime>2)
+	{
+		//hitparticle_->Spown(player_->GetWorldTransform().translate);
+		testTime = 0;
+	}
+
+	hitparticle_->Update();
+
 	EnemyReset();
 
 	UpdateEnemyCommands();
@@ -89,6 +100,7 @@ void GameScene::Object3dDraw()
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		enemy->Draw(viewProjection);
 	}
+	hitparticle_->Draw(viewProjection);
 
 	mapWallManager_->Draw(viewProjection);
 }

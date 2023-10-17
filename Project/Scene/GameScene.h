@@ -11,6 +11,7 @@
 #include"FileLoader.h"
 #include"GameObject/MapWall/MapWall.h"
 #include"GameObject/MapWall/MapWallManager.h"
+#include"GameObject/HitParticle/HitParticle.h"
 
 
 class GameScene : public IScene
@@ -62,6 +63,8 @@ private:
 
 	unique_ptr<MapWallManager>mapWallManager_ = nullptr;
 
+	unique_ptr<HitParticle>hitparticle_ = nullptr;
+	uint32_t testTime = 0;
 };
 
 
