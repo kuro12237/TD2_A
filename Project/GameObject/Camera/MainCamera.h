@@ -17,13 +17,23 @@ public:
 	static ViewProjection GetViewProjection(){ return MainCamera::GetInstance()->viewProjection; }
 
 	static void SetParent(const WorldTransform* worldTransform) { MainCamera::GetInstance()->worldTransform_.parent = worldTransform; }
+
+	static void SetIsShake(bool isFlag) { MainCamera::GetInstance()->IsShake = isFlag;}
 private:
+
+	static void Shake();
+
 
 	ViewProjection viewProjection{};
 	WorldTransform worldTransform_{};
 	
 	float rotate = 0;
 	const float speed = 0.2f;
+
+	bool IsShake = false;
+	Vector2 CameraShakeRadious = { -1.0f,1.0f};
+
+	random_device seedGenerator;
 
 	//Singleton
 	MainCamera() = default;

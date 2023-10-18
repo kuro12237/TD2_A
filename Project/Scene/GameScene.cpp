@@ -47,6 +47,15 @@ void GameScene::Update(GameManager* scene)
 		return;
 	}
 	
+	bool flag = false;
+	ImGui::Begin("d");
+	ImGui::Checkbox("e",&flag );
+	ImGui::End();
+	if (flag)
+	{
+		hitparticle_->Spown(player_->GetWorldTransform().translate);
+		MainCamera::SetIsShake(flag);
+	}
 	timeCount_->Update();
 	// 時間切れ時の処理
 	if (!timeCount_->GetIsTimeUp()) 
@@ -59,12 +68,7 @@ void GameScene::Update(GameManager* scene)
 			enemy->Update();
 		}
 	}
-	testTime++;
-	if (testTime>2)
-	{
-		hitparticle_->Spown(player_->GetWorldTransform().translate);
-		testTime = 0;
-	}
+
 
 	hitparticle_->Update();
 
