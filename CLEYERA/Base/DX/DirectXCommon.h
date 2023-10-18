@@ -61,6 +61,10 @@ private:
 	static D3D12_RECT scissorRectSetting(int32_t kClientWidth, int32_t kClientHeight);
 	static ComPtr<ID3D12DescriptorHeap> CreateDescripterHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 	static ComPtr<ID3D12Resource> CreateDepthStencilTextureResource();
+	
+	static void CreateDebugLayer();
+	static void CreateInforQueue();
+
 	static void CreateFactory();
 	static void CreateDevice();
 	static void CreateCommands();

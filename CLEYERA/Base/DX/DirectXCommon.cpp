@@ -8,36 +8,13 @@ DirectXCommon* DirectXCommon::GetInstance(){
 void DirectXCommon::initialize()
 {
 #ifdef _DEBUG
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&DirectXCommon::GetInstance()->m_pDebugController))))
-	{
-		DirectXCommon::GetInstance()->m_pDebugController->EnableDebugLayer();
-		DirectXCommon::GetInstance()->m_pDebugController->SetEnableGPUBasedValidation(TRUE);
-	}
+	CreateDebugLayer();
 #endif
 	CreateFactory();
 	CreateDevice();
 #ifdef _DEBUG
-	ComPtr<ID3D12InfoQueue> infoQueue = nullptr;
-
-	if (SUCCEEDED(DirectXCommon::GetInstance()->m_pDevice_->QueryInterface(IID_PPV_ARGS(&infoQueue))))
-	{
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
-		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
-		D3D12_MESSAGE_ID denyIds[] =
-		{
-			D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
-		};
-		D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
-		D3D12_INFO_QUEUE_FILTER filter{};
-		filter.DenyList.NumIDs = _countof(denyIds);
-		filter.DenyList.pIDList = denyIds;
-		filter.DenyList.NumSeverities = _countof(severities);
-		filter.DenyList.pSeverityList = severities;
-		infoQueue->PushStorageFilter(&filter);
-	}
+	CreateInforQueue();
 #endif _DEBUG
-
 	CreateCommands();
 	CreateSwapChain();
 	CreateDescritorHeap();
@@ -187,6 +164,7 @@ ComPtr<ID3D12Resource>DirectXCommon::CreateDepthStencilTextureResource()
 	resourceDesc.SampleDesc.Count = 1;
 	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+
 	D3D12_HEAP_PROPERTIES heapProperties{};
 	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
 	D3D12_CLEAR_VALUE depthClearValue{};
@@ -203,6 +181,38 @@ ComPtr<ID3D12Resource>DirectXCommon::CreateDepthStencilTextureResource()
 		IID_PPV_ARGS(&resource));		
 
 	return resource;
+}
+
+void DirectXCommon::CreateInforQueue()
+{
+	ComPtr<ID3D12InfoQueue> infoQueue = nullptr;
+
+	if (SUCCEEDED(DirectXCommon::GetInstance()->m_pDevice_->QueryInterface(IID_PPV_ARGS(&infoQueue))))
+	{
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
+		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_WARNING, true);
+		D3D12_MESSAGE_ID denyIds[] =
+		{
+			D3D12_MESSAGE_ID_RESOURCE_BARRIER_MISMATCHING_COMMAND_LIST_TYPE
+		};
+		D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
+		D3D12_INFO_QUEUE_FILTER filter{};
+		filter.DenyList.NumIDs = _countof(denyIds);
+		filter.DenyList.pIDList = denyIds;
+		filter.DenyList.NumSeverities = _countof(severities);
+		filter.DenyList.pSeverityList = severities;
+		infoQueue->PushStorageFilter(&filter);
+	}
+}
+
+void DirectXCommon::CreateDebugLayer()
+{
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&DirectXCommon::GetInstance()->m_pDebugController))))
+	{
+		DirectXCommon::GetInstance()->m_pDebugController->EnableDebugLayer();
+		DirectXCommon::GetInstance()->m_pDebugController->SetEnableGPUBasedValidation(TRUE);
+	}
 }
 
 void DirectXCommon::CreateFactory()
