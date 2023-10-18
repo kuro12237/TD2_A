@@ -62,7 +62,7 @@ void GameScene::Update(GameManager* scene)
 	testTime++;
 	if (testTime>2)
 	{
-		//hitparticle_->Spown(player_->GetWorldTransform().translate);
+		hitparticle_->Spown(player_->GetWorldTransform().translate);
 		testTime = 0;
 	}
 

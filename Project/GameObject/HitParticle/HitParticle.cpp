@@ -6,7 +6,7 @@ void HitParticle::Initialize()
 	texHandle = TextureManager::LoadTexture("Resources/circle.png");
 	particle_->SetTexHandle(texHandle);
 	particle_->SetName("HitParticles");
-	particle_->Initialize(new ParticlePlaneState, 40000);
+	particle_->Initialize(new ParticlePlaneState, 3500);
 }
 
 void HitParticle::Update()
@@ -42,7 +42,7 @@ void HitParticle::Spown(Vector3 position)
 	mt19937 randomEngine(randSeed());
 	uniform_real_distribution<float>distributionVelocity(-1.0f, 1.0f);
 	uniform_real_distribution<float>distributionColor(0.5f, 1.0f);
-	for (int i = 0; i < 80; i++)
+	for (int i = 0; i < 8; i++)
 	{
 
 		Vector3 VelocityRand = { 
