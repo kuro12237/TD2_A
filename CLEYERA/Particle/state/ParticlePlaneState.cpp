@@ -82,7 +82,7 @@ void ParticlePlaneState::Draw(Particle* state,list<Particle_param>param,ViewProj
 		NumDrawInstansing++;
 	}
 
-	CommandCall(state->GetTexhandle());
+	CommandCall(state->GetTexhandle(),state);
 }
 
 
@@ -98,13 +98,13 @@ void ParticlePlaneState::CarmeraBillbord(ViewProjection view)
 	billboardMatrix.m[3][2] = 0.0f;
 }
 
-void ParticlePlaneState::CommandCall(uint32_t TexHandle)
+void ParticlePlaneState::CommandCall(uint32_t TexHandle,Particle *state)
 {
 	Commands commands = DirectXCommon::GetInstance()->GetCommands();
-	SPSO pso = GraphicsPipelineManager::GetInstance()->GetPso();
-
-	commands.m_pList->SetGraphicsRootSignature(pso.Particle3d.Add.rootSignature.Get());
-	commands.m_pList->SetPipelineState(pso.Particle3d.Add.GraphicsPipelineState.Get());
+	SPSOProperty pso = Get3dParticlePipeline(state);
+	
+	commands.m_pList->SetGraphicsRootSignature(pso.rootSignature.Get());
+	commands.m_pList->SetPipelineState(pso.GraphicsPipelineState.Get());
 
 	commands.m_pList->IASetVertexBuffers(0, 1, &resource_.BufferView);
 	commands.m_pList->IASetIndexBuffer(&resource_.IndexBufferView);
@@ -119,4 +119,36 @@ void ParticlePlaneState::CommandCall(uint32_t TexHandle)
 	DescriptorManager::rootParamerterCommand(2, TexHandle);
 	
 	commands.m_pList->DrawIndexedInstanced(IndexSize,NumDrawInstansing, 0, 0, 0);
+}
+
+
+SPSOProperty ParticlePlaneState::Get3dParticlePipeline(Particle* state)
+{
+	SPSOProperty PSO = {};
+
+	switch (state->GetBlendMode())
+	{
+	case BlendNone:
+		PSO = GraphicsPipelineManager::GetInstance()->GetPso().Particle3d.none;
+		break;
+	case BlendAdd:
+		PSO = GraphicsPipelineManager::GetInstance()->GetPso().Particle3d.Add;
+		break;
+	case BlendSubtruct:
+		assert(0);
+		PSO = GraphicsPipelineManager::GetInstance()->GetPso().Sprite2d.Subtruct;
+		break;
+	case BlendMultiply:
+		assert(0);
+		PSO = GraphicsPipelineManager::GetInstance()->GetPso().Sprite2d.Multiply;
+		break;
+	case BlendScreen:
+		assert(0);
+		PSO = GraphicsPipelineManager::GetInstance()->GetPso().Sprite2d.Screen;
+		break;
+
+	default:
+		break;
+	}
+	return PSO;
 }
