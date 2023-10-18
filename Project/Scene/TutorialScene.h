@@ -6,6 +6,8 @@
 #include "Sprite/Sprite.h"
 #include "WorldTransform.h"
 #include "Graphics/TextureManager/TextureManager.h"
+#include "GameObject/TransitionProcess/TransitionProcess.h"
+
 
 
 /// <summary>
@@ -47,4 +49,6 @@ private:
 	Vector2 tutorial_Position_;
 	// ワールドトランスフォーム
 	WorldTransform tutorial_WorldTransform_;
+
+	bool frag;
 };

@@ -7,6 +7,8 @@ void TitleScene::Initialize() {
 
 	// テクスチャの読み込み
 	title_TexHD_ = TextureManager::LoadTexture("Resources/BackGround/Title_BagGround.png");
+	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/BackGround/BackGround.png");
+
 
 	// 座標
 	title_Position_ = { 0.0f, 0.0f };
@@ -19,7 +21,10 @@ void TitleScene::Initialize() {
 	title_Sprite_->SetTexHandle(title_TexHD_);
 	title_Sprite_->SetColor(title_TexColor_);
 
+	// フェードの処理
 	TransitionProcess::Initialize();
+	// フェードに使う画像の設定
+	TransitionProcess::GetInstance()->GetBG_Sprite()->SetTexHandle(useFade_BG);
 
 }
 
@@ -35,10 +40,23 @@ void TitleScene::Update(GameManager* scene) {
 		return;
 	}
 
+	// スペースでフェードスタート
+	if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
+		TransitionProcess::Fade_In_Init();
+	}
+	TransitionProcess::Fade_In();
+	// フェードの処理が終わったらシーン遷移
+	if (TransitionProcess::Fade_In()) {
+		scene->ChangeState(new TutorialScene);
+		return;
+	}
+
+
+
 #ifdef _DEBUG
 
 	ImGui::Begin("TitleScene");
-	ImGui::Text("9 key = ChangeScene() -> TutorialScene");
+	ImGui::Text("space key = ChangeScene() -> TutorialScene");
 	ImGui::End();
 
 #endif
@@ -50,4 +68,5 @@ void TitleScene::Update(GameManager* scene) {
 void TitleScene::Draw() {
 
 	title_Sprite_->Draw(title_WorldTransform_);
+	TransitionProcess::Draw();
 }

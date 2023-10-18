@@ -25,3 +25,4 @@ Vector4 Sprite::ColorConversion(uint32_t rgbaValue)
 	result.w = (rgbaValue & 0xFF) / 255.0f;         // Alpha
 	return result;
 }
+

@@ -30,7 +30,7 @@ void TransitionProcess::Initialize() {
 	TransitionProcess::GetInstance()->BG_Sprite_->SetTexHandle(TransitionProcess::GetInstance()->BG_TexHD_);
 
 	/// イージングの各値の初期化
-	TransitionProcess::GetInstance()->frame_ = { 0, 60 };
+	TransitionProcess::GetInstance()->frame_ = { 0, 0 };
 	TransitionProcess::GetInstance()->value_ = { 0.0f, 0.0f };
 	TransitionProcess::GetInstance()->ease_isStart_ = false;
 }
@@ -39,7 +39,7 @@ void TransitionProcess::Initialize() {
 // 更新処理
 void TransitionProcess::Update() {
 
-	if (Input::GetInstance()->PushKeyPressed(DIK_O))
+	/*if (Input::GetInstance()->PushKeyPressed(DIK_O))
 	{
 		Fade_Out_Init();
 	}
@@ -48,7 +48,7 @@ void TransitionProcess::Update() {
 		Fade_In_Init();
 	}
 	Fade_Out();
-	Fade_In();
+	Fade_In();*/
 
 #ifdef _DEBUG
 
@@ -75,11 +75,11 @@ void TransitionProcess::Draw() {
 // フェードインの初期化処理
 void TransitionProcess::Fade_In_Init() {
 	// イージングのスタートとゴールの値を設定する　黒 -> 透明
-	TransitionProcess::GetInstance()->value_.Start = 1.0f;
-	TransitionProcess::GetInstance()->value_.Goal = 0.0f;
+	TransitionProcess::GetInstance()->value_.Start = 0.0f;
+	TransitionProcess::GetInstance()->value_.Goal = 1.0f;
 
-	// 進行度０でスタート
-	TransitionProcess::GetInstance()->frame_.Now = 0;
+	// フレームをセット
+	TransitionProcess::GetInstance()->frame_ = { 0, 240 };
 
 	// イージングの処理の実行フラグを立てる
 	TransitionProcess::GetInstance()->ease_isStart_ = true;
@@ -87,34 +87,7 @@ void TransitionProcess::Fade_In_Init() {
 
 
 // フェードイン処理
-void TransitionProcess::Fade_In() {
-	EaseProcess();
-}
-
-
-// フェードアウトの初期化処理
-void TransitionProcess::Fade_Out_Init() {
-
-	// イージングのスタートとゴールの値を設定する　黒 -> 透明
-	TransitionProcess::GetInstance()->value_.Start = 0.0f;
-	TransitionProcess::GetInstance()->value_.Goal = 1.0f;
-
-	// 進行度０でスタート
-	TransitionProcess::GetInstance()->frame_.Now = 0;
-
-	// イージングの処理の実行フラグを立てる
-	TransitionProcess::GetInstance()->ease_isStart_ = true;
-}
-
-
-// フェードアウト処理
-void TransitionProcess::Fade_Out() {
-	EaseProcess();
-}
-
-
-// イージング処理
-void TransitionProcess::EaseProcess() {
+bool TransitionProcess::Fade_In() {
 
 	Frame frame = TransitionProcess::GetInstance()->frame_;
 	Value value = TransitionProcess::GetInstance()->value_;
@@ -130,15 +103,12 @@ void TransitionProcess::EaseProcess() {
 		// フレームが目標値になったら実行フラグを折る
 		if (frame.Now == frame.End) {
 			isStart = false;
+			return true;
 		}
-	}
-	else {
-		//color = { 0.0f, 0.0f, 0.0f, 0.0f };
 	}
 
 	// イージングに入れる値
 	value.useVal = static_cast<float>(frame.Now) / static_cast<float>(frame.End);
-
 
 	// イージング処理
 	color.w = value.Start + (value.Goal - value.Start) * TransitionProcess::EaseOutQuint(value.useVal);
@@ -147,6 +117,59 @@ void TransitionProcess::EaseProcess() {
 	TransitionProcess::GetInstance()->ease_isStart_ = isStart;
 	TransitionProcess::GetInstance()->frame_ = frame;
 	TransitionProcess::GetInstance()->value_ = value;
+
+	return false;
+}
+
+
+// フェードアウトの初期化処理
+void TransitionProcess::Fade_Out_Init() {
+
+	// イージングのスタートとゴールの値を設定する　黒 -> 透明
+	TransitionProcess::GetInstance()->value_.Start = 1.0f;
+	TransitionProcess::GetInstance()->value_.Goal = 0.0f;
+
+	// フレームをセット
+	TransitionProcess::GetInstance()->frame_ = { 0, 400 };
+
+	// イージングの処理の実行フラグを立てる
+	TransitionProcess::GetInstance()->ease_isStart_ = true;
+}
+
+
+// フェードアウト処理
+bool TransitionProcess::Fade_Out() {
+
+	Frame frame = TransitionProcess::GetInstance()->frame_;
+	Value value = TransitionProcess::GetInstance()->value_;
+	Vector4 color{};
+	bool isStart = TransitionProcess::GetInstance()->ease_isStart_;
+
+	// 処理の実行フラグがtrueのとき
+	if (isStart) {
+
+		// フレームを増やす
+		frame.Now++;
+
+		// フレームが目標値になったら実行フラグを折る
+		if (frame.Now == frame.End) {
+			isStart = false;
+			return true;
+		}
+	}
+
+	// イージングに入れる値
+	value.useVal = static_cast<float>(frame.Now) / static_cast<float>(frame.End);
+
+	// イージング処理
+	color.w = value.Start + (value.Goal - value.Start) * TransitionProcess::EaseOutQuint(value.useVal);
+
+	TransitionProcess::GetInstance()->BG_Sprite_->SetColor(color);
+	TransitionProcess::GetInstance()->ease_isStart_ = isStart;
+	TransitionProcess::GetInstance()->frame_ = frame;
+	TransitionProcess::GetInstance()->value_ = value;
+
+	return false;
 }
 
 

@@ -54,7 +54,7 @@ public: // メンバ関数
 	/// <summary>
 	/// フェードイン処理
 	/// </summary>
-	static void Fade_In();
+	static bool Fade_In();
 
 	/// <summary>
 	/// フェードアウトの初期化処理
@@ -64,7 +64,7 @@ public: // メンバ関数
 	/// <summary>
 	/// フェードアウト処理
 	/// </summary>
-	static void Fade_Out();
+	static bool Fade_Out();
 
 #pragma region Get 取得
 
@@ -77,13 +77,6 @@ public: // メンバ関数
 
 
 private: // メンバ関数
-
-	/// <summary>
-	/// イージングの処理
-	/// 以下の処理をまとめた処理
-	/// </summary>
-	static void EaseProcess();
-
 
 	static float EaseOutQuint(float& val);
 	
