@@ -76,7 +76,7 @@ void Enemy::OnTopWall()
 	{
 		worldTransform_.translate.z = worldTransform_.translate.z - 0.1f;
 	}
-	velocity.z = velocity.z * -1;
+	//velocity_.z = velocity_.z * -1;
 }
 
 void Enemy::OnBottomWall()
@@ -85,7 +85,7 @@ void Enemy::OnBottomWall()
 	{
 		worldTransform_.translate.z = worldTransform_.translate.z + 0.1f;
 	}
-	velocity.z = velocity.z * -1;
+	//velocity.z = velocity.z * -1;
 }
 
 void Enemy::OnLeftWall()
@@ -94,7 +94,7 @@ void Enemy::OnLeftWall()
 	{
 		worldTransform_.translate.x = worldTransform_.translate.x + 0.1f;
 	}
-	velocity.x = velocity.x * -1;
+	//velocity.x = velocity.x * -1;
 }
 
 void Enemy::OnRightWall()
@@ -103,5 +103,5 @@ void Enemy::OnRightWall()
 	{
 		worldTransform_.translate.x = worldTransform_.translate.x - 0.1f;
 	}
-	velocity.x = velocity.x * -1;
+	//velocity.x = velocity.x * -1;
 }
