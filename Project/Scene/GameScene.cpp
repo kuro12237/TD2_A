@@ -34,6 +34,7 @@ void GameScene::Initialize()
 
 void GameScene::Update(GameManager* scene)
 {
+	// ９キーでシーン遷移
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
 		TransitionProcess::Fade_In_Init();
@@ -49,12 +50,14 @@ void GameScene::Update(GameManager* scene)
 	// フェードが明ける処理
 	TransitionProcess::Fade_In();
 	TransitionProcess::Fade_Out();
+
 	// フェードが明けたらゲーム処理に入る
 	if (TransitionProcess::Fade_Out()) {
 
+		// タイマーの処理
 		timeCount_->Update();
 
-		// 時間切れ時の処理
+		// 時間切れになると処理はいらないよ
 		if (timeCount_->GetIsTimeUp() == false) {
 			player_->Update();
 			enemy_->Update();
