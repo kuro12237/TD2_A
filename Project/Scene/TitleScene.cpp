@@ -73,8 +73,14 @@ void TitleScene::Update(GameManager* scene) {
 
 
 // 描画処理
-void TitleScene::Draw() {
-
+void TitleScene::Back2dSpriteDraw()
+{
+}
+void TitleScene::Object3dDraw()
+{
+}
+void TitleScene::Flont2dSpriteDraw()
+{
 	title_Sprite_->Draw(title_WorldTransform_);
 	TransitionProcess::Draw();
 }

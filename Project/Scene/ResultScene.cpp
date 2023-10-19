@@ -59,11 +59,18 @@ void ResultScene::Update(GameManager* scene) {
 #endif
 }
 
+void ResultScene::Back2dSpriteDraw()
+{
+}
 
+void ResultScene::Object3dDraw()
+{
+}
 
-// 描画処理
-void ResultScene::Draw() {
-
+void ResultScene::Flont2dSpriteDraw()
+{
 	result_Sprite_->Draw(result_WorldTransform_);
 	TransitionProcess::Draw();
 }
+
+

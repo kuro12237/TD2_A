@@ -138,9 +138,10 @@ void GameScene::Object3dDraw()
 void GameScene::Flont2dSpriteDraw()
 {
 	timeCount_->Draw();
-	TransitionProcess::Draw();
+	//TransitionProcess::Draw();
 	
 	testSprite->Draw(testSpriteWorldTransform);
+	TransitionProcess::Draw();
 }
 
 void GameScene::Collision()

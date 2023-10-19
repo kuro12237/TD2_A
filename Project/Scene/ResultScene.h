@@ -31,7 +31,9 @@ public:
 	/// <summary>
 	/// 描画処理
 	/// </summary>
-	void Draw() override;
+	void Back2dSpriteDraw()override;
+	void Object3dDraw()override;
+	void Flont2dSpriteDraw()override;
 
 
 private:

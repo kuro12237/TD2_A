@@ -71,8 +71,15 @@ void TutorialScene::Update(GameManager* scene) {
 
 
 // 描画処理
-void TutorialScene::Draw() {
+void TutorialScene::Back2dSpriteDraw()
+{
+}
 
+void TutorialScene::Object3dDraw()
+{
+}
+void TutorialScene::Flont2dSpriteDraw()
+{
 	tutorial_Sprite_->Draw(tutorial_WorldTransform_);
 	TransitionProcess::Draw();
 }
