@@ -31,12 +31,13 @@ void GameScene::Initialize()
 	testSprite->SetTexHandle(texHandle);
 	testSprite->Initialize(new SpriteBoxState,{0,0},{320,320});
 	testSpriteWorldTransform.Initialize();
+
+	hitparticle_ = make_unique<HitParticle>();
+	hitparticle_->Initialize();
 }
 
 void GameScene::Update(GameManager* scene)
 {
-
-
 	DebugTools::UpdateExecute(0);
 	DebugTools::UpdateExecute(1);
 
@@ -46,6 +47,15 @@ void GameScene::Update(GameManager* scene)
 		return;
 	}
 	
+	bool flag = false;
+	ImGui::Begin("d");
+	ImGui::Checkbox("e",&flag );
+	ImGui::End();
+	if (flag)
+	{
+		hitparticle_->Spown(player_->GetWorldTransform().translate);
+		MainCamera::SetIsShake(flag);
+	}
 	timeCount_->Update();
 	// 時間切れ時の処理
 	if (!timeCount_->GetIsTimeUp()) 
@@ -58,7 +68,10 @@ void GameScene::Update(GameManager* scene)
 			enemy->Update();
 		}
 	}
-	
+
+
+	hitparticle_->Update();
+
 	EnemyReset();
 
 	UpdateEnemyCommands();
@@ -91,6 +104,7 @@ void GameScene::Object3dDraw()
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		enemy->Draw(viewProjection);
 	}
+	hitparticle_->Draw(viewProjection);
 
 	mapWallManager_->Draw(viewProjection);
 }
@@ -119,6 +133,10 @@ void GameScene::MapWallCollision()
 {
 	mapWallManager_->ListClear();
 	mapWallManager_->SetObject(player_.get());
+
+	for (shared_ptr<Enemy>& enemy : enemys_) {
+		mapWallManager_->SetObject(enemy.get());
+	}
 	mapWallManager_->CheckMapWall();
 }
 

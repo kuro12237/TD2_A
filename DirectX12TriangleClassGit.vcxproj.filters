@@ -136,6 +136,9 @@
     <Filter Include="Project\TimeCount">
       <UniqueIdentifier>{1bd2f468-e466-4edf-81d3-0ff2dba38ad3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\HitParticle">
+      <UniqueIdentifier>{2b34561a-e7dd-4777-b495-dcb1f9b873b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -296,6 +299,9 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp">
       <Filter>Project\TimeCount</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\HitParticle\HitParticle.cpp">
+      <Filter>Project\GameObject\HitParticle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,6 +499,8 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\Camera\MainCamera.h">
       <Filter>Project\GameObject</Filter>
+    <ClInclude Include="Project\GameObject\HitParticle\HitParticle.h">
+      <Filter>Project\GameObject\HitParticle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

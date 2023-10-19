@@ -1,6 +1,6 @@
 #include "Cleyera.h"
 
-Cleyera* Cleyera::CreateInstance()
+Cleyera* Cleyera::GetInstance()
 {
 	static Cleyera instance;
 	return &instance;
@@ -8,13 +8,14 @@ Cleyera* Cleyera::CreateInstance()
 
 void Cleyera::Initialize()
 {
-	Cleyera::CreateInstance();
+	Cleyera::GetInstance();
 
 	WinApp::Initialize();
 	DirectXCommon::initialize();
+	DescriptorManager::Initialize();
 	ShaderManager::Initialize();
 	GraphicsPipelineManager::Initialize();
-	DescriptorManager::Initialize();
+	
 	TextureManager::Initialize();
 	ImGuiManager::Initialize();
 	

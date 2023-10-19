@@ -272,7 +272,8 @@ SPSOProperty GraphicsPipelineManager::CreateShape(ComPtr<ID3D12Device> device, C
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	HRESULT hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+	HRESULT hr = {};
+	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&result.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
@@ -372,7 +373,8 @@ SPSOProperty GraphicsPipelineManager::CreateLine(ComPtr<ID3D12Device>device, Com
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	HRESULT hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+	HRESULT hr = {};
+	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&result.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 	return result;
@@ -506,7 +508,8 @@ SPSOProperty GraphicsPipelineManager::CreateSprite3dNone(ComPtr<ID3D12Device> de
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	HRESULT hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+	HRESULT hr = {};
+	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&SpritePSO.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
@@ -634,7 +637,8 @@ SPSOProperty GraphicsPipelineManager::CreateSprite2dNone(ComPtr<ID3D12Device> de
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 	
-	HRESULT hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+	HRESULT hr = {};
+	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&SpritePSO.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
@@ -768,7 +772,8 @@ SPSOProperty GraphicsPipelineManager::CreateSprite2dAdd(ComPtr<ID3D12Device> dev
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	HRESULT hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+	HRESULT hr = {};
+	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&SpritePSO.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
@@ -898,7 +903,8 @@ SPSOProperty GraphicsPipelineManager::CreateSprite2dSubtract(ComPtr<ID3D12Device
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	HRESULT hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+	HRESULT hr = {};
+	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&SpritePSO.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
@@ -1019,7 +1025,8 @@ SPSOProperty GraphicsPipelineManager::CreateSprite2dMultiply(ComPtr<ID3D12Device
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	HRESULT hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+	HRESULT hr = {};
+	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&SpritePSO.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
@@ -1149,7 +1156,8 @@ SPSOProperty GraphicsPipelineManager::CreateSprite2dScreen(ComPtr<ID3D12Device> 
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	HRESULT hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+	HRESULT hr = {};
+	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&SpritePSO.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
@@ -1331,8 +1339,6 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dNone(ComPtr<ID3D12Device> 
 	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[0].Descriptor.ShaderRegister = 0;
 
-
-	//
 	//Vertex
 	D3D12_DESCRIPTOR_RANGE descriptorRangeForInstancing[1] = {};
 	descriptorRangeForInstancing[0].BaseShaderRegister = 0;
@@ -1340,16 +1346,12 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dNone(ComPtr<ID3D12Device> 
 	descriptorRangeForInstancing[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRangeForInstancing[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
-	
-	
 	//VertexÇÃTransform
 	rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 	rootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
 	rootParameters[1].DescriptorTable.pDescriptorRanges = descriptorRangeForInstancing;
 	rootParameters[1].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeForInstancing);
-	//
 	
-
 	//PixcelDescriptorRanged
 	D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
 	descriptorRange[0].BaseShaderRegister = 0;
@@ -1363,24 +1365,22 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dNone(ComPtr<ID3D12Device> 
 	rootParameters[2].DescriptorTable.pDescriptorRanges = descriptorRange;
 	rootParameters[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
 
-
-	
 	//SamplerÇÃê›íË
-	{
-		D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
-		staticSamplers[0].Filter = D3D12_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
-		staticSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-		staticSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-		staticSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	
+	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
+	staticSamplers[0].Filter = D3D12_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+	staticSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
 
-		staticSamplers[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-		staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;
-		staticSamplers[0].ShaderRegister = 0;
-		staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	staticSamplers[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;
+	staticSamplers[0].ShaderRegister = 0;
+	staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 
-		descriptionRootSignature.pStaticSamplers = staticSamplers;
-		descriptionRootSignature.NumStaticSamplers = _countof(staticSamplers);
-	}
+	descriptionRootSignature.pStaticSamplers = staticSamplers;
+	descriptionRootSignature.NumStaticSamplers = _countof(staticSamplers);
+	
 	descriptionRootSignature.pParameters = rootParameters;
 	descriptionRootSignature.NumParameters = _countof(rootParameters);
 
@@ -1434,7 +1434,7 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dNone(ComPtr<ID3D12Device> 
 	SettingDepth(
 		despthStencilDesc,
 		true,
-		D3D12_DEPTH_WRITE_MASK_ALL,
+		D3D12_DEPTH_WRITE_MASK_ZERO,
 		D3D12_COMPARISON_FUNC_LESS_EQUAL
 	);
 
@@ -1465,7 +1465,8 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dNone(ComPtr<ID3D12Device> 
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	HRESULT hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+	HRESULT hr = {};
+	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&ParticlePSO.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 	
@@ -1497,8 +1498,6 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dAdd(ComPtr<ID3D12Device> d
 	descriptorRangeForInstancing[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRangeForInstancing[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
-
-
 	//VertexÇÃTransform
 	rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 	rootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
@@ -1522,21 +1521,21 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dAdd(ComPtr<ID3D12Device> d
 
 
 	//SamplerÇÃê›íË
-	{
-		D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
-		staticSamplers[0].Filter = D3D12_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
-		staticSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-		staticSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-		staticSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	
+	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
+	staticSamplers[0].Filter = D3D12_FILTER_COMPARISON_MIN_MAG_MIP_LINEAR;
+	staticSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
 
-		staticSamplers[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-		staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;
-		staticSamplers[0].ShaderRegister = 0;
-		staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	staticSamplers[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;
+	staticSamplers[0].ShaderRegister = 0;
+	staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 
-		descriptionRootSignature.pStaticSamplers = staticSamplers;
-		descriptionRootSignature.NumStaticSamplers = _countof(staticSamplers);
-	}
+	descriptionRootSignature.pStaticSamplers = staticSamplers;
+	descriptionRootSignature.NumStaticSamplers = _countof(staticSamplers);
+	
 	descriptionRootSignature.pParameters = rootParameters;
 	descriptionRootSignature.NumParameters = _countof(rootParameters);
 
@@ -1608,7 +1607,6 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dAdd(ComPtr<ID3D12Device> d
 	graphicsPipelineStateDesc.DepthStencilState = despthStencilDesc;
 	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
-
 	//èëÇ´çûÇﬁRTVÇÃèÓïÒ
 	graphicsPipelineStateDesc.NumRenderTargets = 1;
 	graphicsPipelineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
@@ -1621,7 +1619,8 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dAdd(ComPtr<ID3D12Device> d
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 
-	HRESULT hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
+	HRESULT hr = {};
+	hr = device->CreateGraphicsPipelineState(&graphicsPipelineStateDesc,
 		IID_PPV_ARGS(&ParticlePSO.GraphicsPipelineState));
 	assert(SUCCEEDED(hr));
 
