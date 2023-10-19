@@ -3,7 +3,16 @@
 #include "WorldTransform.h"
 #include "Graphics/TextureManager/TextureManager.h"
 #include"Input.h"
+#include "Audio.h"
 
+
+
+struct Src {
+	Vector2 RightTop;
+	Vector2 RightBottom;
+	Vector2 LeftTop;
+	Vector2 LeftBottom;
+};
 
 
 /// <summary>
@@ -67,19 +76,20 @@ public:
 private:
 
 	// スプライト
-	unique_ptr<Sprite>timerSprite_[3];
+	unique_ptr<Sprite>timeCountSprite_[3];
 	unique_ptr<Sprite>timeUpUISprite_;
 
 	// テクスチャ
-	uint32_t numTextureHD_[10]{};
+	uint32_t numberTexHD_;
 	uint32_t timeUpUITextureHD_{};
-
+	
 	// テクスチャカラー
 	Vector4 textureColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-	// 描画座標
-	Vector2 timerPosition_[3]{};
-	WorldTransform timerWorldTransform_[3]{};
+	// 座標
+	Src src_[10];
+	Vector2 timeCountPosition_[3]{};
+	WorldTransform timeCountWorldTransform_[3]{};
 	Vector2 timeUpUIPosition_;
 	WorldTransform timeUpUIWorldTransform_{};
 

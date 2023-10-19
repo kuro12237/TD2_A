@@ -14,7 +14,7 @@ void GameScene::Initialize()
 
 	timeCount_ = make_unique<TimeCount>();
 	timeCount_->Initialize();
-	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/BackGround/BackGround.png");
+	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
 	// フェードの処理
 	TransitionProcess::Initialize();
@@ -139,7 +139,7 @@ void GameScene::Flont2dSpriteDraw()
 {
 	timeCount_->Draw();
 	
-	testSprite->Draw(testSpriteWorldTransform);
+	//testSprite->Draw(testSpriteWorldTransform);
 	TransitionProcess::Draw();
 }
 
