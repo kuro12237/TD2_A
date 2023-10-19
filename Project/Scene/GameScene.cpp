@@ -61,40 +61,40 @@ void GameScene::Update(GameManager* scene)
 		return;
 	}
 	
-
-	MapWallCollision();
-
 	// フェードが明ける処理
 	TransitionProcess::Fade_In();
 	TransitionProcess::Fade_Out();
 
 	// フェードが明けたらゲーム処理に入る
-	if (TransitionProcess::Fade_Out()) {
-
-
-	bool flag = false;
-	ImGui::Begin("d");
-	ImGui::Checkbox("e",&flag );
-	ImGui::End();
-	if (flag)
-	{
-		hitparticle_->Spown(player_->GetWorldTransform().translate);
-		MainCamera::SetIsShake(flag);
+	if (!TransitionProcess::Fade_Out()) {
+		return;
 	}
+		bool flag = false;
+		ImGui::Begin("d");
+		ImGui::Checkbox("e", &flag);
+		ImGui::End();
+		if (flag)
+		{
+			hitparticle_->Spown(player_->GetWorldTransform().translate);
+			MainCamera::SetIsShake(flag);
+		}
+	
+
 	timeCount_->Update();
 	// 時間切れ時の処理
 	if (!timeCount_->GetIsTimeUp()) 
 	{
 		//GameObjectの基本更新
-		//時間切れになったらifを抜ける
-		player_->Update();
-		for (shared_ptr<Enemy>& enemy : enemys_) {
-			enemy->SetPlayer(player_.get());
-			enemy->Update();
-
-		}
-  }
+		//時間切れになったらifを抜ける     
 	}
+
+	player_->Update();
+	for (shared_ptr<Enemy>& enemy : enemys_) {
+		enemy->SetPlayer(player_.get());
+		enemy->Update();
+
+	}
+
 
 	hitparticle_->Update();
 
