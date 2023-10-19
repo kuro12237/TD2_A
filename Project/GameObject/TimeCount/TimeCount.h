@@ -7,7 +7,7 @@
 
 
 
-struct Src {
+struct SrcTimeCount {
 	Vector2 RightTop;
 	Vector2 RightBottom;
 	Vector2 LeftTop;
@@ -60,7 +60,7 @@ public:
 	/// <summary>
 	/// 各位に合ったテクスチャを設定する
 	/// </summary>
-	void SetNumberTexture();
+	void SetSrc();
 
 
 #pragma region get
@@ -87,7 +87,7 @@ private:
 	Vector4 textureColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	// 座標
-	Src src_[10];
+	SrcTimeCount src_[10];
 	Vector2 timeCountPosition_[3]{};
 	WorldTransform timeCountWorldTransform_[3]{};
 	Vector2 timeUpUIPosition_;

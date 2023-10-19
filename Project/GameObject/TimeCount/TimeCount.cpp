@@ -59,13 +59,12 @@ void TimeCount::Initialize() {
 
 	// 初期化
 	timeUpUISprite_ = make_unique<Sprite>();
-	timeUpUIPosition_ = { 200.0f, 230.0f };
+	timeUpUIPosition_ = { 200.0f, 230.0f }; // <-あとで座標直す
 	timeUpUISprite_->Initialize(new SpriteBoxState, timeUpUIPosition_, { 900.0f, 300.0f });
 	timeUpUISprite_->SetColor(textureColor_);
 	timeUpUISprite_->SetTexHandle(timeUpUITextureHD_);
 	// ワールドトランスフォーム
 	timeUpUIWorldTransform_.Initialize();
-	timeUpUIWorldTransform_.translate = { timeUpUIPosition_.x, timeUpUIPosition_.y, 0.0f };
 
 #pragma endregion
 }
@@ -93,7 +92,7 @@ void TimeCount::Update() {
 		CalcTimerPlace(nowLimitTime_);
 
 		// 各位に合ったテクスチャを設定する
-		SetNumberTexture();
+		SetSrc();
 
 		// 制限時間をリセットする
 		ReSetTimer();
@@ -217,7 +216,7 @@ void TimeCount::CalcTimerPlace(uint32_t nowTimer) {
 
 
 // 各位に合ったテクスチャを設定する
-void TimeCount::SetNumberTexture() {
+void TimeCount::SetSrc() {
 
 	// 各位の値にあったテクスチャを設定する
 	timeCountSprite_[0]->SetSrc(src_[eachTime_[0]].RightTop, src_[eachTime_[0]].RightBottom, src_[eachTime_[0]].LeftTop, src_[eachTime_[0]].LeftBottom);
