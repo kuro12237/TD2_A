@@ -6,8 +6,8 @@
 void TitleScene::Initialize() {
 
 	// テクスチャの読み込み
-	title_TexHD_ = TextureManager::LoadTexture("Resources/BackGround/Title_BagGround.png");
-	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/BackGround/BackGround.png");
+	title_TexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/Title_BagGround.png");
+	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
 
 	// 座標

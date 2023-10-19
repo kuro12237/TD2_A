@@ -8,28 +8,42 @@ void TimeCount::Initialize() {
 #pragma region TimeCount
 
 	// テクスチャの読み込み
-	numTextureHD_[0] = TextureManager::LoadTexture("Resources/TimeCount/0.png");
-	numTextureHD_[1] = TextureManager::LoadTexture("Resources/TimeCount/1.png");
-	numTextureHD_[2] = TextureManager::LoadTexture("Resources/TimeCount/2.png");
-	numTextureHD_[3] = TextureManager::LoadTexture("Resources/TimeCount/3.png");
-	numTextureHD_[4] = TextureManager::LoadTexture("Resources/TimeCount/4.png");
-	numTextureHD_[5] = TextureManager::LoadTexture("Resources/TimeCount/5.png");
-	numTextureHD_[6] = TextureManager::LoadTexture("Resources/TimeCount/6.png");
-	numTextureHD_[7] = TextureManager::LoadTexture("Resources/TimeCount/7.png");
-	numTextureHD_[8] = TextureManager::LoadTexture("Resources/TimeCount/8.png");
-	numTextureHD_[9] = TextureManager::LoadTexture("Resources/TimeCount/9.png");
+	numberTexHD_ = TextureManager::LoadTexture("Resources/Texture/UI/Number.png");
 
-	// 初期化
-	for (int index = 0; index < 3; index++) {
+	// 初期化処理
+	// 画像の上下左右の座標を求める
+	int column = 0;
+	int line = 0;
+	for (int Index = 0; Index < 10; Index++) {
+		
+		// 上下左右の値を求める
+		src_[Index].RightTop    = { 0.2f + (0.2f * column), 0.0f + (0.2f *line) };
+		src_[Index].RightBottom = { 0.2f + (0.2f * column), 0.2f + (0.2f *line) };
+		src_[Index].LeftTop     = { 0.0f + (0.2f * column), 0.0f + (0.2f *line) };
+		src_[Index].LeftBottom  = { 0.0f + (0.2f * column), 0.2f + (0.2f *line) };
+
+		// 列を足す
+		column = column + 1;
+
+		// ５回ループしたら
+		if (Index == 4) {
+			// 列を０にして行に１足す
+			column = 0;
+			line++;
+		}
+	}
+
+	for (int Index = 0; Index < 3; Index++) {
+
+		// 座標
+		timeCountWorldTransform_->Initialize();
+		timeCountPosition_[Index] = { 480.0f + (95.0f * Index), 20.0f };
 		// スプライト
-		timerSprite_[index] = make_unique<Sprite>();
-		timerPosition_[index] = { 540.0f + (50.0f * index), 10.0f };
-		timerSprite_[index]->Initialize(new SpriteBoxState, timerPosition_[index], { 100.0f, 100.0f });
-		timerSprite_[index]->SetColor(textureColor_);
-		timerSprite_[index]->SetTexHandle(numTextureHD_[0]);
-		// ワールドトランスフォーム
-		timerWorldTransform_[index].Initialize();
-		timerWorldTransform_[index].translate = { timerPosition_[index].x, timerPosition_[index].y, 0.0f };
+		timeCountSprite_[Index] = make_unique<Sprite>();
+		timeCountSprite_[Index]->SetSrc(src_[0].RightTop, src_[0].RightBottom, src_[0].LeftTop, src_[0].LeftBottom);
+		timeCountSprite_[Index]->Initialize(new SpriteBoxState, timeCountPosition_[Index], { 128.0f, 128.0f });
+		timeCountSprite_[Index]->SetTexHandle(numberTexHD_);
+		timeCountSprite_[Index]->SetColor(textureColor_);
 	}
 	// 制限時間を設定する
 	nowLimitTime_ = kSetLimitTime_;
@@ -41,7 +55,7 @@ void TimeCount::Initialize() {
 #pragma region TimeUp_Ui
 
 	// テクスチャの読み込み
-	timeUpUITextureHD_ = TextureManager::LoadTexture("Resources/TimeCount/TimeUp.png");
+	timeUpUITextureHD_ = TextureManager::LoadTexture("Resources/Texture/UI/TimeUp.png");
 
 	// 初期化
 	timeUpUISprite_ = make_unique<Sprite>();
@@ -60,6 +74,11 @@ void TimeCount::Initialize() {
 
 // 更新処理
 void TimeCount::Update() {
+
+	if (Input::GetInstance()->PushKeyPressed(DIK_0))
+	{
+		//Audio::AudioPlayWave(secondHandSound_);
+	}
 
 
 	if (isDebug_ == false) {
@@ -80,8 +99,13 @@ void TimeCount::Update() {
 		ReSetTimer();
 	}
 
+	for (int Index = 0; Index < 3; Index++) {
+		timeCountWorldTransform_[Index].UpdateMatrix();
+	}
+
 
 #ifdef _DEBUG
+
 
 	ImGui::Begin("TimeCount");
 	ImGui::Text("frame_ = %d", frame_);
@@ -196,9 +220,9 @@ void TimeCount::CalcTimerPlace(uint32_t nowTimer) {
 void TimeCount::SetNumberTexture() {
 
 	// 各位の値にあったテクスチャを設定する
-	timerSprite_[0]->SetTexHandle(numTextureHD_[eachTime_[0]]);
-	timerSprite_[1]->SetTexHandle(numTextureHD_[eachTime_[1]]);
-	timerSprite_[2]->SetTexHandle(numTextureHD_[eachTime_[2]]);
+	timeCountSprite_[0]->SetSrc(src_[eachTime_[0]].RightTop, src_[eachTime_[0]].RightBottom, src_[eachTime_[0]].LeftTop, src_[eachTime_[0]].LeftBottom);
+	timeCountSprite_[1]->SetSrc(src_[eachTime_[1]].RightTop, src_[eachTime_[1]].RightBottom, src_[eachTime_[1]].LeftTop, src_[eachTime_[1]].LeftBottom);
+	timeCountSprite_[2]->SetSrc(src_[eachTime_[2]].RightTop, src_[eachTime_[2]].RightBottom, src_[eachTime_[2]].LeftTop, src_[eachTime_[2]].LeftBottom);
 }
 
 
@@ -206,8 +230,8 @@ void TimeCount::SetNumberTexture() {
 // 描画処理
 void TimeCount::Draw() {
 
-	for (int index = 0; index < 3; index++) {
-		timerSprite_[index]->Draw(timerWorldTransform_[index]);
+	for (int Index = 0; Index < 3; Index++) {
+		timeCountSprite_[Index]->Draw(timeCountWorldTransform_[Index]);
 	}
 	if (isTimeUp_) {
 		timeUpUISprite_->Draw(timeUpUIWorldTransform_);

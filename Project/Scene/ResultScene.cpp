@@ -6,8 +6,8 @@
 void ResultScene::Initialize() {
 
 	// テクスチャの読み込み
-	result_TexHD_ = TextureManager::LoadTexture("Resources/BackGround/Result_BagGround.png");
-	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/BackGround/BackGround.png");
+	result_TexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/Result_BagGround.png");
+	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
 	// 座標
 	result_Position_ = { 0.0f, 0.0f };
