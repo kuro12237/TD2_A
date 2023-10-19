@@ -82,6 +82,7 @@ private:
 	bool MoveFlag = false;
 
 	const float speed = 2.0f;
+					   
 
 	const float rotateSpeed = 0.1f;
 

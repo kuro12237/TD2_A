@@ -77,3 +77,9 @@ Vector3 VectorTransform::Lerp(const Vector3& v1, const Vector3& v2, float t)
 	return result;
 }
 
+float VectorTransform::Dot(const Vector3& v1, const Vector3& v2) {
+	float result;
+	result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+	return result;
+}
+
