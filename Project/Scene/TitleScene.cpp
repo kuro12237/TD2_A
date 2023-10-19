@@ -25,7 +25,10 @@ void TitleScene::Initialize() {
 	TransitionProcess::Initialize();
 	// フェードに使う画像の設定
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetTexHandle(useFade_BG);
-
+	// 色を黒くしておく
+	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
+	// フェードが明ける処理
+	TransitionProcess::Fade_Out_Init();
 }
 
 
@@ -40,15 +43,20 @@ void TitleScene::Update(GameManager* scene) {
 		return;
 	}
 
-	// スペースでフェードスタート
-	if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
-		TransitionProcess::Fade_In_Init();
-	}
-	TransitionProcess::Fade_In();
-	// フェードの処理が終わったらシーン遷移
-	if (TransitionProcess::Fade_In()) {
-		scene->ChangeState(new TutorialScene);
-		return;
+	// フェードが明ける処理
+	TransitionProcess::Fade_Out();
+	if (TransitionProcess::Fade_Out()) {
+
+		// スペースでフェードスタート
+		if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
+			TransitionProcess::Fade_In_Init();
+		}
+		TransitionProcess::Fade_In();
+		// フェードの処理が終わったらシーン遷移
+		if (TransitionProcess::Fade_In()) {
+			scene->ChangeState(new TutorialScene);
+			return;
+		}
 	}
 
 

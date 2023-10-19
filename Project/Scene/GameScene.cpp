@@ -8,6 +8,7 @@ void GameScene::Initialize()
 	timeCount_ = make_unique<TimeCount>();
 	timeCount_->Initialize();
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/BackGround/BackGround.png");
+
 	// フェードの処理
 	TransitionProcess::Initialize();
 	// フェードに使う画像の設定
