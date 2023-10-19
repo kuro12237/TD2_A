@@ -14,6 +14,16 @@ void GameScene::Initialize()
 
 	timeCount_ = make_unique<TimeCount>();
 	timeCount_->Initialize();
+	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/BackGround/BackGround.png");
+
+	// フェードの処理
+	TransitionProcess::Initialize();
+	// フェードに使う画像の設定
+	TransitionProcess::GetInstance()->GetBG_Sprite()->SetTexHandle(useFade_BG);
+	// 色を黒くしておく
+	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
+	// フェードが明ける処理
+	TransitionProcess::Fade_Out_Init();
 
 	player_ = make_unique<Player>();
 	player_->Initialize();
@@ -43,10 +53,25 @@ void GameScene::Update(GameManager* scene)
 
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
-		scene->ChangeState(new DebugScene);
+		TransitionProcess::Fade_In_Init();
+	}
+	// フェードの処理が終わったらシーン遷移
+	if (TransitionProcess::Fade_In()) {
+		scene->ChangeState(new ResultScene);
 		return;
 	}
 	
+
+	MapWallCollision();
+
+	// フェードが明ける処理
+	TransitionProcess::Fade_In();
+	TransitionProcess::Fade_Out();
+
+	// フェードが明けたらゲーム処理に入る
+	if (TransitionProcess::Fade_Out()) {
+
+
 	bool flag = false;
 	ImGui::Begin("d");
 	ImGui::Checkbox("e",&flag );
@@ -66,9 +91,10 @@ void GameScene::Update(GameManager* scene)
 		for (shared_ptr<Enemy>& enemy : enemys_) {
 			enemy->SetPlayer(player_.get());
 			enemy->Update();
-		}
-	}
 
+		}
+  }
+	}
 
 	hitparticle_->Update();
 
@@ -112,6 +138,8 @@ void GameScene::Object3dDraw()
 void GameScene::Flont2dSpriteDraw()
 {
 	timeCount_->Draw();
+	TransitionProcess::Draw();
+	
 	testSprite->Draw(testSpriteWorldTransform);
 }
 

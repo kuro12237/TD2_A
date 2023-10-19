@@ -138,6 +138,7 @@
     </Filter>
     <Filter Include="Project\GameObject\PhysicsF">
       <UniqueIdentifier>{b564d02b-4d3f-4a88-8e53-861e8efb4104}</UniqueIdentifier>
+
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -148,9 +149,6 @@
       <Filter>Shader</Filter>
     </None>
     <None Include="Resources\Shader\Harf_LambertLightObject.hlsli">
-      <Filter>Shader</Filter>
-    </None>
-    <None Include="Resources\Shader\ParticleObject3d.hlsli">
       <Filter>Shader</Filter>
     </None>
   </ItemGroup>
@@ -467,6 +465,14 @@
     <ClInclude Include="Project\GameObject\Enemy\Enemy.h">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Project\Scene\TitleScene.h">
+      <Filter>Project\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Scene\ResultScene.h">
+      <Filter>Project\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Scene\TutorialScene.h">
+      <Filter>Project\Scene</Filter>
     <ClInclude Include="CLEYERA\Particle\Particle.h">
       <Filter>CLEYERA\Particle</Filter>
     </ClInclude>

@@ -11,6 +11,7 @@
 #include"FileLoader.h"
 #include"GameObject/MapWall/MapWall.h"
 #include"GameObject/MapWall/MapWallManager.h"
+#include"GameObject/TransitionProcess/TransitionProcess.h"
 #include"GameObject/HitParticle/HitParticle.h"
 
 
