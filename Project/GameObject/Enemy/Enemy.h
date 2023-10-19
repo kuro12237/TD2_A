@@ -2,31 +2,61 @@
 #include "Model.h"
 #include "WorldTransform.h"
 #include "ViewProjection.h"
+#include"CollisionManager.h"
+#include"ColliderConfig.h"
+#include"VectorTransform.h"
+#include"GameObject/Player/Player.h"
+#include"GameObject/PhysicsFunc/PhysicsFunc.h"
+#include"GameObject/MapWall/IMapWall.h"
 
-class Enemy {
+class Enemy : public Collider , public IMapWall
+{
 public:
 
-	Enemy();
-	~Enemy();
+	Enemy() {};
+	~Enemy() {};
 
 	/// <summary>
-	/// 初期化
+	/// ﾂ鞘ｰﾅﾃｺ窶ｰﾂｻ
 	/// </summary>
 	void Initialize(const Vector3& position);
 
 	/// <summary>
-	/// 更新
+	/// ﾂ更ﾂ新
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// 描画
+	/// 窶｢`窶ｰﾃｦ
 	/// </summary>
 	/// <param name="viewProjection"></param>
 	void Draw(ViewProjection viewProjection);
 
+	void EnemyMove();
+
+	Vector3 GetWorldPosition()override;
+
+	void SetPlayer(Player* player) { player_ = player; }
+
+	void OnCollision()override;
+
+	void OnTopWall()override;
+	void OnBottomWall()override;
+	void OnLeftWall()override;
+	void OnRightWall()override;
+
 private:
 
-	WorldTransform worldTransform_;
-	unique_ptr<Model>model_;
+	Vector3 pos_;
+	Vector3 playerPos_;
+	WorldTransform worldTransform_ = {};
+	Vector3 pos2_ = {};
+	unique_ptr<Model>model_ = nullptr;
+	uint32_t texHandle_ = 0;
+	tuple<Vector3, Vector3> velocity_ = {};
+	Vector3 speed_ = {};
+	float angle = 0;
+	float angle2 = 0;
+	Player* player_ = nullptr;
+	bool isMove_ = false;
 };

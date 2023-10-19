@@ -16,6 +16,8 @@ public:
 	uint32_t GetCollisionMask() const { return CollisionMask_; }
 	void SetCollisionMask(uint32_t collisionMask) { CollisionMask_ = collisionMask; }
 
+	Vector3 GetNamingLerp() { return namingLerp_; }
+	void SetNamingLerp(Vector3 n) { namingLerp_ = n; }
 private:
 
 	//Ž©•ª
@@ -24,4 +26,6 @@ private:
 	uint32_t CollisionMask_ = 0xffffffff;
 
 	float radious_ = 0.5f;
+
+	Vector3 namingLerp_ = {};
 };

@@ -22,13 +22,17 @@ public:
 
 	void Update(GameManager* Scene)override;
 
-	void Draw()override;
-
+	void Back2dSpriteDraw()override;
+	void Object3dDraw()override;
+	void Flont2dSpriteDraw()override;
+	
 private:
 	void TestCsvFile();
 
 	void CheckAllCollision();
 	
+	void Testparticle();
+
 	ViewProjection viewProjection{};
 	uint32_t soundHandle_  = 0;
 
@@ -49,5 +53,8 @@ private:
 
 
 	unique_ptr<Particle>particle_ = nullptr;
-	WorldTransform particleWorldTransform{};
+	
+	Vector3 TestParticlesTranslate = {};
+	Vector4 TestParticleColor = {1,1,1,1};
+	
 };

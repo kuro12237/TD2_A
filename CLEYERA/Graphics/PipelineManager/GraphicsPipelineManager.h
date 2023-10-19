@@ -128,6 +128,7 @@ private:
 	static SPSOProperty CreateHerf_Lambert(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
 
 	static SPSOProperty CreateParticle3dNone(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
+	static SPSOProperty CreateParticle3dAdd(ComPtr<ID3D12Device>device, Commands commands, SShaderMode shader);
 
 	SPSO pso = {};
 

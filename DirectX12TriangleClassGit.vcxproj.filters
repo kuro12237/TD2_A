@@ -124,8 +124,21 @@
     <Filter Include="Project\GameObject\Physics">
       <UniqueIdentifier>{e81173da-9538-4cbe-a5ae-0a728389cd05}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Project\GameObject\TransitionProcess">
-      <UniqueIdentifier>{0e3f302b-6f54-44ee-9d62-a446447cc090}</UniqueIdentifier>
+    <Filter Include="CLEYERA\Particle">
+      <UniqueIdentifier>{efaa3838-3aa8-48b6-8460-43d30a48c24c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\MapWall">
+      <UniqueIdentifier>{4963824a-b159-4527-988c-8db18f3c8d64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\Particles">
+      <UniqueIdentifier>{14d3d412-cccb-4d48-82ad-65f7a4b8ba2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\TimeCount">
+      <UniqueIdentifier>{14592bbf-faba-479c-a6a3-68b97ffcefbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\PhysicsF">
+      <UniqueIdentifier>{b564d02b-4d3f-4a88-8e53-861e8efb4104}</UniqueIdentifier>
+
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +151,6 @@
     <None Include="Resources\Shader\Harf_LambertLightObject.hlsli">
       <Filter>Shader</Filter>
     </None>
-    <None Include="Resources\Shader\ParticleObject3d.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CLEYERA\Cleyera.cpp">
@@ -259,25 +271,35 @@
     <ClCompile Include="Project\GameObject\Camera\MainCamera.cpp">
       <Filter>Project\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Project\GameObject\MapWall\MapWall.cpp" />
     <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="CLEYERA\Particle\Particle.cpp" />
-    <ClCompile Include="CLEYERA\Particle\state\ParticlePlaneState.cpp" />
-    <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp" />
-    <ClCompile Include="Project\GameObject\MapWall\MapWallManager.cpp" />
-    <ClCompile Include="Project\GameObject\TransitionProcess\TransitionProcess.cpp">
-      <Filter>Project\GameObject\TransitionProcess</Filter>
+    <ClCompile Include="CLEYERA\Particle\Particle.cpp">
+      <Filter>CLEYERA\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="Project\Scene\TitleScene.cpp">
-      <Filter>Project\Scene</Filter>
+    <ClCompile Include="CLEYERA\Particle\state\ParticlePlaneState.cpp">
+      <Filter>CLEYERA\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="Project\Scene\ResultScene.cpp">
-      <Filter>Project\Scene</Filter>
+    <ClCompile Include="Project\GameObject\MapWall\MapWall.cpp">
+      <Filter>Project\MapWall</Filter>
     </ClCompile>
-    <ClCompile Include="Project\Scene\TutorialScene.cpp">
-      <Filter>Project\Scene</Filter>
+    <ClCompile Include="Project\GameObject\MapWall\MapWallManager.cpp">
+      <Filter>Project\MapWall</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\Graphics\DescripterManager\DescriptorManager.cpp">
+      <Filter>CLEYERA\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\HitParticle\HitParticle.cpp">
+      <Filter>Project\GameObject\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Player\PlayerParticle.cpp">
+      <Filter>Project\GameObject\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp">
+      <Filter>Project\GameObject\TimeCount</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\PhysicsFunc.cpp">
+      <Filter>Project\GameObject\PhysicsF</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -440,18 +462,8 @@
     <ClInclude Include="Project\GameObject\Camera\MainCamera.h">
       <Filter>Project\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Project\GameObject\MapWall\MapWall.h" />
     <ClInclude Include="Project\GameObject\Enemy\Enemy.h">
       <Filter>Project\GameObject\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="CLEYERA\Particle\Particle.h" />
-    <ClInclude Include="CLEYERA\Particle\state\IParticleState.h" />
-    <ClInclude Include="CLEYERA\Particle\state\ParticlePlaneState.h" />
-    <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h" />
-    <ClInclude Include="Project\GameObject\MapWall\IMapWall.h" />
-    <ClInclude Include="Project\GameObject\MapWall\MapWallManager.h" />
-    <ClInclude Include="Project\GameObject\TransitionProcess\TransitionProcess.h">
-      <Filter>Project\GameObject\TransitionProcess</Filter>
     </ClInclude>
     <ClInclude Include="Project\Scene\TitleScene.h">
       <Filter>Project\Scene</Filter>
@@ -461,6 +473,41 @@
     </ClInclude>
     <ClInclude Include="Project\Scene\TutorialScene.h">
       <Filter>Project\Scene</Filter>
+    <ClInclude Include="CLEYERA\Particle\Particle.h">
+      <Filter>CLEYERA\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Particle\state\ParticlePlaneState.h">
+      <Filter>CLEYERA\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Particle\state\IParticleState.h">
+      <Filter>CLEYERA\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Particle\SParticle.h">
+      <Filter>CLEYERA\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\MapWall\MapWall.h">
+      <Filter>Project\MapWall</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\MapWall\MapWallManager.h">
+      <Filter>Project\MapWall</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\MapWall\IMapWall.h">
+      <Filter>Project\MapWall</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Graphics\DescripterManager\DescriptorManager.h">
+      <Filter>CLEYERA\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\HitParticle\HitParticle.h">
+      <Filter>Project\GameObject\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Player\PlayerParticle.h">
+      <Filter>Project\GameObject\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h">
+      <Filter>Project\GameObject\TimeCount</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\PhysicsFunc.h">
+      <Filter>Project\GameObject\PhysicsF</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -482,8 +529,12 @@
     <FxCompile Include="Resources\Shader\Harf_LambertLightObject.VS.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\Shader\ParticleObject3d.PS.hlsl" />
-    <FxCompile Include="Resources\Shader\ParticleObject3d.VS.hlsl" />
+    <FxCompile Include="Resources\Shader\ParticleObject3d.PS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\ParticleObject3d.VS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="CLEYERA\externals\imgui\LICENSE.txt">

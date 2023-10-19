@@ -37,10 +37,6 @@ void MapWallManager::CheckMapWall()
 
 void MapWallManager::Riflection(IMapWall* mA)
 {
-	ImGui::Begin("worldPos");
-
-	ImGui::Text("pos %f %f %f", mA->GetWorldPosition().x, mA->GetWorldPosition().y, mA->GetWorldPosition().z);
-	ImGui::End();
 	if (mA->GetWorldPosition().z + mA->GetSize()+mA->GetVelocity().z> static_cast<float>(FILD_MAP_SIZE_Z))
 	{
 		mA->OnTopWall();
@@ -57,5 +53,4 @@ void MapWallManager::Riflection(IMapWall* mA)
 	{
 		mA->OnLeftWall();
 	}
-
 }

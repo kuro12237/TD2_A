@@ -26,6 +26,7 @@ struct ParticleData{
 	Matrix4x4 WVP;
 	Matrix4x4 world;
 	Vector4 color;
+	Matrix4x4 uvTransform;
 };
 struct MaterialData
 {

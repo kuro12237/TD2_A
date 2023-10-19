@@ -2,9 +2,16 @@
 
 void GameScene::Initialize()
 {
+	Grid* grid = new Grid();
+	grid->Initialize();
+	//GridCommandをセット
+	DebugTools::addCommand(grid, "Grid");
+	DebugCamera* debugcamera = new DebugCamera();
+	debugcamera->Initialize();
+	DebugTools::addCommand(debugcamera, "DebugCamera");
+
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
 
-	
 	timeCount_ = make_unique<TimeCount>();
 	timeCount_->Initialize();
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/BackGround/BackGround.png");
@@ -21,20 +28,29 @@ void GameScene::Initialize()
 	player_ = make_unique<Player>();
 	player_->Initialize();
 
-
 	LoadEnemyDate();
-	enemy_ = make_unique<Enemy>();
-	enemy_->Initialize({ 0,0,0 });
+
 	MainCamera::Initialize();
 
 	collisionManager_ = make_unique<CollisionManager>();
 	mapWallManager_ = make_unique<MapWallManager>();
 	mapWallManager_->Initialize();
+
+	texHandle = TextureManager::LoadTexture("Resources/mob.png");
+	testSprite = make_unique<Sprite>();
+	testSprite->SetTexHandle(texHandle);
+	testSprite->Initialize(new SpriteBoxState,{0,0},{320,320});
+	testSpriteWorldTransform.Initialize();
+
+	hitparticle_ = make_unique<HitParticle>();
+	hitparticle_->Initialize();
 }
 
 void GameScene::Update(GameManager* scene)
 {
-	// ９キーでシーン遷移
+	DebugTools::UpdateExecute(0);
+	DebugTools::UpdateExecute(1);
+
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
 		TransitionProcess::Fade_In_Init();
@@ -45,6 +61,7 @@ void GameScene::Update(GameManager* scene)
 		return;
 	}
 	
+
 	MapWallCollision();
 
 	// フェードが明ける処理
@@ -54,142 +71,179 @@ void GameScene::Update(GameManager* scene)
 	// フェードが明けたらゲーム処理に入る
 	if (TransitionProcess::Fade_Out()) {
 
-		// タイマーの処理
-		timeCount_->Update();
 
-		// 時間切れになると処理はいらないよ
-		if (timeCount_->GetIsTimeUp() == false) {
-			player_->Update();
-			enemy_->Update();
+	bool flag = false;
+	ImGui::Begin("d");
+	ImGui::Checkbox("e",&flag );
+	ImGui::End();
+	if (flag)
+	{
+		hitparticle_->Spown(player_->GetWorldTransform().translate);
+		MainCamera::SetIsShake(flag);
+	}
+	timeCount_->Update();
+	// 時間切れ時の処理
+	if (!timeCount_->GetIsTimeUp()) 
+	{
+		//GameObjectの基本更新
+		//時間切れになったらifを抜ける
+		player_->Update();
+		for (shared_ptr<Enemy>& enemy : enemys_) {
+			enemy->SetPlayer(player_.get());
+			enemy->Update();
+
 		}
+  }
 	}
 
+	hitparticle_->Update();
 
+	EnemyReset();
 
 	UpdateEnemyCommands();
-	
+	//マップの壁との当たり判定
+	MapWallCollision();
+	//壁のupdate
 	mapWallManager_->Update();
+	//当たり判定
 	Collision();
-
+	//カメラ
 	MainCamera::Update(player_->GetWorldTransform());
 
 	viewProjection.UpdateMatrix();
-
 	viewProjection = MainCamera::GetViewProjection();
-
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
-
-	/*ImGui::Begin("ChangeDebugScene");
-	ImGui::Text("9 key");
-	ImGui::End();*/
 }
 
-void GameScene::Draw()
+void GameScene::Back2dSpriteDraw()
 {
+}
+
+void GameScene::Object3dDraw()
+{
+	DebugTools::DrawExecute(0);
+	DebugTools::DrawExecute(1);
 
 	player_->Draw(viewProjection);
-	enemy_->Draw(viewProjection);
+
+	// 敵
+	for (shared_ptr<Enemy>& enemy : enemys_) {
+		enemy->Draw(viewProjection);
+	}
+	hitparticle_->Draw(viewProjection);
 
 	mapWallManager_->Draw(viewProjection);
+}
 
+void GameScene::Flont2dSpriteDraw()
+{
 	timeCount_->Draw();
-
 	TransitionProcess::Draw();
 	
+	testSprite->Draw(testSpriteWorldTransform);
 }
 
 void GameScene::Collision()
 {
 	collisionManager_->ClliderClear();
-
 	//Set
 	collisionManager_->ClliderPush(player_.get());
 
+	for (shared_ptr<Enemy>& enemy : enemys_) {
+		collisionManager_->ClliderPush(enemy.get());
+	}
+
 	//Check
 	collisionManager_->CheckAllCollision();
-
 }
 
 void GameScene::MapWallCollision()
 {
 	mapWallManager_->ListClear();
 	mapWallManager_->SetObject(player_.get());
+
+	for (shared_ptr<Enemy>& enemy : enemys_) {
+		mapWallManager_->SetObject(enemy.get());
+	}
 	mapWallManager_->CheckMapWall();
 }
 
-// �G�̃��[�hcsv��
+// enemyのデータをロード(CSVで)
 void GameScene::LoadEnemyDate() {
-    fileLoad = FileLoader::CSVLoadFile("enemySpawn.csv");
+    fileLoad = FileLoader::CSVLoadFile("resources/enemySpawn.csv");
 }
 
-// �G�����̍X�V
+// データを読み込む
 void GameScene::UpdateEnemyCommands() {
-	// �ҋ@����
 	if (wait) {
 		waitTimer--;
 		if (waitTimer <= 0) {
-			// �ҋ@����
 			wait = false;
 		}
 		return;
 	}
 
-	// 1�s���̕����������ϐ�
 	std::string line;
 
-	// �R�}���h���s���[�v
 	while (getline(fileLoad, line)) {
-		// 1�s���̕�������X�g���[���ɕϊ����ĉ�͂��₷������
+	
 		std::istringstream line_stream(line);
-
 		std::string word;
-		// ,��؂�ōs�̐擪��������擾
+		
 		getline(line_stream, word, ',');
 
-		// "//"����n�܂�s�̓R�����g
 		if (word.find("//") == 0) {
-			// �R�����g�s���΂�
+			
 			continue;
 		}
 
-		// POP�R�}���h
 		if (word.find("SPAWN") == 0) {
-			// x���W
+	
 			getline(line_stream, word, ',');
 			float x = (float)std::atof(word.c_str());
 
-			// y���W
 			getline(line_stream, word, ',');
 			float y = (float)std::atof(word.c_str());
 
-			// z���W
 			getline(line_stream, word, ',');
 			float z = (float)std::atof(word.c_str());
 
 			EnemySpawn(Vector3(x, y, z));
-
-
 		}
 		else if (word.find("WAIT") == 0) {
 			getline(line_stream, word, ',');
 
-			// �҂�����
 			int32_t waitTime = atoi(word.c_str());
 
-			// �ҋ@�J�n
 			wait = true;
 			waitTimer = waitTime;
 
-			// �R�}���h���[�v�𔲂���
 			break;
 		}
 	}
 
 }
 
-// �G�̔���
+// enemy発生
 void GameScene::EnemySpawn(const Vector3& position) {
-	enemy_ = make_unique<Enemy>();
-	enemy_->Initialize(position);
+
+	shared_ptr<Enemy> enemy = make_shared<Enemy>();
+	enemy->Initialize(position);
+	enemy->SetPlayer(player_.get());
+	enemys_.push_back(enemy);
+}
+
+// enemyのreset
+void GameScene::EnemyReset() {
+	if (Input::GetInstance()->PushKeyPressed(DIK_R)) {
+		enemys_.clear();
+		for (shared_ptr<Enemy>& enemy : enemys_) {
+		
+			enemy = make_shared<Enemy>();
+			enemy->Initialize({ 0,0.5,0 });
+		}
+
+		LoadEnemyDate();
+	}
 }
 

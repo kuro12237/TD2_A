@@ -11,6 +11,18 @@
 #include"Sprite/Sprite.h"
 #include"Input.h"
 #include"Audio.h"
+#include"Graphics/DescripterManager/DescriptorManager.h"
+
+#ifdef _DEBUG
+ 
+#define BuildMode "Debug"
+
+#else
+
+#define BuildMode "Release"
+
+#endif // _DEBUG
+
 
 class Cleyera
 {
@@ -25,9 +37,10 @@ public:
 
 	static void BeginFlame();
 	static void EndFlame();
+
 private:
 
+
 	D3DResourceLeakChecker leakCheck;
-	
 };
 

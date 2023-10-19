@@ -1,10 +1,8 @@
 #include "Cleyera.h"
 
-
 Cleyera* Cleyera::GetInstance()
 {
 	static Cleyera instance;
-
 	return &instance;
 }
 
@@ -14,8 +12,10 @@ void Cleyera::Initialize()
 
 	WinApp::Initialize();
 	DirectXCommon::initialize();
+	DescriptorManager::Initialize();
 	ShaderManager::Initialize();
 	GraphicsPipelineManager::Initialize();
+	
 	TextureManager::Initialize();
 	ImGuiManager::Initialize();
 	
@@ -35,10 +35,9 @@ void Cleyera::Finalize()
 void Cleyera::BeginFlame()
 {
 	DirectXCommon::BeginFlame();
-
 	ImGuiManager::BeginFlame();
-
 	Input::BeginFlame();
+	DescriptorManager::BeginFlame();
 }
 
 void Cleyera::EndFlame()

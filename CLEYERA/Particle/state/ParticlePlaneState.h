@@ -5,6 +5,8 @@
 #include"GraphicsPipelineManager.h"
 #include"Particle/Particle.h"
 #include"Graphics/TextureManager/TextureManager.h"
+#include"Model.h"
+
 
 class ParticlePlaneState: public IParticleState
 {
@@ -14,14 +16,19 @@ public:
 
 	void Initialize(Particle* state)override;
 
-	void Draw(Particle* state, WorldTransform worldTransform, ViewProjection viewprojection)override;
+	void Draw(Particle* state, list<Particle_param>param, ViewProjection viewprojection)override;
 
 
 private:
 
-	void CommandCall(uint32_t TexHandle);
+	SPSOProperty Get3dParticlePipeline(Particle* state);
+
+	void CarmeraBillbord(ViewProjection view);
+
+	void CommandCall(uint32_t TexHandle, Particle* state);
 	
 	uint32_t NumInstansing = 0;
+	uint32_t NumDrawInstansing = 0;
 	bool NumInstansingLock = false;
 
 	uint32_t dsvIndex = 0;
@@ -29,7 +36,7 @@ private:
 	Vector4 testColor = { 1,1,1,1 };
 
 	Vector3 testRotate = { };
-	Vector3 testTrans = {};
+	Vector3 testTrans = {0,3,0};
 
 	Vector4 pos = { 0,0,0,1 };
 	float size = 0.5f;
@@ -37,7 +44,14 @@ private:
 	const uint32_t VertexSize = 4;
 	const uint32_t IndexSize = 6;
 	ResourcePeroperty resource_ = {};
+	
 
+	Matrix4x4 billboardMatrix{};
+
+
+	Matrix4x4 sMat{};
+	Matrix4x4 tMat{};
+	
 };
 
 

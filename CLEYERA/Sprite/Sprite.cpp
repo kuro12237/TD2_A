@@ -16,6 +16,14 @@ void Sprite::Draw(WorldTransform worldTransform)
 	state_->Draw(this, worldTransform);
 }
 
+void Sprite::SetSrc(Vector2 TR, Vector2 BR, Vector2 TL, Vector2 BL)
+{
+	srcTR = TR;
+	srcBR = BR;
+	srcTL = TL;
+	srcBL = BL;
+}
+
 Vector4 Sprite::ColorConversion(uint32_t rgbaValue)
 {
 	Vector4 result = {};

@@ -17,7 +17,7 @@ public:
 	/// 掛け算
 	/// </summary>
 	static Matrix4x4 Multiply(Matrix4x4 m1, Matrix4x4 m2);
-
+	
 #pragma endregion
 
 #pragma region 行列の変換
