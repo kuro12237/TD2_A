@@ -1434,7 +1434,7 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dNone(ComPtr<ID3D12Device> 
 	SettingDepth(
 		despthStencilDesc,
 		true,
-		D3D12_DEPTH_WRITE_MASK_ALL,
+		D3D12_DEPTH_WRITE_MASK_ZERO,
 		D3D12_COMPARISON_FUNC_LESS_EQUAL
 	);
 
@@ -1497,8 +1497,6 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dAdd(ComPtr<ID3D12Device> d
 	descriptorRangeForInstancing[0].NumDescriptors = 1;
 	descriptorRangeForInstancing[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRangeForInstancing[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-
-
 
 	//VertexÇÃTransform
 	rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
@@ -1608,7 +1606,6 @@ SPSOProperty GraphicsPipelineManager::CreateParticle3dAdd(ComPtr<ID3D12Device> d
 	graphicsPipelineStateDesc.RasterizerState = rasterizerDesc; //RasterizerState
 	graphicsPipelineStateDesc.DepthStencilState = despthStencilDesc;
 	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
-
 
 	//èëÇ´çûÇﬁRTVÇÃèÓïÒ
 	graphicsPipelineStateDesc.NumRenderTargets = 1;

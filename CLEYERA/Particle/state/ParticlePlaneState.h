@@ -21,9 +21,11 @@ public:
 
 private:
 
+	SPSOProperty Get3dParticlePipeline(Particle* state);
+
 	void CarmeraBillbord(ViewProjection view);
 
-	void CommandCall(uint32_t TexHandle);
+	void CommandCall(uint32_t TexHandle, Particle* state);
 	
 	uint32_t NumInstansing = 0;
 	uint32_t NumDrawInstansing = 0;

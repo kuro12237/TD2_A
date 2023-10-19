@@ -12,7 +12,7 @@ void DebugScene::Initialize()
 	
 	sprite_ = make_unique<Sprite>();
 
-	SpriteTexHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
+	SpriteTexHandle = TextureManager::LoadTexture("Resources/mob.png");
 	sprite_->SetTexHandle(SpriteTexHandle);
 	sprite_->Initialize(new SpriteBoxState,{0,0},{320,320});
 
@@ -46,7 +46,7 @@ void DebugScene::Update(GameManager* Scene)
 
 	ImGui::Begin("Sprite");
 	ImGui::ColorPicker4("color", &color.x);
-	ImGui::DragFloat3("Rotate", &spriteWorldTransform_.rotation.x, 0.1f);
+	ImGui::DragFloat3("Rotate", &sprite2WorldTransform_.translate.x, 0.1f);
 	ImGui::Checkbox("NONE", &NoneFlag);
 	ImGui::Checkbox("Add", &AddFlag);
 	ImGui::Checkbox("Subtract", &SubtractFlag);
@@ -178,8 +178,9 @@ void DebugScene::Object3dDraw()
 }
 void DebugScene::Flont2dSpriteDraw()
 {
-	sprite2_->Draw(sprite2WorldTransform_);
+
 	sprite_->Draw(spriteWorldTransform_);
+	sprite2_->Draw(sprite2WorldTransform_);
 }
 
 void DebugScene::Testparticle()

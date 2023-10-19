@@ -14,6 +14,8 @@ void MainCamera::Initialize()
 
 void MainCamera::Update(WorldTransform w)
 {
+	
+
 	//’Ç]‚·‚éobj‚Ìrt‚ðGet
 	MainCamera::GetInstance()->viewProjection.translation_ = w.translate;
 	MainCamera::GetInstance()->viewProjection.rotation_ = w.rotation;
@@ -31,6 +33,32 @@ void MainCamera::Update(WorldTransform w)
 	//ƒIƒtƒZƒbƒg‚ðƒJƒƒ‰‚Ì‰ñ“]‚É‡‚í‚¹‚Ä‰ñ“]‚³‚¹‚é
 	offset = VectorTransform::TransformNormal(offset, rotateMatrix);
 
+	
+
 	MainCamera::GetInstance()->viewProjection.translation_ = VectorTransform::Add(Lerp ,offset);
+	Shake();
 	MainCamera::GetInstance()->viewProjection.UpdateMatrix();
+}
+
+void MainCamera::Shake()
+{
+	if (!MainCamera::GetInstance()->IsShake)
+	{
+		return;
+	}
+	if (MainCamera::GetInstance()->CameraShakeRadious.x >=-0.1f&&MainCamera::GetInstance()->CameraShakeRadious.y<=0.1f)
+	{
+		MainCamera::GetInstance()->CameraShakeRadious = { -1.0f,1.0f };
+		MainCamera::GetInstance()->IsShake = false;
+		return;
+	}
+
+	mt19937 randomEngine(MainCamera::GetInstance()->seedGenerator());
+
+	uniform_real_distribution<float>distribution(MainCamera::GetInstance()->CameraShakeRadious.x, MainCamera::GetInstance()->CameraShakeRadious.y);
+
+	MainCamera::GetInstance()->CameraShakeRadious.x += 0.05f;
+	MainCamera::GetInstance()->CameraShakeRadious.y -= 0.05f;
+	Vector3 randpos = { distribution(randomEngine),distribution(randomEngine), distribution(randomEngine) };
+	MainCamera::GetInstance()->viewProjection.translation_ = VectorTransform::Add(MainCamera::GetInstance()->viewProjection.translation_, randpos);
 }

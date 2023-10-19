@@ -29,6 +29,8 @@ public:
 	
 	void SetName(const string name) { name_ = name; }
 
+	void SetBlendMode(BlendMode blend) { blendMode_ = blend; }
+
 	/// <summary>
 	/// ƒŠƒXƒg‚É“o˜^
 	/// </summary>
@@ -52,6 +54,7 @@ public:
 	/// </summary>
 	list<Particle_param> GetParticles() { return particles_; }
 
+	BlendMode GetBlendMode() { return blendMode_; }
 #pragma endregion 
 private:
 
@@ -64,6 +67,7 @@ private:
 	uint32_t texhandle = 0;
 	
 	list<Particle_param> particles_{};
+	BlendMode blendMode_ = BlendAdd;
 };
 
 
