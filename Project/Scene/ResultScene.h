@@ -6,6 +6,7 @@
 #include "Sprite/Sprite.h"
 #include "WorldTransform.h"
 #include "Graphics/TextureManager/TextureManager.h"
+#include "GameObject/TransitionProcess/TransitionProcess.h"
 
 
 /// <summary>

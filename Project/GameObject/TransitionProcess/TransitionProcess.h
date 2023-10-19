@@ -110,6 +110,6 @@ private: // メンバ変数
 	// 終始の値
 	Value value_;
 	// イージングの実行フラグ
-	bool ease_isStart_;
-
+	bool isFadeIn_;
+	bool isFadeOut_;
 };

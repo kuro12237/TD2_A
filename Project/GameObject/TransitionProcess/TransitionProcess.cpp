@@ -32,7 +32,9 @@ void TransitionProcess::Initialize() {
 	/// イージングの各値の初期化
 	TransitionProcess::GetInstance()->frame_ = { 0, 0 };
 	TransitionProcess::GetInstance()->value_ = { 0.0f, 0.0f };
-	TransitionProcess::GetInstance()->ease_isStart_ = false;
+	TransitionProcess::GetInstance()->isFadeIn_ = false;
+	TransitionProcess::GetInstance()->isFadeOut_ = false;
+
 }
 
 
@@ -82,7 +84,7 @@ void TransitionProcess::Fade_In_Init() {
 	TransitionProcess::GetInstance()->frame_ = { 0, 240 };
 
 	// イージングの処理の実行フラグを立てる
-	TransitionProcess::GetInstance()->ease_isStart_ = true;
+	TransitionProcess::GetInstance()->isFadeIn_ = true;
 }
 
 
@@ -92,17 +94,17 @@ bool TransitionProcess::Fade_In() {
 	Frame frame = TransitionProcess::GetInstance()->frame_;
 	Value value = TransitionProcess::GetInstance()->value_;
 	Vector4 color{};
-	bool isStart = TransitionProcess::GetInstance()->ease_isStart_;
+	bool isFadeIn = TransitionProcess::GetInstance()->isFadeIn_;
 
 	// 処理の実行フラグがtrueのとき
-	if (isStart) {
+	if (isFadeIn) {
 
 		// フレームを増やす
 		frame.Now++;
 
 		// フレームが目標値になったら実行フラグを折る
 		if (frame.Now == frame.End) {
-			isStart = false;
+			isFadeIn = false;
 			return true;
 		}
 	}
@@ -114,7 +116,7 @@ bool TransitionProcess::Fade_In() {
 	color.w = value.Start + (value.Goal - value.Start) * TransitionProcess::EaseOutQuint(value.useVal);
 
 	TransitionProcess::GetInstance()->BG_Sprite_->SetColor(color);
-	TransitionProcess::GetInstance()->ease_isStart_ = isStart;
+	TransitionProcess::GetInstance()->isFadeIn_ = isFadeIn;
 	TransitionProcess::GetInstance()->frame_ = frame;
 	TransitionProcess::GetInstance()->value_ = value;
 
@@ -133,7 +135,7 @@ void TransitionProcess::Fade_Out_Init() {
 	TransitionProcess::GetInstance()->frame_ = { 0, 400 };
 
 	// イージングの処理の実行フラグを立てる
-	TransitionProcess::GetInstance()->ease_isStart_ = true;
+	TransitionProcess::GetInstance()->isFadeOut_ = true;
 }
 
 
@@ -143,17 +145,17 @@ bool TransitionProcess::Fade_Out() {
 	Frame frame = TransitionProcess::GetInstance()->frame_;
 	Value value = TransitionProcess::GetInstance()->value_;
 	Vector4 color{};
-	bool isStart = TransitionProcess::GetInstance()->ease_isStart_;
+	bool isFadeOut = TransitionProcess::GetInstance()->isFadeOut_;
 
 	// 処理の実行フラグがtrueのとき
-	if (isStart) {
+	if (isFadeOut) {
 
 		// フレームを増やす
 		frame.Now++;
 
 		// フレームが目標値になったら実行フラグを折る
 		if (frame.Now == frame.End) {
-			isStart = false;
+			isFadeOut = false;
 			return true;
 		}
 	}
@@ -165,7 +167,7 @@ bool TransitionProcess::Fade_Out() {
 	color.w = value.Start + (value.Goal - value.Start) * TransitionProcess::EaseOutQuint(value.useVal);
 
 	TransitionProcess::GetInstance()->BG_Sprite_->SetColor(color);
-	TransitionProcess::GetInstance()->ease_isStart_ = isStart;
+	TransitionProcess::GetInstance()->isFadeOut_ = isFadeOut;
 	TransitionProcess::GetInstance()->frame_ = frame;
 	TransitionProcess::GetInstance()->value_ = value;
 

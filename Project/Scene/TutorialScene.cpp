@@ -53,10 +53,8 @@ void TutorialScene::Update(GameManager* scene) {
 		TransitionProcess::Fade_In();
 		// フェードの処理が終わったらシーン遷移
 		if (TransitionProcess::Fade_In()) {
-
-			frag = true;
-			//scene->ChangeState(new GameScene);
-			//return;
+			scene->ChangeState(new GameScene);
+			return;
 		}
 	}
 
@@ -65,7 +63,6 @@ void TutorialScene::Update(GameManager* scene) {
 
 	ImGui::Begin("TutorialScene");
 	ImGui::Text("space key = ChangeScene() -> GameScene");
-	ImGui::Text("flag = %d", frag);
 	ImGui::End();
 
 #endif

@@ -7,7 +7,15 @@ void GameScene::Initialize()
 	
 	timeCount_ = make_unique<TimeCount>();
 	timeCount_->Initialize();
+	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/BackGround/BackGround.png");
+	// フェードの処理
 	TransitionProcess::Initialize();
+	// フェードに使う画像の設定
+	TransitionProcess::GetInstance()->GetBG_Sprite()->SetTexHandle(useFade_BG);
+	// 色を黒くしておく
+	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
+	// フェードが明ける処理
+	TransitionProcess::Fade_Out_Init();
 
 	player_ = make_unique<Player>();
 	player_->Initialize();
@@ -21,26 +29,38 @@ void GameScene::Initialize()
 	collisionManager_ = make_unique<CollisionManager>();
 	mapWallManager_ = make_unique<MapWallManager>();
 	mapWallManager_->Initialize();
-
 }
 
 void GameScene::Update(GameManager* scene)
 {
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
+		TransitionProcess::Fade_In_Init();
+	}
+	// フェードの処理が終わったらシーン遷移
+	if (TransitionProcess::Fade_In()) {
 		scene->ChangeState(new ResultScene);
 		return;
 	}
 	
 	MapWallCollision();
 
-	timeCount_->Update();
-	// 時間切れ時の処理
-	if (timeCount_->GetIsTimeUp() == false) {
-		player_->Update();
-		enemy_->Update();
+	// フェードが明ける処理
+	TransitionProcess::Fade_In();
+	TransitionProcess::Fade_Out();
+	// フェードが明けたらゲーム処理に入る
+	if (TransitionProcess::Fade_Out()) {
+
+		timeCount_->Update();
+
+		// 時間切れ時の処理
+		if (timeCount_->GetIsTimeUp() == false) {
+			player_->Update();
+			enemy_->Update();
+		}
 	}
-	TransitionProcess::Update();
+
+
 
 	UpdateEnemyCommands();
 	
