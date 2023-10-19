@@ -62,6 +62,7 @@ void TutorialScene::Update(GameManager* scene) {
 #ifdef _DEBUG
 
 	ImGui::Begin("TutorialScene");
+	ImGui::Text("9 key = ChangeScene() -> GameScene");
 	ImGui::Text("space key = ChangeScene() -> GameScene");
 	ImGui::End();
 

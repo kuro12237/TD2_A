@@ -35,6 +35,12 @@ void ResultScene::Initialize() {
 // 更新処理
 void ResultScene::Update(GameManager* scene) {
 
+	if (Input::GetInstance()->PushKeyPressed(DIK_9))
+	{
+		scene->ChangeState(new GameScene);
+		return;
+	}
+
 	// シーン遷移
 	if (Input::GetInstance()->PushKeyPressed(DIK_SPACE))
 	{
@@ -54,6 +60,7 @@ void ResultScene::Update(GameManager* scene) {
 
 	ImGui::Begin("ResultScene");
 	ImGui::Text("9 key = ChangeScene() -> GameScene");
+	ImGui::Text("space key = ChangeScene() -> TitleScene");
 	ImGui::End();
 
 #endif

@@ -139,6 +139,9 @@
     <Filter Include="Project\GameObject\PhysicsF">
       <UniqueIdentifier>{b564d02b-4d3f-4a88-8e53-861e8efb4104}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\TransitionProcess">
+      <UniqueIdentifier>{2adce2af-e910-4ca5-8fba-d33722363fbe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -302,6 +305,18 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\PhysicsFunc.cpp">
       <Filter>Project\GameObject\PhysicsF</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Scene\ResultScene.cpp">
+      <Filter>Project\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Scene\TitleScene.cpp">
+      <Filter>Project\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\Scene\TutorialScene.cpp">
+      <Filter>Project\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\TransitionProcess\TransitionProcess.cpp">
+      <Filter>Project\GameObject\TransitionProcess</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -502,6 +517,18 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\PhysicsFunc.h">
       <Filter>Project\GameObject\PhysicsF</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Scene\ResultScene.h">
+      <Filter>Project\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Scene\TitleScene.h">
+      <Filter>Project\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\Scene\TutorialScene.h">
+      <Filter>Project\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\TransitionProcess\TransitionProcess.h">
+      <Filter>Project\GameObject\TransitionProcess</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
