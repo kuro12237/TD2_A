@@ -25,6 +25,9 @@ void GameScene::Initialize()
 	// フェードが明ける処理
 	TransitionProcess::Fade_Out_Init();
 
+	// スコア
+	Score::Initialize();
+
 	player_ = make_unique<Player>();
 	player_->Initialize();
 
@@ -39,7 +42,7 @@ void GameScene::Initialize()
 	texHandle = TextureManager::LoadTexture("Resources/mob.png");
 	testSprite = make_unique<Sprite>();
 	testSprite->SetTexHandle(texHandle);
-	testSprite->Initialize(new SpriteBoxState,{0,0},{320,320});
+	testSprite->Initialize(new SpriteBoxState, { 0,0 }, { 320,320 });
 	testSpriteWorldTransform.Initialize();
 
 	hitparticle_ = make_unique<HitParticle>();
@@ -55,12 +58,16 @@ void GameScene::Update(GameManager* scene)
 	{
 		TransitionProcess::Fade_In_Init();
 	}
+	if (Input::GetInstance()->PushKeyPressed(DIK_5))
+	{
+		Score::AddScore(100);
+	}
 	// フェードの処理が終わったらシーン遷移
 	if (TransitionProcess::Fade_In()) {
 		scene->ChangeState(new ResultScene);
 		return;
 	}
-	
+
 	// フェードが明ける処理
 	TransitionProcess::Fade_In();
 	TransitionProcess::Fade_Out();
@@ -69,20 +76,20 @@ void GameScene::Update(GameManager* scene)
 	if (!TransitionProcess::Fade_Out()) {
 		return;
 	}
-		bool flag = false;
-		ImGui::Begin("d");
-		ImGui::Checkbox("e", &flag);
-		ImGui::End();
-		if (flag)
-		{
-			hitparticle_->Spown(player_->GetWorldTransform().translate);
-			MainCamera::SetIsShake(flag);
-		}
-	
+	bool flag = false;
+	ImGui::Begin("d");
+	ImGui::Checkbox("e", &flag);
+	ImGui::End();
+	if (flag)
+	{
+		hitparticle_->Spown(player_->GetWorldTransform().translate);
+		MainCamera::SetIsShake(flag);
+	}
 
+	Score::Update();
 	timeCount_->Update();
 	// 時間切れ時の処理
-	if (!timeCount_->GetIsTimeUp()) 
+	if (!timeCount_->GetIsTimeUp())
 	{
 		//GameObjectの基本更新
 		//時間切れになったらifを抜ける     
@@ -138,8 +145,9 @@ void GameScene::Object3dDraw()
 void GameScene::Flont2dSpriteDraw()
 {
 	timeCount_->Draw();
-	
+	Score::Draw();
 	//testSprite->Draw(testSpriteWorldTransform);
+
 	TransitionProcess::Draw();
 }
 
@@ -170,7 +178,7 @@ void GameScene::MapWallCollision()
 
 // enemyのデータをロード(CSVで)
 void GameScene::LoadEnemyDate() {
-    fileLoad = FileLoader::CSVLoadFile("resources/enemySpawn.csv");
+	fileLoad = FileLoader::CSVLoadFile("resources/enemySpawn.csv");
 }
 
 // データを読み込む
@@ -186,19 +194,19 @@ void GameScene::UpdateEnemyCommands() {
 	std::string line;
 
 	while (getline(fileLoad, line)) {
-	
+
 		std::istringstream line_stream(line);
 		std::string word;
-		
+
 		getline(line_stream, word, ',');
 
 		if (word.find("//") == 0) {
-			
+
 			continue;
 		}
 
 		if (word.find("SPAWN") == 0) {
-	
+
 			getline(line_stream, word, ',');
 			float x = (float)std::atof(word.c_str());
 
@@ -238,7 +246,7 @@ void GameScene::EnemyReset() {
 	if (Input::GetInstance()->PushKeyPressed(DIK_R)) {
 		enemys_.clear();
 		for (shared_ptr<Enemy>& enemy : enemys_) {
-		
+
 			enemy = make_shared<Enemy>();
 			enemy->Initialize({ 0,0.5,0 });
 		}

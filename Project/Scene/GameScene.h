@@ -13,6 +13,7 @@
 #include"GameObject/MapWall/MapWallManager.h"
 #include"GameObject/TransitionProcess/TransitionProcess.h"
 #include"GameObject/HitParticle/HitParticle.h"
+#include "GameObject/Score/Score.h"
 
 
 class GameScene : public IScene

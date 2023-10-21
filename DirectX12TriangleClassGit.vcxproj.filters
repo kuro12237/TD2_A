@@ -142,6 +142,9 @@
     <Filter Include="Project\GameObject\TransitionProcess">
       <UniqueIdentifier>{2adce2af-e910-4ca5-8fba-d33722363fbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\Score">
+      <UniqueIdentifier>{810fce35-6e98-4cae-b8a1-a84bc664a924}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -317,6 +320,9 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\TransitionProcess\TransitionProcess.cpp">
       <Filter>Project\GameObject\TransitionProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Score\Score.cpp">
+      <Filter>Project\GameObject\Score</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -529,6 +535,9 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\TransitionProcess\TransitionProcess.h">
       <Filter>Project\GameObject\TransitionProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Score\Score.h">
+      <Filter>Project\GameObject\Score</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
