@@ -107,6 +107,6 @@ void Enemy::OnRightWall()
 	}
 
 	speed_.x = speed_.x * -1;
-
+	
 	//velocity.x = velocity.x * -1;
 }
