@@ -13,6 +13,7 @@
 #include"GameObject/MapWall/MapWallManager.h"
 #include"GameObject/TransitionProcess/TransitionProcess.h"
 #include"GameObject/HitParticle/HitParticle.h"
+#include"GameObject/EnemyBomb/EnemyBomb.h"
 
 
 class GameScene : public IScene
@@ -66,6 +67,8 @@ private:
 
 	unique_ptr<HitParticle>hitparticle_ = nullptr;
 	uint32_t testTime = 0;
+
+	unique_ptr<EnemyBomb>testEnemyBomb = nullptr;
 };
 
 

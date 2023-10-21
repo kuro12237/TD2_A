@@ -67,7 +67,7 @@ Vector3 Enemy::GetWorldPosition() {
 
 void Enemy::OnCollision(){
 	pos2_ = VectorTransform::Add(worldTransform_.translate, GetNamingLerp());
-	isMove_ = true;
+  	isMove_ = true;
 }
 
 void Enemy::OnTopWall()
@@ -76,7 +76,7 @@ void Enemy::OnTopWall()
 	{
 		worldTransform_.translate.z = worldTransform_.translate.z - 0.1f;
 	}
-	//velocity_.z = velocity_.z * -1;
+	speed_.z = speed_.z * -1;
 }
 
 void Enemy::OnBottomWall()
@@ -85,6 +85,7 @@ void Enemy::OnBottomWall()
 	{
 		worldTransform_.translate.z = worldTransform_.translate.z + 0.1f;
 	}
+	speed_.z = speed_.z * -1;
 	//velocity.z = velocity.z * -1;
 }
 
@@ -95,6 +96,7 @@ void Enemy::OnLeftWall()
 		worldTransform_.translate.x = worldTransform_.translate.x + 0.1f;
 	}
 	//velocity.x = velocity.x * -1;
+	speed_.x = speed_.x * -1;
 }
 
 void Enemy::OnRightWall()
@@ -103,5 +105,8 @@ void Enemy::OnRightWall()
 	{
 		worldTransform_.translate.x = worldTransform_.translate.x - 0.1f;
 	}
+
+	speed_.x = speed_.x * -1;
+
 	//velocity.x = velocity.x * -1;
 }
