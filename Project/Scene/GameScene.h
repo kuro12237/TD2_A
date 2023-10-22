@@ -14,6 +14,7 @@
 #include"GameObject/TransitionProcess/TransitionProcess.h"
 #include"GameObject/HitParticle/HitParticle.h"
 #include "GameObject/Score/Score.h"
+#include "GameObject/ShamWall/ShamWall.h"
 
 
 class GameScene : public IScene
@@ -67,6 +68,8 @@ private:
 
 	unique_ptr<HitParticle>hitparticle_ = nullptr;
 	uint32_t testTime = 0;
+
+	unique_ptr<ShamWall>shamWall_ = nullptr;
 };
 
 
