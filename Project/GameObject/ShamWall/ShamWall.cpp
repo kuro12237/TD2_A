@@ -55,12 +55,11 @@ void ShamWall::Update() {
 		//Bottom_[Index].worldTansform.UpdateMatrix();
 		//Left_[Index].worldTansform.UpdateMatrix();
 		Right_[Index].worldTansform.UpdateMatrix();
+		Right_[Index].model->SetColor(color);
 	}
-
-	ImGui::Begin("ShamWall");
-	//ImGui::DragFloat3("Left", &Left_.worldTansform.translate.x, 0.05f);
+	ImGui::Begin("color");
+	ImGui::DragFloat4("color", &color.x, 0.05f);
 	ImGui::End();
-
 }
 
 

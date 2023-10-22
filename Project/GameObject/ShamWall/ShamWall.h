@@ -53,4 +53,6 @@ private:
 
 	// ‰ŠúƒXƒP[ƒ‹
 	Vector3 initScale_ = { 0.5f, 1.0f, 0.5f };
+
+	Vector4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 };
