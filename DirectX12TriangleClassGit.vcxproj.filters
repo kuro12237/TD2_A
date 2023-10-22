@@ -151,6 +151,9 @@
     <Filter Include="Project\GameObject\Skydome">
       <UniqueIdentifier>{f2f02140-c46c-4c8c-b0d3-6fd2fb8981ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\MapGround">
+      <UniqueIdentifier>{0e7ca6a5-158f-494d-adcb-a7d8f1f1dc40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -336,6 +339,9 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\Skydome\Skydome.cpp">
       <Filter>Project\GameObject\Skydome</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\MapGround\MapGround.cpp">
+      <Filter>Project\GameObject\MapGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -557,6 +563,9 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\Skydome\Skydome.h">
       <Filter>Project\GameObject\Skydome</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\MapGround\MapGround.h">
+      <Filter>Project\GameObject\MapGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
