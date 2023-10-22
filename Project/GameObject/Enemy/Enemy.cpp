@@ -35,6 +35,7 @@ void Enemy::Update() {
 /// </summary>
 void Enemy::Draw(ViewProjection viewProjection){
 	model_->Draw(worldTransform_, viewProjection);
+	
 }
 
 void Enemy::EnemyMove() {

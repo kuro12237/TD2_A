@@ -11,6 +11,8 @@
 
 #define MAX_MOVE_COOLTIME 300
 
+class Enemy;
+
 class Player: public Collider, public IMapWall
 {
 public:
@@ -42,6 +44,7 @@ public:
 
 #pragma region set
 
+	void SetEnemy(Enemy* enemy) { enemy = enemy_; }
 
 #pragma endregion
 
@@ -67,6 +70,15 @@ private:
 	WorldTransform LineWorldTransform_ = {};
 
 	Vector3 Velocity = { 0.0f,0.0f,0.0f};
+
+	tuple<Vector3, Vector3> velocity_ = {};
+	Vector3 HitVelo = {};
+	bool isMove_ = false;
+	Enemy* enemy_ = nullptr;
+	std::list<shared_ptr<Enemy>>enemys_;
+	Vector3 enemyPos_ = {};
+	float angle = 0.0f;
+	float angle2 = 0.0f;
 	
 	/// <summary>
 	/// reticleƒgplayer‚ÌƒxƒNƒgƒ‹

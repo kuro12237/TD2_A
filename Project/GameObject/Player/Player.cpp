@@ -1,4 +1,5 @@
 ﻿#include "Player.h"
+#include"GameObject/Enemy/Enemy.h"
 
 void Player::Initialize()
 {
@@ -26,6 +27,7 @@ void Player::Initialize()
 	LineWorldTransform_.parent = &worldTransform_;
 	LineWorldTransform_.translate.y = 0.5f;
 
+	isMove_ = false;
 	SetCollosionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionAttributeEnemy);
 	
@@ -58,6 +60,7 @@ void Player::Draw(ViewProjection view)
 
 void Player::OnCollision()
 {
+	isMove_ = true;
 }
 
 void Player::OnTopWall()
@@ -133,15 +136,43 @@ void Player::Move()
 		
 		//MoveFlag = false;
 	}
+
+	// 敵に衝突した後の処理 ↓
+	list<shared_ptr<Enemy>>& enemys = enemys_;
+
+	for (shared_ptr<Enemy>& enemy : enemys) {
+
+		enemyPos_ = enemy->GetWorldPosition();
+		angle = atan2((worldTransform_.translate.z - enemyPos_.z), (worldTransform_.translate.x, enemyPos_.x));
+		angle2 = atan2((enemyPos_.z - worldTransform_.translate.z), (enemyPos_.x - worldTransform_.translate.x));
+		angle = angle * 180.0f / (float)M_PI;
+		angle2 = angle2 * 180.0f / (float)M_PI;
+
+		if (isMove_) {
+
+			velocity_ = PhysicsFunc::SpeedComposition(enemyPos_, worldTransform_.translate, angle, angle2);
+			HitVelo = get<0>(velocity_);
+			HitVelo = VectorTransform::Normalize(HitVelo);
+			Velocity = HitVelo;
+			isMove_ = false;
+		}
+
+	}
+
+	// ここまで ↑
+
 	//摩擦
 	FancFrictionCoefficient();
 	//加算処理
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
 
+	
+
 	ImGui::Begin("Player_param");
 	ImGui::Text("WorldPos : %f %f %f", worldTransform_.translate.x, worldTransform_.translate.y, worldTransform_.translate.z);
 	ImGui::Text("Normalize : %f %f %f", RPNormalize.x, RPNormalize.y, RPNormalize.z);
 	ImGui::Text("Velocity : %f %f %f", Velocity.x, Velocity.y, Velocity.z);
+	ImGui::Text("velocity_ : %f %f %f", enemyPos_);
 	ImGui::End();
 
 }

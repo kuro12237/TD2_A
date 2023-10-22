@@ -95,12 +95,14 @@ void GameScene::Update(GameManager* scene)
 		//時間切れになったらifを抜ける     
 	}
 
-	player_->Update();
+	
 	for (shared_ptr<Enemy>& enemy : enemys_) {
+		player_->SetEnemy(enemy.get());
 		enemy->SetPlayer(player_.get());
 		enemy->Update();
-
 	}
+
+	player_->Update();
 
 
 	hitparticle_->Update();
