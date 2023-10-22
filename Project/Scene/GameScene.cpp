@@ -2,10 +2,10 @@
 
 void GameScene::Initialize()
 {
-	Grid* grid = new Grid();
-	grid->Initialize();
+	//Grid* grid = new Grid();
+	//grid->Initialize();
 	//GridCommandをセット
-	DebugTools::addCommand(grid, "Grid");
+	//DebugTools::addCommand(grid, "Grid");
 	DebugCamera* debugcamera = new DebugCamera();
 	debugcamera->Initialize();
 	DebugTools::addCommand(debugcamera, "DebugCamera");
@@ -47,6 +47,10 @@ void GameScene::Initialize()
 	skydome_ = make_unique<Skydome>();
 	skydome_->Initialize();
 
+	// 床
+	mapGround_ = make_unique<MapGround>();
+	mapGround_->Initialize();
+
 	texHandle = TextureManager::LoadTexture("Resources/mob.png");
 	testSprite = make_unique<Sprite>();
 	testSprite->SetTexHandle(texHandle);
@@ -60,7 +64,7 @@ void GameScene::Initialize()
 void GameScene::Update(GameManager* scene)
 {
 	DebugTools::UpdateExecute(0);
-	DebugTools::UpdateExecute(1);
+	//DebugTools::UpdateExecute(1);
 
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
@@ -125,6 +129,9 @@ void GameScene::Update(GameManager* scene)
 	// 天球
 	skydome_->Update();
 
+	// 床
+	mapGround_->Updatea();
+
 	//当たり判定
 	Collision();
 	//カメラ
@@ -142,9 +149,11 @@ void GameScene::Back2dSpriteDraw()
 void GameScene::Object3dDraw()
 {
 	DebugTools::DrawExecute(0);
-	DebugTools::DrawExecute(1);
+	//DebugTools::DrawExecute(1);
 
 	skydome_->Draw(viewProjection);
+
+	mapGround_->Draw(viewProjection);
 
 	player_->Draw(viewProjection);
 

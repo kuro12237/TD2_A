@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Sprite/Sprite.h"
-#include "WorldTransform.h"
-#include "Graphics/TextureManager/TextureManager.h"
+#include"Model.h"
+#include"WorldTransform.h"
 
 
 struct MapGroundElement {
-
+	unique_ptr<Model>model = nullptr;
+	WorldTransform worldTansform{};
 };
 
 
@@ -30,9 +30,12 @@ public:
 	/// <summary>
 	/// ï`âÊèàóù
 	/// </summary>
-	void Draw();
+	void Draw(ViewProjection view);
 
 private:
 
+	MapGroundElement ground_;
+
+	Vector4 modelColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 };
