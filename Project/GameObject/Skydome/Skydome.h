@@ -38,5 +38,7 @@ private:
 
 	SkydomeElemnt skydome_;
 
+	float initScale_ = 70.0f;
+
 	Vector4 modelColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 };

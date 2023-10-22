@@ -15,6 +15,7 @@
 #include"GameObject/HitParticle/HitParticle.h"
 #include "GameObject/Score/Score.h"
 #include "GameObject/ShamWall/ShamWall.h"
+#include "GameObject/Skydome/Skydome.h"
 
 
 class GameScene : public IScene
@@ -70,6 +71,8 @@ private:
 	uint32_t testTime = 0;
 
 	unique_ptr<ShamWall>shamWall_ = nullptr;
+
+	unique_ptr<Skydome>skydome_ = nullptr;
 };
 
 
