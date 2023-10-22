@@ -82,6 +82,7 @@
     <ClCompile Include="Project\GameObject\HitParticle\HitParticle.cpp" />
     <ClCompile Include="Project\GameObject\Player\PlayerParticle.cpp" />
     <ClCompile Include="Project\GameObject\Score\Score.cpp" />
+    <ClCompile Include="Project\GameObject\ShamWall\ShamWall.cpp" />
     <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp" />
     <ClCompile Include="Project\GameObject\Camera\MainCamera.cpp" />
     <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Project\GameObject\PhysicsFunc.h" />
     <ClInclude Include="Project\GameObject\Player\PlayerParticle.h" />
     <ClInclude Include="Project\GameObject\Score\Score.h" />
+    <ClInclude Include="Project\GameObject\ShamWall\ShamWall.h" />
     <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h" />
     <ClInclude Include="Project\GameObject\Camera\MainCamera.h" />
     <ClInclude Include="Project\GameObject\Enemy\Enemy.h" />
