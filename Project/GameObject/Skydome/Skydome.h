@@ -4,45 +4,39 @@
 #include"WorldTransform.h"
 
 
-
-struct WallElemnt {
+struct SkydomeElemnt {
 	unique_ptr<Model>model = nullptr;
 	WorldTransform worldTansform{};
 };
 
 
 /// <summary>
-/// ShamWallクラス
+/// 天球
 /// </summary>
-class ShamWall {
-
+class Skydome {
 public:
-
-	ShamWall() {};
-	~ShamWall() {};
 
 	/// <summary>
 	/// 初期化処理
 	/// </summary>
 	void Initialize();
 
+
 	/// <summary>
 	/// 更新処理
 	/// </summary>
 	void Update();
 
+
 	/// <summary>
 	/// 描画処理
 	/// </summary>
-	void Draw(ViewProjection view);
+	void Draw(ViewProjection viewProjection);
+
 
 private:
 
-	WallElemnt shamWall_;
+	SkydomeElemnt skydome_;
 
-	// 初期スケール
-	Vector3 initScale_ = { 1.07f, 2.0f, 1.07f };
-
-	// カラー
 	Vector4 modelColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 };
