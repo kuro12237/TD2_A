@@ -6,32 +6,43 @@
 void ShamWall::Initialize() {
 
 	// 上辺の壁
-	Top_.model = make_unique<Model>();
-	Top_.model->CreateFromObj("ShamWall");
-	Top_.worldTansform.Initialize();
-	Top_.worldTansform.scale.y = 5.0f;
-	Top_.worldTansform.translate.x = 32;
+	for (int Index = 0; Index < MAX_WALL_OBJECT; Index++) {
 
-	// 下辺の壁
-	Bottom_.model = make_unique<Model>();
-	Bottom_.model->CreateFromObj("ShamWall");
-	Bottom_.worldTansform.Initialize();
-	Bottom_.worldTansform.scale.y = 5.0f;
-	Bottom_.worldTansform.translate.x = -32;
+		// 上辺の壁
+		/*Top_[Index].model = make_unique<Model>();
+		Top_[Index].model->CreateFromObj("ShamWall");
+		Top_[Index].model->SetColor({ 1.0f, 0.0f, 0.0f, 1.0f });
+		Top_[Index].worldTansform.scale = initScale_;
+		Top_[Index].worldTansform.translate = initTopTranslate_;
+		initTopTranslate_.z -= 2.2f;*/
 
-	// 左辺の壁
-	Left_.model = make_unique<Model>();
-	Left_.model->CreateFromObj("ShamWall");
-	Left_.worldTansform.Initialize();
-	Left_.worldTansform.scale.y = 5.0f;
-	Left_.worldTansform.translate.z = 32;
 
-	// 右辺の壁
-	Right_.model = make_unique<Model>();
-	Right_.model->CreateFromObj("ShamWall");
-	Right_.worldTansform.Initialize();
-	Right_.worldTansform.scale.y = 5.0f;
-	Right_.worldTansform.translate.z = -32;
+		// 下辺の壁
+		/*Bottom_[Index].model = make_unique<Model>();
+		Bottom_[Index].model->CreateFromObj("ShamWall");
+		Bottom_[Index].model->SetColor({ 0.0f, 1.0f, 0.0f, 1.0f });
+		Bottom_[Index].worldTansform.scale = initScale_;
+		Bottom_[Index].worldTansform.translate = initBottomTranslate_;
+		initBottomTranslate_.z -= 2.2f;*/
+
+
+		// 左辺の壁
+		/*Left_[Index].model = make_unique<Model>();
+		Left_[Index].model->CreateFromObj("ShamWall");
+		Left_[Index].model->SetColor({ 0.0f, 0.0f, 1.0f, 1.0f });
+		Left_[Index].worldTansform.scale = initScale_;
+		Left_[Index].worldTansform.translate = initLeftTranslate_;
+		initLeftTranslate_.x -= 2.2f;*/
+
+
+		// 右辺の壁
+		Right_[Index].model = make_unique<Model>();
+		Right_[Index].model->CreateFromObj("ShamWall");
+		Right_[Index].model->SetColor({ 1.0f, 1.0f, 0.0f, 1.0f });
+		Right_[Index].worldTansform.scale = initScale_;
+		Right_[Index].worldTansform.translate = initRightTranslate_;
+		initRightTranslate_.x -= 2.2f;
+	}
 }
 
 
@@ -39,10 +50,16 @@ void ShamWall::Initialize() {
 // 更新処理
 void ShamWall::Update() {
 
-	Top_.worldTansform.UpdateMatrix();
-	Bottom_.worldTansform.UpdateMatrix();
-	Left_.worldTansform.UpdateMatrix();
-	Right_.worldTansform.UpdateMatrix();
+	for (int Index = 0; Index < MAX_WALL_OBJECT; Index++) {
+		//Top_[Index].worldTansform.UpdateMatrix();
+		//Bottom_[Index].worldTansform.UpdateMatrix();
+		//Left_[Index].worldTansform.UpdateMatrix();
+		Right_[Index].worldTansform.UpdateMatrix();
+	}
+
+	ImGui::Begin("ShamWall");
+	//ImGui::DragFloat3("Left", &Left_.worldTansform.translate.x, 0.05f);
+	ImGui::End();
 
 }
 
@@ -51,8 +68,10 @@ void ShamWall::Update() {
 // 描画処理
 void ShamWall::Draw(ViewProjection view) {
 
-	Top_.model->Draw(Top_.worldTansform, view);
-	Bottom_.model->Draw(Bottom_.worldTansform, view);
-	Left_.model->Draw(Left_.worldTansform, view);
-	Right_.model->Draw(Right_.worldTansform, view);
+	for (int Index = 0; Index < MAX_WALL_OBJECT; Index++) {
+		//Top_[Index].model->Draw(Top_[Index].worldTansform, view);
+		//Bottom_[Index].model->Draw(Bottom_[Index].worldTansform, view);
+		//Left_[Index].model->Draw(Left_[Index].worldTansform, view);
+		Right_[Index].model->Draw(Right_[Index].worldTansform, view);
+	}
 }

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig" />
+    <None Include="cpp.hint" />
     <None Include="Resources\Shader\Harf_LambertLightObject.hlsli" />
     <None Include="Resources\Shader\ParticleObject3d.hlsli" />
     <None Include="Resources\Shader\SpriteObject3d.hlsli" />

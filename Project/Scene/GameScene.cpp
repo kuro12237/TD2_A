@@ -144,7 +144,7 @@ void GameScene::Object3dDraw()
 	}
 	hitparticle_->Draw(viewProjection);
 
-	mapWallManager_->Draw(viewProjection);
+	//mapWallManager_->Draw(viewProjection);
 	shamWall_->Draw(viewProjection);
 }
 
