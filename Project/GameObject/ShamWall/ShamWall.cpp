@@ -8,6 +8,7 @@ void ShamWall::Initialize() {
 	shamWall_.model = make_unique<Model>();
 	shamWall_.model->CreateFromObj("ShamWall");
 	shamWall_.model->SetColor(modelColor_);
+	shamWall_.worldTansform.Initialize();
 	shamWall_.worldTansform.scale = initScale_;
 }
 

@@ -43,6 +43,10 @@ void GameScene::Initialize()
 	shamWall_ = make_unique<ShamWall>();
 	shamWall_->Initialize();
 
+	// 天球
+	skydome_ = make_unique<Skydome>();
+	skydome_->Initialize();
+
 	texHandle = TextureManager::LoadTexture("Resources/mob.png");
 	testSprite = make_unique<Sprite>();
 	testSprite->SetTexHandle(texHandle);
@@ -117,6 +121,10 @@ void GameScene::Update(GameManager* scene)
 	//壁のupdate
 	mapWallManager_->Update();
 	shamWall_->Update();
+	
+	// 天球
+	skydome_->Update();
+
 	//当たり判定
 	Collision();
 	//カメラ
@@ -135,6 +143,8 @@ void GameScene::Object3dDraw()
 {
 	DebugTools::DrawExecute(0);
 	DebugTools::DrawExecute(1);
+
+	skydome_->Draw(viewProjection);
 
 	player_->Draw(viewProjection);
 

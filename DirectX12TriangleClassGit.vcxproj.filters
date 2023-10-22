@@ -148,6 +148,9 @@
     <Filter Include="Project\GameObject\ShamWall">
       <UniqueIdentifier>{bf73c98a-1ae4-4ce9-8a7b-82db4a5ed265}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\Skydome">
+      <UniqueIdentifier>{f2f02140-c46c-4c8c-b0d3-6fd2fb8981ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -330,6 +333,9 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\ShamWall\ShamWall.cpp">
       <Filter>Project\GameObject\ShamWall</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Skydome\Skydome.cpp">
+      <Filter>Project\GameObject\Skydome</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -548,6 +554,9 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\ShamWall\ShamWall.h">
       <Filter>Project\GameObject\ShamWall</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Skydome\Skydome.h">
+      <Filter>Project\GameObject\Skydome</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
