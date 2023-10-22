@@ -39,6 +39,10 @@ void GameScene::Initialize()
 	mapWallManager_ = make_unique<MapWallManager>();
 	mapWallManager_->Initialize();
 
+	// 見かけの壁
+	shamWall_ = make_unique<ShamWall>();
+	shamWall_->Initialize();
+
 	texHandle = TextureManager::LoadTexture("Resources/mob.png");
 	testSprite = make_unique<Sprite>();
 	testSprite->SetTexHandle(texHandle);
@@ -112,6 +116,7 @@ void GameScene::Update(GameManager* scene)
 	MapWallCollision();
 	//壁のupdate
 	mapWallManager_->Update();
+	shamWall_->Update();
 	//当たり判定
 	Collision();
 	//カメラ
@@ -139,7 +144,8 @@ void GameScene::Object3dDraw()
 	}
 	hitparticle_->Draw(viewProjection);
 
-	mapWallManager_->Draw(viewProjection);
+	//mapWallManager_->Draw(viewProjection);
+	shamWall_->Draw(viewProjection);
 }
 
 void GameScene::Flont2dSpriteDraw()
