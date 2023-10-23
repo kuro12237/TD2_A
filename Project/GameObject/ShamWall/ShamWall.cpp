@@ -5,6 +5,7 @@
 // èâä˙âªèàóù
 void ShamWall::Initialize() {
 
+	perlinNoise_ = make_unique<PerlinNoise>();
 	shamWall_.model = make_unique<Model>();
 	shamWall_.model->CreateFromObj("ShamWall");
 	shamWall_.model->SetColor(modelColor_);
@@ -18,6 +19,7 @@ void ShamWall::Initialize() {
 void ShamWall::Update() {
 
 	shamWall_.worldTansform.UpdateMatrix();
+
 	
 	ImGui::Begin("shamWall");
 	ImGui::DragFloat3("scale", &shamWall_.worldTansform.scale.x, 0.005f);

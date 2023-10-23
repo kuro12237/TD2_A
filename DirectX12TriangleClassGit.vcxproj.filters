@@ -154,6 +154,9 @@
     <Filter Include="Project\GameObject\MapGround">
       <UniqueIdentifier>{0e7ca6a5-158f-494d-adcb-a7d8f1f1dc40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CLEYERA\math\PerlinNoise">
+      <UniqueIdentifier>{b4848b44-4792-43c6-9986-2b4ddf306c9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -342,6 +345,9 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\MapGround\MapGround.cpp">
       <Filter>Project\GameObject\MapGround</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\math\PerlinNoise\PerlinNoise.cpp">
+      <Filter>CLEYERA\math\PerlinNoise</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -566,6 +572,9 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\MapGround\MapGround.h">
       <Filter>Project\GameObject\MapGround</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\math\PerlinNoise\PerlinNoise.h">
+      <Filter>CLEYERA\math\PerlinNoise</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

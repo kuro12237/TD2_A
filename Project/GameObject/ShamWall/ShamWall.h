@@ -53,9 +53,12 @@ private:
 
 	WallElemnt shamWall_;
 
+
 	// 初期スケール
 	Vector3 initScale_ = { 1.07f, 2.0f, 1.07f };
 
 	// カラー
 	Vector4 modelColor_ = { 1.0f, 0.0f, 0.0f, 1.0f };
+
+
 };

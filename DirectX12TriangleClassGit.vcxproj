@@ -61,6 +61,7 @@
     <ClCompile Include="CLEYERA\Graphics\TextureManager\TextureManager.cpp" />
     <ClCompile Include="CLEYERA\Input\Input.cpp" />
     <ClCompile Include="CLEYERA\math\MatrixTransform.cpp" />
+    <ClCompile Include="CLEYERA\math\PerlinNoise\PerlinNoise.cpp" />
     <ClCompile Include="CLEYERA\math\VectorTransform.cpp" />
     <ClCompile Include="CLEYERA\Model\Model.cpp" />
     <ClCompile Include="CLEYERA\Model\State\ModelLineState.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="CLEYERA\math\Matrix3x3.h" />
     <ClInclude Include="CLEYERA\math\Matrix4x4.h" />
     <ClInclude Include="CLEYERA\math\MatrixTransform.h" />
+    <ClInclude Include="CLEYERA\math\PerlinNoise\PerlinNoise.h" />
     <ClInclude Include="CLEYERA\math\Vector2.h" />
     <ClInclude Include="CLEYERA\math\Vector3.h" />
     <ClInclude Include="CLEYERA\math\Vector4.h" />
