@@ -142,6 +142,11 @@
     <Filter Include="Project\GameObject\TransitionProcess">
       <UniqueIdentifier>{2adce2af-e910-4ca5-8fba-d33722363fbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\BombEnemy">
+      <UniqueIdentifier>{ef553447-91f1-415e-9cad-010289a58081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\BombEnemy\State">
+      <UniqueIdentifier>{0ad2d52c-9e5c-4b26-81e3-57d029d67b7c}</UniqueIdentifier>
     <Filter Include="Project\GameObject\Score">
       <UniqueIdentifier>{810fce35-6e98-4cae-b8a1-a84bc664a924}</UniqueIdentifier>
     </Filter>
@@ -331,6 +336,11 @@
     <ClCompile Include="Project\GameObject\TransitionProcess\TransitionProcess.cpp">
       <Filter>Project\GameObject\TransitionProcess</Filter>
     </ClCompile>
+    <ClCompile Include="Project\GameObject\EnemyBomb\EnemyBomb.cpp">
+      <Filter>Project\GameObject\BombEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\EnemyBomb\state\stateMoveEnemyBomb.cpp">
+      <Filter>Project\GameObject\BombEnemy\State</Filter>
     <ClCompile Include="Project\GameObject\Score\Score.cpp">
       <Filter>Project\GameObject\Score</Filter>
     </ClCompile>
@@ -555,6 +565,14 @@
     <ClInclude Include="Project\GameObject\TransitionProcess\TransitionProcess.h">
       <Filter>Project\GameObject\TransitionProcess</Filter>
     </ClInclude>
+    <ClInclude Include="Project\GameObject\EnemyBomb\EnemyBomb.h">
+      <Filter>Project\GameObject\BombEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\EnemyBomb\state\IstateEnemyBomb.h">
+      <Filter>Project\GameObject\BombEnemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\EnemyBomb\state\StateMoveEnemyBomb.h">
+      <Filter>Project\GameObject\BombEnemy\State</Filter>
     <ClInclude Include="Project\GameObject\Score\Score.h">
       <Filter>Project\GameObject\Score</Filter>
     </ClInclude>

@@ -54,11 +54,19 @@ void GameScene::Initialize()
 	texHandle = TextureManager::LoadTexture("Resources/mob.png");
 	testSprite = make_unique<Sprite>();
 	testSprite->SetTexHandle(texHandle);
+
+	testSprite->SetSrc({ 0.5,0 }, { 0.5,0.5 }, { 0,0 }, { 0,0.5 });
+	testSprite->Initialize(new SpriteBoxState,{0,0},{320,320});
+
 	testSprite->Initialize(new SpriteBoxState, { 0,0 }, { 320,320 });
+
 	testSpriteWorldTransform.Initialize();
 
 	hitparticle_ = make_unique<HitParticle>();
 	hitparticle_->Initialize();
+
+	testEnemyBomb = make_unique<EnemyBomb>();
+	testEnemyBomb->Initialize({ 0,0.5f,0 });
 }
 
 void GameScene::Update(GameManager* scene)
@@ -88,10 +96,12 @@ void GameScene::Update(GameManager* scene)
 	if (!TransitionProcess::Fade_Out()) {
 		return;
 	}
+
 	bool flag = false;
 	ImGui::Begin("d");
 	ImGui::Checkbox("e", &flag);
 	ImGui::End();
+
 	if (flag)
 	{
 		hitparticle_->Spown(player_->GetWorldTransform().translate);
@@ -113,8 +123,9 @@ void GameScene::Update(GameManager* scene)
 		enemy->Update();
 
 	}
-
-
+	testEnemyBomb->SetPlayer(player_.get());
+	testEnemyBomb->Update();
+	
 	hitparticle_->Update();
 
 	EnemyReset();
@@ -156,7 +167,7 @@ void GameScene::Object3dDraw()
 	mapGround_->Draw(viewProjection);
 
 	player_->Draw(viewProjection);
-
+	testEnemyBomb->Draw(viewProjection);
 	// 敵
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		enemy->Draw(viewProjection);

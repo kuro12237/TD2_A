@@ -3,6 +3,7 @@
 void Player::Initialize()
 {
 	model_ = make_unique<Model>();
+	model_->UseLight(HARF_LAMBERT);
 	model_->Initialize(new ModelSphereState);
 	texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
 	model_->SetTexHandle(texHandle);
@@ -120,18 +121,10 @@ void Player::Move()
 		Velocity = VectorTransform::Multiply(Velocity, speed);
 	}
 
-	MoveCoolTime++;
-    
+
 	if (abs(Velocity.x)<0.05f && abs(Velocity.y)<0.05f && abs(Velocity.z)<0.05f)
 	{
 		MoveFlag = false;
-	}
-
-	if (MoveCoolTime > MAX_MOVE_COOLTIME)
-	{
-		MoveCoolTime = 0;
-		
-		//MoveFlag = false;
 	}
 	//摩擦
 	FancFrictionCoefficient();
@@ -175,9 +168,7 @@ void Player::Reticle()
 
 	RPNormalize = VectorTransform::Subtruct(Rpos, Ppos);
 	RPNormalize = VectorTransform::Normalize(RPNormalize);
-		
 	
-
 }
 
 void Player::FancFrictionCoefficient()
