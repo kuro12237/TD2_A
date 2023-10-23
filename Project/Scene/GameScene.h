@@ -34,9 +34,6 @@ public:
 	void Object3dDraw()override;
 	void Flont2dSpriteDraw()override;
 
-	/// <summary>
-	/// �G����
-	/// </summary>
 	void LoadEnemyDate();
 	void UpdateEnemyCommands();
 	void EnemySpawn(const Vector3& position);
@@ -61,8 +58,6 @@ private:
     stringstream fileLoad;
 	
 	unique_ptr<EnemyBomb>testEnemyBomb = nullptr;
-
-	//uint32_t testTime = 0;
 
 	unique_ptr<MapWallManager>mapWallManager_ = nullptr;
 	unique_ptr<ShamWall>shamWall_ = nullptr;
