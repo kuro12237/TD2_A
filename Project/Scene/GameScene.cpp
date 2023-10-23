@@ -16,16 +16,16 @@ void GameScene::Initialize()
 	timeCount_->Initialize();
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
-	// フェードの処理
+	//// フェードの処理
 	TransitionProcess::Initialize();
-	// フェードに使う画像の設定
+	//// フェードに使う画像の設定
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetTexHandle(useFade_BG);
-	// 色を黒くしておく
+	//// 色を黒くしておく
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
-	// フェードが明ける処理
+	//// フェードが明ける処理
 	TransitionProcess::Fade_Out_Init();
 
-	// スコア
+	//// スコア
 	Score::Initialize();
 
 	player_ = make_unique<Player>();
@@ -51,16 +51,6 @@ void GameScene::Initialize()
 	mapGround_ = make_unique<MapGround>();
 	mapGround_->Initialize();
 
-	texHandle = TextureManager::LoadTexture("Resources/mob.png");
-	testSprite = make_unique<Sprite>();
-	testSprite->SetTexHandle(texHandle);
-
-	testSprite->SetSrc({ 0.5,0 }, { 0.5,0.5 }, { 0,0 }, { 0,0.5 });
-	testSprite->Initialize(new SpriteBoxState,{0,0},{320,320});
-
-	testSprite->Initialize(new SpriteBoxState, { 0,0 }, { 320,320 });
-
-	testSpriteWorldTransform.Initialize();
 
 	hitparticle_ = make_unique<HitParticle>();
 	hitparticle_->Initialize();
@@ -71,6 +61,7 @@ void GameScene::Initialize()
 
 void GameScene::Update(GameManager* scene)
 {
+	scene;
 	DebugTools::UpdateExecute(0);
 	//DebugTools::UpdateExecute(1);
 
@@ -180,7 +171,7 @@ void GameScene::Object3dDraw()
 
 void GameScene::Flont2dSpriteDraw()
 {
-	timeCount_->Draw();
+	//timeCount_->Draw();
 	Score::Draw();
 	//testSprite->Draw(testSpriteWorldTransform);
 

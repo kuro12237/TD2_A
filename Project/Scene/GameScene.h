@@ -50,35 +50,23 @@ private:
 
 	ViewProjection viewProjection{};
 
-	unique_ptr<TimeCount>timeCount_ = nullptr;
 	unique_ptr<CollisionManager> collisionManager_ = nullptr;
-
+	unique_ptr<TimeCount>timeCount_ = nullptr;
 	unique_ptr<Player>player_ = nullptr;
-	unique_ptr<Enemy>enemy_ = nullptr;
-
-	unique_ptr<Sprite>testSprite = nullptr;
-	uint32_t texHandle = 0;
-	WorldTransform testSpriteWorldTransform{};
+	unique_ptr<HitParticle>hitparticle_ = nullptr;
 
 	std::list<shared_ptr<Enemy>>enemys_;
-
 	bool wait = false; 
 	uint32_t waitTimer = 0;
-
-	stringstream fileLoad;
-
-	unique_ptr<MapWallManager>mapWallManager_ = nullptr;
-
-	unique_ptr<HitParticle>hitparticle_ = nullptr;
-	uint32_t testTime = 0;
-
-
+    stringstream fileLoad;
+	
 	unique_ptr<EnemyBomb>testEnemyBomb = nullptr;
 
+	//uint32_t testTime = 0;
+
+	unique_ptr<MapWallManager>mapWallManager_ = nullptr;
 	unique_ptr<ShamWall>shamWall_ = nullptr;
-
 	unique_ptr<Skydome>skydome_ = nullptr;
-
 	unique_ptr<MapGround>mapGround_ = nullptr;
 
 };
