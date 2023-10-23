@@ -1,11 +1,10 @@
 #include "StateMoveEnemyBomb.h"
 
+
 void stateMoveEnemyBomb::Move(WorldTransform& worldTransform, EnemyBomb* state)
 {
-	
-	
-	worldTransform.translate = VectorTransform::Add({0.01f,0,0}, worldTransform.translate);
-	
+	worldTransform.translate.x = worldTransform.translate.x + state->GetVelocity().x;
+	worldTransform.translate.z = worldTransform.translate.z + state->GetVelocity().z;
 
-	state;
+	//worldTransform.translate = VectorTransform::Add(state->GetVelocity(), worldTransform.translate);
 }

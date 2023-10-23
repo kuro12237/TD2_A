@@ -16,6 +16,20 @@ void EnemyBomb::Initialize(Vector3 position)
 
 void EnemyBomb::Update()
 {
+	Vector3 Ppos = player_->GetWorldPosition();
+	//worldTransform_.UpdateMatrix();
+	Vector3 Epos{};
+	Epos.x = worldTransform_.matWorld.m[3][0];
+	Epos.y = worldTransform_.matWorld.m[3][1];
+	Epos.z = worldTransform_.matWorld.m[3][2];
+
+	velocity_ = VectorTransform::Subtruct(Ppos,Epos);
+	velocity_ = VectorTransform::Normalize(velocity_);
+	velocity_.x = velocity_.x * 0.1f;
+	velocity_.y = velocity_.y * 0.1f;
+	velocity_.z = velocity_.z * 0.1f;
+
+
 	state_->Move(worldTransform_, this);
 	worldTransform_.UpdateMatrix();
 }

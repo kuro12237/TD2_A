@@ -17,7 +17,10 @@ public:
 
 	void Draw(ViewProjection view);
 
+	Player* GetPlayer() { return player_; }
+
 	Vector3 GetPlayerTranslate() { return player_->GetWorldPosition(); }
+	Vector3 GetVelocity() { return velocity_; }
 private:
 
 	IstateEnemyBomb* state_ = nullptr;
@@ -27,7 +30,8 @@ private:
 
 	unique_ptr<Model>model = nullptr;
 	uint32_t texHandle = 0;
-	
+	Vector3 velocity_ = {};
+	uint32_t LerpTime = 0;
 
 };
 
