@@ -19,14 +19,6 @@ void Skydome::Update() {
 
 	skydome_.worldTansform.UpdateMatrix();
 	skydome_.worldTansform.scale = { initScale_,initScale_, initScale_ };
-
-
-	ImGui::Begin("Skydome");
-
-	ImGui::DragFloat("scale", &initScale_, 0.05f);
-	ImGui::DragFloat3("rotate", &skydome_.worldTansform.rotation.x, 0.05f);
-	ImGui::DragFloat3("translate", &skydome_.worldTansform.translate.x, 0.05f);
-	ImGui::End();
 }
 
 

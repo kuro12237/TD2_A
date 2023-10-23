@@ -20,10 +20,6 @@ void GameManager::Run()
 	{
 		Cleyera::BeginFlame();
 	
-		ImGui::Begin("usedescripter");
-		ImGui::Text("descripterIndex %d", DescriptorManager::GetIndex());
-		ImGui::Text("tex %d", TextureManager::NumLoadTexture());
-		ImGui::End();
 
 		Scene_->Update(this);
 		

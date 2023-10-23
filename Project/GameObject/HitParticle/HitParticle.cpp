@@ -12,11 +12,6 @@ void HitParticle::Initialize()
 void HitParticle::Update()
 {
 	ListParticle_ = particle_->begin();
-
-	ImGui::Begin("hitPatticle");
-	ImGui::Text("%d", ListParticle_.size());
-	ImGui::Text("%d", ListParticle_.max_size());
-	ImGui::End();
 	
 	for (Particle_param particle : ListParticle_)
 	{

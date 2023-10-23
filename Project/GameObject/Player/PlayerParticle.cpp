@@ -42,9 +42,7 @@ void PlayerParticle::Update()
 {
 	//XVˆ—
 	particles_param_ = particle_->begin();
-	ImGui::Begin("Particle_Param");
-	ImGui::Text("size : %d", particles_param_.size());
-	ImGui::End();
+
 	for (Particle_param particle : particles_param_)
 	{
 		particle.color_.w -= 0.01f;

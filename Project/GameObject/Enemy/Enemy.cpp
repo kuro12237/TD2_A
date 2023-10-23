@@ -6,10 +6,11 @@
 void Enemy::Initialize(const Vector3& position) {
 
 	model_ = make_unique<Model>();
+	model_->UseLight(HARF_LAMBERT);
 	model_->Initialize(new ModelSphereState);
-	texHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
+	texHandle_ = TextureManager::LoadTexture("Resources/Enemy.png");
 	model_->SetTexHandle(texHandle_);
-	model_->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+	model_->SetColor({ 1.0f,0.0f,1.0f,1.0f });
 
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };

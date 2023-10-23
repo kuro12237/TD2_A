@@ -89,9 +89,7 @@ void GameScene::Update(GameManager* scene)
 		return;
 	}
 	bool flag = false;
-	ImGui::Begin("d");
-	ImGui::Checkbox("e", &flag);
-	ImGui::End();
+
 	if (flag)
 	{
 		hitparticle_->Spown(player_->GetWorldTransform().translate);

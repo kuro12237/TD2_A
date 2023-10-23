@@ -88,12 +88,12 @@ void DebugCamera::UpdateExecute()
 {
 	DebugCamera::GetInstance()->CameraObjeViewProjection_ = DebugTools::GetInstance()->GetViewProjection();
 
-	ImGui::Begin("DebugCameraTest");
-	ImGui::Checkbox("isDebugCamera", &DebugCamera::GetInstance()->isCamera);
-	ImGui::SliderFloat3("CameraRotate",&DebugCamera::GetInstance()->CemaraRotateSpeed_.x,-0.1f,0.1f);
-	ImGui::Text("WASD:Move");
-	ImGui::Text("TOP,DOWN,LEFT,RIGHT : CameraRotate");
-	ImGui::End();
+	//ImGui::Begin("DebugCameraTest");
+	//ImGui::Checkbox("isDebugCamera", &DebugCamera::GetInstance()->isCamera);
+	//ImGui::SliderFloat3("CameraRotate",&DebugCamera::GetInstance()->CemaraRotateSpeed_.x,-0.1f,0.1f);
+	//ImGui::Text("WASD:Move");
+	//ImGui::Text("TOP,DOWN,LEFT,RIGHT : CameraRotate");
+	//ImGui::End();
 
 	IsUseDebugCameraViewProjection();
 

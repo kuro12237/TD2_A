@@ -1,7 +1,5 @@
 #include "ShamWall.h"
 
-
-
 // èâä˙âªèàóù
 void ShamWall::Initialize() {
 
@@ -12,24 +10,12 @@ void ShamWall::Initialize() {
 	shamWall_.worldTansform.scale = initScale_;
 }
 
-
-
 // çXêVèàóù
 void ShamWall::Update() {
 
 	shamWall_.worldTansform.UpdateMatrix();
 	shamWall_.model->SetColor(modelColor_);
-
-	
-	ImGui::Begin("shamWall");
-	ImGui::DragFloat3("scale", &shamWall_.worldTansform.scale.x, 0.005f);
-	ImGui::DragFloat3("rotation", &shamWall_.worldTansform.rotation.x, 0.005f);
-	ImGui::DragFloat3("translate", &shamWall_.worldTansform.translate.x, 0.005f);
-	ImGui::ColorEdit4("color", &modelColor_.x);
-	ImGui::End();
 }
-
-
 
 // ï`âÊèàóù
 void ShamWall::Draw(ViewProjection view) {
