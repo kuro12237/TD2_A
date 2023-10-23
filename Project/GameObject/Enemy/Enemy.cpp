@@ -10,7 +10,6 @@ void Enemy::Initialize(const Vector3& position) {
 	texHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
 	model_->SetTexHandle(texHandle_);
 	model_->SetColor({ 1.0f,0.0f,0.0f,1.0f });
-
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
 	worldTransform_.translate = position;

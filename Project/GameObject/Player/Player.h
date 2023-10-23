@@ -44,7 +44,7 @@ public:
 
 #pragma region set
 
-	void SetEnemy(Enemy* enemy) { enemy = enemy_; }
+	void SetEnemy(std::list<shared_ptr<Enemy>>enemys) { enemys_ = enemys; }
 
 #pragma endregion
 
@@ -74,7 +74,7 @@ private:
 	tuple<Vector3, Vector3> velocity_ = {};
 	Vector3 HitVelo = {};
 	bool isMove_ = false;
-	Enemy* enemy_ = nullptr;
+	Enemy* enemy_;
 	std::list<shared_ptr<Enemy>>enemys_;
 	Vector3 enemyPos_ = {};
 	float angle = 0.0f;
