@@ -12,7 +12,7 @@ TransitionProcess* TransitionProcess::GetInstance() {
 void TransitionProcess::Initialize() {
 
 	// テクスチャの読み込み
-	TransitionProcess::GetInstance()->BG_TexHD_ = TextureManager::LoadTexture("Resources/BackGround/BackGround.png");
+	TransitionProcess::GetInstance()->BG_TexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
 	// 座標
 	Vector2 pos = TransitionProcess::GetInstance()->BG_Position_;

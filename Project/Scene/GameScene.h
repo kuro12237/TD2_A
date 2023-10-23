@@ -14,6 +14,10 @@
 #include"GameObject/TransitionProcess/TransitionProcess.h"
 #include"GameObject/HitParticle/HitParticle.h"
 #include"GameObject/EnemyBomb/EnemyBomb.h"
+#include "GameObject/Score/Score.h"
+#include "GameObject/ShamWall/ShamWall.h"
+#include "GameObject/Skydome/Skydome.h"
+#include "GameObject/MapGround/MapGround.h"
 
 
 class GameScene : public IScene
@@ -68,7 +72,15 @@ private:
 	unique_ptr<HitParticle>hitparticle_ = nullptr;
 	uint32_t testTime = 0;
 
+
 	unique_ptr<EnemyBomb>testEnemyBomb = nullptr;
+
+	unique_ptr<ShamWall>shamWall_ = nullptr;
+
+	unique_ptr<Skydome>skydome_ = nullptr;
+
+	unique_ptr<MapGround>mapGround_ = nullptr;
+
 };
 
 

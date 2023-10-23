@@ -147,6 +147,17 @@
     </Filter>
     <Filter Include="Project\GameObject\BombEnemy\State">
       <UniqueIdentifier>{0ad2d52c-9e5c-4b26-81e3-57d029d67b7c}</UniqueIdentifier>
+    <Filter Include="Project\GameObject\Score">
+      <UniqueIdentifier>{810fce35-6e98-4cae-b8a1-a84bc664a924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\ShamWall">
+      <UniqueIdentifier>{bf73c98a-1ae4-4ce9-8a7b-82db4a5ed265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\Skydome">
+      <UniqueIdentifier>{f2f02140-c46c-4c8c-b0d3-6fd2fb8981ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\MapGround">
+      <UniqueIdentifier>{0e7ca6a5-158f-494d-adcb-a7d8f1f1dc40}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +173,7 @@
     <None Include="Resources\Shader\ParticleObject3d.hlsli">
       <Filter>Shader</Filter>
     </None>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CLEYERA\Cleyera.cpp">
@@ -329,6 +341,17 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\EnemyBomb\state\stateMoveEnemyBomb.cpp">
       <Filter>Project\GameObject\BombEnemy\State</Filter>
+    <ClCompile Include="Project\GameObject\Score\Score.cpp">
+      <Filter>Project\GameObject\Score</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\ShamWall\ShamWall.cpp">
+      <Filter>Project\GameObject\ShamWall</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Skydome\Skydome.cpp">
+      <Filter>Project\GameObject\Skydome</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\MapGround\MapGround.cpp">
+      <Filter>Project\GameObject\MapGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -550,6 +573,17 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\EnemyBomb\state\StateMoveEnemyBomb.h">
       <Filter>Project\GameObject\BombEnemy\State</Filter>
+    <ClInclude Include="Project\GameObject\Score\Score.h">
+      <Filter>Project\GameObject\Score</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\ShamWall\ShamWall.h">
+      <Filter>Project\GameObject\ShamWall</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Skydome\Skydome.h">
+      <Filter>Project\GameObject\Skydome</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\MapGround\MapGround.h">
+      <Filter>Project\GameObject\MapGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

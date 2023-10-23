@@ -2,10 +2,10 @@
 
 void GameScene::Initialize()
 {
-	Grid* grid = new Grid();
-	grid->Initialize();
+	//Grid* grid = new Grid();
+	//grid->Initialize();
 	//GridCommandをセット
-	DebugTools::addCommand(grid, "Grid");
+	//DebugTools::addCommand(grid, "Grid");
 	DebugCamera* debugcamera = new DebugCamera();
 	debugcamera->Initialize();
 	DebugTools::addCommand(debugcamera, "DebugCamera");
@@ -14,7 +14,7 @@ void GameScene::Initialize()
 
 	timeCount_ = make_unique<TimeCount>();
 	timeCount_->Initialize();
-	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/BackGround/BackGround.png");
+	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
 	// フェードの処理
 	TransitionProcess::Initialize();
@@ -24,6 +24,9 @@ void GameScene::Initialize()
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
 	// フェードが明ける処理
 	TransitionProcess::Fade_Out_Init();
+
+	// スコア
+	Score::Initialize();
 
 	player_ = make_unique<Player>();
 	player_->Initialize();
@@ -36,12 +39,27 @@ void GameScene::Initialize()
 	mapWallManager_ = make_unique<MapWallManager>();
 	mapWallManager_->Initialize();
 
+	// 見かけの壁
+	shamWall_ = make_unique<ShamWall>();
+	shamWall_->Initialize();
+
+	// 天球
+	skydome_ = make_unique<Skydome>();
+	skydome_->Initialize();
+
+	// 床
+	mapGround_ = make_unique<MapGround>();
+	mapGround_->Initialize();
+
 	texHandle = TextureManager::LoadTexture("Resources/mob.png");
 	testSprite = make_unique<Sprite>();
 	testSprite->SetTexHandle(texHandle);
+
 	testSprite->SetSrc({ 0.5,0 }, { 0.5,0.5 }, { 0,0 }, { 0,0.5 });
 	testSprite->Initialize(new SpriteBoxState,{0,0},{320,320});
-	
+
+	testSprite->Initialize(new SpriteBoxState, { 0,0 }, { 320,320 });
+
 	testSpriteWorldTransform.Initialize();
 
 	hitparticle_ = make_unique<HitParticle>();
@@ -54,18 +72,22 @@ void GameScene::Initialize()
 void GameScene::Update(GameManager* scene)
 {
 	DebugTools::UpdateExecute(0);
-	DebugTools::UpdateExecute(1);
+	//DebugTools::UpdateExecute(1);
 
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
 		TransitionProcess::Fade_In_Init();
+	}
+	if (Input::GetInstance()->PushKeyPressed(DIK_5))
+	{
+		Score::AddScore(100);
 	}
 	// フェードの処理が終わったらシーン遷移
 	if (TransitionProcess::Fade_In()) {
 		scene->ChangeState(new ResultScene);
 		return;
 	}
-	
+
 	// フェードが明ける処理
 	TransitionProcess::Fade_In();
 	TransitionProcess::Fade_Out();
@@ -79,17 +101,17 @@ void GameScene::Update(GameManager* scene)
 	ImGui::Begin("d");
 	ImGui::Checkbox("e", &flag);
 	ImGui::End();
-	
+
 	if (flag)
 	{
 		hitparticle_->Spown(player_->GetWorldTransform().translate);
 		MainCamera::SetIsShake(flag);
 	}
-	
 
+	Score::Update();
 	timeCount_->Update();
 	// 時間切れ時の処理
-	if (!timeCount_->GetIsTimeUp()) 
+	if (!timeCount_->GetIsTimeUp())
 	{
 		//GameObjectの基本更新
 		//時間切れになったらifを抜ける     
@@ -113,6 +135,14 @@ void GameScene::Update(GameManager* scene)
 	MapWallCollision();
 	//壁のupdate
 	mapWallManager_->Update();
+	shamWall_->Update();
+	
+	// 天球
+	skydome_->Update();
+
+	// 床
+	mapGround_->Updatea();
+
 	//当たり判定
 	Collision();
 	//カメラ
@@ -130,7 +160,11 @@ void GameScene::Back2dSpriteDraw()
 void GameScene::Object3dDraw()
 {
 	DebugTools::DrawExecute(0);
-	DebugTools::DrawExecute(1);
+	//DebugTools::DrawExecute(1);
+
+	skydome_->Draw(viewProjection);
+
+	mapGround_->Draw(viewProjection);
 
 	player_->Draw(viewProjection);
 	testEnemyBomb->Draw(viewProjection);
@@ -140,14 +174,16 @@ void GameScene::Object3dDraw()
 	}
 	hitparticle_->Draw(viewProjection);
 
-	mapWallManager_->Draw(viewProjection);
+	//mapWallManager_->Draw(viewProjection);
+	shamWall_->Draw(viewProjection);
 }
 
 void GameScene::Flont2dSpriteDraw()
 {
 	timeCount_->Draw();
-	
-	testSprite->Draw(testSpriteWorldTransform);
+	Score::Draw();
+	//testSprite->Draw(testSpriteWorldTransform);
+
 	TransitionProcess::Draw();
 }
 
@@ -178,7 +214,7 @@ void GameScene::MapWallCollision()
 
 // enemyのデータをロード(CSVで)
 void GameScene::LoadEnemyDate() {
-    fileLoad = FileLoader::CSVLoadFile("resources/enemySpawn.csv");
+	fileLoad = FileLoader::CSVLoadFile("resources/enemySpawn.csv");
 }
 
 // データを読み込む
@@ -194,19 +230,19 @@ void GameScene::UpdateEnemyCommands() {
 	std::string line;
 
 	while (getline(fileLoad, line)) {
-	
+
 		std::istringstream line_stream(line);
 		std::string word;
-		
+
 		getline(line_stream, word, ',');
 
 		if (word.find("//") == 0) {
-			
+
 			continue;
 		}
 
 		if (word.find("SPAWN") == 0) {
-	
+
 			getline(line_stream, word, ',');
 			float x = (float)std::atof(word.c_str());
 
@@ -246,7 +282,7 @@ void GameScene::EnemyReset() {
 	if (Input::GetInstance()->PushKeyPressed(DIK_R)) {
 		enemys_.clear();
 		for (shared_ptr<Enemy>& enemy : enemys_) {
-		
+
 			enemy = make_shared<Enemy>();
 			enemy->Initialize({ 0,0.5,0 });
 		}
