@@ -11,6 +11,17 @@ struct WallElemnt {
 };
 
 
+enum ColorState {
+	AddRed,
+	SubRed,
+	AddGreen,
+	SubGreen,
+	AddBlue,
+	SubBlue,
+};
+
+
+
 /// <summary>
 /// ShamWallクラス
 /// </summary>
@@ -36,6 +47,8 @@ public:
 	/// </summary>
 	void Draw(ViewProjection view);
 
+	
+
 private:
 
 	WallElemnt shamWall_;
@@ -44,5 +57,5 @@ private:
 	Vector3 initScale_ = { 1.07f, 2.0f, 1.07f };
 
 	// カラー
-	Vector4 modelColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
+	Vector4 modelColor_ = { 1.0f, 0.0f, 0.0f, 1.0f };
 };

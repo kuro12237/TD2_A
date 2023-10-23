@@ -18,8 +18,6 @@ void ShamWall::Initialize() {
 void ShamWall::Update() {
 
 	shamWall_.worldTansform.UpdateMatrix();
-	shamWall_.model->SetColor(modelColor_);
-
 	
 	ImGui::Begin("shamWall");
 	ImGui::DragFloat3("scale", &shamWall_.worldTansform.scale.x, 0.005f);
