@@ -157,6 +157,9 @@
     <Filter Include="CLEYERA\math\PerlinNoise">
       <UniqueIdentifier>{b4848b44-4792-43c6-9986-2b4ddf306c9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\ShamWall\State">
+      <UniqueIdentifier>{872faede-5097-4797-b96e-3f3d3e3ea16b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -348,6 +351,15 @@
     </ClCompile>
     <ClCompile Include="CLEYERA\math\PerlinNoise\PerlinNoise.cpp">
       <Filter>CLEYERA\math\PerlinNoise</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\ShamWall\State\CalcBlue.cpp">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\ShamWall\State\CalcRed.cpp">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\ShamWall\State\CalcGreen.cpp">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -575,6 +587,18 @@
     </ClInclude>
     <ClInclude Include="CLEYERA\math\PerlinNoise\PerlinNoise.h">
       <Filter>CLEYERA\math\PerlinNoise</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\ShamWall\State\CalcBlue.h">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\ShamWall\State\CalcGreen.h">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\ShamWall\State\CalcRed.h">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\ShamWall\State\WallColorState.h">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

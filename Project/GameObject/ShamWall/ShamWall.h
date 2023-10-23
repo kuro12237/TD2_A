@@ -47,7 +47,27 @@ public:
 	/// </summary>
 	void Draw(ViewProjection view);
 
+	/// <summary>
+	/// カラーの計算
+	/// </summary>
+	void CalcGradation(ColorState state);
+
+	/// <summary>
+	/// RGBを求める
+	/// </summary>
+	Vector3 CalcRGB(Vector4 color);
 	
+	/// <summary>
+	/// RGBAを求める
+	/// </summary>
+	Vector4 CalcRGBA(Vector3 color);
+
+
+#pragma region Get
+
+	ColorState GetColorState() { return state_; }
+
+#pragma endregion
 
 private:
 
@@ -60,5 +80,7 @@ private:
 	// カラー
 	Vector4 modelColor_ = { 1.0f, 0.0f, 0.0f, 1.0f };
 
+	Vector3 color_;
 
+	ColorState state_ = AddGreen;
 };
