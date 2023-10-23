@@ -21,7 +21,7 @@ void ShamWall::Initialize() {
 void ShamWall::Update() {
 
 	shamWall_.worldTansform.UpdateMatrix();
-	CalcGradation(state_);
+	shamWall_.model->SetColor(modelColor_);
 	
 	ImGui::Begin("shamWall");
 	ImGui::DragFloat3("scale", &shamWall_.worldTansform.scale.x, 0.005f);
@@ -38,35 +38,6 @@ void ShamWall::Update() {
 void ShamWall::Draw(ViewProjection view) {
 
 	shamWall_.model->Draw(shamWall_.worldTansform, view);
-}
-
-
-
-// ゲーミグのカラー計算
-void ShamWall::CalcGradation(ColorState state) {
-
-	if (state == AddRed) {
-		color_.x++;
-
-		if (color_.x >= 255) {
-			state_ = SubRed;
-		}
-	}
-	else if (state == SubRed) {
-		color_.x--;
-	}
-	else if (state == AddGreen) {
-		color_.y++;
-	}
-	else if (state == SubGreen) {
-		color_.y--;
-	}
-	else if (state == AddBlue) {
-		color_.z++;
-	}
-	else if (state == SubBlue) {
-		color_.z--;
-	}
 }
 
 

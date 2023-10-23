@@ -48,11 +48,6 @@ public:
 	void Draw(ViewProjection view);
 
 	/// <summary>
-	/// ƒJƒ‰[‚ÌŒvZ
-	/// </summary>
-	void CalcGradation(ColorState state);
-
-	/// <summary>
 	/// RGB‚ğ‹‚ß‚é
 	/// </summary>
 	Vector3 CalcRGB(Vector4 color);
