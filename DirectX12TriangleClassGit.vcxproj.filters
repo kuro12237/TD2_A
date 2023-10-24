@@ -160,6 +160,9 @@
     <Filter Include="Project\GameObject\ShamWall\State">
       <UniqueIdentifier>{872faede-5097-4797-b96e-3f3d3e3ea16b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\StartCount">
+      <UniqueIdentifier>{fc5a9255-13c9-42b9-bc9b-202677d68a6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -360,6 +363,14 @@
     </ClCompile>
     <ClCompile Include="Project\GameObject\ShamWall\State\CalcGreen.cpp">
       <Filter>Project\GameObject\ShamWall\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\Model\State\ModelCubeState.cpp" />
+    <ClCompile Include="Project\GameObject\EnemyBomb\EnemyBomb.cpp" />
+    <ClCompile Include="Project\GameObject\EnemyBomb\EnemyBombManager.cpp" />
+    <ClCompile Include="Project\GameObject\EnemyBomb\state\StateBreakEnemyBomb.cpp" />
+    <ClCompile Include="Project\GameObject\EnemyBomb\state\stateMoveEnemyBomb.cpp" />
+    <ClCompile Include="Project\GameObject\StartCount\StartCount.cpp">
+      <Filter>Project\GameObject\StartCount</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -599,6 +610,15 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\ShamWall\State\WallColorState.h">
       <Filter>Project\GameObject\ShamWall\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Model\State\ModelCubeState.h" />
+    <ClInclude Include="Project\GameObject\EnemyBomb\EnemyBomb.h" />
+    <ClInclude Include="Project\GameObject\EnemyBomb\EnemyBombManager.h" />
+    <ClInclude Include="Project\GameObject\EnemyBomb\state\IstateEnemyBomb.h" />
+    <ClInclude Include="Project\GameObject\EnemyBomb\state\StateBreakEnemyBomb.h" />
+    <ClInclude Include="Project\GameObject\EnemyBomb\state\StateMoveEnemyBomb.h" />
+    <ClInclude Include="Project\GameObject\StartCount\StartCount.h">
+      <Filter>Project\GameObject\StartCount</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

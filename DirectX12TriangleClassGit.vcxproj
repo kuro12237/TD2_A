@@ -95,6 +95,7 @@
     <ClCompile Include="Project\GameObject\ShamWall\State\CalcGreen.cpp" />
     <ClCompile Include="Project\GameObject\ShamWall\State\CalcRed.cpp" />
     <ClCompile Include="Project\GameObject\Skydome\Skydome.cpp" />
+    <ClCompile Include="Project\GameObject\StartCount\StartCount.cpp" />
     <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp" />
     <ClCompile Include="Project\GameObject\Camera\MainCamera.cpp" />
     <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Project\GameObject\ShamWall\State\CalcRed.h" />
     <ClInclude Include="Project\GameObject\ShamWall\State\WallColorState.h" />
     <ClInclude Include="Project\GameObject\Skydome\Skydome.h" />
+    <ClInclude Include="Project\GameObject\StartCount\StartCount.h" />
     <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h" />
     <ClInclude Include="Project\GameObject\Camera\MainCamera.h" />
     <ClInclude Include="Project\GameObject\Enemy\Enemy.h" />
