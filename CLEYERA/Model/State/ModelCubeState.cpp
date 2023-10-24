@@ -35,20 +35,20 @@ void ModelCubeState::Draw(Model* state, WorldTransform worldTransform, ViewProje
 	float size = state->GetSize();
 
 	vertexData[0].position = { pos.x - size,pos.y-size,pos.z+size,pos.w };
-	vertexData[0].texcoord = { 1.0f,1.0f };
+	vertexData[0].texcoord = { 0.0f,1.0f };
 	vertexData[0].normal = { 0.0f,1.0f,0.0f };
 	//20
 	//31
 	vertexData[1].position = { pos.x + size,pos.y-size,pos.z + size,pos.w };
-	vertexData[1].texcoord = { 1.0f,0.0f };
+	vertexData[1].texcoord = { 1.0f,1.0f };
 	vertexData[1].normal = { 0.0f,1.0f,0.0f };
 
 	vertexData[2].position = { pos.x + size,pos.y+size,pos.z + size,pos.w };
-	vertexData[2].texcoord = { 0.0f,1.0f };
+	vertexData[2].texcoord = { 1.0f,0.0f };
 	vertexData[2].normal = { 0.0f,1.0f,0.0f };
 
 	vertexData[3].position = { pos.x - size,pos.y+size,pos.z + size,pos.w };
-	vertexData[3].texcoord = { 1.0f,0.0f };
+	vertexData[3].texcoord = { 0.0f,0.0f };
 	vertexData[3].normal = { 0.0f,1.0f,0.0f };
 
 	//64
@@ -58,11 +58,11 @@ void ModelCubeState::Draw(Model* state, WorldTransform worldTransform, ViewProje
 	vertexData[4].normal = { 0.0f,1.0f,0.0f };
 	
 	vertexData[5].position = { pos.x + size,pos.y + size,pos.z - size,pos.w };
-	vertexData[5].texcoord = { 1.0f,1.0f };
+	vertexData[5].texcoord = { 0.0f,1.0f };
 	vertexData[5].normal = { 0.0f,1.0f,0.0f };
 
 	vertexData[6].position = { pos.x + size,pos.y - size,pos.z - size,pos.w };
-	vertexData[6].texcoord = { 0.0f,0.0f };
+	vertexData[6].texcoord = { 1.0f,1.0f };
 	vertexData[6].normal = { 1.0f,1.0f,0.0f };
 
 	vertexData[7].position = { pos.x - size,pos.y - size,pos.z - size,pos.w };
@@ -78,20 +78,13 @@ void ModelCubeState::Draw(Model* state, WorldTransform worldTransform, ViewProje
 	indexData[12] = 0; indexData[13] = 4; indexData[14] = 7;
 	indexData[15] = 3; indexData[16] = 4; indexData[17] = 0;
 
-
     indexData[18] = 0; indexData[19] = 7; indexData[20] = 6;
 	indexData[21] = 1; indexData[22] = 0; indexData[23] = 6;
 
 	indexData[24] = 5; indexData[25] = 3; indexData[26] = 2;
 	indexData[27] = 4; indexData[28] = 3; indexData[29] = 5;
-	//3
-
-	indexData[30] = 5; indexData[31] = 2; indexData[32] = 6;
-
-	//indexData[24] = 3; indexData[25] = 2; indexData[26] = 6;
-	//indexData[27] = 3; indexData[28] = 6; indexData[29] = 7;
 	
-	//indexData[30] = 0; indexData[31] = 1; indexData[32] = 5;
+	indexData[30] = 5; indexData[31] = 2; indexData[32] = 6;
 	indexData[33] = 2; indexData[34] = 1; indexData[35] = 6;
 
 	worldTransform.TransfarMatrix(resource_.wvpResource, viewprojection);

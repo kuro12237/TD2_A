@@ -21,9 +21,7 @@ void EnemyBomb::Initialize(Vector3 position, uint32_t texHandle)
 void EnemyBomb::Update()
 {
 	SetRadious(Radious);
-	ImGui::Begin("t");
-	ImGui::Text("%f", Radious);
-	ImGui::End();
+	
 	state_->Move(worldTransform_, this);
 	
 	worldTransform_.UpdateMatrix();
@@ -45,13 +43,13 @@ Vector3 EnemyBomb::GetWorldPosition()
 
 void EnemyBomb::OnCollision()
 {
-
+	ChangeState(new StateBreakEnemyBomb);
 
 }
 
 Vector3 EnemyBomb::GetVelocity()
 {
-	return Vector3();
+	return { 0.1f,0.1f,0.1f };
 }
 
 void EnemyBomb::ChangeState(IstateEnemyBomb* state)

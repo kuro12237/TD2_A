@@ -88,16 +88,10 @@ void GameScene::Update(GameManager* scene)
 	if (!TransitionProcess::Fade_Out()) {
 		return;
 	}
-
-	bool flag = false;
-	ImGui::Begin("d");
-	ImGui::Checkbox("e", &flag);
-	ImGui::End();
-
-	if (flag)
+	if (player_->GetHitFlag())
 	{
 		hitparticle_->Spown(player_->GetWorldTransform().translate);
-		MainCamera::SetIsShake(flag);
+		MainCamera::SetIsShake(true);
 	}
 
 	Score::Update();
@@ -177,10 +171,9 @@ void GameScene::Object3dDraw()
 
 void GameScene::Flont2dSpriteDraw()
 {
-	//timeCount_->Draw();
+	timeCount_->Draw();
 	Score::Draw();
-	//testSprite->Draw(testSpriteWorldTransform);
-
+	
 	TransitionProcess::Draw();
 }
 
@@ -194,9 +187,9 @@ void GameScene::Collision()
 		collisionManager_->ClliderPush(enemy.get());
 	}
 	
-	//for (shared_ptr<EnemyBomb>& enemy : enemyBombManager->GetEnemys())
+	for (shared_ptr<EnemyBomb>& enemy : enemyBombManager->GetEnemys())
 	{
-		//collisionManager_->ClliderPush(enemy.get());
+		collisionManager_->ClliderPush(enemy.get());
 	}
 
 	//Check
