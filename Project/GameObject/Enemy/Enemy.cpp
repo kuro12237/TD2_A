@@ -55,7 +55,6 @@ void Enemy::EnemyMove() {
 		else {
 			worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, speed_);
 		}
-    
 	
 }
 

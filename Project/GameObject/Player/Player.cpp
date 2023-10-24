@@ -164,9 +164,6 @@ void Player::Move()
 				HitVelo = VectorTransform::Normalize(HitVelo);
 				Velocity = HitVelo;
 				isMove_ = false;
-				if (!isMove_) {
-
-				}
 			}
 			
 		
@@ -175,7 +172,7 @@ void Player::Move()
 	// ここまで ↑
 
 	//摩擦
-	//FancFrictionCoefficient();
+	FancFrictionCoefficient();
 	//加算処理
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
 
