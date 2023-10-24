@@ -108,6 +108,15 @@ Vector3 Player::GetWorldPosition()
 	return result;
 }
 
+Vector3 Player::GetVelocity()
+{
+	Vector3 result;
+	result.x = Velocity.x;
+	result.y = Velocity.y;
+	result.z = Velocity.z;
+	return result;
+}
+
 void Player::Move()
 {
 	if (Input::GetInstance()->PushKey(DIK_A)){

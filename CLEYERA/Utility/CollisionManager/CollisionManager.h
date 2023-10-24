@@ -1,5 +1,6 @@
 #pragma once
 #include"./Collider/Collider.h"
+#include "math/VectorTransform.h"
 #include"Pch.h"
 
 class CollisionManager {
@@ -13,7 +14,7 @@ public:
 
 private:
 	void CheckCollisionPair(Collider* cA, Collider* cB);
-	bool CheckBallCollosion(Vector3 v1, float v1Radious, Vector3 v2, float v2Radious);
+	bool CheckBallCollosion(Vector3 v1, float v1Radius, Vector3 velo, Vector3 v2, float v2Radius, Vector3 velo2, float frameTime);
 
 	std::list<Collider*> colliders_;
 };

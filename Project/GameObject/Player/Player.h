@@ -36,6 +36,7 @@ public:
 #pragma region get
 
 	Vector3 GetWorldPosition()override;
+	Vector3 GetVelocity()override;
 
 
 	const WorldTransform &GetWorldTransform()const { return worldTransform_; }

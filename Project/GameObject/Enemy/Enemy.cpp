@@ -64,6 +64,15 @@ Vector3 Enemy::GetWorldPosition() {
 	return WorldPos;
 }
 
+Vector3 Enemy::GetVelocity()
+{
+	Vector3 result;
+	result.x = speed_.x;
+	result.y = speed_.y;
+	result.z = speed_.z;
+	return result;
+}
+
 void Enemy::OnCollision(){
 	isMove_ = true;
 }

@@ -28,38 +28,47 @@ void CollisionManager::CheckCollisionPair(Collider* cA, Collider* cB) {
 	//“–‚½‚è”»’è‚ÌŒvŽZŠJŽn
 	Vector3 cApos = cA->GetWorldPosition();
 	Vector3 cBpos = cB->GetWorldPosition();
+	Vector3 cAvelo = cA->GetVelocity();
+	Vector3 cBvelo = cB->GetVelocity();
 
 	float cAradious = cA->GetRadious();
 	float cBradious = cB->GetRadious();
 
-	if (CheckBallCollosion(cApos, cAradious, cBpos, cBradious)) {
+	if (CheckBallCollosion(cApos, cAradious,cAvelo, cBpos, cBradious,cBvelo,1.0f / 60.0f)) {
 		cA->OnCollision();
 		cB->OnCollision();
 	}
 }
 
 
-bool CollisionManager::CheckBallCollosion(Vector3 v1, float v1Radious, Vector3 v2, float v2Radious) {
-	//float t;
-
-	float x = (v2.x - v1.x);
-	float y = (v2.y - v1.y);
-	float z = (v2.z - v1.z);
-
-	float resultPos = (x * x) + (y * y) + (z * z);
-
-	float resultRadious = v1Radious + v2Radious;
-
-	bool Flag = false;
-
+bool CollisionManager::CheckBallCollosion(Vector3 v1, float v1Radius, Vector3 velo, Vector3 v2, float v2Radius, Vector3 velo2, float frameTime) {
 	
+	Vector3 newPos1 = VectorTransform::Add(v1, VectorTransform::Multiply(velo, frameTime));
+	Vector3 newPos2 = VectorTransform::Add(v2, VectorTransform::Multiply(velo2, frameTime));
 
-	if (resultPos <= (resultRadious * resultRadious)) {
-		
-		Flag = true;
+
+	Vector3 relativeVelocity = VectorTransform::Subtruct( velo , velo2);
+
+	Vector3 relativePosition = VectorTransform::Subtruct(newPos1, newPos2);
+
+	float a = VectorTransform::Dot(relativeVelocity, relativeVelocity);
+	float b = 2.0f * VectorTransform::Dot(relativeVelocity ,relativePosition);
+	float c = VectorTransform::Dot(relativePosition ,relativePosition) - (v1Radius + v2Radius) * (v1Radius + v2Radius);
+
+	float discriminant = b * b - 4.0f * a * c;
+
+	bool collision = false;
+
+	if (discriminant > 0) {
+		float t = (-b - sqrt(discriminant)) / (2.0f * a);
+
+		if (t >= 0.0f && t <= 1.0f) {
+			
+			collision = true;
+		}
 	}
 
-	return Flag;
+	return collision;
 }
 
 

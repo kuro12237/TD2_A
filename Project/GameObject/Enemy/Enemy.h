@@ -35,6 +35,7 @@ public:
 	void EnemyMove();
 
 	Vector3 GetWorldPosition()override;
+	Vector3 GetVelocity()override;
 
 	void SetPlayer(Player* player) { player_ = player; }
 
