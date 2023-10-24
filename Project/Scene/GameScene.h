@@ -18,6 +18,7 @@
 #include "GameObject/ShamWall/ShamWall.h"
 #include "GameObject/Skydome/Skydome.h"
 #include "GameObject/MapGround/MapGround.h"
+#include <iostream>
 
 
 class GameScene : public IScene

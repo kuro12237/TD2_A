@@ -33,6 +33,7 @@ public:
 	void Draw(ViewProjection viewProjection);
 
 	void EnemyMove();
+	void RandomMove();
 
 	Vector3 GetWorldPosition()override;
 
@@ -57,6 +58,13 @@ private:
 	tuple<Vector3, Vector3> velocity_ = {};
 	Vector3 speed_ = {};
 	Vector3 playerVelo_;
+	const float gravity_ = 9.8f;
+	const float fallSpeed_ = 1.0f;
+	int count_ = 0;
+	//Vector3 randomSpeed = {};
+	int randomX = 0;
+	int randomZ = 0;
+	float dt = 1.0f / 60.0f;
 	float angle = 0;
 	float angle2 = 0;
 	Player* player_ = nullptr;
