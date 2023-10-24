@@ -154,11 +154,11 @@
     <Filter Include="Project\GameObject\MapGround">
       <UniqueIdentifier>{0e7ca6a5-158f-494d-adcb-a7d8f1f1dc40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Project\GameObject\EnemyBomb">
-      <UniqueIdentifier>{516a66c8-fb1d-4ba1-8089-dd7308005f86}</UniqueIdentifier>
+    <Filter Include="CLEYERA\math\PerlinNoise">
+      <UniqueIdentifier>{b4848b44-4792-43c6-9986-2b4ddf306c9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CLEYERA\Model\Cube">
-      <UniqueIdentifier>{8810be34-4844-4645-b40b-5561d87b3a2b}</UniqueIdentifier>
+    <Filter Include="Project\GameObject\ShamWall\State">
+      <UniqueIdentifier>{872faede-5097-4797-b96e-3f3d3e3ea16b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -349,14 +349,17 @@
     <ClCompile Include="Project\GameObject\MapGround\MapGround.cpp">
       <Filter>Project\GameObject\MapGround</Filter>
     </ClCompile>
-    <ClCompile Include="Project\GameObject\EnemyBomb\EnemyBomb.cpp" />
-    <ClCompile Include="Project\GameObject\EnemyBomb\state\stateMoveEnemyBomb.cpp" />
-    <ClCompile Include="Project\GameObject\EnemyBomb\state\StateBreakEnemyBomb.cpp" />
-    <ClCompile Include="Project\GameObject\EnemyBomb\EnemyBombManager.cpp">
-      <Filter>Project\GameObject\EnemyBomb</Filter>
+    <ClCompile Include="CLEYERA\math\PerlinNoise\PerlinNoise.cpp">
+      <Filter>CLEYERA\math\PerlinNoise</Filter>
     </ClCompile>
-    <ClCompile Include="CLEYERA\Model\State\ModelCubeState.cpp">
-      <Filter>CLEYERA\Model\Cube</Filter>
+    <ClCompile Include="Project\GameObject\ShamWall\State\CalcBlue.cpp">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\ShamWall\State\CalcRed.cpp">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\ShamWall\State\CalcGreen.cpp">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -582,15 +585,20 @@
     <ClInclude Include="Project\GameObject\MapGround\MapGround.h">
       <Filter>Project\GameObject\MapGround</Filter>
     </ClInclude>
-    <ClInclude Include="Project\GameObject\EnemyBomb\EnemyBomb.h" />
-    <ClInclude Include="Project\GameObject\EnemyBomb\state\IstateEnemyBomb.h" />
-    <ClInclude Include="Project\GameObject\EnemyBomb\state\StateMoveEnemyBomb.h" />
-    <ClInclude Include="Project\GameObject\EnemyBomb\state\StateBreakEnemyBomb.h" />
-    <ClInclude Include="Project\GameObject\EnemyBomb\EnemyBombManager.h">
-      <Filter>Project\GameObject\EnemyBomb</Filter>
+    <ClInclude Include="CLEYERA\math\PerlinNoise\PerlinNoise.h">
+      <Filter>CLEYERA\math\PerlinNoise</Filter>
     </ClInclude>
-    <ClInclude Include="CLEYERA\Model\State\ModelCubeState.h">
-      <Filter>CLEYERA\Model\Cube</Filter>
+    <ClInclude Include="Project\GameObject\ShamWall\State\CalcBlue.h">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\ShamWall\State\CalcGreen.h">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\ShamWall\State\CalcRed.h">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\ShamWall\State\WallColorState.h">
+      <Filter>Project\GameObject\ShamWall\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

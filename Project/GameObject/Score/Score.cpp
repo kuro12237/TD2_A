@@ -66,6 +66,13 @@ void Score::Update() {
 
 	Score::CalcScorePlace(Score::GetInstance()->acquisitionScore_);
 	Score::SetSrc();
+
+	ImGui::Begin("sukoa");
+	ImGui::DragFloat3("scale1", &Score::GetInstance()->scoreWorldTransform_[0].scale.x, 0.01f);
+	ImGui::DragFloat3("scale2", &Score::GetInstance()->scoreWorldTransform_[1].scale.x, 0.01f);
+	ImGui::DragFloat3("scale3", &Score::GetInstance()->scoreWorldTransform_[2].scale.x, 0.01f);
+	ImGui::DragFloat3("scale4", &Score::GetInstance()->scoreWorldTransform_[3].scale.x, 0.01f);
+	ImGui::End();
 }
 
 

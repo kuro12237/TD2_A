@@ -20,13 +20,12 @@ void Skydome::Update() {
 	skydome_.worldTansform.UpdateMatrix();
 	skydome_.worldTansform.scale = { initScale_,initScale_, initScale_ };
 
+	skydome_.worldTansform.rotation.x -= 0.0005f;
+	skydome_.worldTansform.rotation.y += 0.0005f;
+	skydome_.worldTansform.rotation.z += 0.0005f;
 
-	ImGui::Begin("Skydome");
-
-	ImGui::DragFloat("scale", &initScale_, 0.05f);
-	ImGui::DragFloat3("rotate", &skydome_.worldTansform.rotation.x, 0.05f);
-	ImGui::DragFloat3("translate", &skydome_.worldTansform.translate.x, 0.05f);
-	ImGui::End();
+	float time = float(clock() / 1000.0);
+	skydome_.model->SetColor(CalculateColorGradient(time));
 }
 
 
@@ -35,4 +34,17 @@ void Skydome::Update() {
 void Skydome::Draw(ViewProjection view) {
 
 	skydome_.model->Draw(skydome_.worldTansform, view);
+}
+
+
+
+
+// グラデーションする処理
+Vector4 Skydome::CalculateColorGradient(float time) {
+	Vector4 color{};
+	color.x = 0.5f + 0.5f * std::sin(0.7f * time);
+	color.y = 0.5f + 0.5f * std::sin(0.7f * time + 2.0f);
+	color.z = 0.5f + 0.5f * std::sin(0.7f * time + 4.0f);
+	color.w = 1.0f;
+	return color;
 }

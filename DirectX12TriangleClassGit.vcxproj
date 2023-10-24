@@ -61,6 +61,7 @@
     <ClCompile Include="CLEYERA\Graphics\TextureManager\TextureManager.cpp" />
     <ClCompile Include="CLEYERA\Input\Input.cpp" />
     <ClCompile Include="CLEYERA\math\MatrixTransform.cpp" />
+    <ClCompile Include="CLEYERA\math\PerlinNoise\PerlinNoise.cpp" />
     <ClCompile Include="CLEYERA\math\VectorTransform.cpp" />
     <ClCompile Include="CLEYERA\Model\Model.cpp" />
     <ClCompile Include="CLEYERA\Model\State\ModelCubeState.cpp" />
@@ -90,6 +91,9 @@
     <ClCompile Include="Project\GameObject\Player\PlayerParticle.cpp" />
     <ClCompile Include="Project\GameObject\Score\Score.cpp" />
     <ClCompile Include="Project\GameObject\ShamWall\ShamWall.cpp" />
+    <ClCompile Include="Project\GameObject\ShamWall\State\CalcBlue.cpp" />
+    <ClCompile Include="Project\GameObject\ShamWall\State\CalcGreen.cpp" />
+    <ClCompile Include="Project\GameObject\ShamWall\State\CalcRed.cpp" />
     <ClCompile Include="Project\GameObject\Skydome\Skydome.cpp" />
     <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp" />
     <ClCompile Include="Project\GameObject\Camera\MainCamera.cpp" />
@@ -131,6 +135,7 @@
     <ClInclude Include="CLEYERA\math\Matrix3x3.h" />
     <ClInclude Include="CLEYERA\math\Matrix4x4.h" />
     <ClInclude Include="CLEYERA\math\MatrixTransform.h" />
+    <ClInclude Include="CLEYERA\math\PerlinNoise\PerlinNoise.h" />
     <ClInclude Include="CLEYERA\math\Vector2.h" />
     <ClInclude Include="CLEYERA\math\Vector3.h" />
     <ClInclude Include="CLEYERA\math\Vector4.h" />
@@ -171,6 +176,10 @@
     <ClInclude Include="Project\GameObject\Player\PlayerParticle.h" />
     <ClInclude Include="Project\GameObject\Score\Score.h" />
     <ClInclude Include="Project\GameObject\ShamWall\ShamWall.h" />
+    <ClInclude Include="Project\GameObject\ShamWall\State\CalcBlue.h" />
+    <ClInclude Include="Project\GameObject\ShamWall\State\CalcGreen.h" />
+    <ClInclude Include="Project\GameObject\ShamWall\State\CalcRed.h" />
+    <ClInclude Include="Project\GameObject\ShamWall\State\WallColorState.h" />
     <ClInclude Include="Project\GameObject\Skydome\Skydome.h" />
     <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h" />
     <ClInclude Include="Project\GameObject\Camera\MainCamera.h" />

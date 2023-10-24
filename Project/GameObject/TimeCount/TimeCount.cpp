@@ -65,6 +65,7 @@ void TimeCount::Initialize() {
 	timeUpUISprite_->SetTexHandle(timeUpUITextureHD_);
 	// ワールドトランスフォーム
 	timeUpUIWorldTransform_.Initialize();
+	timeUpUIWorldTransform_.scale = { 2.0f, 3.0f, 1.0f };
 
 #pragma endregion
 }
