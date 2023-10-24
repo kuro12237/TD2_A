@@ -111,6 +111,7 @@ void GameScene::Update(GameManager* scene)
 
 	player_->SetEnemy(enemys_);
 	for (shared_ptr<Enemy>& enemy : enemys_) {
+		enemy->RandomMove();
 		enemy->SetPlayer(player_.get());
 		enemy->Update();
 	}

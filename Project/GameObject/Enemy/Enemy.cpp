@@ -15,7 +15,7 @@ void Enemy::Initialize(const Vector3& position) {
 	worldTransform_.translate = position;
 	isMove_ = false;
 	worldTransform_.UpdateMatrix();
-
+	srand(static_cast<unsigned>(time(nullptr)));
 	SetCollosionAttribute(kCollisionAttributeEnemy);
 	SetCollisionMask(kCollisionAttributePlayer);
 }
@@ -26,6 +26,7 @@ void Enemy::Initialize(const Vector3& position) {
 void Enemy::Update() {
 
 	EnemyMove();
+	RandomMove();
 	worldTransform_.UpdateMatrix();
 }
 
@@ -38,6 +39,16 @@ void Enemy::Draw(ViewProjection viewProjection){
 }
 
 void Enemy::EnemyMove() {
+
+
+
+	if (worldTransform_.translate.y >= 0.6f) {
+		worldTransform_.translate.y -= (fallSpeed_ * gravity_) * dt;
+	}
+	else if (worldTransform_.translate.y >= 0.6) {
+		worldTransform_.translate.y = 0.5f;
+	}
+
 
 	playerPos_ = player_->GetWorldPosition();
 	angle = atan2((worldTransform_.translate.z - playerPos_.z), (worldTransform_.translate.x - playerPos_.x));
@@ -56,6 +67,26 @@ void Enemy::EnemyMove() {
 			worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, speed_);
 		}
 	
+}
+
+void Enemy::RandomMove(){
+
+	randomX = -10 + rand() % (10 - (-1 + 10));
+	randomZ = -10 + rand() % (10 - (-1 + 10));
+	
+
+	++count_;
+	if (count_ >= 480) {
+		worldTransform_.translate.x += randomX;
+		worldTransform_.translate.z += randomZ;
+	}
+
+	if (count_ >= 482) {
+		randomX = 0;
+		randomZ = 0;
+		count_ = 0;
+	}
+
 }
 
 Vector3 Enemy::GetWorldPosition() {
