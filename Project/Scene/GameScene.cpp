@@ -55,8 +55,9 @@ void GameScene::Initialize()
 	hitparticle_ = make_unique<HitParticle>();
 	hitparticle_->Initialize();
 
-	testEnemyBomb = make_unique<EnemyBomb>();
-	testEnemyBomb->Initialize({ 0,0.5f,0 });
+	enemyBombManager = make_unique<EnemyBombManager>();
+	enemyBombManager->Initialize();
+
 }
 
 void GameScene::Update(GameManager* scene)
@@ -115,10 +116,10 @@ void GameScene::Update(GameManager* scene)
 		enemy->Update();
 	}
 
-	player_->Update();
 
-	testEnemyBomb->SetPlayer(player_.get());
-	testEnemyBomb->Update();
+	enemyBombManager->Update(player_.get());
+	
+	player_->Update();
 	
 	hitparticle_->Update();
 
@@ -161,7 +162,9 @@ void GameScene::Object3dDraw()
 	mapGround_->Draw(viewProjection);
 
 	player_->Draw(viewProjection);
-	testEnemyBomb->Draw(viewProjection);
+	enemyBombManager->Draw(viewProjection);
+
+
 	// 敵
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		enemy->Draw(viewProjection);
@@ -188,6 +191,10 @@ void GameScene::Collision()
 	collisionManager_->ClliderPush(player_.get());
 
 	for (shared_ptr<Enemy>& enemy : enemys_) {
+		collisionManager_->ClliderPush(enemy.get());
+	}
+	for (shared_ptr<EnemyBomb>& enemy : enemyBombManager->GetEnemys())
+	{
 		collisionManager_->ClliderPush(enemy.get());
 	}
 
