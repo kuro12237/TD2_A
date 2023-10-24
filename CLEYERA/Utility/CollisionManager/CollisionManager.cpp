@@ -59,6 +59,11 @@ bool CollisionManager::CheckBallCollosion(Vector3 v1, float v1Radius, Vector3 ve
 
 	bool collision = false;
 
+	if (VectorTransform::Dot(relativeVelocity, relativePosition) > 0) {
+
+		return false;
+	}
+
 	if (discriminant > 0) {
 		float t = (-b - sqrt(discriminant)) / (2.0f * a);
 

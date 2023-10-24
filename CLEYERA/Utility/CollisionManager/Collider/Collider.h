@@ -24,7 +24,7 @@ private:
 	//‘ŠŽè
 	uint32_t CollisionMask_ = 0xffffffff;
 
-	float radious_ = 0.5f;
+	float radious_ = 0.7f;
 
 	Vector3 namingLerp_ = {};
 };

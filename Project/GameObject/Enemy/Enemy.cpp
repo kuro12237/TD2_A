@@ -49,7 +49,6 @@ void Enemy::EnemyMove() {
 		velocity_ = PhysicsFunc::SpeedComposition(playerPos_, worldTransform_.translate, angle, angle2);
 		speed_ = get<1>(velocity_);
 		speed_ = VectorTransform::Normalize(speed_);
-
 		isMove_ = false;
 	}
 
