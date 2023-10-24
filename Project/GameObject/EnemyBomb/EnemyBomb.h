@@ -1,15 +1,17 @@
 #pragma once
 #include"Model.h"
 #include"state/StateMoveEnemyBomb.h"
+#include"state/StateBreakEnemyBomb.h"
 #include"GameObject/Player/Player.h"
 
-class EnemyBomb
+
+class EnemyBomb: public Collider
 {
 public:
 	EnemyBomb() {};
 	~EnemyBomb() { delete state_; }
 
-	void Initialize(Vector3 position);
+	void Initialize(Vector3 position,uint32_t texHandle);
 
 	void SetPlayer(Player* player) { player_ = player; }
 
@@ -17,10 +19,20 @@ public:
 
 	void Draw(ViewProjection view);
 
-	Player* GetPlayer() { return player_; }
+	Vector3 GetWorldPosition()override;
+	void OnCollision()override;
 
+	void SetIsDead(bool f) { IsDead = f; }
+	bool GetIsDead() { return IsDead; }
+
+	void ChangeState(IstateEnemyBomb* state);
+	void SetModelRadious(float r) { Radious += r; }
+	float GetModelRadions() {return Radious; }
+
+	void SetModelColor(Vector4 c) { model->SetColor(c);}
+
+	Player* GetPlayer() { return player_; }
 	Vector3 GetPlayerTranslate() { return player_->GetWorldPosition(); }
-	Vector3 GetVelocity() { return velocity_; }
 private:
 
 	IstateEnemyBomb* state_ = nullptr;
@@ -30,9 +42,10 @@ private:
 
 	unique_ptr<Model>model = nullptr;
 	uint32_t texHandle = 0;
-	Vector3 velocity_ = {};
-	uint32_t LerpTime = 0;
+	
+	bool IsDead = false;
 
+	float Radious = 0.5f;
 };
 
 

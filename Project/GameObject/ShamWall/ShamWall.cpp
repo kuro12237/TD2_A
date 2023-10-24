@@ -1,7 +1,5 @@
 #include "ShamWall.h"
 
-
-
 // ‰Šú‰»ˆ—
 void ShamWall::Initialize() {
 
@@ -11,8 +9,6 @@ void ShamWall::Initialize() {
 	shamWall_.worldTansform.Initialize();
 	shamWall_.worldTansform.scale = initScale_;
 }
-
-
 
 // XVˆ—
 void ShamWall::Update() {
@@ -28,8 +24,6 @@ void ShamWall::Update() {
 	ImGui::ColorEdit4("color", &modelColor_.x);
 	ImGui::End();
 }
-
-
 
 // •`‰æˆ—
 void ShamWall::Draw(ViewProjection view) {
