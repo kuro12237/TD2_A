@@ -34,11 +34,34 @@ public:
 	void Draw(ViewProjection viewProjection);
 
 
+
+	/// <summary>
+	/// グラデーションする処理
+	/// </summary>
+	Vector4 CalculateColorGradient(float time);
+
+
+
+	/// <summary>
+	/// RGBを求める
+	/// </summary>
+	Vector3 CalcRGB(Vector4 color);
+
+	/// <summary>
+	/// RGBAを求める
+	/// </summary>
+	Vector4 CalcRGBA(Vector3 color);
+
+
 private:
 
 	SkydomeElemnt skydome_;
 
-	float initScale_ = 70.0f;
+	float initScale_ = 7000.0f;
 
 	Vector4 modelColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+
+	// RGBカラー
+	Vector3 color_;
 };
