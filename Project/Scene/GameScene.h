@@ -65,6 +65,9 @@ private:
 	unique_ptr<Skydome>skydome_ = nullptr;
 	unique_ptr<MapGround>mapGround_ = nullptr;
 
+
+	bool isGame_;
+	int startGameSceneTimer_;
 };
 
 

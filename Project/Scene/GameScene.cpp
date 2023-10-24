@@ -16,14 +16,16 @@ void GameScene::Initialize()
 	timeCount_->Initialize();
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
+	// 天球
+	skydome_ = make_unique<Skydome>();
+	skydome_->Initialize();
+
 	//// フェードの処理
 	TransitionProcess::Initialize();
 	//// フェードに使う画像の設定
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetTexHandle(useFade_BG);
 	//// 色を黒くしておく
-	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
-	//// フェードが明ける処理
-	TransitionProcess::Fade_Out_Init();
+	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
 
 	//// スコア
 	Score::Initialize();
@@ -43,10 +45,6 @@ void GameScene::Initialize()
 	shamWall_ = make_unique<ShamWall>();
 	shamWall_->Initialize();
 
-	// 天球
-	skydome_ = make_unique<Skydome>();
-	skydome_->Initialize();
-
 	// 床
 	mapGround_ = make_unique<MapGround>();
 	mapGround_->Initialize();
@@ -58,6 +56,8 @@ void GameScene::Initialize()
 	enemyBombManager = make_unique<EnemyBombManager>();
 	enemyBombManager->Initialize();
 
+	isGame_ = true;
+	TransitionProcess::Fade_Out_Init();
 }
 
 void GameScene::Update(GameManager* scene)
@@ -65,88 +65,145 @@ void GameScene::Update(GameManager* scene)
 	scene;
 	DebugTools::UpdateExecute(0);
 	//DebugTools::UpdateExecute(1);
+	if (Input::GetInstance()->PushKeyPressed(DIK_5))
+	{
+		Score::AddScore(100);
+	}
 
-	// フェードが明ける処理
+
+	//if (!isGame_)
+	//{
+	//	startGameSceneTimer_++;
+
+	//	if (startGameSceneTimer_ >= 120) {
+	//		isGame_ = true;
+	//		//TransitionProcess::Fade_Out_Init();
+	//	}
+	//}
+
+
+	///// ゲームの処理に入る
+	if (isGame_) {
+
+		if (TransitionProcess::Fade_Out()) {
+
+			// シェイク
+			bool flag = false;
+			ImGui::Begin("d");
+			ImGui::Checkbox("e", &flag);
+			ImGui::End();
+
+			if (flag)
+			{
+				hitparticle_->Spown(player_->GetWorldTransform().translate);
+				MainCamera::SetIsShake(flag);
+			}
+
+
+			/* ---------- プレイヤー ---------- */
+
+			// プレイヤーの更新処理
+			player_->Update();
+
+			// プレイヤーにエネミーを送る 
+			player_->SetEnemy(enemys_);
+
+			// プレイヤーのスコアの処理
+			Score::Update();
+			player_->SetEnemy(enemys_);
+
+			// 多分プレイヤーのパーティクル
+			hitparticle_->Update();
+
+
+
+			/* ---------- エネミー ---------- */
+
+			// エネミーの更新処理諸々
+			for (shared_ptr<Enemy>& enemy : enemys_) {
+				enemy->RandomMove();
+				enemy->SetPlayer(player_.get());
+				enemy->Update();
+			}
+
+			// これは何かしらん
+			enemyBombManager->Update(player_.get());
+
+			// これも何か知らん
+			EnemyReset();
+
+			// 多分CSV読んでエネミーをリスさせてる
+			UpdateEnemyCommands();
+
+
+
+			/* ---------- 壁 --------- */
+
+			//マップの壁との当たり判定
+			MapWallCollision();
+
+			//壁のupdate
+			mapWallManager_->Update();
+			shamWall_->Update();
+
+
+
+			/* ---------- 床 --------- */
+
+			// 床の更新処理
+			mapGround_->Updatea();
+
+
+
+			/* ---------- 天球 --------- */
+
+			// 天球の更新処理
+			skydome_->Update();
+
+
+
+			/* ---------- 制限時間 --------- */
+
+			// 制限時間の処理
+			timeCount_->Update();
+			// 時間切れ時の処理
+			if (timeCount_->GetIsTimeUp())
+			{
+				if (Input::GetInstance()->PushKeyPressed(DIK_SPACE))
+				{
+					TransitionProcess::Fade_In_Init();
+				}
+			}
+
+
+
+			/* ---------- 当たり判定 --------- */
+
+			//当たり判定
+			Collision();
+		}
+	}
+
+
+
+	/* ---------- フェード---------- */
+
+	// フェードが入る処理
 	TransitionProcess::Fade_In();
-	TransitionProcess::Fade_Out();
-
-	// フェードが明けたらゲーム処理に入る
-	if (!TransitionProcess::Fade_Out()) {
+	// フェードに入り終わったらシーンチェンジ
+	if (TransitionProcess::Fade_In()) {
+		scene->ChangeState(new ResultScene);
 		return;
 	}
 
-	bool flag = false;
-	ImGui::Begin("d");
-	ImGui::Checkbox("e", &flag);
-	ImGui::End();
-
-	if (flag)
-	{
-		hitparticle_->Spown(player_->GetWorldTransform().translate);
-		MainCamera::SetIsShake(flag);
-	}
-
-	Score::Update();
-	timeCount_->Update();
-	// 時間切れ時の処理
-	if (timeCount_->GetIsTimeUp())
-	{
-		// フェードイン
-		//TransitionProcess::Fade_In_Init();
-	}
-
-	player_->SetEnemy(enemys_);
-	for (shared_ptr<Enemy>& enemy : enemys_) {
-		enemy->RandomMove();
-		enemy->SetPlayer(player_.get());
-		enemy->Update();
-	}
 
 
-	enemyBombManager->Update(player_.get());
-	
-	player_->Update();
-	
-	hitparticle_->Update();
-
-	EnemyReset();
-
-	UpdateEnemyCommands();
-	//マップの壁との当たり判定
-	MapWallCollision();
-	//壁のupdate
-	mapWallManager_->Update();
-	shamWall_->Update();
-	
-	// 天球
-	skydome_->Update();
-
-	// 床
-	mapGround_->Updatea();
-
-	//当たり判定
-	Collision();
 	//カメラ
 	MainCamera::Update(player_->GetWorldTransform());
 
 	viewProjection.UpdateMatrix();
 	viewProjection = MainCamera::GetViewProjection();
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
-
-
-	if (Input::GetInstance()->PushKeyPressed(DIK_9))
-	{
-		TransitionProcess::Fade_In_Init();
-	}
-	if (Input::GetInstance()->PushKeyPressed(DIK_5))
-	{
-		Score::AddScore(100);
-	}
-	// フェードの処理が終わったらシーン遷移
-	if (TransitionProcess::Fade_In()) {
-		scene->ChangeState(new ResultScene);
-		return;
-	}
 }
 
 void GameScene::Back2dSpriteDraw()
@@ -178,10 +235,10 @@ void GameScene::Object3dDraw()
 
 void GameScene::Flont2dSpriteDraw()
 {
-	timeCount_->Draw();
-	Score::Draw();
-	//testSprite->Draw(testSpriteWorldTransform);
-
+	if (TransitionProcess::Fade_Out()) {
+		Score::Draw();
+		timeCount_->Draw();
+	}
 	TransitionProcess::Draw();
 }
 

@@ -79,11 +79,13 @@ private:
 	unique_ptr<Sprite>timeCountSprite_[3];
 	unique_ptr<Sprite>timeUpUISprite_;
 	unique_ptr<Sprite>timerUIBGSprite_;
+	unique_ptr<Sprite>ASprite_;
 
 	// テクスチャ
 	uint32_t numberTexHD_{};
 	uint32_t timeUpUITextureHD_{};
 	uint32_t timerUIBGTexHD_{};
+	uint32_t ATexHD_{};
 
 	// テクスチャカラー
 	Vector4 textureColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -96,6 +98,8 @@ private:
 	WorldTransform timeUpUIWorldTransform_{};
 	Vector2 timerUIBGPosition_;
 	WorldTransform timerUIBGWorldTransform_{};
+	Vector2 APosition_;
+	WorldTransform ATransform_{};
 
 	// 制限時間
 	uint32_t nowLimitTime_ = 0;
@@ -105,5 +109,5 @@ private:
 	bool isTimeUp_ = false;
 
 	// デバッグフラグ　
-	bool isDebug_ = true;
+	bool isDebug_ = false;
 };
