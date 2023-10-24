@@ -1,60 +1,92 @@
 #include "Enemy.h"
 
 /// <summary>
-/// ‰Šú‰»
+/// 
 /// </summary>
 void Enemy::Initialize(const Vector3& position) {
 
 	model_ = make_unique<Model>();
-	model_->Initialize(new ModelSphereState);
+	model_->Initialize(new ModelCubeState);
 	texHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
 	model_->SetTexHandle(texHandle_);
 	model_->SetColor({ 1.0f,0.0f,0.0f,1.0f });
-
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
 	worldTransform_.translate = position;
 	isMove_ = false;
 	worldTransform_.UpdateMatrix();
-
+	srand(static_cast<unsigned>(time(nullptr)));
 	SetCollosionAttribute(kCollisionAttributeEnemy);
 	SetCollisionMask(kCollisionAttributePlayer);
 }
 
 /// <summary>
-/// XV
+/// 
 /// </summary>
 void Enemy::Update() {
 
 	EnemyMove();
+	RandomMove();
 	worldTransform_.UpdateMatrix();
 }
 
 /// <summary>
-/// •`‰æ
+/// 
 /// </summary>
 void Enemy::Draw(ViewProjection viewProjection){
 	model_->Draw(worldTransform_, viewProjection);
+	
 }
 
 void Enemy::EnemyMove() {
 
-	pos_ = pos2_;
+
+
+	if (worldTransform_.translate.y >= 0.6f) {
+		worldTransform_.translate.y -= (fallSpeed_ * gravity_) * dt;
+	}
+	else if (worldTransform_.translate.y >= 0.6) {
+		worldTransform_.translate.y = 0.5f;
+	}
+
+
 	playerPos_ = player_->GetWorldPosition();
-	angle = atan2((pos_.z - playerPos_.z), (pos_.x, -playerPos_.x));
-	angle2 = atan2((playerPos_.z - pos_.z), (playerPos_.x - pos_.x));
+	angle = atan2((worldTransform_.translate.z - playerPos_.z), (worldTransform_.translate.x - playerPos_.x));
+	angle2 = atan2((playerPos_.z - worldTransform_.translate.z), (playerPos_.x - worldTransform_.translate.x));
 	angle = angle * 180.0f / (float)M_PI;
 	angle2 = angle2 * 180.0f / (float)M_PI;
 
-	if (isMove_) {
-		velocity_ = PhysicsFunc::SpeedComposition(playerPos_, pos_, angle, angle2);
-		speed_ = get<1>(velocity_);
-		speed_ = VectorTransform::Normalize(speed_);
+		if (isMove_) {
+			velocity_ = PhysicsFunc::SpeedComposition(playerPos_, worldTransform_.translate, angle, angle2);
+			speed_ = get<1>(velocity_);
+			speed_ = VectorTransform::Normalize(speed_);
+			isMove_ = false;
+			
+		}
+		else {
+			worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, speed_);
+		}
+	
+}
 
-		isMove_ = false;
+void Enemy::RandomMove(){
+
+	randomX = -10 + rand() % (10 - (-1 + 10));
+	randomZ = -10 + rand() % (10 - (-1 + 10));
+	
+
+	++count_;
+	if (count_ >= 480) {
+		worldTransform_.translate.x += randomX;
+		worldTransform_.translate.z += randomZ;
 	}
 
-	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate,speed_ );
+	if (count_ >= 482) {
+		randomX = 0;
+		randomZ = 0;
+		count_ = 0;
+	}
+
 }
 
 Vector3 Enemy::GetWorldPosition() {
@@ -65,8 +97,16 @@ Vector3 Enemy::GetWorldPosition() {
 	return WorldPos;
 }
 
+Vector3 Enemy::GetVelocity()
+{
+	Vector3 result;
+	result.x = speed_.x;
+	result.y = speed_.y;
+	result.z = speed_.z;
+	return result;
+}
+
 void Enemy::OnCollision(){
-	pos2_ = VectorTransform::Add(worldTransform_.translate, GetNamingLerp());
 	isMove_ = true;
 }
 
@@ -76,7 +116,7 @@ void Enemy::OnTopWall()
 	{
 		worldTransform_.translate.z = worldTransform_.translate.z - 0.1f;
 	}
-	//velocity_.z = velocity_.z * -1;
+	speed_.z = speed_.z * -1;
 }
 
 void Enemy::OnBottomWall()
@@ -85,6 +125,7 @@ void Enemy::OnBottomWall()
 	{
 		worldTransform_.translate.z = worldTransform_.translate.z + 0.1f;
 	}
+	speed_.z = speed_.z * -1;
 	//velocity.z = velocity.z * -1;
 }
 
@@ -95,6 +136,7 @@ void Enemy::OnLeftWall()
 		worldTransform_.translate.x = worldTransform_.translate.x + 0.1f;
 	}
 	//velocity.x = velocity.x * -1;
+	speed_.x = speed_.x * -1;
 }
 
 void Enemy::OnRightWall()
@@ -103,5 +145,8 @@ void Enemy::OnRightWall()
 	{
 		worldTransform_.translate.x = worldTransform_.translate.x - 0.1f;
 	}
+
+	speed_.x = speed_.x * -1;
+	
 	//velocity.x = velocity.x * -1;
 }

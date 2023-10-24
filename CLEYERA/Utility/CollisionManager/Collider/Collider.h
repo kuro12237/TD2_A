@@ -8,6 +8,7 @@ public:
 	void SetRadious(float radious) { radious_ = radious; }
 
 	virtual Vector3 GetWorldPosition() = 0;
+	virtual Vector3 GetVelocity() = 0;
 	virtual void OnCollision() = 0;
 
 	uint32_t GetCollosionAttribute() const { return collisionAttribute_; }
@@ -16,8 +17,6 @@ public:
 	uint32_t GetCollisionMask() const { return CollisionMask_; }
 	void SetCollisionMask(uint32_t collisionMask) { CollisionMask_ = collisionMask; }
 
-	Vector3 GetNamingLerp() { return namingLerp_; }
-	void SetNamingLerp(Vector3 n) { namingLerp_ = n; }
 private:
 
 	//Ž©•ª
@@ -26,6 +25,4 @@ private:
 	uint32_t CollisionMask_ = 0xffffffff;
 
 	float radious_ = 0.5f;
-
-	Vector3 namingLerp_ = {};
 };

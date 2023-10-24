@@ -16,16 +16,16 @@ void GameScene::Initialize()
 	timeCount_->Initialize();
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
-	// フェードの処理
+	//// フェードの処理
 	TransitionProcess::Initialize();
-	// フェードに使う画像の設定
+	//// フェードに使う画像の設定
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetTexHandle(useFade_BG);
-	// 色を黒くしておく
+	//// 色を黒くしておく
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
-	// フェードが明ける処理
+	//// フェードが明ける処理
 	TransitionProcess::Fade_Out_Init();
 
-	// スコア
+	//// スコア
 	Score::Initialize();
 
 	player_ = make_unique<Player>();
@@ -51,18 +51,18 @@ void GameScene::Initialize()
 	mapGround_ = make_unique<MapGround>();
 	mapGround_->Initialize();
 
-	texHandle = TextureManager::LoadTexture("Resources/mob.png");
-	testSprite = make_unique<Sprite>();
-	testSprite->SetTexHandle(texHandle);
-	testSprite->Initialize(new SpriteBoxState, { 0,0 }, { 320,320 });
-	testSpriteWorldTransform.Initialize();
 
 	hitparticle_ = make_unique<HitParticle>();
 	hitparticle_->Initialize();
+
+	enemyBombManager = make_unique<EnemyBombManager>();
+	enemyBombManager->Initialize();
+
 }
 
 void GameScene::Update(GameManager* scene)
 {
+	scene;
 	DebugTools::UpdateExecute(0);
 	//DebugTools::UpdateExecute(1);
 
@@ -88,10 +88,12 @@ void GameScene::Update(GameManager* scene)
 	if (!TransitionProcess::Fade_Out()) {
 		return;
 	}
+
 	bool flag = false;
 	ImGui::Begin("d");
 	ImGui::Checkbox("e", &flag);
 	ImGui::End();
+
 	if (flag)
 	{
 		hitparticle_->Spown(player_->GetWorldTransform().translate);
@@ -107,14 +109,18 @@ void GameScene::Update(GameManager* scene)
 		//時間切れになったらifを抜ける     
 	}
 
-	player_->Update();
+	player_->SetEnemy(enemys_);
 	for (shared_ptr<Enemy>& enemy : enemys_) {
+		enemy->RandomMove();
 		enemy->SetPlayer(player_.get());
 		enemy->Update();
-
 	}
 
 
+	enemyBombManager->Update(player_.get());
+	
+	player_->Update();
+	
 	hitparticle_->Update();
 
 	EnemyReset();
@@ -156,6 +162,8 @@ void GameScene::Object3dDraw()
 	mapGround_->Draw(viewProjection);
 
 	player_->Draw(viewProjection);
+	enemyBombManager->Draw(viewProjection);
+
 
 	// 敵
 	for (shared_ptr<Enemy>& enemy : enemys_) {
@@ -169,7 +177,7 @@ void GameScene::Object3dDraw()
 
 void GameScene::Flont2dSpriteDraw()
 {
-	timeCount_->Draw();
+	//timeCount_->Draw();
 	Score::Draw();
 	//testSprite->Draw(testSpriteWorldTransform);
 
@@ -183,6 +191,10 @@ void GameScene::Collision()
 	collisionManager_->ClliderPush(player_.get());
 
 	for (shared_ptr<Enemy>& enemy : enemys_) {
+		collisionManager_->ClliderPush(enemy.get());
+	}
+	for (shared_ptr<EnemyBomb>& enemy : enemyBombManager->GetEnemys())
+	{
 		collisionManager_->ClliderPush(enemy.get());
 	}
 
@@ -263,6 +275,7 @@ void GameScene::EnemySpawn(const Vector3& position) {
 	shared_ptr<Enemy> enemy = make_shared<Enemy>();
 	enemy->Initialize(position);
 	enemy->SetPlayer(player_.get());
+	player_->SetEnemy(enemys_);
 	enemys_.push_back(enemy);
 }
 

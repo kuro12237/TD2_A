@@ -18,6 +18,10 @@ public:
 
 	bool PushKeyPressed(uint32_t keyNum);
 
+	static void NoneJoyState(XINPUT_STATE& state);
+
+	bool GetJoystickState(XINPUT_STATE& state);
+
 private:
 
 	static void CreateKeybordDevice();
@@ -27,8 +31,11 @@ private:
 
 	BYTE keys[256] = {};
 	BYTE preKeys[256] = {};
+	XINPUT_STATE state_{};
 
 	bool isInitialize=false;
+
+
 
 	//0x80=‰Ÿ‚µ‚Ä‚¢‚éó‘Ô
 	//0x00=‰Ÿ‚µ‚Ä‚È‚¢ó‘Ô

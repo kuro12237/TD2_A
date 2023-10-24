@@ -1,8 +1,10 @@
 ﻿#include "Player.h"
+#include"GameObject/Enemy/Enemy.h"
 
 void Player::Initialize()
 {
 	model_ = make_unique<Model>();
+	model_->UseLight(HARF_LAMBERT);
 	model_->Initialize(new ModelSphereState);
 	texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
 	model_->SetTexHandle(texHandle);
@@ -26,6 +28,7 @@ void Player::Initialize()
 	LineWorldTransform_.parent = &worldTransform_;
 	LineWorldTransform_.translate.y = 0.5f;
 
+	isMove_ = false;
 	SetCollosionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionAttributeEnemy);
 	
@@ -58,6 +61,7 @@ void Player::Draw(ViewProjection view)
 
 void Player::OnCollision()
 {
+	isMove_ = true;
 }
 
 void Player::OnTopWall()
@@ -105,39 +109,101 @@ Vector3 Player::GetWorldPosition()
 	return result;
 }
 
+Vector3 Player::GetVelocity()
+{
+	Vector3 result;
+	result.x = Velocity.x;
+	result.y = Velocity.y;
+	result.z = Velocity.z;
+	return result;
+}
+
 void Player::Move()
 {
+#pragma region keybord
+	//回転
 	if (Input::GetInstance()->PushKey(DIK_A)){
 		worldTransform_.rotation.y -= rotateSpeed;
 	}else if(Input::GetInstance()->PushKey(DIK_D)){
 		worldTransform_.rotation.y += rotateSpeed;
 	}
-
-	if (!MoveFlag&&Input::GetInstance()->PushKey(DIK_SPACE))
+	//覇者
+	if (!MoveFlag && Input::GetInstance()->PushKey(DIK_SPACE))
 	{
 		MoveFlag = true;
 		Velocity = RPNormalize;
 		Velocity = VectorTransform::Multiply(Velocity, speed);
 	}
+#pragma endregion 
 
-	MoveCoolTime++;
+#pragma region Controler
+
+	XINPUT_STATE joyState{};
+	Input::NoneJoyState(joyState);
+	if (Input::GetInstance()->GetJoystickState(joyState))
+	{
+		//回転
+		Rvelocity.x = 0.0f;
+		Rvelocity.z = 0.0f;
+		Rvelocity.y = float(joyState.Gamepad.sThumbLX / SHRT_MAX);
+		Rvelocity.y = Rvelocity.y * 0.1f;
+		worldTransform_.rotation = VectorTransform::Add(worldTransform_.rotation, Rvelocity);
+		
+		//発射処理
+		if (!MoveFlag && joyState.Gamepad.wButtons &XINPUT_GAMEPAD_A)
+		{
+			MoveFlag = true;
+			Velocity = RPNormalize;
+			Velocity = VectorTransform::Multiply(Velocity, speed);
+		}
+
+	}
+#pragma endregion 
     
+	//フラグ切り替え
 	if (abs(Velocity.x)<0.05f && abs(Velocity.y)<0.05f && abs(Velocity.z)<0.05f)
 	{
 		MoveFlag = false;
 	}
-
+  
 	if (MoveCoolTime > MAX_MOVE_COOLTIME)
 	{
 		MoveCoolTime = 0;
 		
 		//MoveFlag = false;
 	}
+
+	// 敵に衝突した後の処理 ↓
+	list<shared_ptr<Enemy>>& enemys = enemys_;
+
+	for (shared_ptr<Enemy>& enemy : enemys) {
+
+		enemyPos_ = enemy->GetWorldPosition();
+		angle = atan2((worldTransform_.translate.z - enemyPos_.z), (worldTransform_.translate.x, enemyPos_.x));
+		angle2 = atan2((enemyPos_.z - worldTransform_.translate.z), (enemyPos_.x - worldTransform_.translate.x));
+		angle = angle * 180.0f / (float)M_PI;
+		angle2 = angle2 * 180.0f / (float)M_PI;
+
+			if (isMove_) {
+
+				velocity_ = PhysicsFunc::SpeedComposition(enemyPos_, worldTransform_.translate, angle, angle2);
+				HitVelo = get<0>(velocity_);
+				HitVelo = VectorTransform::Normalize(HitVelo);
+				Velocity = HitVelo;
+				isMove_ = false;
+			}
+			
+		
+
+	}
+	// ここまで ↑
+  
 	//摩擦
 	FancFrictionCoefficient();
 	//加算処理
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
 
+	
 	ImGui::Begin("Player_param");
 	ImGui::Text("WorldPos : %f %f %f", worldTransform_.translate.x, worldTransform_.translate.y, worldTransform_.translate.z);
 	ImGui::Text("Normalize : %f %f %f", RPNormalize.x, RPNormalize.y, RPNormalize.z);
@@ -175,9 +241,7 @@ void Player::Reticle()
 
 	RPNormalize = VectorTransform::Subtruct(Rpos, Ppos);
 	RPNormalize = VectorTransform::Normalize(RPNormalize);
-		
 	
-
 }
 
 void Player::FancFrictionCoefficient()

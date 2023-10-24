@@ -83,3 +83,28 @@ float VectorTransform::Dot(const Vector3& v1, const Vector3& v2) {
 	return result;
 }
 
+Vector3 VectorTransform::SlerpFanc(Vector3 start, Vector3 end, float t)
+{
+	float dot = start.x * end.x + start.y * end.y + start.z * end.z;
+	float theta = std::acos(dot) * t;
+	Vector3 relative = { end.x - start.x * dot, end.y - start.y * dot, end.z - start.z * dot };
+	relative = Normalize(relative);
+	Vector3 result = {
+		start.x * std::cosf(theta) + relative.x * std::sinf(theta),
+		start.y * std::cosf(theta) + relative.y * std::sinf(theta),
+		start.z * std::cosf(theta) + relative.z * std::sinf(theta)
+	};
+
+	return result;
+}
+
+Vector4 VectorTransform::Subtruct(const Vector4& v1, const Vector4& v2)
+{
+	Vector4 result{};
+	result.x = v1.x - v2.x;
+	result.y = v1.y - v2.y;
+	result.z = v1.z - v2.z;
+	result.w = v1.w - v2.w;
+	return result;
+}
+

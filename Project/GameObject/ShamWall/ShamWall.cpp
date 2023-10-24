@@ -1,7 +1,5 @@
 #include "ShamWall.h"
 
-
-
 // ‰Šú‰»ˆ—
 void ShamWall::Initialize() {
 
@@ -16,8 +14,6 @@ void ShamWall::Initialize() {
 
 	calcColorState_ = new CalcGreen();
 }
-
-
 
 // XVˆ—
 void ShamWall::Update() {
@@ -43,8 +39,6 @@ void ShamWall::Update() {
 #endif // _DEBUG
 
 }
-
-
 
 // •`‰æˆ—
 void ShamWall::Draw(ViewProjection view) {
