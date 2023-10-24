@@ -8,7 +8,8 @@ void EnemyBomb::Initialize(Vector3 position, uint32_t texHandle)
 	worldTransform_.UpdateMatrix();
 
 	model = make_unique<Model>();
-	model->Initialize(new ModelSphereState);
+	
+	model->Initialize(new ModelCubeState,{0,0},{3,3});
 	model->SetColor({ 1.0f,0.5f,0.0f,1.0f });
 
 	model->SetTexHandle(texHandle);

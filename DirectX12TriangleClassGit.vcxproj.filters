@@ -157,6 +157,9 @@
     <Filter Include="Project\GameObject\EnemyBomb">
       <UniqueIdentifier>{516a66c8-fb1d-4ba1-8089-dd7308005f86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CLEYERA\Model\Cube">
+      <UniqueIdentifier>{8810be34-4844-4645-b40b-5561d87b3a2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -351,6 +354,9 @@
     <ClCompile Include="Project\GameObject\EnemyBomb\state\StateBreakEnemyBomb.cpp" />
     <ClCompile Include="Project\GameObject\EnemyBomb\EnemyBombManager.cpp">
       <Filter>Project\GameObject\EnemyBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\Model\State\ModelCubeState.cpp">
+      <Filter>CLEYERA\Model\Cube</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -582,6 +588,9 @@
     <ClInclude Include="Project\GameObject\EnemyBomb\state\StateBreakEnemyBomb.h" />
     <ClInclude Include="Project\GameObject\EnemyBomb\EnemyBombManager.h">
       <Filter>Project\GameObject\EnemyBomb</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Model\State\ModelCubeState.h">
+      <Filter>CLEYERA\Model\Cube</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

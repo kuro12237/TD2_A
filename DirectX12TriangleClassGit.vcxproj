@@ -63,6 +63,7 @@
     <ClCompile Include="CLEYERA\math\MatrixTransform.cpp" />
     <ClCompile Include="CLEYERA\math\VectorTransform.cpp" />
     <ClCompile Include="CLEYERA\Model\Model.cpp" />
+    <ClCompile Include="CLEYERA\Model\State\ModelCubeState.cpp" />
     <ClCompile Include="CLEYERA\Model\State\ModelLineState.cpp" />
     <ClCompile Include="CLEYERA\Model\State\ModelObjState.cpp" />
     <ClCompile Include="CLEYERA\Model\State\ModelPlaneState.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="CLEYERA\math\VectorTransform.h" />
     <ClInclude Include="CLEYERA\Model\Model.h" />
     <ClInclude Include="CLEYERA\Model\State\IModelState.h" />
+    <ClInclude Include="CLEYERA\Model\State\ModelCubeState.h" />
     <ClInclude Include="CLEYERA\Model\State\ModelLineState.h" />
     <ClInclude Include="CLEYERA\Model\State\ModelObjState.h" />
     <ClInclude Include="CLEYERA\Model\State\ModelPlaneState.h" />
