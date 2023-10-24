@@ -99,6 +99,7 @@ private:
 					   
 
 	const float rotateSpeed = 0.1f;
+	Vector3 Rvelocity{};
 
 	uint32_t texHandle = 0;
 };

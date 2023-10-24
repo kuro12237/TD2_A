@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig" />
+    <None Include="cpp.hint" />
     <None Include="Resources\Shader\Harf_LambertLightObject.hlsli" />
     <None Include="Resources\Shader\ParticleObject3d.hlsli" />
     <None Include="Resources\Shader\SpriteObject3d.hlsli" />
@@ -78,10 +79,15 @@
     <ClCompile Include="CLEYERA\Utility\LogManager\LogManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Project\GameManager\GameManager.cpp" />
+    <ClCompile Include="Project\GameObject\EnemyBomb\EnemyBomb.cpp" />
+    <ClCompile Include="Project\GameObject\EnemyBomb\state\stateMoveEnemyBomb.cpp" />
+    <ClCompile Include="Project\GameObject\MapGround\MapGround.cpp" />
     <ClCompile Include="Project\GameObject\PhysicsFunc.cpp" />
     <ClCompile Include="Project\GameObject\HitParticle\HitParticle.cpp" />
     <ClCompile Include="Project\GameObject\Player\PlayerParticle.cpp" />
     <ClCompile Include="Project\GameObject\Score\Score.cpp" />
+    <ClCompile Include="Project\GameObject\ShamWall\ShamWall.cpp" />
+    <ClCompile Include="Project\GameObject\Skydome\Skydome.cpp" />
     <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp" />
     <ClCompile Include="Project\GameObject\Camera\MainCamera.cpp" />
     <ClCompile Include="Project\GameObject\Enemy\Enemy.cpp" />
@@ -149,11 +155,17 @@
     <ClInclude Include="CLEYERA\Utility\LogManager\LogManager.h" />
     <ClInclude Include="CLEYERA\Utility\Pch\Pch.h" />
     <ClInclude Include="Project\GameManager\GameManager.h" />
+    <ClInclude Include="Project\GameObject\EnemyBomb\EnemyBomb.h" />
+    <ClInclude Include="Project\GameObject\EnemyBomb\state\IstateEnemyBomb.h" />
+    <ClInclude Include="Project\GameObject\EnemyBomb\state\StateMoveEnemyBomb.h" />
     <ClInclude Include="Project\GameObject\HitParticle\HitParticle.h" />
+    <ClInclude Include="Project\GameObject\MapGround\MapGround.h" />
     <ClInclude Include="Project\GameObject\MapWall\MapWallManager.h" />
     <ClInclude Include="Project\GameObject\PhysicsFunc.h" />
     <ClInclude Include="Project\GameObject\Player\PlayerParticle.h" />
     <ClInclude Include="Project\GameObject\Score\Score.h" />
+    <ClInclude Include="Project\GameObject\ShamWall\ShamWall.h" />
+    <ClInclude Include="Project\GameObject\Skydome\Skydome.h" />
     <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h" />
     <ClInclude Include="Project\GameObject\Camera\MainCamera.h" />
     <ClInclude Include="Project\GameObject\Enemy\Enemy.h" />

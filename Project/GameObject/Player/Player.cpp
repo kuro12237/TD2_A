@@ -4,6 +4,7 @@
 void Player::Initialize()
 {
 	model_ = make_unique<Model>();
+	model_->UseLight(HARF_LAMBERT);
 	model_->Initialize(new ModelSphereState);
 	texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
 	model_->SetTexHandle(texHandle);
@@ -119,26 +120,52 @@ Vector3 Player::GetVelocity()
 
 void Player::Move()
 {
+#pragma region keybord
+	//回転
 	if (Input::GetInstance()->PushKey(DIK_A)){
 		worldTransform_.rotation.y -= rotateSpeed;
 	}else if(Input::GetInstance()->PushKey(DIK_D)){
 		worldTransform_.rotation.y += rotateSpeed;
 	}
-
-	if (!MoveFlag&&Input::GetInstance()->PushKey(DIK_SPACE))
+	//覇者
+	if (!MoveFlag && Input::GetInstance()->PushKey(DIK_SPACE))
 	{
 		MoveFlag = true;
 		Velocity = RPNormalize;
 		Velocity = VectorTransform::Multiply(Velocity, speed);
 	}
+#pragma endregion 
 
-	MoveCoolTime++;
+#pragma region Controler
+
+	XINPUT_STATE joyState{};
+	Input::NoneJoyState(joyState);
+	if (Input::GetInstance()->GetJoystickState(joyState))
+	{
+		//回転
+		Rvelocity.x = 0.0f;
+		Rvelocity.z = 0.0f;
+		Rvelocity.y = float(joyState.Gamepad.sThumbLX / SHRT_MAX);
+		Rvelocity.y = Rvelocity.y * 0.1f;
+		worldTransform_.rotation = VectorTransform::Add(worldTransform_.rotation, Rvelocity);
+		
+		//発射処理
+		if (!MoveFlag && joyState.Gamepad.wButtons &XINPUT_GAMEPAD_A)
+		{
+			MoveFlag = true;
+			Velocity = RPNormalize;
+			Velocity = VectorTransform::Multiply(Velocity, speed);
+		}
+
+	}
+#pragma endregion 
     
+	//フラグ切り替え
 	if (abs(Velocity.x)<0.05f && abs(Velocity.y)<0.05f && abs(Velocity.z)<0.05f)
 	{
 		MoveFlag = false;
 	}
-
+  
 	if (MoveCoolTime > MAX_MOVE_COOLTIME)
 	{
 		MoveCoolTime = 0;
@@ -170,7 +197,7 @@ void Player::Move()
 
 	}
 	// ここまで ↑
-
+  
 	//摩擦
 	FancFrictionCoefficient();
 	//加算処理
@@ -214,9 +241,7 @@ void Player::Reticle()
 
 	RPNormalize = VectorTransform::Subtruct(Rpos, Ppos);
 	RPNormalize = VectorTransform::Normalize(RPNormalize);
-		
 	
-
 }
 
 void Player::FancFrictionCoefficient()

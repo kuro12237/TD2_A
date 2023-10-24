@@ -2,10 +2,10 @@
 
 void GameScene::Initialize()
 {
-	Grid* grid = new Grid();
-	grid->Initialize();
+	//Grid* grid = new Grid();
+	//grid->Initialize();
 	//GridCommandをセット
-	DebugTools::addCommand(grid, "Grid");
+	//DebugTools::addCommand(grid, "Grid");
 	DebugCamera* debugcamera = new DebugCamera();
 	debugcamera->Initialize();
 	DebugTools::addCommand(debugcamera, "DebugCamera");
@@ -16,16 +16,16 @@ void GameScene::Initialize()
 	timeCount_->Initialize();
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
-	// フェードの処理
+	//// フェードの処理
 	TransitionProcess::Initialize();
-	// フェードに使う画像の設定
+	//// フェードに使う画像の設定
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetTexHandle(useFade_BG);
-	// 色を黒くしておく
+	//// 色を黒くしておく
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
-	// フェードが明ける処理
+	//// フェードが明ける処理
 	TransitionProcess::Fade_Out_Init();
 
-	// スコア
+	//// スコア
 	Score::Initialize();
 
 	player_ = make_unique<Player>();
@@ -39,20 +39,31 @@ void GameScene::Initialize()
 	mapWallManager_ = make_unique<MapWallManager>();
 	mapWallManager_->Initialize();
 
-	texHandle = TextureManager::LoadTexture("Resources/mob.png");
-	testSprite = make_unique<Sprite>();
-	testSprite->SetTexHandle(texHandle);
-	testSprite->Initialize(new SpriteBoxState, { 0,0 }, { 320,320 });
-	testSpriteWorldTransform.Initialize();
+	// 見かけの壁
+	shamWall_ = make_unique<ShamWall>();
+	shamWall_->Initialize();
+
+	// 天球
+	skydome_ = make_unique<Skydome>();
+	skydome_->Initialize();
+
+	// 床
+	mapGround_ = make_unique<MapGround>();
+	mapGround_->Initialize();
+
 
 	hitparticle_ = make_unique<HitParticle>();
 	hitparticle_->Initialize();
+
+	testEnemyBomb = make_unique<EnemyBomb>();
+	testEnemyBomb->Initialize({ 0,0.5f,0 });
 }
 
 void GameScene::Update(GameManager* scene)
 {
+	scene;
 	DebugTools::UpdateExecute(0);
-	DebugTools::UpdateExecute(1);
+	//DebugTools::UpdateExecute(1);
 
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
@@ -76,10 +87,12 @@ void GameScene::Update(GameManager* scene)
 	if (!TransitionProcess::Fade_Out()) {
 		return;
 	}
+
 	bool flag = false;
 	ImGui::Begin("d");
 	ImGui::Checkbox("e", &flag);
 	ImGui::End();
+
 	if (flag)
 	{
 		hitparticle_->Spown(player_->GetWorldTransform().translate);
@@ -103,7 +116,9 @@ void GameScene::Update(GameManager* scene)
 
 	player_->Update();
 
-
+	testEnemyBomb->SetPlayer(player_.get());
+	testEnemyBomb->Update();
+	
 	hitparticle_->Update();
 
 	EnemyReset();
@@ -113,6 +128,14 @@ void GameScene::Update(GameManager* scene)
 	MapWallCollision();
 	//壁のupdate
 	mapWallManager_->Update();
+	shamWall_->Update();
+	
+	// 天球
+	skydome_->Update();
+
+	// 床
+	mapGround_->Updatea();
+
 	//当たり判定
 	Collision();
 	//カメラ
@@ -130,22 +153,27 @@ void GameScene::Back2dSpriteDraw()
 void GameScene::Object3dDraw()
 {
 	DebugTools::DrawExecute(0);
-	DebugTools::DrawExecute(1);
+	//DebugTools::DrawExecute(1);
+
+	skydome_->Draw(viewProjection);
+
+	mapGround_->Draw(viewProjection);
 
 	player_->Draw(viewProjection);
-
+	testEnemyBomb->Draw(viewProjection);
 	// 敵
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		enemy->Draw(viewProjection);
 	}
 	hitparticle_->Draw(viewProjection);
 
-	mapWallManager_->Draw(viewProjection);
+	//mapWallManager_->Draw(viewProjection);
+	shamWall_->Draw(viewProjection);
 }
 
 void GameScene::Flont2dSpriteDraw()
 {
-	timeCount_->Draw();
+	//timeCount_->Draw();
 	Score::Draw();
 	//testSprite->Draw(testSpriteWorldTransform);
 

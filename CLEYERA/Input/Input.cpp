@@ -41,6 +41,22 @@ bool Input::PushKeyPressed(uint32_t keyNum)
 	return false;
 }
 
+void Input::NoneJoyState(XINPUT_STATE& state)
+{
+	if(!Input::GetInstance()->GetJoystickState(state))
+    {
+	    return;
+    }
+}
+bool Input::GetJoystickState(XINPUT_STATE& state)
+{
+	DWORD dwResult = XInputGetState(0, &state);
+	if (dwResult == ERROR_SUCCESS) {
+		return true;
+	}
+	return false;
+}
+
 
 void Input::CreateKeybordDevice()
 {
