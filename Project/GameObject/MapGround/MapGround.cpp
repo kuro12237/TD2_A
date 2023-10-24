@@ -20,11 +20,11 @@ void MapGround::Updatea() {
 
 #ifdef _DEBUG
 
-	ImGui::Begin("MapGround");
+	/*ImGui::Begin("MapGround");
 	ImGui::DragFloat3("scale", &ground_.worldTansform.scale.x, 0.01f);
 	ImGui::DragFloat3("rotate", &ground_.worldTansform.rotation.x, 0.01f);
 	ImGui::DragFloat3("transform", &ground_.worldTansform.translate.x, 0.01f);
-	ImGui::End();
+	ImGui::End();*/
 
 #endif // _DEBUG
 

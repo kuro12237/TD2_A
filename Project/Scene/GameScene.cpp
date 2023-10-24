@@ -66,20 +66,6 @@ void GameScene::Update(GameManager* scene)
 	DebugTools::UpdateExecute(0);
 	//DebugTools::UpdateExecute(1);
 
-	if (Input::GetInstance()->PushKeyPressed(DIK_9))
-	{
-		TransitionProcess::Fade_In_Init();
-	}
-	if (Input::GetInstance()->PushKeyPressed(DIK_5))
-	{
-		Score::AddScore(100);
-	}
-	// フェードの処理が終わったらシーン遷移
-	if (TransitionProcess::Fade_In()) {
-		scene->ChangeState(new ResultScene);
-		return;
-	}
-
 	// フェードが明ける処理
 	TransitionProcess::Fade_In();
 	TransitionProcess::Fade_Out();
@@ -103,10 +89,10 @@ void GameScene::Update(GameManager* scene)
 	Score::Update();
 	timeCount_->Update();
 	// 時間切れ時の処理
-	if (!timeCount_->GetIsTimeUp())
+	if (timeCount_->GetIsTimeUp())
 	{
-		//GameObjectの基本更新
-		//時間切れになったらifを抜ける     
+		// フェードイン
+		//TransitionProcess::Fade_In_Init();
 	}
 
 	player_->SetEnemy(enemys_);
@@ -146,6 +132,21 @@ void GameScene::Update(GameManager* scene)
 	viewProjection.UpdateMatrix();
 	viewProjection = MainCamera::GetViewProjection();
 	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
+
+
+	if (Input::GetInstance()->PushKeyPressed(DIK_9))
+	{
+		TransitionProcess::Fade_In_Init();
+	}
+	if (Input::GetInstance()->PushKeyPressed(DIK_5))
+	{
+		Score::AddScore(100);
+	}
+	// フェードの処理が終わったらシーン遷移
+	if (TransitionProcess::Fade_In()) {
+		scene->ChangeState(new ResultScene);
+		return;
+	}
 }
 
 void GameScene::Back2dSpriteDraw()
@@ -177,7 +178,7 @@ void GameScene::Object3dDraw()
 
 void GameScene::Flont2dSpriteDraw()
 {
-	//timeCount_->Draw();
+	timeCount_->Draw();
 	Score::Draw();
 	//testSprite->Draw(testSpriteWorldTransform);
 

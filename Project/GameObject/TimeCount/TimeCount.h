@@ -78,25 +78,29 @@ private:
 	// スプライト
 	unique_ptr<Sprite>timeCountSprite_[3];
 	unique_ptr<Sprite>timeUpUISprite_;
+	unique_ptr<Sprite>timerUIBGSprite_;
 
 	// テクスチャ
-	uint32_t numberTexHD_;
+	uint32_t numberTexHD_{};
 	uint32_t timeUpUITextureHD_{};
-	
+	uint32_t timerUIBGTexHD_{};
+
 	// テクスチャカラー
 	Vector4 textureColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	// 座標
 	SrcTimeCount src_[10];
-	Vector2 timeCountPosition_[3]{};
-	WorldTransform timeCountWorldTransform_[3]{};
+	Vector2 timeCountPosition_[2]{};
+	WorldTransform timeCountWorldTransform_[2]{};
 	Vector2 timeUpUIPosition_;
 	WorldTransform timeUpUIWorldTransform_{};
+	Vector2 timerUIBGPosition_;
+	WorldTransform timerUIBGWorldTransform_{};
 
 	// 制限時間
 	uint32_t nowLimitTime_ = 0;
-	const uint32_t kSetLimitTime_ = 30;
-	uint32_t eachTime_[3]{};
+	const uint32_t kSetLimitTime_ = 60;
+	uint32_t eachTime_[2]{};
 	uint32_t frame_ = 0;
 	bool isTimeUp_ = false;
 
