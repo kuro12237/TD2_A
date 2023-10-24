@@ -1,6 +1,6 @@
 #include "EnemyBomb.h"
 
-void EnemyBomb::Initialize(Vector3 position)
+void EnemyBomb::Initialize(Vector3 position, uint32_t texHandle)
 {
 	state_ =  new stateMoveEnemyBomb;
 	worldTransform_.Initialize();
@@ -8,26 +8,18 @@ void EnemyBomb::Initialize(Vector3 position)
 	worldTransform_.UpdateMatrix();
 
 	model = make_unique<Model>();
-	model->Initialize(new ModelSphereState);
 	
-	texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
+	model->Initialize(new ModelCubeState,{0,0},{3,3});
+	model->SetColor({ 1.0f,0.5f,0.0f,1.0f });
+
 	model->SetTexHandle(texHandle);
+	SetCollosionAttribute(kCollisionAttributeEnemy);
+	SetCollisionMask(kCollisionAttributePlayer);
 }
 
 void EnemyBomb::Update()
 {
-	Vector3 Ppos = player_->GetWorldPosition();
-	Vector3 Epos{};
-	Epos.x = worldTransform_.matWorld.m[3][0];
-	Epos.y = worldTransform_.matWorld.m[3][1];
-	Epos.z = worldTransform_.matWorld.m[3][2];
-
-	velocity_ = VectorTransform::Subtruct(Ppos,Epos);
-	velocity_ = VectorTransform::Normalize(velocity_);
-	velocity_.x = velocity_.x * 0.1f;
-	velocity_.y = velocity_.y * 0.1f;
-	velocity_.z = velocity_.z * 0.1f;
-
+	SetRadious(Radious);
 	state_->Move(worldTransform_, this);
 	
 	worldTransform_.UpdateMatrix();
@@ -36,4 +28,25 @@ void EnemyBomb::Update()
 void EnemyBomb::Draw(ViewProjection view)
 {
 	model->Draw(worldTransform_, view);
+}
+
+Vector3 EnemyBomb::GetWorldPosition()
+{
+	Vector3 result{};
+	result.x = worldTransform_.matWorld.m[3][0];
+	result.y = worldTransform_.matWorld.m[3][1];
+	result.z = worldTransform_.matWorld.m[3][2];
+	return result;
+}
+
+void EnemyBomb::OnCollision()
+{
+
+
+}
+
+void EnemyBomb::ChangeState(IstateEnemyBomb* state)
+{
+	delete state_;
+	state_ = state;
 }

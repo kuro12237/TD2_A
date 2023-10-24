@@ -4,7 +4,6 @@
 #include"VectorTransform.h"
 #include"MatrixTransform.h"
 
-
 class stateMoveEnemyBomb : public IstateEnemyBomb
 {
 public:
@@ -15,8 +14,7 @@ public:
 
 private:
 
-	Vector3 LerpSpeed = {};
-
+	uint32_t StateChangeTimer = 0;
 };
 
 

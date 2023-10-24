@@ -18,6 +18,7 @@
 #include "GameObject/ShamWall/ShamWall.h"
 #include "GameObject/Skydome/Skydome.h"
 #include "GameObject/MapGround/MapGround.h"
+#include"GameObject/EnemyBomb/EnemyBombManager.h"
 
 
 class GameScene : public IScene
@@ -57,7 +58,7 @@ private:
 	uint32_t waitTimer = 0;
     stringstream fileLoad;
 	
-	unique_ptr<EnemyBomb>testEnemyBomb = nullptr;
+	unique_ptr<EnemyBombManager>enemyBombManager = nullptr;
 
 	unique_ptr<MapWallManager>mapWallManager_ = nullptr;
 	unique_ptr<ShamWall>shamWall_ = nullptr;

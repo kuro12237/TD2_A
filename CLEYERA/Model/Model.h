@@ -6,7 +6,7 @@
 #include"ModelLineState.h"
 #include"ModelSphereState.h"
 #include"ModelObjState.h"
-
+#include"ModelCubeState.h"
 #include"WorldTransform.h"
 #include"ViewProjection.h"
 
