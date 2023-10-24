@@ -84,8 +84,8 @@ private:
 
 
 	// 初期スケール
-	Vector3 initScale_ = { 1.07f, 1.0f, 1.07f };
-	Vector3 initTranslate_ = { 1.0f, 1.0f, 1.0f };
+	Vector3 initScale_ = { 1.0f, 1.0f, 1.0f };
+	Vector3 initTranslate_ = { 0.015f, -0.5f, 0.015f };
 
 	// RGBAカラー
 	Vector4 modelColor_ = { 1.0f, 0.0f, 0.0f, 1.0f };
