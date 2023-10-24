@@ -55,7 +55,7 @@ void GameScene::Initialize()
 	hitparticle_ = make_unique<HitParticle>();
 	hitparticle_->Initialize();
 
-	enemyBombManager = make_unique<EnemyBombManager>();
+	enemyBombManager = make_shared<EnemyBombManager>();
 	enemyBombManager->Initialize();
 
 }
@@ -193,9 +193,10 @@ void GameScene::Collision()
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		collisionManager_->ClliderPush(enemy.get());
 	}
-	for (shared_ptr<EnemyBomb>& enemy : enemyBombManager->GetEnemys())
+	
+	//for (shared_ptr<EnemyBomb>& enemy : enemyBombManager->GetEnemys())
 	{
-		collisionManager_->ClliderPush(enemy.get());
+		//collisionManager_->ClliderPush(enemy.get());
 	}
 
 	//Check

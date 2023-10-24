@@ -38,10 +38,10 @@ void EnemyBombManager::Update(Player* player)
 	if (Input::GetInstance()->PushKeyPressed(DIK_U))
 	{
 		
-		//shared_ptr<EnemyBomb>enemy = nullptr;
-		//enemy = make_unique<EnemyBomb>();
-		//enemy->Initialize({ 0,0,20.0f }, texHandle);
-		//enemys_.push_back(enemy);
+		shared_ptr<EnemyBomb>enemy = nullptr;
+		enemy = make_shared<EnemyBomb>();
+		enemy->Initialize({ 0,0,20.0f }, texHandle);
+		enemys_.push_back(enemy);
 		
 	}
 

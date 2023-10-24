@@ -12,7 +12,7 @@ public:
 private:
 	void ColorFanc();
 
-	const Vector3 ScaleSpeed_ = {0.05f,0.05f,0.05f};
+	const Vector3 ScaleSpeed_ = {0.0125f,0.0125f,0.0125f};
 	const Vector3 RotateSoeed = { 0.0f,0.02f,0.0f };
 
 	const Vector4 MaxColor = { 0,0,0,0.0};

@@ -5,6 +5,7 @@ void EnemyBomb::Initialize(Vector3 position, uint32_t texHandle)
 	state_ =  new stateMoveEnemyBomb;
 	worldTransform_.Initialize();
 	worldTransform_.translate = position;
+	worldTransform_.scale = { 0.5f,0.5f,0.5f };
 	worldTransform_.UpdateMatrix();
 
 	model = make_unique<Model>();
@@ -20,6 +21,9 @@ void EnemyBomb::Initialize(Vector3 position, uint32_t texHandle)
 void EnemyBomb::Update()
 {
 	SetRadious(Radious);
+	ImGui::Begin("t");
+	ImGui::Text("%f", Radious);
+	ImGui::End();
 	state_->Move(worldTransform_, this);
 	
 	worldTransform_.UpdateMatrix();
@@ -43,6 +47,11 @@ void EnemyBomb::OnCollision()
 {
 
 
+}
+
+Vector3 EnemyBomb::GetVelocity()
+{
+	return Vector3();
 }
 
 void EnemyBomb::ChangeState(IstateEnemyBomb* state)

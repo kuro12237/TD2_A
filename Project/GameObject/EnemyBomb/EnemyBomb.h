@@ -21,6 +21,7 @@ public:
 
 	Vector3 GetWorldPosition()override;
 	void OnCollision()override;
+	Vector3 GetVelocity()override;
 
 	void SetIsDead(bool f) { IsDead = f; }
 	bool GetIsDead() { return IsDead; }

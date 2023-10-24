@@ -58,7 +58,7 @@ private:
 	uint32_t waitTimer = 0;
     stringstream fileLoad;
 	
-	unique_ptr<EnemyBombManager>enemyBombManager = nullptr;
+	shared_ptr<EnemyBombManager>enemyBombManager = nullptr;
 
 	unique_ptr<MapWallManager>mapWallManager_ = nullptr;
 	unique_ptr<ShamWall>shamWall_ = nullptr;
