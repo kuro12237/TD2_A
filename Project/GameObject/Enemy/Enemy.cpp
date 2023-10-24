@@ -45,15 +45,18 @@ void Enemy::EnemyMove() {
 	angle = angle * 180.0f / (float)M_PI;
 	angle2 = angle2 * 180.0f / (float)M_PI;
 
-	if (isMove_) {
-		velocity_ = PhysicsFunc::SpeedComposition(playerPos_, worldTransform_.translate, angle, angle2);
-		speed_ = get<1>(velocity_);
-		speed_ = VectorTransform::Normalize(speed_);
-
-		isMove_ = false;
-	}
-
-	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate,speed_ );
+		if (isMove_) {
+			velocity_ = PhysicsFunc::SpeedComposition(playerPos_, worldTransform_.translate, angle, angle2);
+			speed_ = get<1>(velocity_);
+			speed_ = VectorTransform::Normalize(speed_);
+			isMove_ = false;
+			
+		}
+		else {
+			worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, speed_);
+		}
+    
+	
 }
 
 Vector3 Enemy::GetWorldPosition() {
@@ -62,6 +65,15 @@ Vector3 Enemy::GetWorldPosition() {
 	WorldPos.y = worldTransform_.matWorld.m[3][1];
 	WorldPos.z = worldTransform_.matWorld.m[3][2];
 	return WorldPos;
+}
+
+Vector3 Enemy::GetVelocity()
+{
+	Vector3 result;
+	result.x = speed_.x;
+	result.y = speed_.y;
+	result.z = speed_.z;
+	return result;
 }
 
 void Enemy::OnCollision(){

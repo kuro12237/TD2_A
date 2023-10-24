@@ -108,6 +108,15 @@ Vector3 Player::GetWorldPosition()
 	return result;
 }
 
+Vector3 Player::GetVelocity()
+{
+	Vector3 result;
+	result.x = Velocity.x;
+	result.y = Velocity.y;
+	result.z = Velocity.z;
+	return result;
+}
+
 void Player::Move()
 {
 	if (Input::GetInstance()->PushKey(DIK_A)){
@@ -148,20 +157,25 @@ void Player::Move()
 		angle = angle * 180.0f / (float)M_PI;
 		angle2 = angle2 * 180.0f / (float)M_PI;
 
-		if (isMove_) {
+			if (isMove_) {
 
-			velocity_ = PhysicsFunc::SpeedComposition(enemyPos_, worldTransform_.translate, angle, angle2);
-			HitVelo = get<0>(velocity_);
-			HitVelo = VectorTransform::Normalize(HitVelo);
-			Velocity = HitVelo;
-			isMove_ = false;
-		}
+				velocity_ = PhysicsFunc::SpeedComposition(enemyPos_, worldTransform_.translate, angle, angle2);
+				HitVelo = get<0>(velocity_);
+				HitVelo = VectorTransform::Normalize(HitVelo);
+				Velocity = HitVelo;
+				isMove_ = false;
+				if (!isMove_) {
+
+				}
+			}
+			
+		
 
 	}
 	// ここまで ↑
 
 	//摩擦
-	FancFrictionCoefficient();
+	//FancFrictionCoefficient();
 	//加算処理
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
 

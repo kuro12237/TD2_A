@@ -37,6 +37,7 @@ public:
 
 	Vector3 GetWorldPosition()override;
 
+	Vector3 GetVelocity()override;
 
 	const WorldTransform &GetWorldTransform()const { return worldTransform_; }
 
@@ -76,6 +77,7 @@ private:
 	bool isMove_ = false;
 	Enemy* enemy_;
 	std::list<shared_ptr<Enemy>>enemys_;
+	Vector3 enemyVelo_ = {};
 	Vector3 enemyPos_ = {};
 	float angle = 0.0f;
 	float angle2 = 0.0f;

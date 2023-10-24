@@ -36,6 +36,8 @@ public:
 
 	Vector3 GetWorldPosition()override;
 
+	Vector3 GetVelocity()override;
+
 	void SetPlayer(Player* player) { player_ = player; }
 
 	void OnCollision()override;
@@ -54,6 +56,7 @@ private:
 	uint32_t texHandle_ = 0;
 	tuple<Vector3, Vector3> velocity_ = {};
 	Vector3 speed_ = {};
+	Vector3 playerVelo_;
 	float angle = 0;
 	float angle2 = 0;
 	Player* player_ = nullptr;

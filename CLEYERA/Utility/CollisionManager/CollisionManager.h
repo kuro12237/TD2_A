@@ -13,7 +13,7 @@ public:
 
 private:
 	void CheckCollisionPair(Collider* cA, Collider* cB);
-	bool CheckBallCollosion(Vector3 v1, float v1Radious, Vector3 v2, float v2Radious);
+	bool CheckBallCollosion(Vector3 v1, float v1Radious,Vector3 Velo, Vector3 v2, float v2Radious, Vector3 velo2);
 
 	std::list<Collider*> colliders_;
 };
