@@ -1,4 +1,5 @@
 ﻿#include "Player.h"
+#include"GameObject/Enemy/Enemy.h"
 
 void Player::Initialize()
 {
@@ -27,6 +28,7 @@ void Player::Initialize()
 	LineWorldTransform_.parent = &worldTransform_;
 	LineWorldTransform_.translate.y = 0.5f;
 
+	isMove_ = false;
 	SetCollosionAttribute(kCollisionAttributePlayer);
 	SetCollisionMask(kCollisionAttributeEnemy);
 	
@@ -59,6 +61,7 @@ void Player::Draw(ViewProjection view)
 
 void Player::OnCollision()
 {
+	isMove_ = true;
 }
 
 void Player::OnTopWall()
@@ -103,6 +106,15 @@ Vector3 Player::GetWorldPosition()
 	result.x = worldTransform_.matWorld.m[3][0];
 	result.y = worldTransform_.matWorld.m[3][1];
 	result.z = worldTransform_.matWorld.m[3][2];
+	return result;
+}
+
+Vector3 Player::GetVelocity()
+{
+	Vector3 result;
+	result.x = Velocity.x;
+	result.y = Velocity.y;
+	result.z = Velocity.z;
 	return result;
 }
 
@@ -153,12 +165,45 @@ void Player::Move()
 	{
 		MoveFlag = false;
 	}
+  
+	if (MoveCoolTime > MAX_MOVE_COOLTIME)
+	{
+		MoveCoolTime = 0;
+		
+		//MoveFlag = false;
+	}
 
+	// 敵に衝突した後の処理 ↓
+	list<shared_ptr<Enemy>>& enemys = enemys_;
+
+	for (shared_ptr<Enemy>& enemy : enemys) {
+
+		enemyPos_ = enemy->GetWorldPosition();
+		angle = atan2((worldTransform_.translate.z - enemyPos_.z), (worldTransform_.translate.x, enemyPos_.x));
+		angle2 = atan2((enemyPos_.z - worldTransform_.translate.z), (enemyPos_.x - worldTransform_.translate.x));
+		angle = angle * 180.0f / (float)M_PI;
+		angle2 = angle2 * 180.0f / (float)M_PI;
+
+			if (isMove_) {
+
+				velocity_ = PhysicsFunc::SpeedComposition(enemyPos_, worldTransform_.translate, angle, angle2);
+				HitVelo = get<0>(velocity_);
+				HitVelo = VectorTransform::Normalize(HitVelo);
+				Velocity = HitVelo;
+				isMove_ = false;
+			}
+			
+		
+
+	}
+	// ここまで ↑
+  
 	//摩擦
 	FancFrictionCoefficient();
 	//加算処理
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
 
+	
 	ImGui::Begin("Player_param");
 	ImGui::Text("WorldPos : %f %f %f", worldTransform_.translate.x, worldTransform_.translate.y, worldTransform_.translate.z);
 	ImGui::Text("Normalize : %f %f %f", RPNormalize.x, RPNormalize.y, RPNormalize.z);

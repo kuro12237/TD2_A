@@ -109,15 +109,16 @@ void GameScene::Update(GameManager* scene)
 		//時間切れになったらifを抜ける     
 	}
 
-	player_->Update();
+	player_->SetEnemy(enemys_);
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		enemy->SetPlayer(player_.get());
 		enemy->Update();
-
 	}
+
 
 	enemyBombManager->Update(player_.get());
 	
+	player_->Update();
 	
 	hitparticle_->Update();
 
@@ -273,6 +274,7 @@ void GameScene::EnemySpawn(const Vector3& position) {
 	shared_ptr<Enemy> enemy = make_shared<Enemy>();
 	enemy->Initialize(position);
 	enemy->SetPlayer(player_.get());
+	player_->SetEnemy(enemys_);
 	enemys_.push_back(enemy);
 }
 

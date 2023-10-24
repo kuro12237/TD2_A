@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
 /// <summary>
-/// ‰Šú‰»
+/// 
 /// </summary>
 void Enemy::Initialize(const Vector3& position) {
 
@@ -10,7 +10,6 @@ void Enemy::Initialize(const Vector3& position) {
 	texHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
 	model_->SetTexHandle(texHandle_);
 	model_->SetColor({ 1.0f,0.0f,0.0f,1.0f });
-
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
 	worldTransform_.translate = position;
@@ -22,7 +21,7 @@ void Enemy::Initialize(const Vector3& position) {
 }
 
 /// <summary>
-/// XV
+/// 
 /// </summary>
 void Enemy::Update() {
 
@@ -31,30 +30,32 @@ void Enemy::Update() {
 }
 
 /// <summary>
-/// •`‰æ
+/// 
 /// </summary>
 void Enemy::Draw(ViewProjection viewProjection){
 	model_->Draw(worldTransform_, viewProjection);
+	
 }
 
 void Enemy::EnemyMove() {
 
-	pos_ = pos2_;
 	playerPos_ = player_->GetWorldPosition();
-	angle = atan2((pos_.z - playerPos_.z), (pos_.x, -playerPos_.x));
-	angle2 = atan2((playerPos_.z - pos_.z), (playerPos_.x - pos_.x));
+	angle = atan2((worldTransform_.translate.z - playerPos_.z), (worldTransform_.translate.x - playerPos_.x));
+	angle2 = atan2((playerPos_.z - worldTransform_.translate.z), (playerPos_.x - worldTransform_.translate.x));
 	angle = angle * 180.0f / (float)M_PI;
 	angle2 = angle2 * 180.0f / (float)M_PI;
 
-	if (isMove_) {
-		velocity_ = PhysicsFunc::SpeedComposition(playerPos_, pos_, angle, angle2);
-		speed_ = get<1>(velocity_);
-		speed_ = VectorTransform::Normalize(speed_);
-
-		isMove_ = false;
-	}
-
-	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate,speed_ );
+		if (isMove_) {
+			velocity_ = PhysicsFunc::SpeedComposition(playerPos_, worldTransform_.translate, angle, angle2);
+			speed_ = get<1>(velocity_);
+			speed_ = VectorTransform::Normalize(speed_);
+			isMove_ = false;
+			
+		}
+		else {
+			worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, speed_);
+		}
+	
 }
 
 Vector3 Enemy::GetWorldPosition() {
@@ -65,9 +66,17 @@ Vector3 Enemy::GetWorldPosition() {
 	return WorldPos;
 }
 
+Vector3 Enemy::GetVelocity()
+{
+	Vector3 result;
+	result.x = speed_.x;
+	result.y = speed_.y;
+	result.z = speed_.z;
+	return result;
+}
+
 void Enemy::OnCollision(){
-	pos2_ = VectorTransform::Add(worldTransform_.translate, GetNamingLerp());
-  	isMove_ = true;
+	isMove_ = true;
 }
 
 void Enemy::OnTopWall()
