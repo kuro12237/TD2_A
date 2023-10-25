@@ -1,10 +1,9 @@
 ﻿#include "TutorialScene.h"
 
-
-
 // 初期化処理
 void TutorialScene::Initialize() {
 
+	GameAudio::Initialize();
 	// テクスチャの読み込み
 	tutorial_.TexHD[0] = TextureManager::LoadTexture("Resources/Texture/BackGround/Tutorial/Tutorial1.png");
 	tutorial_.TexHD[1] = TextureManager::LoadTexture("Resources/Texture/BackGround/Tutorial/Tutorial2.png");
@@ -53,6 +52,31 @@ void TutorialScene::Update(GameManager* scene) {
 	{
 		if (TransitionProcess::Fade_Out()) {
 
+		// Aボタンでスタート
+		XINPUT_STATE joyState{};
+		Input::NoneJoyState(joyState);
+		if (Input::GetInstance()->GetJoystickState(joyState))
+		{
+			//発射処理
+			if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+			{
+				GameAudio::PlaySelectSound();
+				TransitionProcess::Fade_In_Init();
+			}
+
+		}
+		// スペースでフェードスタート
+		if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
+			GameAudio::PlaySelectSound();
+			TransitionProcess::Fade_In_Init();
+		}
+		TransitionProcess::Fade_In();
+		// フェードの処理が終わったらシーン遷移
+		if (TransitionProcess::Fade_In()) {
+			
+			scene->ChangeState(new GameScene);
+			return;
+
 			if (nowPage_ == 0) {
 
 				if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A || Input::GetInstance()->PushKeyPressed(DIK_SPACE))
@@ -84,6 +108,7 @@ void TutorialScene::Update(GameManager* scene) {
 				scene->ChangeState(new GameScene);
 				return;
 			}
+
 		}
 	}
 
