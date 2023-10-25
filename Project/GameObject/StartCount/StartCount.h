@@ -44,14 +44,13 @@ public:
 	void SubtructTimer();
 
 	/// <summary>
-	/// 制限時間の各位を求める
-	/// </summary>
-	void CalcTimerPlace(uint32_t nowTimer);
-
-	/// <summary>
 	/// 各位に合ったテクスチャを設定する
 	/// </summary>
 	void SetSrc();
+
+
+
+	bool GetIsStartCount() { return isStartCount_; }
 
 private:
 

@@ -56,6 +56,11 @@ void GameScene::Initialize()
 	enemyBombManager = make_unique<EnemyBombManager>();
 	enemyBombManager->Initialize();
 
+
+	startCount_ = make_unique<StartCount>();
+	startCount_->Initialize();
+
+
 	isGame_ = true;
 	TransitionProcess::Fade_Out_Init();
 }
@@ -98,6 +103,13 @@ void GameScene::Update(GameManager* scene)
 				hitparticle_->Spown(player_->GetWorldTransform().translate);
 				MainCamera::SetIsShake(flag);
 			}
+
+
+
+			/* ---------- スタートカウント---------- */
+
+			// 更新処理
+			startCount_->Update();
 
 
 			/* ---------- プレイヤー ---------- */
@@ -236,6 +248,7 @@ void GameScene::Object3dDraw()
 void GameScene::Flont2dSpriteDraw()
 {
 	if (TransitionProcess::Fade_Out()) {
+		startCount_->Draw();
 		Score::Draw();
 		timeCount_->Draw();
 	}
