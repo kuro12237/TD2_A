@@ -99,11 +99,14 @@ void GameScene::Update(GameManager* scene)
 					}
 
 					if (fade_) {
-						if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A || Input::GetInstance()->PushKeyPressed(DIK_SPACE))
+						if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 						{
 							TransitionProcess::Fade_In_Init();
 						}
 					}
+				}
+				if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
+					TransitionProcess::Fade_In_Init();
 				}
 			}
 			else if (!timeCount_->GetIsTimeUp()) {

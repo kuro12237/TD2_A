@@ -39,70 +39,68 @@ void TutorialScene::Initialize() {
 
 
 // 更新処理
-void TutorialScene::Update(GameManager* scene) 
+void TutorialScene::Update(GameManager* scene)
 {
 
 	// フェードが明ける処理
 	TransitionProcess::Fade_In();
 	TransitionProcess::Fade_Out();
 
+
 	// Aボタンでスタート
 	XINPUT_STATE joyState{};
 	Input::NoneJoyState(joyState);
-	if (Input::GetInstance()->GetJoystickState(joyState))
-	{
-		if (TransitionProcess::Fade_Out()) {
+	TransitionProcess::Fade_In();
+	// フェードの処理が終わったらシーン遷移
+	if (TransitionProcess::Fade_In()) {
 
-			// Aボタンでスタート
-			XINPUT_STATE joyState{};
-			Input::NoneJoyState(joyState);
-			if (Input::GetInstance()->GetJoystickState(joyState))
+		scene->ChangeState(new GameScene);
+		return;
+	}
+	if (nowPage_ == 0) {
+		if (Input::GetInstance()->GetJoystickState(joyState)) {
+			if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 			{
-				
-				TransitionProcess::Fade_In();
-				// フェードの処理が終わったらシーン遷移
-				if (TransitionProcess::Fade_In()) {
-
-					scene->ChangeState(new GameScene);
-					return;
-				}
-				if (nowPage_ == 0) {
-
-					if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A || Input::GetInstance()->PushKeyPressed(DIK_SPACE))
-					{
-						GameAudio::PlaySelectSound();
-						nowPage_ = 1;
-						timer_ = 80;
-					}
-				}
-				else if (nowPage_ == 1) {
-
-					timer_--;
-
-					if (timer_ <= 0)
-					{
-						timer_ = 0;
-						fade_ = true;
-					}
-
-					if (fade_)
-					{
-						if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A || Input::GetInstance()->PushKeyPressed(DIK_SPACE))
-						{
-							GameAudio::PlaySelectSound();
-							TransitionProcess::Fade_In_Init();
-						}
-					}
-				}
-				// フェードの処理が終わったらシーン遷移
-				if (TransitionProcess::Fade_In()) {
-					scene->ChangeState(new GameScene);
-					return;
-				}
-
+				GameAudio::PlaySelectSound();
+				nowPage_ = 1;
+				timer_ = 80;
 			}
-			
 		}
+		if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
+			GameAudio::PlaySelectSound();
+			nowPage_ = 1;
+			timer_ = 80;
+		}
+	}
+	else if (nowPage_ == 1) {
+
+		timer_--;
+
+		if (timer_ <= 0)
+		{
+			timer_ = 0;
+			fade_ = true;
+		}
+
+		if (fade_)
+		{
+			if (Input::GetInstance()->GetJoystickState(joyState)) {
+				if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+				{
+					GameAudio::PlaySelectSound();
+					TransitionProcess::Fade_In_Init();
+				}
+			}
+			if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
+				GameAudio::PlaySelectSound();
+				TransitionProcess::Fade_In_Init();
+			}
+		}
+	}
+	// フェードの処理が終わったらシーン遷移
+	if (TransitionProcess::Fade_In()) {
+		scene->ChangeState(new GameScene);
+		return;
 	}
 }
 
