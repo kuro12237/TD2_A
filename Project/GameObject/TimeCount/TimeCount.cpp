@@ -74,7 +74,7 @@ void TimeCount::Initialize() {
 #pragma region TimerUIBackGround
 
 	// テクスチャの読み込み
-	timerUIBGTexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/TimerBg.png");
+	timerUIBGTexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/Game/TimerBg.png");
 
 	// 初期化
 	timerUIBGSprite_ = make_unique<Sprite>();

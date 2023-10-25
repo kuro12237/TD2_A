@@ -1,9 +1,7 @@
-#include "Enemy.h"
+#include "GameObject/Enemy/StoppedEnemy.h"
 
-/// <summary>
-/// 
-/// </summary>
-void Enemy::Initialize(const Vector3& position, uint32_t texHandle) {
+
+void StoppedEnemy::Initialize(const Vector3& pos, uint32_t texHandle){
 
 	model_ = make_unique<Model>();
 	model_->Initialize(new ModelCubeState);
@@ -11,41 +9,30 @@ void Enemy::Initialize(const Vector3& position, uint32_t texHandle) {
 	model_->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
-	worldTransform_.translate = position;
-	isMove_ = false;
+	worldTransform_.translate = pos;
 	worldTransform_.UpdateMatrix();
-	srand(static_cast<unsigned>(time(nullptr)));
 	SetCollosionAttribute(kCollisionAttributeEnemy);
-	SetCollisionMask(kCollisionMaskEnemy);
+	SetCollisionMask(kCollisionAttributePlayer);
 }
 
-/// <summary>
-/// 
-/// </summary>
-void Enemy::Update() {
+void StoppedEnemy::Update(){
 
-	EnemyMove();
-	RandomMove();
+	Move();
 	worldTransform_.UpdateMatrix();
 }
 
-/// <summary>
-/// 
-/// </summary>
-void Enemy::Draw(ViewProjection viewProjection){
+void StoppedEnemy::Draw(ViewProjection viewProjection){
 	model_->Draw(worldTransform_, viewProjection);
-	
 }
 
-void Enemy::EnemyMove() {
+void StoppedEnemy::Move(){
 
-	if (worldTransform_.translate.y >= 0.6f) {
-		worldTransform_.translate.y -= (fallSpeed_ * gravity_) * dt;
+	if (worldTransform_.translate.y <= 0.4f) {
+		worldTransform_.translate.y += 0.05f;
 	}
-	else if (worldTransform_.translate.y >= 0.6) {
+	else if (worldTransform_.translate.y >= 0.4f) {
 		worldTransform_.translate.y = 0.5f;
 	}
-
 
 	playerPos_ = player_->GetWorldPosition();
 	angle = atan2((worldTransform_.translate.z - playerPos_.z), (worldTransform_.translate.x - playerPos_.x));
@@ -57,54 +44,16 @@ void Enemy::EnemyMove() {
 		velocity_ = PhysicsFunc::SpeedComposition(playerPos_, worldTransform_.translate, angle, angle2);
 		speed_ = get<1>(velocity_);
 		speed_ = VectorTransform::Normalize(speed_);
-		isMove_ = false;	
+		isMove_ = false;
+
 	}
 	else {
 		worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, speed_);
 	}
 }
 
-void Enemy::RandomMove(){
-
-	int max = 20;
-	int min = -20;
-
-	randomX = min + rand() % (max - (min + 1));
-	randomZ = min + rand() % (max - (min + 1));
-
-	randomX = randomX / 10;
-	randomZ = randomZ / 10;
-
-	++count_;
-	//480/510
-	if (count_ >= 0 && speed_.x == 0.0f && speed_.z == 0.0f) {
-		if (!RandFlag)
-		{
-			randomSpeed.x = float(randomX);
-			randomSpeed.z = float(randomZ);
-			randomSpeed = VectorTransform::Multiply(randomSpeed, 0.1f);
-			randomSpeed.y = 0;
-			RandFlag = true;
-		}
-	}
-
-	if (worldTransform_.translate.x >= 28 || worldTransform_.translate.x <= -28 || worldTransform_.translate.z >= 28 || worldTransform_.translate.z <= -28) {
-		randomSpeed = VectorTransform::Multiply(randomSpeed, -1.0f);
-	}
-
-	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, randomSpeed);
-
-	if (count_ >= 120 && RandFlag) {
-		randomX = 0;
-		randomZ = 0;
-		count_ = 0;
-		randomSpeed = { 0,0,0 };
-		RandFlag = false;
-	}
-
-}
-
-Vector3 Enemy::GetWorldPosition() {
+Vector3 StoppedEnemy::GetWorldPosition()
+{
 	Vector3 WorldPos;
 	WorldPos.x = worldTransform_.matWorld.m[3][0];
 	WorldPos.y = worldTransform_.matWorld.m[3][1];
@@ -112,7 +61,7 @@ Vector3 Enemy::GetWorldPosition() {
 	return WorldPos;
 }
 
-Vector3 Enemy::GetVelocity()
+Vector3 StoppedEnemy::GetVelocity()
 {
 	Vector3 result;
 	result.x = speed_.x;
@@ -121,12 +70,12 @@ Vector3 Enemy::GetVelocity()
 	return result;
 }
 
-void Enemy::OnCollision(){
+void StoppedEnemy::OnCollision()
+{
 	isMove_ = true;
-	GameAudio::PlayHitSound();
 }
 
-void Enemy::OnTopWall()
+void StoppedEnemy::OnTopWall()
 {
 	if (worldTransform_.translate.z > static_cast<float>(FILD_MAP_SIZE_Z))
 	{
@@ -136,7 +85,7 @@ void Enemy::OnTopWall()
 	Score::AddScore(10);
 }
 
-void Enemy::OnBottomWall()
+void StoppedEnemy::OnBottomWall()
 {
 	if (worldTransform_.translate.z > static_cast<float>(FILD_MAP_SIZE_Z))
 	{
@@ -147,7 +96,7 @@ void Enemy::OnBottomWall()
 	//velocity.z = velocity.z * -1;
 }
 
-void Enemy::OnLeftWall()
+void StoppedEnemy::OnLeftWall()
 {
 	if (worldTransform_.translate.x > static_cast<float>(FILD_MAP_SIZE_X))
 	{
@@ -158,7 +107,7 @@ void Enemy::OnLeftWall()
 	isDead_ = true;
 }
 
-void Enemy::OnRightWall()
+void StoppedEnemy::OnRightWall()
 {
 	if (worldTransform_.translate.x > -static_cast<float>(FILD_MAP_SIZE_X))
 	{
