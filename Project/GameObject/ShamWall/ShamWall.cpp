@@ -28,13 +28,13 @@ void ShamWall::Update() {
 	
 #ifdef _DEBUG
 
-	ImGui::Begin("shamWall");
+	/*ImGui::Begin("shamWall");
 	ImGui::DragFloat3("scale", &shamWall_.worldTansform.scale.x, 0.005f);
 	ImGui::DragFloat3("rotation", &shamWall_.worldTansform.rotation.x, 0.005f);
 	ImGui::DragFloat3("translate", &shamWall_.worldTansform.translate.x, 0.005f);
 	ImGui::ColorEdit4("color", &modelColor_.x);
 	ImGui::DragFloat3("RGB", &color_.x, 0.01f);
-	ImGui::End();
+	ImGui::End();*/
 
 #endif // _DEBUG
 

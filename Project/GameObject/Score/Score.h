@@ -4,6 +4,11 @@
 #include "Graphics/TextureManager/TextureManager.h"
 #include"Input.h"
 #include "Audio.h"
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+#include <chrono>
+#include <thread>
 
 
 
@@ -60,13 +65,16 @@ private: // メンバ関数
 	/// </summary>
 	static void SetSrc();
 
+
 private: // メンバ変数
 
 	// スプライト
 	unique_ptr<Sprite>scoreSprite_[4];
+	unique_ptr<Sprite>scoreBgSprite_;
 
 	// テクスチャ
 	uint32_t scoreTexHD_;
+	uint32_t scoreBgTexHd_;
 
 	// テクスチャカラー
 	Vector4 texColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
@@ -75,6 +83,8 @@ private: // メンバ変数
 	SrcScore src_[10];
 	Vector2 scorePosition_[4]{};
 	WorldTransform scoreWorldTransform_[4]{};
+	Vector2 scoreBgPosition_;
+	WorldTransform scoreBgWorldTransform_;
 
 	// 獲得スコア
 	uint32_t acquisitionScore_;

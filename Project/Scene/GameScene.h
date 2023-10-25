@@ -19,6 +19,7 @@
 #include"GameObject/Skydome/Skydome.h"
 #include"GameObject/MapGround/MapGround.h"
 #include"GameObject/EnemyBomb/EnemyBombManager.h"
+#include "GameObject//StartCount/StartCount.h"
 
 class GameScene : public IScene
 {
@@ -65,6 +66,11 @@ private:
 	unique_ptr<Skydome>skydome_ = nullptr;
 	unique_ptr<MapGround>mapGround_ = nullptr;
 
+	unique_ptr<StartCount> startCount_ = nullptr;
+
+
+	bool isGame_;
+	int startGameSceneTimer_;
 };
 
 
