@@ -6,7 +6,7 @@ void Player::Initialize()
 	model_ = make_unique<Model>();
 	model_->UseLight(HARF_LAMBERT);
 	model_->Initialize(new ModelSphereState);
-	texHandle = TextureManager::LoadTexture("Resources/Green.png");
+	texHandle = TextureManager::LoadTexture("Resources/Texture/player.png");
 	model_->SetTexHandle(texHandle);
 
 	MoveEffect = make_unique<PlayerParticle>();

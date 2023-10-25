@@ -10,6 +10,8 @@ void Skydome::Initialize() {
 	skydome_.model->SetColor(modelColor_);
 	skydome_.worldTansform.Initialize();
 	skydome_.worldTansform.scale = { initScale_, initScale_, initScale_ };
+
+	skydome_.worldTansform.UpdateMatrix();
 }
 
 

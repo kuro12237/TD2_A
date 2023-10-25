@@ -19,6 +19,7 @@
 #include"GameObject/Skydome/Skydome.h"
 #include"GameObject/MapGround/MapGround.h"
 #include"GameObject/EnemyBomb/EnemyBombManager.h"
+#include "GameObject//StartCount/StartCount.h"
 
 class GameScene : public IScene
 {
@@ -58,12 +59,18 @@ private:
     stringstream fileLoad;
 	
 	shared_ptr<EnemyBombManager>enemyBombManager = nullptr;
+	uint32_t enemyTexHandle_;
 
 	unique_ptr<MapWallManager>mapWallManager_ = nullptr;
 	unique_ptr<ShamWall>shamWall_ = nullptr;
 	unique_ptr<Skydome>skydome_ = nullptr;
 	unique_ptr<MapGround>mapGround_ = nullptr;
 
+	unique_ptr<StartCount> startCount_ = nullptr;
+
+
+	bool isGame_;
+	int startGameSceneTimer_;
 };
 
 

@@ -33,15 +33,15 @@ void TimeCount::Initialize() {
 		}
 	}
 
-	for (int Index = 0; Index < 3; Index++) {
+	for (int Index = 0; Index < 2; Index++) {
 
 		// 座標
 		timeCountWorldTransform_->Initialize();
-		timeCountPosition_[Index] = { 480.0f + (95.0f * Index), 20.0f };
+		timeCountPosition_[Index] = { 545.0f + (85.0f * Index), 0.0f };
 		// スプライト
 		timeCountSprite_[Index] = make_unique<Sprite>();
 		timeCountSprite_[Index]->SetSrc(src_[0].RightTop, src_[0].RightBottom, src_[0].LeftTop, src_[0].LeftBottom);
-		timeCountSprite_[Index]->Initialize(new SpriteBoxState, timeCountPosition_[Index], { 128.0f, 128.0f });
+		timeCountSprite_[Index]->Initialize(new SpriteBoxState, timeCountPosition_[Index], { 104.0f, 104.0f });
 		timeCountSprite_[Index]->SetTexHandle(numberTexHD_);
 		timeCountSprite_[Index]->SetColor(textureColor_);
 	}
@@ -59,13 +59,50 @@ void TimeCount::Initialize() {
 
 	// 初期化
 	timeUpUISprite_ = make_unique<Sprite>();
-	timeUpUIPosition_ = { 200.0f, 230.0f }; // <-あとで座標直す
-	timeUpUISprite_->Initialize(new SpriteBoxState, timeUpUIPosition_, { 900.0f, 300.0f });
+	timeUpUIPosition_ = { 0.0f, 0.0f }; // <-あとで座標直す
+	timeUpUISprite_->Initialize(new SpriteBoxState, timeUpUIPosition_, { 1280.0f, 720.0f });
 	timeUpUISprite_->SetColor(textureColor_);
 	timeUpUISprite_->SetTexHandle(timeUpUITextureHD_);
 	// ワールドトランスフォーム
 	timeUpUIWorldTransform_.Initialize();
-	timeUpUIWorldTransform_.scale = { 2.0f, 3.0f, 1.0f };
+	timeUpUIWorldTransform_.scale = { 1.0f, 1.0f, 1.0f };
+
+#pragma endregion
+
+
+
+#pragma region TimerUIBackGround
+
+	// テクスチャの読み込み
+	timerUIBGTexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/TimerBg.png");
+
+	// 初期化
+	timerUIBGSprite_ = make_unique<Sprite>();
+	timerUIBGPosition_ = { 0.0f, 0.0f };
+	timerUIBGSprite_->Initialize(new SpriteBoxState, timerUIBGPosition_, { 1280.0f, 720.0f });
+	timerUIBGSprite_->SetTexHandle(timerUIBGTexHD_);
+	timerUIBGSprite_->SetColor(textureColor_);
+	
+	// ワールドトランスフォーム
+	timerUIBGWorldTransform_.Initialize();
+
+	isTimeUp_ = 0;
+
+#pragma endregion
+
+#pragma region A
+
+	ATexHD_ = TextureManager::LoadTexture("Resources/Texture/UI/A.png");
+
+	// 初期化
+	ASprite_ = make_unique<Sprite>();
+	APosition_ = { 430.0f, 350.0f };
+	ASprite_->Initialize(new SpriteBoxState, APosition_, { 400.0f, 400.0f });
+	ASprite_->SetTexHandle(ATexHD_);
+	ASprite_->SetColor(textureColor_);
+
+	// ワールドトランスフォーム
+	ATransform_.Initialize();
 
 #pragma endregion
 }
@@ -99,22 +136,18 @@ void TimeCount::Update() {
 		ReSetTimer();
 	}
 
-	for (int Index = 0; Index < 3; Index++) {
+	for (int Index = 0; Index < 2; Index++) {
 		timeCountWorldTransform_[Index].UpdateMatrix();
 	}
+	timerUIBGWorldTransform_.UpdateMatrix();
+	timeUpUIWorldTransform_.UpdateMatrix();
+	ATransform_.UpdateMatrix();
 
 
 #ifdef _DEBUG
 
 
 	ImGui::Begin("TimeCount");
-	ImGui::Text("frame_ = %d", frame_);
-	ImGui::Text("nowTimer = %d", nowLimitTime_);
-	ImGui::Text("100 = %d", eachTime_[0]);
-	ImGui::Text(" 10 = %d", eachTime_[1]);
-	ImGui::Text("  1 = %d", eachTime_[2]);
-	ImGui::Text("isTimeUp_ = %d", isTimeUp_);
-	ImGui::Text("R-key : ResetTimer");
 	ImGui::Checkbox("isDebugMode", &isDebug_);
 	ImGui::End();
 
@@ -207,11 +240,9 @@ void TimeCount::ReSetTimer() {
 void TimeCount::CalcTimerPlace(uint32_t nowTimer) {
 
 	// 100の位
-	eachTime_[0] = (nowTimer % 1000) / 100;
+	eachTime_[0] = (nowTimer % 100) / 10;
 	// 10の位
-	eachTime_[1] = (nowTimer % 100) / 10;
-	// 1の位
-	eachTime_[2] = (nowTimer % 10) / 1;
+	eachTime_[1] = (nowTimer % 10) / 1;
 }
 
 
@@ -222,7 +253,6 @@ void TimeCount::SetSrc() {
 	// 各位の値にあったテクスチャを設定する
 	timeCountSprite_[0]->SetSrc(src_[eachTime_[0]].RightTop, src_[eachTime_[0]].RightBottom, src_[eachTime_[0]].LeftTop, src_[eachTime_[0]].LeftBottom);
 	timeCountSprite_[1]->SetSrc(src_[eachTime_[1]].RightTop, src_[eachTime_[1]].RightBottom, src_[eachTime_[1]].LeftTop, src_[eachTime_[1]].LeftBottom);
-	timeCountSprite_[2]->SetSrc(src_[eachTime_[2]].RightTop, src_[eachTime_[2]].RightBottom, src_[eachTime_[2]].LeftTop, src_[eachTime_[2]].LeftBottom);
 }
 
 
@@ -230,11 +260,14 @@ void TimeCount::SetSrc() {
 // 描画処理
 void TimeCount::Draw() {
 
-	for (int Index = 0; Index < 3; Index++) {
+	timerUIBGSprite_->Draw(timerUIBGWorldTransform_);
+
+	for (int Index = 0; Index < 2; Index++) {
 		timeCountSprite_[Index]->Draw(timeCountWorldTransform_[Index]);
 	}
 	if (isTimeUp_) {
 		timeUpUISprite_->Draw(timeUpUIWorldTransform_);
+		ASprite_->Draw(timerUIBGWorldTransform_);
 	}
 }
 

@@ -2,10 +2,6 @@
 
 void GameScene::Initialize()
 {
-	//Grid* grid = new Grid();
-	//grid->Initialize();
-	//GridCommandをセット
-	//DebugTools::addCommand(grid, "Grid");
 	DebugCamera* debugcamera = new DebugCamera();
 	debugcamera->Initialize();
 	DebugTools::addCommand(debugcamera, "DebugCamera");
@@ -16,14 +12,16 @@ void GameScene::Initialize()
 	timeCount_->Initialize();
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
+	// 天球
+	skydome_ = make_unique<Skydome>();
+	skydome_->Initialize();
+
 	//// フェードの処理
 	TransitionProcess::Initialize();
 	//// フェードに使う画像の設定
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetTexHandle(useFade_BG);
 	//// 色を黒くしておく
-	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
-	//// フェードが明ける処理
-	TransitionProcess::Fade_Out_Init();
+	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
 
 	//// スコア
 	Score::Initialize();
@@ -32,6 +30,7 @@ void GameScene::Initialize()
 	player_->Initialize();
 
 	LoadEnemyDate();
+	enemyTexHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
 
 	MainCamera::Initialize();
 	MainCamera::SetOffset({ 0.0f,3.0f,-50.0f });
@@ -43,10 +42,6 @@ void GameScene::Initialize()
 	// 見かけの壁
 	shamWall_ = make_unique<ShamWall>();
 	shamWall_->Initialize();
-
-	// 天球
-	skydome_ = make_unique<Skydome>();
-	skydome_->Initialize();
 
 	// 床
 	mapGround_ = make_unique<MapGround>();
@@ -60,82 +55,145 @@ void GameScene::Initialize()
 	enemyBombManager = make_shared<EnemyBombManager>();
 	enemyBombManager->Initialize();
 
+
+	startCount_ = make_unique<StartCount>();
+	startCount_->Initialize();
+
+
+	isGame_ = true;
+	TransitionProcess::Fade_Out_Init();
 }
 
 void GameScene::Update(GameManager* scene)
 {
 	scene;
 	DebugTools::UpdateExecute(0);
-	//DebugTools::UpdateExecute(1);
 
-	if (Input::GetInstance()->PushKeyPressed(DIK_9))
-	{
-		TransitionProcess::Fade_In_Init();
+
+	///// ゲームの処理に入る
+	if (isGame_) {
+
+		if (TransitionProcess::Fade_Out()) {
+
+			if (flag)
+			{
+				hitparticle_->Spown(player_->GetWorldTransform().translate);
+				MainCamera::SetIsShake(flag);
+			}
+
+
+			/* ---------- スタートカウント---------- */
+
+			// 更新処理
+			//startCount_->Update();
+
+
+
+			/* ---------- プレイヤー ---------- */
+
+			// プレイヤーの更新処理
+			player_->Update();
+
+			// プレイヤーにエネミーを送る 
+			player_->SetEnemy(enemys_);
+
+			// プレイヤーのスコアの処理
+			Score::Update();
+			player_->SetEnemy(enemys_);
+
+			// 多分プレイヤーのパーティクル
+			hitparticle_->Update();
+
+
+
+			/* ---------- エネミー ---------- */
+
+			// エネミーの更新処理諸々
+			for (shared_ptr<Enemy>& enemy : enemys_) {
+				enemy->RandomMove();
+				enemy->SetPlayer(player_.get());
+				enemy->Update();
+			}
+
+			// これは何かしらん
+			enemyBombManager->Update(player_.get());
+
+			// これも何か知らん
+			EnemyReset();
+
+			// 多分CSV読んでエネミーをリスさせてる
+			UpdateEnemyCommands();
+
+
+
+			/* ---------- 壁 --------- */
+
+			//マップの壁との当たり判定
+			MapWallCollision();
+
+			//壁のupdate
+			mapWallManager_->Update();
+			shamWall_->Update();
+
+
+
+			/* ---------- 床 --------- */
+
+			// 床の更新処理
+			mapGround_->Updatea();
+
+
+
+			/* ---------- 天球 --------- */
+
+			// 天球の更新処理
+			skydome_->Update();
+
+
+
+			/* ---------- 制限時間 --------- */
+
+			// 制限時間の処理
+			timeCount_->Update();
+			// 時間切れ時の処理
+			if (timeCount_->GetIsTimeUp())
+			{
+				if (Input::GetInstance()->PushKeyPressed(DIK_SPACE))
+				{
+					TransitionProcess::Fade_In_Init();
+				}
+			}
+
+
+
+			/* ---------- 当たり判定 --------- */
+
+			//当たり判定
+			Collision();
+		}
 	}
-	if (Input::GetInstance()->PushKeyPressed(DIK_5))
-	{
-		Score::AddScore(100);
-	}
-	// フェードの処理が終わったらシーン遷移
+
+	enemys_.remove_if([](shared_ptr<Enemy>& enemy) {
+		if (enemy->IsDead()) {
+			enemy.reset();
+			return true;
+		}
+		return false;
+	});
+
+
+
+	/* ---------- フェード---------- */
+
+	// フェードが入る処理
+	TransitionProcess::Fade_In();
+	// フェードに入り終わったらシーンチェンジ
 	if (TransitionProcess::Fade_In()) {
 		scene->ChangeState(new ResultScene);
 		return;
 	}
 
-	// フェードが明ける処理
-	TransitionProcess::Fade_In();
-	TransitionProcess::Fade_Out();
 
-	// フェードが明けたらゲーム処理に入る
-	if (!TransitionProcess::Fade_Out()) {
-		return;
-	}
-	if (player_->GetHitFlag())
-	{
-		hitparticle_->Spown(player_->GetWorldTransform().translate);
-		MainCamera::SetIsShake(true);
-	}
-
-	Score::Update();
-	timeCount_->Update();
-	// 時間切れ時の処理
-	if (!timeCount_->GetIsTimeUp())
-	{
-		//GameObjectの基本更新
-		//時間切れになったらifを抜ける
-	}
-
-	player_->SetEnemy(enemys_);
-	for (shared_ptr<Enemy>& enemy : enemys_) {
-		enemy->RandomMove();
-		enemy->SetPlayer(player_.get());
-		enemy->Update();
-	}
-
-
-	enemyBombManager->Update(player_.get());
-	
-	player_->Update();
-	
-	hitparticle_->Update();
-
-	EnemyReset();
-
-	UpdateEnemyCommands();
-	//マップの壁との当たり判定
-	MapWallCollision();
-	//壁のupdate
-	mapWallManager_->Update();
-	shamWall_->Update();
-	
-	// 天球
-	skydome_->Update();
-
-	// 床
-	mapGround_->Updatea();
-	
-	//当たり判定
-	Collision();
 	//カメラ
 	MainCamera::Update(player_->GetWorldTransform());
 
@@ -151,31 +209,45 @@ void GameScene::Back2dSpriteDraw()
 void GameScene::Object3dDraw()
 {
 	DebugTools::DrawExecute(0);
-	//DebugTools::DrawExecute(1);
 
+	// 天球
 	skydome_->Draw(viewProjection);
 
+	// 床
 	mapGround_->Draw(viewProjection);
 
+	// 壁
+	shamWall_->Draw(viewProjection);
+
+	// プレイヤー
 	player_->Draw(viewProjection);
-	enemyBombManager->Draw(viewProjection);
 
-
-	// 敵
+	// エネミー
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		enemy->Draw(viewProjection);
 	}
-	hitparticle_->Draw(viewProjection);
+	enemyBombManager->Draw(viewProjection);
 
-	//mapWallManager_->Draw(viewProjection);
-	shamWall_->Draw(viewProjection);
+	// パーティクル
+	hitparticle_->Draw(viewProjection);
 }
 
 void GameScene::Flont2dSpriteDraw()
 {
-	
-	timeCount_->Draw();
-	Score::Draw();
+	// フェードが明けたら描画
+	if (TransitionProcess::Fade_Out()) {
+
+		// スタート時のカウント
+		//startCount_->Draw();
+
+		// スコアの描画
+		Score::Draw();
+
+		// 制限時間の描画
+		timeCount_->Draw();
+	}
+
+	// フェード 
 	TransitionProcess::Draw();
 	
 }
@@ -270,7 +342,7 @@ void GameScene::UpdateEnemyCommands() {
 void GameScene::EnemySpawn(const Vector3& position) {
 
 	shared_ptr<Enemy> enemy = make_shared<Enemy>();
-	enemy->Initialize(position);
+	enemy->Initialize(position, enemyTexHandle_);
 	enemy->SetPlayer(player_.get());
 	player_->SetEnemy(enemys_);
 	enemys_.push_back(enemy);
@@ -281,9 +353,8 @@ void GameScene::EnemyReset() {
 	if (Input::GetInstance()->PushKeyPressed(DIK_R)) {
 		enemys_.clear();
 		for (shared_ptr<Enemy>& enemy : enemys_) {
-
 			enemy = make_shared<Enemy>();
-			enemy->Initialize({ 0,0.5,0 });
+			enemy->Initialize({ 0,0.5,0 }, enemyTexHandle_);
 		}
 
 		LoadEnemyDate();
