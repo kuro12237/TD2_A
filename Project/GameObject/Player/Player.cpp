@@ -147,8 +147,16 @@ void Player::Move()
 		//回転
 		Rvelocity.x = 0.0f;
 		Rvelocity.z = 0.0f;
-		Rvelocity.y = float(joyState.Gamepad.sThumbLX / SHRT_MAX);
-		Rvelocity.y = Rvelocity.y * 0.1f;
+		Rvelocity.y = 0.0f;
+		if (joyState.Gamepad.wButtons& XINPUT_GAMEPAD_DPAD_LEFT)
+		{
+			Rvelocity.y = -0.05f;
+		}
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
+		{
+			Rvelocity.y = 0.05f;
+		}
+		//Rvelocity.y = Rvelocity.y * 0.1f;
 		worldTransform_.rotation = VectorTransform::Add(worldTransform_.rotation, Rvelocity);
 		
 		//発射処理
@@ -164,7 +172,7 @@ void Player::Move()
 #pragma endregion 
     
 	//フラグ切り替え
-	if (abs(Velocity.x)<0.05f && abs(Velocity.y)<0.05f && abs(Velocity.z)<0.05f)
+	if (abs(Velocity.x)<0.5f && abs(Velocity.y)<0.5f && abs(Velocity.z)<0.5f)
 	{
 		MoveFlag = false;
 	}
@@ -181,17 +189,14 @@ void Player::Move()
 		angle = angle * 180.0f / (float)M_PI;
 		angle2 = angle2 * 180.0f / (float)M_PI;
 
-			if (isMove_) {
+		if (isMove_) {
 
-				velocity_ = PhysicsFunc::SpeedComposition(enemyPos_, worldTransform_.translate, angle, angle2);
-				HitVelo = get<0>(velocity_);
-				HitVelo = VectorTransform::Normalize(HitVelo);
-				Velocity = HitVelo;
-				isMove_ = false;
-			}
-			
-		
-
+			velocity_ = PhysicsFunc::SpeedComposition(enemyPos_, worldTransform_.translate, angle, angle2);
+			HitVelo = get<0>(velocity_);
+			HitVelo = VectorTransform::Normalize(HitVelo);
+			Velocity = HitVelo;
+			isMove_ = false;
+		}
 	}
 	// ここまで ↑
   
