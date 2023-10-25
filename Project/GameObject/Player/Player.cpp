@@ -30,7 +30,7 @@ void Player::Initialize()
 
 	isMove_ = false;
 	SetCollosionAttribute(kCollisionAttributePlayer);
-	SetCollisionMask(kCollisionAttributeEnemy);
+	SetCollisionMask(kCollisionMaskPlayer);
 	
 	SetSize(model_->GetSize());
 }

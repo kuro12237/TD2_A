@@ -14,8 +14,8 @@ void EnemyBomb::Initialize(Vector3 position, uint32_t texHandle)
 	model->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 
 	model->SetTexHandle(texHandle);
-	SetCollosionAttribute(kCollisionAttributeEnemy);
-	SetCollisionMask(kCollisionAttributePlayer);
+	SetCollosionAttribute(kCollisionAttributeEnemyBomb);
+	SetCollisionMask(kCollisionMaskEnemyBomb);
 }
 
 void EnemyBomb::Update()
@@ -43,9 +43,9 @@ Vector3 EnemyBomb::GetWorldPosition()
 
 void EnemyBomb::OnCollision()
 {
-	Score::AddScore(100);
 	if (!SceneChangeFlag)
 	{
+		Score::AddScore(100);
 		ChangeState(new StateBreakEnemyBomb);
 		SceneChangeFlag = true;
 	}

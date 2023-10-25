@@ -16,7 +16,7 @@ void Enemy::Initialize(const Vector3& position, uint32_t texHandle) {
 	worldTransform_.UpdateMatrix();
 	srand(static_cast<unsigned>(time(nullptr)));
 	SetCollosionAttribute(kCollisionAttributeEnemy);
-	SetCollisionMask(kCollisionAttributePlayer);
+	SetCollisionMask(kCollisionMaskEnemy);
 }
 
 /// <summary>
