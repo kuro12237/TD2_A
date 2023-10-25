@@ -10,7 +10,7 @@ WinApp *WinApp::GetInstance()
 void WinApp::Initialize()
 {
 	WinApp::GetInstance()->wc_.lpfnWndProc = WinApp::WindowProc;
-	WinApp::GetInstance()->wc_.lpszClassName = L"CLEYERA";
+	WinApp::GetInstance()->wc_.lpszClassName = L"2128_“ËŒ‚";
 	WinApp::GetInstance()->wc_.hInstance = GetModuleHandle(nullptr);
 	WinApp::GetInstance()->wc_.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	RegisterClass(&WinApp::GetInstance()->wc_);
@@ -22,7 +22,7 @@ void WinApp::Initialize()
 
 	WinApp::GetInstance()->hwnd_=CreateWindow(
 		WinApp::GetInstance()->wc_.lpszClassName,
-		L"CLEYERA",
+		L"2128_“ËŒ‚",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,

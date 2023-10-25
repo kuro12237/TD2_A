@@ -403,6 +403,7 @@
     <ClCompile Include="Project\GameObject\EnemyBomb\state\StateSpownEnemyBomb.cpp">
       <Filter>Project\GameObject\EnemyBomb\State</Filter>
     </ClCompile>
+    <ClCompile Include="Project\GameObject\StartCount\StartCount.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Utility\Pch\Pch.h">
@@ -663,6 +664,7 @@
     <ClInclude Include="Project\GameObject\EnemyBomb\state\StateSpownEnemyBomb.h">
       <Filter>Project\GameObject\EnemyBomb\State</Filter>
     </ClInclude>
+    <ClInclude Include="Project\GameObject\StartCount\StartCount.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\ShapeObject3d.PS.hlsl">
