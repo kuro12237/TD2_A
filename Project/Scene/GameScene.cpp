@@ -2,10 +2,6 @@
 
 void GameScene::Initialize()
 {
-	//Grid* grid = new Grid();
-	//grid->Initialize();
-	//GridCommandをセット
-	//DebugTools::addCommand(grid, "Grid");
 	DebugCamera* debugcamera = new DebugCamera();
 	debugcamera->Initialize();
 	DebugTools::addCommand(debugcamera, "DebugCamera");
@@ -69,22 +65,6 @@ void GameScene::Update(GameManager* scene)
 {
 	scene;
 	DebugTools::UpdateExecute(0);
-	//DebugTools::UpdateExecute(1);
-	if (Input::GetInstance()->PushKeyPressed(DIK_5))
-	{
-		Score::AddScore(100);
-	}
-
-
-	//if (!isGame_)
-	//{
-	//	startGameSceneTimer_++;
-
-	//	if (startGameSceneTimer_ >= 120) {
-	//		isGame_ = true;
-	//		//TransitionProcess::Fade_Out_Init();
-	//	}
-	//}
 
 
 	///// ゲームの処理に入る
@@ -109,7 +89,8 @@ void GameScene::Update(GameManager* scene)
 			/* ---------- スタートカウント---------- */
 
 			// 更新処理
-			startCount_->Update();
+			//startCount_->Update();
+
 
 
 			/* ---------- プレイヤー ---------- */
@@ -225,33 +206,45 @@ void GameScene::Back2dSpriteDraw()
 void GameScene::Object3dDraw()
 {
 	DebugTools::DrawExecute(0);
-	//DebugTools::DrawExecute(1);
 
+	// 天球
 	skydome_->Draw(viewProjection);
 
+	// 床
 	mapGround_->Draw(viewProjection);
 
+	// 壁
+	shamWall_->Draw(viewProjection);
+
+	// プレイヤー
 	player_->Draw(viewProjection);
-	enemyBombManager->Draw(viewProjection);
 
-
-	// 敵
+	// エネミー
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		enemy->Draw(viewProjection);
 	}
-	hitparticle_->Draw(viewProjection);
+	enemyBombManager->Draw(viewProjection);
 
-	//mapWallManager_->Draw(viewProjection);
-	shamWall_->Draw(viewProjection);
+	// パーティクル
+	hitparticle_->Draw(viewProjection);
 }
 
 void GameScene::Flont2dSpriteDraw()
 {
+	// フェードが明けたら描画
 	if (TransitionProcess::Fade_Out()) {
+
+		// スタート時のカウント
 		startCount_->Draw();
+
+		// スコアの描画
 		Score::Draw();
+
+		// 制限時間の描画
 		timeCount_->Draw();
 	}
+
+	// フェード 
 	TransitionProcess::Draw();
 }
 
