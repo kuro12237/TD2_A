@@ -75,10 +75,10 @@ void GameScene::Update(GameManager* scene)
 
 		if (TransitionProcess::Fade_Out()) {
 
-			if (flag)
+			if (player_->GetHitFlag())
 			{
 				hitparticle_->Spown(player_->GetWorldTransform().translate);
-				MainCamera::SetIsShake(flag);
+				MainCamera::SetIsShake(true);
 			}
 
 
