@@ -1,5 +1,5 @@
-#include "WinApp.h"
-
+ï»¿#include "WinApp.h"
+#include<wchar.h>
 WinApp *WinApp::GetInstance()
 {
 	static WinApp instance;
@@ -10,7 +10,7 @@ WinApp *WinApp::GetInstance()
 void WinApp::Initialize()
 {
 	WinApp::GetInstance()->wc_.lpfnWndProc = WinApp::WindowProc;
-	WinApp::GetInstance()->wc_.lpszClassName = L"2128_“ËŒ‚";
+	WinApp::GetInstance()->wc_.lpszClassName = L"CLEYERA";
 	WinApp::GetInstance()->wc_.hInstance = GetModuleHandle(nullptr);
 	WinApp::GetInstance()->wc_.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	RegisterClass(&WinApp::GetInstance()->wc_);
@@ -19,10 +19,10 @@ void WinApp::Initialize()
 	WinApp::GetInstance()->kWindowWidth,
 	WinApp::GetInstance()->kWindowHeight };
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
-
+	
 	WinApp::GetInstance()->hwnd_=CreateWindow(
 		WinApp::GetInstance()->wc_.lpszClassName,
-		L"2128_“ËŒ‚",
+		L"2128_çªæ’ƒ",
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
@@ -33,7 +33,12 @@ void WinApp::Initialize()
 		WinApp::GetInstance()->wc_.hInstance,
 		nullptr
 	);
+	HFONT hFont = CreateFont(24, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+		CLIP_DEFAULT_PRECIS, CLEARTYPE_NATURAL_QUALITY, DEFAULT_PITCH | FF_SWISS, L"Arial");
+	SendMessage(WinApp::GetInstance()->hwnd_, WM_SETFONT, (WPARAM)hFont, TRUE);
 
+	// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒˆãƒ«ã®å¤‰æ›´
+	//SetWindowText(WinApp::GetInstance()->hwnd_, L"2128_çªæ’ƒ");
 	ShowWindow(WinApp::GetInstance()->hwnd_, SW_SHOW);
 
 	timeBeginPeriod(1);
@@ -94,9 +99,9 @@ LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	}
 	switch (msg)
 	{
-		//ƒEƒCƒ“ƒhƒE‚ª”jŠü
+		//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ãŒç ´æ£„
 	case WM_DESTROY:
-		//OS‚É‘Î‚µƒAƒvƒŠI—¹‚ğ“`‚¦‚é
+		//OSã«å¯¾ã—ã‚¢ãƒ—ãƒªçµ‚äº†ã‚’ä¼ãˆã‚‹
 		PostQuitMessage(0);
 		return 0;
 	}
