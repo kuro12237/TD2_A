@@ -16,7 +16,7 @@ Vector3 PhysicsFunc::Repulsiveforce(float k, Vector3 v1, Vector3 v2) {
 
 tuple<Vector3, Vector3> PhysicsFunc::Decomposition(Vector3& v1, float angle) {
 
-	float initialVelo = sqrt(VectorTransform::Dot(v1,v1)); // 速度の合成
+	float initialVelo = sqrt((v1.x * v1.x) + (v1.z * v1.z)); // 速度の合成
 	float angle2 = atan2(v1.z, v1.x); // 進行方向
 	float angleSA = angle2 - angle;	// 角度の差
 
@@ -37,15 +37,21 @@ tuple<Vector3, Vector3> PhysicsFunc::Decomposition(Vector3& v1, float angle) {
 	------------------------------*/
 	Vector3 playerVelo;
 
-	if (std::sin(angleSA) < 0) {
-		playerVelo.x = playerVec * std::cos(angle - (float)M_PI / 2.0f);
-		playerVelo.y = 0.0f;
-		playerVelo.z = playerVec * std::sin(angle - (float)M_PI / 2.0f);
+	if (initialVelo == 0.0f) {
+		// ゼロ割りを防ぐ
+		playerVelo = { 0.0f, 0.0f, 0.0f };
 	}
 	else {
-		playerVelo.x = playerVec * std::cos(angle + (float)M_PI / 2.0f);
-		playerVelo.y = 0.0f;
-		playerVelo.z = playerVec * std::sin(angle + (float)M_PI / 2.0f);
+		if (std::sin(angleSA) < 0) {
+			playerVelo.x = playerVec * std::cos(angle - (float)M_PI / 2.0f);
+			playerVelo.y = 0.0f;
+			playerVelo.z = playerVec * std::sin(angle - (float)M_PI / 2.0f);
+		}
+		else {
+			playerVelo.x = playerVec * std::cos(angle + (float)M_PI / 2.0f);
+			playerVelo.y = 0.0f;
+			playerVelo.z = playerVec * std::sin(angle + (float)M_PI / 2.0f);
+		}
 	}
 
 
@@ -54,8 +60,14 @@ tuple<Vector3, Vector3> PhysicsFunc::Decomposition(Vector3& v1, float angle) {
 
 tuple<Vector3, Vector3> PhysicsFunc::SpeedComposition(Vector3& v1,Vector3& v2, float angle1, float angle2) {
 
+	if (angle1 == 0.0f || angle2 == 0.0f) {
+		// ゼロ割りエラーが発生する場合、適切な処理を行う
+		return { Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f) };
+	}
+
 	tuple<Vector3, Vector3> Velo1 = PhysicsFunc::Decomposition(v1, angle1);
 	tuple<Vector3, Vector3> Velo2 = PhysicsFunc::Decomposition(v2, angle2);
+
 
 	Vector3 Velo3 = get<0>(Velo1);
 	Vector3	Velo4 = get<1>(Velo1);
@@ -64,6 +76,8 @@ tuple<Vector3, Vector3> PhysicsFunc::SpeedComposition(Vector3& v1,Vector3& v2, f
 
 	Vector3 playerVelo = VectorTransform::Add(Velo3, Velo5);
 	Vector3 opponentVelo = VectorTransform::Add(Velo4, Velo6);
+	playerVelo = VectorTransform::Normalize(playerVelo);
+	opponentVelo = VectorTransform::Normalize(opponentVelo);
 
 	return	 { playerVelo, opponentVelo };
 }
