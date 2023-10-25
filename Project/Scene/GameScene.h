@@ -62,7 +62,8 @@ private:
     stringstream fileLoad;
 	
 	shared_ptr<EnemyBombManager>enemyBombManager = nullptr;
-	uint32_t enemyTexHandle_;
+	uint32_t enemyTexHandle_ = 0;
+	uint32_t stopeedEnemyTexHandle_ = 0;
 	uint32_t enemyCount_ = 0;
 
 	unique_ptr<MapWallManager>mapWallManager_ = nullptr;

@@ -72,12 +72,7 @@ void TutorialScene::Update(GameManager* scene)
 				TransitionProcess::Fade_In_Init();
 			}
 			TransitionProcess::Fade_In();
-			// フェードの処理が終わったらシーン遷移
-			if (TransitionProcess::Fade_In()) {
-
-				scene->ChangeState(new GameScene);
-				return;
-			}
+		
 
 				if (nowPage_ == 0) {
 
@@ -104,14 +99,12 @@ void TutorialScene::Update(GameManager* scene)
 							TransitionProcess::Fade_In_Init();
 						}
 					}
+					// フェードの処理が終わったらシーン遷移
+					if (TransitionProcess::Fade_In()) {
+						scene->ChangeState(new GameScene);
+						return;
+					}
 				}
-				// フェードの処理が終わったらシーン遷移
-				if (TransitionProcess::Fade_In()) {
-					scene->ChangeState(new GameScene);
-					return;
-				}
-
-
 			
 		}
 	}
