@@ -16,7 +16,7 @@ void PlayerParticle::Spown(Vector3 position)
 	spownTime++;
 	if (spownTime > 1)
 	{
-		for (int i = 0; i < 7; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			Particle_param p1{};
 			p1.worldTransform_.Initialize();
@@ -27,10 +27,11 @@ void PlayerParticle::Spown(Vector3 position)
 			p1.worldTransform_.translate = VectorTransform::Add(position, randpos);
 
 			uniform_real_distribution<float>distributionAlpha(0.2f, 1.0f);
-			p1.color_ = { 1,1,1,distributionAlpha(randomEngine) };
+			Vector4 color = Model::ColorConversion(0x616161ff);
+			p1.color_ = { color.x,color.y,color.z,distributionAlpha(randomEngine) };
 
 			ParticleUV(p1.uvTransform_.scale, p1.uvTransform_.translate);
-
+			
 			particle_->PushList(p1);
 		}
 		spownTime = 0;

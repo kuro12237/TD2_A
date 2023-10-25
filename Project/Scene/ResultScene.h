@@ -39,7 +39,7 @@ public:
 private:
 
 	/* ----- テクスチャ ----- */
-	unique_ptr<Sprite>result_Sprite_;
+	unique_ptr<Sprite>result_Sprite_=nullptr;
 	// ハンドル
 	uint32_t result_TexHD_{};
 	// ハンドル
@@ -47,7 +47,7 @@ private:
 
 	/* ----- 座標系 ----- */
 	// ２次元座標
-	Vector2 result_Position_;
+	Vector2 result_Position_ = {};
 	// ワールドトランスフォーム
-	WorldTransform result_WorldTransform_;
+	WorldTransform result_WorldTransform_ = {};
 };

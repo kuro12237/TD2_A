@@ -39,17 +39,17 @@ public:
 private:
 
 	/* ----- テクスチャ ----- */
-	unique_ptr<Sprite>tutorial_Sprite_;
+	unique_ptr<Sprite>tutorial_Sprite_ = nullptr;
 	// ハンドル
-	uint32_t tutorial_TexHD_{};
+	uint32_t tutorial_TexHD_ = {};
 	// ハンドル
 	Vector4 tutorial_TexColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	/* ----- 座標系 ----- */
 	// ２次元座標
-	Vector2 tutorial_Position_;
+	Vector2 tutorial_Position_ = {};
 	// ワールドトランスフォーム
-	WorldTransform tutorial_WorldTransform_;
+	WorldTransform tutorial_WorldTransform_ = {};
 
-	bool frag;
+	bool frag = {};
 };

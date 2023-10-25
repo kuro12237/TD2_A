@@ -85,6 +85,7 @@
     <ClCompile Include="Project\GameObject\EnemyBomb\EnemyBombManager.cpp" />
     <ClCompile Include="Project\GameObject\EnemyBomb\state\StateBreakEnemyBomb.cpp" />
     <ClCompile Include="Project\GameObject\EnemyBomb\state\stateMoveEnemyBomb.cpp" />
+    <ClCompile Include="Project\GameObject\EnemyBomb\state\StateSpownEnemyBomb.cpp" />
     <ClCompile Include="Project\GameObject\MapGround\MapGround.cpp" />
     <ClCompile Include="Project\GameObject\PhysicsFunc.cpp" />
     <ClCompile Include="Project\GameObject\HitParticle\HitParticle.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Project\GameObject\EnemyBomb\state\IstateEnemyBomb.h" />
     <ClInclude Include="Project\GameObject\EnemyBomb\state\StateBreakEnemyBomb.h" />
     <ClInclude Include="Project\GameObject\EnemyBomb\state\StateMoveEnemyBomb.h" />
+    <ClInclude Include="Project\GameObject\EnemyBomb\state\StateSpownEnemyBomb.h" />
     <ClInclude Include="Project\GameObject\HitParticle\HitParticle.h" />
     <ClInclude Include="Project\GameObject\MapGround\MapGround.h" />
     <ClInclude Include="Project\GameObject\MapWall\MapWallManager.h" />

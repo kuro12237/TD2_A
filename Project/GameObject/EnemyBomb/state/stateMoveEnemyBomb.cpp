@@ -4,12 +4,6 @@ void stateMoveEnemyBomb::Move(WorldTransform& worldTransform, EnemyBomb* state)
 {
 	StateChangeTimer++;
 
-	if (StateChangeTimer >= 600)
-	{
-		state->ChangeState(new StateBreakEnemyBomb);
-		return;
-	}
-
 	Vector3 Ppos = state->GetPlayer()->GetWorldPosition();
 	Vector3 Epos = state->GetWorldPosition();
 	Vector3 v{};

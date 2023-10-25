@@ -80,7 +80,7 @@ public:
 
 private:
 
-	WallElemnt shamWall_;
+	WallElemnt shamWall_ = {};
 
 
 	// 初期スケール
@@ -91,9 +91,9 @@ private:
 	Vector4 modelColor_ = { 1.0f, 0.0f, 0.0f, 1.0f };
 
 	// RGBカラー
-	Vector3 color_;
+	Vector3 color_ = {};
 
-	WallColorState* calcColorState_;
+	WallColorState* calcColorState_ = nullptr;
 
 
 	ColorState colorState_ = AddGreen;
