@@ -43,9 +43,10 @@ Vector3 EnemyBomb::GetWorldPosition()
 
 void EnemyBomb::OnCollision()
 {
-	Score::AddScore(100);
+	
 	if (!SceneChangeFlag)
 	{
+		Score::AddScore(100);
 		ChangeState(new StateBreakEnemyBomb);
 		SceneChangeFlag = true;
 	}

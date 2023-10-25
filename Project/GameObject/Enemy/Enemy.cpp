@@ -39,8 +39,6 @@ void Enemy::Draw(ViewProjection viewProjection){
 
 void Enemy::EnemyMove() {
 
-
-
 	if (worldTransform_.translate.y >= 0.6f) {
 		worldTransform_.translate.y -= (fallSpeed_ * gravity_) * dt;
 	}
@@ -93,6 +91,11 @@ void Enemy::RandomMove(){
 			RandFlag = true;
 		}
 	}
+
+	if (worldTransform_.translate.x >= 28 || worldTransform_.translate.x <= -28 || worldTransform_.translate.z >= 28 || worldTransform_.translate.z <= -28) {
+		randomSpeed = VectorTransform::Multiply(randomSpeed, -1.0f);
+	}
+
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, randomSpeed);
 
 	if (count_ >= 120 && RandFlag) {
