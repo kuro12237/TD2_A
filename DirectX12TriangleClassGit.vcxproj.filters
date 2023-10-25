@@ -403,6 +403,9 @@
     <ClCompile Include="Project\GameObject\EnemyBomb\state\StateSpownEnemyBomb.cpp">
       <Filter>Project\GameObject\EnemyBomb\State</Filter>
     </ClCompile>
+    <ClCompile Include="Project\GameObject\Enemy\StoppedEnemy.cpp">
+      <Filter>Project\GameObject\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Utility\Pch\Pch.h">
@@ -662,6 +665,9 @@
     </ClInclude>
     <ClInclude Include="Project\GameObject\EnemyBomb\state\StateSpownEnemyBomb.h">
       <Filter>Project\GameObject\EnemyBomb\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Enemy\StoppedEnemy.h">
+      <Filter>Project\GameObject\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

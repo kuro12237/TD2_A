@@ -32,7 +32,14 @@ void GameScene::Initialize()
 	player_->Initialize();
 
 	LoadEnemyDate();
+
 	enemyTexHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
+	shared_ptr<StoppedEnemy> stpEnemy = make_shared<StoppedEnemy>();
+	stpEnemy->Initialize({0.0f,0.0f,0.0f},enemyTexHandle_);
+	stpEnemy->SetPlayer(player_.get());
+	player_->SetStpEnemy(stpEnemys_);
+	stpEnemys_.push_back(stpEnemy);
+
 
 	MainCamera::Initialize();
 
@@ -113,6 +120,19 @@ void GameScene::Update(GameManager* scene)
 
 	}
 
+	for (shared_ptr<StoppedEnemy>& stpEnemy : stpEnemys_) {
+		stpEnemy->SetPlayer(player_.get());
+		stpEnemy->Update();
+	}
+
+	stpEnemys_.remove_if([](shared_ptr<StoppedEnemy>& stpEnemy) {
+		if (stpEnemy->IsDead()) {
+			stpEnemy.reset();
+			return true;
+		}
+		return false;
+	});
+
 	enemyCount_++;
 
 	if (enemyCount_ >= 900) {
@@ -181,6 +201,11 @@ void GameScene::Object3dDraw()
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		enemy->Draw(viewProjection);
 	}
+
+	for (shared_ptr<StoppedEnemy>& stpEnemy : stpEnemys_) {
+		stpEnemy->Draw(viewProjection);
+	}
+
 	hitparticle_->Draw(viewProjection);
 
 	//mapWallManager_->Draw(viewProjection);
@@ -205,6 +230,10 @@ void GameScene::Collision()
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		collisionManager_->ClliderPush(enemy.get());
 	}
+
+	for (shared_ptr<StoppedEnemy>& stpEnemy : stpEnemys_) {
+		collisionManager_->ClliderPush(stpEnemy.get());
+	}
 	
 	for (shared_ptr<EnemyBomb>& enemy : enemyBombManager->GetEnemys())
 	{
@@ -223,6 +252,11 @@ void GameScene::MapWallCollision()
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		mapWallManager_->SetObject(enemy.get());
 	}
+
+	for (shared_ptr<StoppedEnemy>& stpEnemy : stpEnemys_) {
+		mapWallManager_->SetObject(stpEnemy.get());
+	}
+
 	mapWallManager_->CheckMapWall();
 }
 

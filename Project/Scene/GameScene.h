@@ -19,6 +19,7 @@
 #include"GameObject/Skydome/Skydome.h"
 #include"GameObject/MapGround/MapGround.h"
 #include"GameObject/EnemyBomb/EnemyBombManager.h"
+#include "GameObject/Enemy/StoppedEnemy.h"
 
 class GameScene : public IScene
 {
@@ -53,6 +54,8 @@ private:
 	unique_ptr<HitParticle>hitparticle_ = nullptr;
 	
 	std::list<shared_ptr<Enemy>>enemys_;
+	std::list<shared_ptr<StoppedEnemy>>stpEnemys_;
+
 	bool wait = false; 
 	uint32_t waitTimer = 0;
     stringstream fileLoad;

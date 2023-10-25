@@ -39,8 +39,6 @@ void Enemy::Draw(ViewProjection viewProjection){
 
 void Enemy::EnemyMove() {
 
-
-
 	if (worldTransform_.translate.y >= 0.6f) {
 		worldTransform_.translate.y -= (fallSpeed_ * gravity_) * dt;
 	}

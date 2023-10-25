@@ -13,6 +13,8 @@
 
 class Enemy;
 
+class StoppedEnemy;
+
 class Player: public Collider, public IMapWall
 {
 public:
@@ -49,6 +51,7 @@ public:
 #pragma region set
 
 	void SetEnemy(std::list<shared_ptr<Enemy>>enemys) { enemys_ = enemys; }
+	void SetStpEnemy(std::list<shared_ptr<StoppedEnemy>>stpEnemys) { stpEnemys_ = stpEnemys; }
 
 #pragma endregion
 
@@ -80,6 +83,7 @@ private:
 	bool isMove_ = false;
 	Enemy* enemy_;
 	std::list<shared_ptr<Enemy>>enemys_;
+	std::list<shared_ptr<StoppedEnemy>>stpEnemys_;
 	Vector3 enemyVelo_ = {};
 	Vector3 enemyPos_ = {};
 	float angle = 0.0f;
