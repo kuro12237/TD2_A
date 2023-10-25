@@ -26,7 +26,7 @@ void EnemyBomb::Update()
 	{
 		GameAudio::PlayHitSound();
 		KillCounter::AddCount();
-		Score::AddScore(100);
+		
 		SoundLock = true;
 	}
 	
@@ -53,7 +53,7 @@ void EnemyBomb::OnCollision()
 {
 	if (!SceneChangeFlag)
 	{
-		
+		Score::AddScore(100);
 		SoundFlag = true;
 	
 		ChangeState(new StateBreakEnemyBomb);
