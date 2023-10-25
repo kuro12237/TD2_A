@@ -6,19 +6,23 @@
 void ResultScene::Initialize() {
 
 	// テクスチャの読み込み
-	result_TexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/Result_BagGround.png");
+	result_.TexHD[0] = TextureManager::LoadTexture("Resources/Texture/BackGround/Result/Result_Back.png");
+	result_.TexHD[1] = TextureManager::LoadTexture("Resources/Texture/BackGround/Result/Result_front.png");
+	result_.TexHD[2] = TextureManager::LoadTexture("Resources/Texture/BackGround/Result/MojiUI.png");
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
+	uint32_t scoreTexHD_ = TextureManager::LoadTexture("Resources/Texture/UI/Score.png");
 
 	// 座標
-	result_Position_ = { 0.0f, 0.0f };
-	result_WorldTransform_.Initialize();
-	result_WorldTransform_.translate = { result_Position_.x, result_Position_.y, 0.0f };
+	result_.position = { 0.0f, 0.0f };
 
 	// スプライト
-	result_Sprite_ = make_unique<Sprite>();
-	result_Sprite_->Initialize(new SpriteBoxState, result_Position_, { 1280, 720 });
-	result_Sprite_->SetTexHandle(result_TexHD_);
-	result_Sprite_->SetColor(result_TexColor_);
+	for (int Index = 0; Index < 3; Index++) {
+		result_.worldTransform[Index].Initialize();
+		result_.sprite[Index] = make_unique<Sprite>();
+		result_.sprite[Index]->Initialize(new SpriteBoxState, result_.position, { 1280.0f, 720.0f });
+		result_.sprite[Index]->SetTexHandle(result_.TexHD[Index]);
+		result_.sprite[Index]->SetColor(result_TexColor_);
+	}
 
 	// フェードの処理
 	TransitionProcess::Initialize();
@@ -28,6 +32,14 @@ void ResultScene::Initialize() {
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
 	// フェードが明ける処理
 	TransitionProcess::Fade_Out_Init();
+
+	// スコアの処理
+	score_ = Score::GetInstance()->GetScore();
+	Score::Initialize();
+	Score::GetInstance()->GetBG_Sprite0()->SetTexHandle(scoreTexHD_);
+	Score::GetInstance()->GetBG_Sprite1()->SetTexHandle(scoreTexHD_);
+	Score::GetInstance()->GetBG_Sprite2()->SetTexHandle(scoreTexHD_);
+	Score::GetInstance()->GetBG_Sprite3()->SetTexHandle(scoreTexHD_);
 }
 
 
@@ -35,13 +47,20 @@ void ResultScene::Initialize() {
 // 更新処理
 void ResultScene::Update(GameManager* scene) {
 
-	if (Input::GetInstance()->PushKeyPressed(DIK_9))
-	{
-		scene->ChangeState(new GameScene);
-		return;
-	}
+	Score::UpdateResult(score_);
 
 	// シーン遷移
+	XINPUT_STATE joyState{};
+	Input::NoneJoyState(joyState);
+	if (Input::GetInstance()->GetJoystickState(joyState))
+	{
+		//発射処理
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+		{
+			TransitionProcess::Fade_In_Init();
+		}
+
+	}
 	if (Input::GetInstance()->PushKeyPressed(DIK_SPACE))
 	{
 		TransitionProcess::Fade_In_Init();
@@ -56,14 +75,12 @@ void ResultScene::Update(GameManager* scene) {
 	TransitionProcess::Fade_In();
 	TransitionProcess::Fade_Out();
 
-#ifdef _DEBUG
+	for (int Index = 0; Index < 3; Index++) {
+		result_.worldTransform[Index].UpdateMatrix();
+	}
 
-	ImGui::Begin("ResultScene");
-	ImGui::Text("9 key = ChangeScene() -> GameScene");
-	ImGui::Text("space key = ChangeScene() -> TitleScene");
-	ImGui::End();
-
-#endif
+	float time = float(clock() / 1000.0);
+	result_.sprite[1]->SetColor(CalculateColorGradient(time));
 }
 
 void ResultScene::Back2dSpriteDraw()
@@ -76,8 +93,20 @@ void ResultScene::Object3dDraw()
 
 void ResultScene::Flont2dSpriteDraw()
 {
-	result_Sprite_->Draw(result_WorldTransform_);
+	for (int Index = 0; Index < 3; Index++) {
+		result_.sprite[Index]->Draw(result_.worldTransform[Index]);
+	}
+	Score::DrawResult();
 	TransitionProcess::Draw();
 }
 
 
+// グラデーションする処理
+Vector4 ResultScene::CalculateColorGradient(float time) {
+	Vector4 color{};
+	color.x = 0.5f + 0.5f * std::sin(0.7f * time);
+	color.y = 0.5f + 0.5f * std::sin(0.7f * time + 2.0f);
+	color.z = 0.5f + 0.5f * std::sin(0.7f * time + 4.0f);
+	color.w = 1.0f;
+	return color;
+}
