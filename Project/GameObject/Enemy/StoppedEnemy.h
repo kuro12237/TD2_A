@@ -55,4 +55,6 @@ private:
 	bool isDead_ = false;
 	random_device seedGenerator;
 	list<shared_ptr<StoppedEnemy>>enemys_;
+	bool SoundFlag = false;
+	bool SoundLock = false;
 };

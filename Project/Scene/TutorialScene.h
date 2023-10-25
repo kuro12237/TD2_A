@@ -10,6 +10,15 @@
 
 
 
+struct TutorialElement {
+	unique_ptr<Sprite>sprite[2];
+	uint32_t TexHD[2];
+	Vector2 position;
+	WorldTransform worldTansform[2];
+};
+
+
+
 /// <summary>
 /// チュートリアルシーンクラス
 /// </summary>
@@ -38,18 +47,9 @@ public:
 
 private:
 
-	/* ----- テクスチャ ----- */
-	unique_ptr<Sprite>tutorial_Sprite_ = nullptr;
-	// ハンドル
-	uint32_t tutorial_TexHD_ = {};
-	// ハンドル
-	Vector4 tutorial_TexColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-	/* ----- 座標系 ----- */
-	// ２次元座標
-	Vector2 tutorial_Position_ = {};
-	// ワールドトランスフォーム
-	WorldTransform tutorial_WorldTransform_ = {};
-
-	bool frag = {};
+	TutorialElement tutorial_;
+	Vector4 TexColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+	uint32_t timer_ = 0;
+	bool fade_;
+	uint32_t nowPage_;
 };

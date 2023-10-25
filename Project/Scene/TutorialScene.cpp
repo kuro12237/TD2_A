@@ -1,24 +1,27 @@
 ﻿#include "TutorialScene.h"
 
-
-
 // 初期化処理
 void TutorialScene::Initialize() {
 
+	GameAudio::Initialize();
 	// テクスチャの読み込み
-	tutorial_TexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/Tutorial/Tutorial_BagGround.png");
+	tutorial_.TexHD[0] = TextureManager::LoadTexture("Resources/Texture/BackGround/Tutorial/Tutorial1.png");
+	tutorial_.TexHD[1] = TextureManager::LoadTexture("Resources/Texture/BackGround/Tutorial/Tutorial2.png");
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
-	// 座標
-	tutorial_Position_ = { 0.0f, 0.0f };
-	tutorial_WorldTransform_.Initialize();
-	tutorial_WorldTransform_.translate = { tutorial_Position_.x, tutorial_Position_.y, 0.0f };
 
-	// スプライト
-	tutorial_Sprite_ = make_unique<Sprite>();
-	tutorial_Sprite_->Initialize(new SpriteBoxState, tutorial_Position_, { 1280,720 });
-	tutorial_Sprite_->SetTexHandle(tutorial_TexHD_);
-	tutorial_Sprite_->SetColor(tutorial_TexColor_);
+	tutorial_.position = { 0.0f, 0.0f };
+	for (int Index = 0; Index < 2; Index++) {
+
+		// 座標
+		tutorial_.worldTansform[Index].Initialize();
+
+		// スプライト
+		tutorial_.sprite[Index] = make_unique<Sprite>();
+		tutorial_.sprite[Index]->Initialize(new SpriteBoxState, tutorial_.position, { 1280.0f, 720.0f });
+		tutorial_.sprite[Index]->SetTexHandle(tutorial_.TexHD[Index]);
+		tutorial_.sprite[Index]->SetColor(TexColor);
+	}
 
 	// フェードの処理
 	TransitionProcess::Initialize();
@@ -28,57 +31,96 @@ void TutorialScene::Initialize() {
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
 	// フェードが明ける処理
 	TransitionProcess::Fade_Out_Init();
+
+	nowPage_ = 0;
+	fade_ = false;
 }
 
 
 
 // 更新処理
-void TutorialScene::Update(GameManager* scene) {
+void TutorialScene::Update(GameManager* scene) 
+{
 
 	// フェードが明ける処理
+	TransitionProcess::Fade_In();
 	TransitionProcess::Fade_Out();
-	if (TransitionProcess::Fade_Out()) {
 
-		// シーン遷移
-		if (Input::GetInstance()->PushKeyPressed(DIK_9))
-		{
-			scene->ChangeState(new GameScene);
-			return;
-		}
+	// Aボタンでスタート
+	XINPUT_STATE joyState{};
+	Input::NoneJoyState(joyState);
+	if (Input::GetInstance()->GetJoystickState(joyState))
+	{
+		if (TransitionProcess::Fade_Out()) {
 
-		// Aボタンでスタート
-		XINPUT_STATE joyState{};
-		Input::NoneJoyState(joyState);
-		if (Input::GetInstance()->GetJoystickState(joyState))
-		{
-			//発射処理
-			if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+			// Aボタンでスタート
+			XINPUT_STATE joyState{};
+			Input::NoneJoyState(joyState);
+			if (Input::GetInstance()->GetJoystickState(joyState))
 			{
+				//発射処理
+				if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+				{
+					GameAudio::PlaySelectSound();
+					TransitionProcess::Fade_In_Init();
+				}
+
+			}
+			// スペースでフェードスタート
+			if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
+				GameAudio::PlaySelectSound();
 				TransitionProcess::Fade_In_Init();
 			}
+			TransitionProcess::Fade_In();
+			// フェードの処理が終わったらシーン遷移
+			if (TransitionProcess::Fade_In()) {
 
-		}
-		// スペースでフェードスタート
-		if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
-			TransitionProcess::Fade_In_Init();
-		}
-		TransitionProcess::Fade_In();
-		// フェードの処理が終わったらシーン遷移
-		if (TransitionProcess::Fade_In()) {
-			scene->ChangeState(new GameScene);
-			return;
+				scene->ChangeState(new GameScene);
+				return;
+			}
+
+				if (nowPage_ == 0) {
+
+					if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A || Input::GetInstance()->PushKeyPressed(DIK_SPACE))
+					{
+						nowPage_ = 1;
+						timer_ = 80;
+					}
+				}
+				else if (nowPage_ == 1) {
+
+					timer_--;
+
+					if (timer_ <= 0)
+					{
+						timer_ = 0;
+						fade_ = true;
+					}
+
+					if (fade_)
+					{
+						if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A || Input::GetInstance()->PushKeyPressed(DIK_SPACE))
+						{
+							TransitionProcess::Fade_In_Init();
+						}
+					}
+				}
+				// フェードの処理が終わったらシーン遷移
+				if (TransitionProcess::Fade_In()) {
+					scene->ChangeState(new GameScene);
+					return;
+				}
+
+
+			
 		}
 	}
 
-
-#ifdef _DEBUG
-
-	ImGui::Begin("TutorialScene");
-	ImGui::Text("9 key = ChangeScene() -> GameScene");
-	ImGui::Text("space key = ChangeScene() -> GameScene");
+	ImGui::Begin("nowPage");
+	ImGui::Text("now = %d", nowPage_);
+	ImGui::Text("timer = %d", timer_);
+	ImGui::Text("fade = %d", fade_);
 	ImGui::End();
-
-#endif
 }
 
 
@@ -93,6 +135,6 @@ void TutorialScene::Object3dDraw()
 }
 void TutorialScene::Flont2dSpriteDraw()
 {
-	tutorial_Sprite_->Draw(tutorial_WorldTransform_);
+	tutorial_.sprite[nowPage_]->Draw(tutorial_.worldTansform[nowPage_]);
 	TransitionProcess::Draw();
 }

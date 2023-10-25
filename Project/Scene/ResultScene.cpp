@@ -5,6 +5,7 @@
 // 初期化処理
 void ResultScene::Initialize() {
 
+	GameAudio::Initialize();
 	// テクスチャの読み込み
 	result_.TexHD[0] = TextureManager::LoadTexture("Resources/Texture/BackGround/Result/Result_Back.png");
 	result_.TexHD[1] = TextureManager::LoadTexture("Resources/Texture/BackGround/Result/Result_front.png");
@@ -63,16 +64,19 @@ void ResultScene::Update(GameManager* scene) {
 		//発射処理
 		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 		{
+			
 			TransitionProcess::Fade_In_Init();
 		}
 
 	}
 	if (Input::GetInstance()->PushKeyPressed(DIK_SPACE))
 	{
+		
 		TransitionProcess::Fade_In_Init();
 	}
 	// フェードの処理が終わったらシーン遷移
 	if (TransitionProcess::Fade_In()) {
+		GameAudio::PlaySelectSound();
 		scene->ChangeState(new TitleScene);
 		return;
 	}

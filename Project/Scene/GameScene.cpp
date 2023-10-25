@@ -55,6 +55,7 @@ void GameScene::Initialize()
 	enemyBombManager = make_shared<EnemyBombManager>();
 	enemyBombManager->Initialize();
 
+
 	isGame_ = true;
 	TransitionProcess::Fade_Out_Init();
 }
@@ -208,6 +209,7 @@ void GameScene::Update(GameManager* scene)
 	TransitionProcess::Fade_In();
 	// フェードに入り終わったらシーンチェンジ
 	if (TransitionProcess::Fade_In()) {
+		GameAudio::PlaySelectSound();
 		scene->ChangeState(new ResultScene);
 		return;
 	}
