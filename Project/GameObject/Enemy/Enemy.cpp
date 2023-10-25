@@ -94,7 +94,7 @@ void Enemy::RandomMove(){
 		}
 	}
 
-	if (worldTransform_.translate.x >= 30 || worldTransform_.translate.x <= -30 || worldTransform_.translate.z >= 30 || worldTransform_.translate.z <= -30) {
+	if (worldTransform_.translate.x >= 28 || worldTransform_.translate.x <= -28 || worldTransform_.translate.z >= 28 || worldTransform_.translate.z <= -28) {
 		randomSpeed = VectorTransform::Multiply(randomSpeed, -1.0f);
 	}
 
