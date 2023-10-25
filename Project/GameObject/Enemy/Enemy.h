@@ -9,6 +9,7 @@
 #include"GameObject/PhysicsFunc/PhysicsFunc.h"
 #include"GameObject/MapWall/IMapWall.h"
 #include"GameObject/Score/Score.h"
+#include"GameObject/KillCounter/KillCounter.h"
 
 class Enemy : public Collider , public IMapWall
 {
@@ -75,4 +76,7 @@ private:
 	Player* player_ = nullptr;
 	bool isMove_ = false;
 	bool isDead_ = false;
+
+	bool SoundFlag = false;
+	bool SoundLock = false;
 };

@@ -10,6 +10,7 @@
 #include"GameObject/Player/Player.h"
 #include"GameObject/PhysicsFunc/PhysicsFunc.h"
 #include <GameObject/Score/Score.h>
+#include"GameObject/KillCounter/KillCounter.h"
 
 class StoppedEnemy : public Collider, public IMapWall {
 public:
