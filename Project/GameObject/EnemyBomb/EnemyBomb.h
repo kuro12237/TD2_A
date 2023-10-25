@@ -53,6 +53,8 @@ private:
 
 	float Radious = 0.5f;
 	bool SceneChangeFlag = false;
+	bool SoundFlag = false;
+	bool SoundLock = false;
 };
 
 

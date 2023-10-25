@@ -21,6 +21,14 @@ void EnemyBomb::Initialize(Vector3 position, uint32_t texHandle)
 void EnemyBomb::Update()
 {
 	SetRadious(Radious);
+
+	if (SoundFlag && !SoundLock)
+	{
+		GameAudio::PlayHitSound();
+		KillCounter::AddCount();
+		Score::AddScore(100);
+		SoundLock = true;
+	}
 	
 	state_->Move(worldTransform_, this);
 	
@@ -45,9 +53,9 @@ void EnemyBomb::OnCollision()
 {
 	if (!SceneChangeFlag)
 	{
-		GameAudio::PlayHitSound();
-		KillCounter::AddCount();
-		Score::AddScore(100);
+		
+		SoundFlag = true;
+	
 		ChangeState(new StateBreakEnemyBomb);
 		SceneChangeFlag = true;
 	}

@@ -59,16 +59,19 @@ void ResultScene::Update(GameManager* scene) {
 		//発射処理
 		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 		{
+			
 			TransitionProcess::Fade_In_Init();
 		}
 
 	}
 	if (Input::GetInstance()->PushKeyPressed(DIK_SPACE))
 	{
+		
 		TransitionProcess::Fade_In_Init();
 	}
 	// フェードの処理が終わったらシーン遷移
 	if (TransitionProcess::Fade_In()) {
+		GameAudio::PlaySelectSound();
 		scene->ChangeState(new TitleScene);
 		return;
 	}
