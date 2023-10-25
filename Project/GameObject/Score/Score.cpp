@@ -14,7 +14,7 @@ void Score::Initialize() {
 
 	// テクスチャの読み込み
 	uint32_t scoreTexHD_ = TextureManager::LoadTexture("Resources/Texture/UI/Score.png");
-	uint32_t scoreBgTexHD = TextureManager::LoadTexture("Resources/Texture/BackGround/ScoreBg.png");
+	uint32_t scoreBgTexHD = TextureManager::LoadTexture("Resources/Texture/BackGround/Game/ScoreBg.png");
 
 	// 画像の上下左右の座標を決める
 	int column = 0;
@@ -45,8 +45,11 @@ void Score::Initialize() {
 	for (int Index = 0; Index < 4; Index++) {
 
 		// 座標
-		Score::GetInstance()->scoreWorldTransform_->Initialize();
+		Score::GetInstance()->scoreWorldTransform_[Index].Initialize();
+		Score::GetInstance()->scoreUseResultWorldTransform_[Index].Initialize();
+
 		Score::GetInstance()->scorePosition_[Index] = { 20.0f + (85.0f * Index), 550.0f };
+		Score::GetInstance()->scoreUseResultPosition_[Index] = { 760.0f + (85.0f * Index), 115.0f };
 
 		// スプライト
 		Score::GetInstance()->scoreSprite_[Index] = make_unique<Sprite>();
@@ -54,6 +57,12 @@ void Score::Initialize() {
 		Score::GetInstance()->scoreSprite_[Index]->Initialize(new SpriteBoxState, Score::GetInstance()->scorePosition_[Index], { 128.0f, 128.0f });
 		Score::GetInstance()->scoreSprite_[Index]->SetTexHandle(scoreTexHD_);
 		Score::GetInstance()->scoreSprite_[Index]->SetColor(Score::GetInstance()->texColor_);
+
+		Score::GetInstance()->scoreUseResultSprite_[Index] = make_unique<Sprite>();
+		Score::GetInstance()->scoreUseResultSprite_[Index]->SetSrc(src[0].RightTop, src[0].RightBottom, src[0].LeftTop, src[0].LeftBottom);
+		Score::GetInstance()->scoreUseResultSprite_[Index]->Initialize(new SpriteBoxState, Score::GetInstance()->scoreUseResultPosition_[Index], { 128.0f, 128.0f });
+		Score::GetInstance()->scoreUseResultSprite_[Index]->SetTexHandle(scoreTexHD_);
+		Score::GetInstance()->scoreUseResultSprite_[Index]->SetColor(Score::GetInstance()->texColor_);
 	}
 
 	Score::GetInstance()->scoreBgWorldTransform_.Initialize();
@@ -64,6 +73,7 @@ void Score::Initialize() {
 	Score::GetInstance()->scoreBgSprite_->SetTexHandle(scoreBgTexHD);
 	Score::GetInstance()->scoreBgSprite_->SetColor(Score::GetInstance()->texColor_);
 
+	Score::GetInstance()->acquisitionScore_ = 0;
 }
 
 
@@ -72,11 +82,21 @@ void Score::Update() {
 
 	for (int Index = 0; Index < 4; Index++) {
 		Score::GetInstance()->scoreWorldTransform_[Index].UpdateMatrix();
+		Score::GetInstance()->scoreUseResultWorldTransform_[Index].UpdateMatrix();
 	}
 
 	Score::CalcScorePlace(Score::GetInstance()->acquisitionScore_);
 	Score::SetSrc();
 	Score::GetInstance()->scoreBgWorldTransform_.UpdateMatrix();
+}
+void Score::UpdateResult(uint32_t score) {
+
+	for (int Index = 0; Index < 4; Index++) {
+		Score::GetInstance()->scoreUseResultWorldTransform_[Index].UpdateMatrix();
+	}
+
+	Score::CalcScorePlace(score);
+	Score::SetSrc();
 }
 
 
@@ -86,6 +106,14 @@ void Score::Draw() {
 	Score::GetInstance()->scoreBgSprite_->Draw(Score::GetInstance()->scoreBgWorldTransform_);
 	for (int Index = 0; Index < 4; Index++) {
 		Score::GetInstance()->scoreSprite_[Index]->Draw(Score::GetInstance()->scoreWorldTransform_[Index]);
+	}
+}
+void Score::DrawResult() {
+
+
+
+	for (int Index = 0; Index < 4; Index++) {
+		Score::GetInstance()->scoreUseResultSprite_[Index]->Draw(Score::GetInstance()->scoreWorldTransform_[Index]);
 	}
 }
 
@@ -131,5 +159,9 @@ void Score::SetSrc() {
 	Score::GetInstance()->scoreSprite_[1]->SetSrc(src[eachTime[1]].RightTop, src[eachTime[1]].RightBottom, src[eachTime[1]].LeftTop, src[eachTime[1]].LeftBottom);
 	Score::GetInstance()->scoreSprite_[2]->SetSrc(src[eachTime[2]].RightTop, src[eachTime[2]].RightBottom, src[eachTime[2]].LeftTop, src[eachTime[2]].LeftBottom);
 	Score::GetInstance()->scoreSprite_[3]->SetSrc(src[eachTime[2]].RightTop, src[eachTime[2]].RightBottom, src[eachTime[2]].LeftTop, src[eachTime[2]].LeftBottom);
+	Score::GetInstance()->scoreUseResultSprite_[0]->SetSrc(src[eachTime[0]].RightTop, src[eachTime[0]].RightBottom, src[eachTime[0]].LeftTop, src[eachTime[0]].LeftBottom);
+	Score::GetInstance()->scoreUseResultSprite_[1]->SetSrc(src[eachTime[1]].RightTop, src[eachTime[1]].RightBottom, src[eachTime[1]].LeftTop, src[eachTime[1]].LeftBottom);
+	Score::GetInstance()->scoreUseResultSprite_[2]->SetSrc(src[eachTime[2]].RightTop, src[eachTime[2]].RightBottom, src[eachTime[2]].LeftTop, src[eachTime[2]].LeftBottom);
+	Score::GetInstance()->scoreUseResultSprite_[3]->SetSrc(src[eachTime[2]].RightTop, src[eachTime[2]].RightBottom, src[eachTime[2]].LeftTop, src[eachTime[2]].LeftBottom);
 }
 

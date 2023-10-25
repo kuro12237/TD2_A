@@ -7,6 +7,16 @@
 #include "WorldTransform.h"
 #include "Graphics/TextureManager/TextureManager.h"
 #include "GameObject/TransitionProcess/TransitionProcess.h"
+#include "GameObject/Score/Score.h"
+#include"GameObject/KillCounter/KillCounter.h"
+
+
+struct ResultElement {
+	unique_ptr<Sprite>sprite[3];
+	uint32_t TexHD[3];
+	Vector2 position;
+	WorldTransform worldTransform[3];
+};
 
 
 /// <summary>
@@ -29,6 +39,11 @@ public:
 	void Update(GameManager* scene) override;
 
 	/// <summary>
+	/// グラデーションする処理
+	/// </summary>
+	Vector4 CalculateColorGradient(float time);
+
+	/// <summary>
 	/// 描画処理
 	/// </summary>
 	void Back2dSpriteDraw()override;
@@ -37,17 +52,10 @@ public:
 
 
 private:
-
-	/* ----- テクスチャ ----- */
-	unique_ptr<Sprite>result_Sprite_=nullptr;
-	// ハンドル
-	uint32_t result_TexHD_{};
-	// ハンドル
+	
+	
+	ResultElement result_;
 	Vector4 result_TexColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
+	uint32_t score_;
 
-	/* ----- 座標系 ----- */
-	// ２次元座標
-	Vector2 result_Position_ = {};
-	// ワールドトランスフォーム
-	WorldTransform result_WorldTransform_ = {};
 };

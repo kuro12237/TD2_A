@@ -16,7 +16,7 @@ void Enemy::Initialize(const Vector3& position, uint32_t texHandle) {
 	worldTransform_.UpdateMatrix();
 	srand(static_cast<unsigned>(time(nullptr)));
 	SetCollosionAttribute(kCollisionAttributeEnemy);
-	SetCollisionMask(kCollisionAttributePlayer);
+	SetCollisionMask(kCollisionMaskEnemy);
 }
 
 /// <summary>
@@ -26,6 +26,13 @@ void Enemy::Update() {
 
 	EnemyMove();
 	RandomMove();
+	if (SoundFlag&&!SoundLock)
+	{
+		GameAudio::PlayHitSound();
+		KillCounter::AddCount();
+		SoundLock = true;
+	}
+
 	worldTransform_.UpdateMatrix();
 }
 
@@ -46,8 +53,6 @@ void Enemy::EnemyMove() {
 		worldTransform_.translate.y = 0.5f;
 	}
 
-	
-
 	if (isMove_) {
 		playerPos_ = player_->GetWorldPosition();
 		pos_ = GetWorldPosition();
@@ -62,13 +67,10 @@ void Enemy::EnemyMove() {
 	}
 	
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, speed_);
-
-	
 }
 
 void Enemy::RandomMove(){
 
-	
 	int max = 20;
 	int min = -20;
 
@@ -77,7 +79,6 @@ void Enemy::RandomMove(){
 
 	randomX = randomX / 10;
 	randomZ = randomZ / 10;
-
 
 	++count_;
 	//480/510
@@ -127,6 +128,7 @@ Vector3 Enemy::GetVelocity()
 
 void Enemy::OnCollision(){
 	isMove_ = true;
+	SoundFlag = true;
 }
 
 void Enemy::OnTopWall()

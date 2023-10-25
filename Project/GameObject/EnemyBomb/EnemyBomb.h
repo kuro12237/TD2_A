@@ -5,6 +5,8 @@
 #include"state/StateSpownEnemyBomb.h"
 #include"GameObject/Player/Player.h"
 #include"GameObject/Score/Score.h"
+#include"GameObject/GameAudio/GameAudio.h"
+#include"GameObject/KillCounter/KillCounter.h"
 
 class EnemyBomb: public Collider
 {

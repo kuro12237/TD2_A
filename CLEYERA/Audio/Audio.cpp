@@ -102,8 +102,8 @@ void Audio::SoundUnLoad()
 void Audio::AudioPlayWave(uint32_t soundHandle)
 {
 	HRESULT result{};
-    IXAudio2SourceVoice* pSourcevoice = nullptr;
-	result = Audio::GetInstance()->xAudio->CreateSourceVoice(&pSourcevoice, &Audio::GetInstance()->soundData_[soundHandle].wfex);
+ 
+	result = Audio::GetInstance()->xAudio->CreateSourceVoice(&Audio::GetInstance()->pSourcevoice[soundHandle], &Audio::GetInstance()->soundData_[soundHandle].wfex);
 	assert(SUCCEEDED(result));
 
 	XAUDIO2_BUFFER buf{};
@@ -111,8 +111,16 @@ void Audio::AudioPlayWave(uint32_t soundHandle)
 	buf.AudioBytes = Audio::GetInstance()->soundData_[soundHandle].bufferSize;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
 
-	result = pSourcevoice->SubmitSourceBuffer(&buf);
-	result = pSourcevoice->Start();
+	result = Audio::GetInstance()->pSourcevoice[soundHandle]->SubmitSourceBuffer(&buf);
+	result = Audio::GetInstance()->pSourcevoice[soundHandle]->Start();
+
+	assert(SUCCEEDED(result));
+}
+
+void Audio::AudioStopWave(uint32_t soundHandle)
+{
+	HRESULT result{};
+	result = Audio::GetInstance()->pSourcevoice[soundHandle]->Stop();
 
 	assert(SUCCEEDED(result));
 }

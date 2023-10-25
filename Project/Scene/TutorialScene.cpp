@@ -6,7 +6,7 @@
 void TutorialScene::Initialize() {
 
 	// テクスチャの読み込み
-	tutorial_TexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/Tutorial_BagGround.png");
+	tutorial_TexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/Tutorial/Tutorial_BagGround.png");
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
 	// 座標
@@ -46,6 +46,18 @@ void TutorialScene::Update(GameManager* scene) {
 			return;
 		}
 
+		// Aボタンでスタート
+		XINPUT_STATE joyState{};
+		Input::NoneJoyState(joyState);
+		if (Input::GetInstance()->GetJoystickState(joyState))
+		{
+			//発射処理
+			if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+			{
+				TransitionProcess::Fade_In_Init();
+			}
+
+		}
 		// スペースでフェードスタート
 		if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
 			TransitionProcess::Fade_In_Init();

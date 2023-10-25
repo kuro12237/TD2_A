@@ -46,6 +46,11 @@ void StoppedEnemy::Move(){
 		angle = angle * 180.0f / (float)M_PI;
 		angle2 = angle2 * 180.0f / (float)M_PI;
 		velocity_ = PhysicsFunc::SpeedComposition(playerPos_, pos_, angle, angle2);
+
+		KillCounter::AddCount();
+		GameAudio::PlayHitSound();
+		velocity_ = PhysicsFunc::SpeedComposition(playerPos_, worldTransform_.translate, angle, angle2);
+
 		speed_ = get<1>(velocity_);
 
 		isMove_ = false;

@@ -42,17 +42,6 @@ public:
 
 
 
-	/// <summary>
-	/// RGB‚ğ‹‚ß‚é
-	/// </summary>
-	Vector3 CalcRGB(Vector4 color);
-
-	/// <summary>
-	/// RGBA‚ğ‹‚ß‚é
-	/// </summary>
-	Vector4 CalcRGBA(Vector3 color);
-
-
 private:
 
 	SkydomeElemnt skydome_ = {};
