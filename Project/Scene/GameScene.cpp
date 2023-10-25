@@ -30,8 +30,8 @@ void GameScene::Initialize()
 	player_->Initialize();
 
 	LoadEnemyDate();
-	enemyTexHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
-	
+	enemyTexHandle_ = TextureManager::LoadTexture("Resources/Enemy.png");
+	stopeedEnemyTexHandle_ = TextureManager::LoadTexture("Resources/StoppedEnemy.png");
 	MainCamera::Initialize();
 	MainCamera::SetOffset({ 0.0f,3.0f,-50.0f });
 
@@ -394,7 +394,7 @@ void GameScene::RandomSpawn()
 		uniform_real_distribution<float>distribution(-25.0f, 25.0f);
 		shared_ptr<StoppedEnemy>enemy = nullptr;
 		enemy = make_shared<StoppedEnemy>();
-		enemy->Initialize({ float(distribution(randomEngine)),-6.0,float(distribution(randomEngine)) }, enemyTexHandle_);
+		enemy->Initialize({ float(distribution(randomEngine)),-6.0,float(distribution(randomEngine)) }, stopeedEnemyTexHandle_);
 		stpEnemys_.push_back(enemy);
 		spawnTimer_ = 0;
 	}

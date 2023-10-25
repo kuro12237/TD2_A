@@ -78,7 +78,6 @@ void TutorialScene::Update(GameManager* scene)
 				scene->ChangeState(new GameScene);
 				return;
 			}
-
 				if (nowPage_ == 0) {
 
 					if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A || Input::GetInstance()->PushKeyPressed(DIK_SPACE))

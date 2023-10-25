@@ -8,7 +8,7 @@ void Enemy::Initialize(const Vector3& position, uint32_t texHandle) {
 	model_ = make_unique<Model>();
 	model_->Initialize(new ModelCubeState);
 	model_->SetTexHandle(texHandle);
-	model_->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+	model_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
 	worldTransform_.translate = position;

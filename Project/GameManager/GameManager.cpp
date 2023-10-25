@@ -20,19 +20,13 @@ void GameManager::Run()
 	{
 		Cleyera::BeginFlame();
 	
-		ImGui::Begin("usedescripter");
-		ImGui::Text("descripterIndex %d", DescriptorManager::GetIndex());
-		ImGui::Text("tex %d", TextureManager::NumLoadTexture());
-		ImGui::End();
-
+	
 		Scene_->Update(this);
 		
 		Scene_->Back2dSpriteDraw();
 		Scene_->Object3dDraw();
 		Scene_->Flont2dSpriteDraw();
-		ImGui::Begin("killCount");
-		ImGui::Text("count %d", KillCounter::GetCount());
-		ImGui::End();
+	
 		Cleyera::EndFlame();
 	}
 }
