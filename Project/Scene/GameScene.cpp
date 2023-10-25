@@ -33,6 +33,7 @@ void GameScene::Initialize()
 	enemyTexHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
 
 	MainCamera::Initialize();
+	MainCamera::SetOffset({ 0.0f,3.0f,-50.0f });
 
 	collisionManager_ = make_unique<CollisionManager>();
 	mapWallManager_ = make_unique<MapWallManager>();
@@ -73,12 +74,6 @@ void GameScene::Update(GameManager* scene)
 	if (isGame_) {
 
 		if (TransitionProcess::Fade_Out()) {
-
-			// シェイク
-			bool flag = false;
-			ImGui::Begin("d");
-			ImGui::Checkbox("e", &flag);
-			ImGui::End();
 
 			if (flag)
 			{
