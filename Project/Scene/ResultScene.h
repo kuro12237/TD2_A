@@ -9,6 +9,7 @@
 #include "GameObject/TransitionProcess/TransitionProcess.h"
 #include "GameObject/Score/Score.h"
 #include"GameObject/KillCounter/KillCounter.h"
+#include "GameObject/KillCounter/KillCounter.h"
 
 
 struct ResultElement {
@@ -57,5 +58,5 @@ private:
 	ResultElement result_;
 	Vector4 result_TexColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 	uint32_t score_;
-
+	uint32_t count_;
 };
