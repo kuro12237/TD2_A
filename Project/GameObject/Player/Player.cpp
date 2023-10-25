@@ -204,13 +204,6 @@ void Player::Move()
 	//加算処理
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
 
-	
-	ImGui::Begin("Player_param");
-	ImGui::Text("WorldPos : %f %f %f", worldTransform_.translate.x, worldTransform_.translate.y, worldTransform_.translate.z);
-	ImGui::Text("Normalize : %f %f %f", RPNormalize.x, RPNormalize.y, RPNormalize.z);
-	ImGui::Text("Velocity : %f %f %f", Velocity.x, Velocity.y, Velocity.z);
-	ImGui::End();
-
 }
 
 void Player::Reticle()
