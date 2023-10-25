@@ -19,7 +19,7 @@
 #include"GameObject/Skydome/Skydome.h"
 #include"GameObject/MapGround/MapGround.h"
 #include"GameObject/EnemyBomb/EnemyBombManager.h"
-#include "GameObject//StartCount/StartCount.h"
+#include "GameObject/Enemy/StoppedEnemy.h"
 
 class GameScene : public IScene
 {
@@ -38,7 +38,7 @@ public:
 	void LoadEnemyDate();
 	void UpdateEnemyCommands();
 	void EnemySpawn(const Vector3& position);
-	void EnemyReset();
+	void RandomSpawn();
 	
 private:
 	
@@ -54,17 +54,22 @@ private:
 	unique_ptr<HitParticle>hitparticle_ = nullptr;
 	
 	std::list<shared_ptr<Enemy>>enemys_;
+	std::list<shared_ptr<StoppedEnemy>>stpEnemys_;
+
 	bool wait = false; 
 	uint32_t waitTimer = 0;
     stringstream fileLoad;
 	
 	shared_ptr<EnemyBombManager>enemyBombManager = nullptr;
 	uint32_t enemyTexHandle_;
+	uint32_t enemyCount_ = 0;
 
 	unique_ptr<MapWallManager>mapWallManager_ = nullptr;
 	unique_ptr<ShamWall>shamWall_ = nullptr;
 	unique_ptr<Skydome>skydome_ = nullptr;
 	unique_ptr<MapGround>mapGround_ = nullptr;
+	random_device seedGenerator;
+	uint32_t spawnTimer_ = 0;
 
 	unique_ptr<StartCount> startCount_ = nullptr;
 

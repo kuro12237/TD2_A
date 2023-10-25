@@ -31,7 +31,7 @@ void GameScene::Initialize()
 
 	LoadEnemyDate();
 	enemyTexHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
-
+	
 	MainCamera::Initialize();
 	MainCamera::SetOffset({ 0.0f,3.0f,-50.0f });
 
@@ -118,9 +118,6 @@ void GameScene::Update(GameManager* scene)
 			// これは何かしらん
 			enemyBombManager->Update(player_.get());
 
-			// これも何か知らん
-			EnemyReset();
-
 			// 多分CSV読んでエネミーをリスさせてる
 			UpdateEnemyCommands();
 
@@ -173,6 +170,28 @@ void GameScene::Update(GameManager* scene)
 		}
 	}
 
+	player_->SetStpEnemy(stpEnemys_);
+
+	for (shared_ptr<StoppedEnemy>& stpEnemy : stpEnemys_) {
+		stpEnemy->SetPlayer(player_.get());
+		stpEnemy->Update();
+	}
+
+	stpEnemys_.remove_if([](shared_ptr<StoppedEnemy>& stpEnemy) {
+		if (stpEnemy->IsDead()) {
+			stpEnemy.reset();
+			return true;
+		}
+		return false;
+	});
+
+	enemyCount_++;
+
+	if (enemyCount_ >= 900) {
+		LoadEnemyDate();
+		enemyCount_ = 0;
+	}
+
 	enemys_.remove_if([](shared_ptr<Enemy>& enemy) {
 		if (enemy->IsDead()) {
 			enemy.reset();
@@ -180,9 +199,7 @@ void GameScene::Update(GameManager* scene)
 		}
 		return false;
 	});
-
-
-
+  
 	/* ---------- フェード---------- */
 
 	// フェードが入る処理
@@ -226,6 +243,15 @@ void GameScene::Object3dDraw()
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		enemy->Draw(viewProjection);
 	}
+
+	RandomSpawn();
+
+	for (shared_ptr<StoppedEnemy>& stpEnemy : stpEnemys_) {
+		stpEnemy->Draw(viewProjection);
+	}
+
+	hitparticle_->Draw(viewProjection);
+
 	enemyBombManager->Draw(viewProjection);
 
 	// パーティクル
@@ -261,6 +287,10 @@ void GameScene::Collision()
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		collisionManager_->ClliderPush(enemy.get());
 	}
+
+	for (shared_ptr<StoppedEnemy>& stpEnemy : stpEnemys_) {
+		collisionManager_->ClliderPush(stpEnemy.get());
+	}
 	
 	for (shared_ptr<EnemyBomb>& enemy : enemyBombManager->GetEnemys())
 	{
@@ -279,6 +309,11 @@ void GameScene::MapWallCollision()
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		mapWallManager_->SetObject(enemy.get());
 	}
+
+	for (shared_ptr<StoppedEnemy>& stpEnemy : stpEnemys_) {
+		mapWallManager_->SetObject(stpEnemy.get());
+	}
+
 	mapWallManager_->CheckMapWall();
 }
 
@@ -348,16 +383,19 @@ void GameScene::EnemySpawn(const Vector3& position) {
 	enemys_.push_back(enemy);
 }
 
-// enemyのreset
-void GameScene::EnemyReset() {
-	if (Input::GetInstance()->PushKeyPressed(DIK_R)) {
-		enemys_.clear();
-		for (shared_ptr<Enemy>& enemy : enemys_) {
-			enemy = make_shared<Enemy>();
-			enemy->Initialize({ 0,0.5,0 }, enemyTexHandle_);
-		}
+void GameScene::RandomSpawn()
+{
 
-		LoadEnemyDate();
+	spawnTimer_++;
+
+	if (spawnTimer_ >= 180) {
+		mt19937 randomEngine(seedGenerator());
+		uniform_real_distribution<float>distribution(-25.0f, 25.0f);
+		shared_ptr<StoppedEnemy>enemy = nullptr;
+		enemy = make_shared<StoppedEnemy>();
+		enemy->Initialize({ float(distribution(randomEngine)),-6.0,float(distribution(randomEngine)) }, enemyTexHandle_);
+		stpEnemys_.push_back(enemy);
+		spawnTimer_ = 0;
 	}
+	
 }
-
