@@ -200,7 +200,7 @@ void Player::Move()
 
 		isMove_ = false;
 
-		}
+		
 	}
 
 	// ここまで ↑
