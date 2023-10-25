@@ -2,7 +2,9 @@
 #include"WorldTransform.h"
 #include"ViewProjection.h"
 #include"state/ParticlePlaneState.h"
+
 #include"SParticle.h"
+#include"WinApp.h"
 
 class Particle
 {
@@ -36,6 +38,9 @@ public:
 	/// </summary>
 	void PushList(Particle_param particle) { particles_.push_back(particle);}
 
+	void SetPosition(Vector4 p) { pos_ = p; }
+	void SetSize(float s) { size_ = s; }
+
 #pragma endregion 
 
 #pragma region get
@@ -55,6 +60,10 @@ public:
 	list<Particle_param> GetParticles() { return particles_; }
 
 	BlendMode GetBlendMode() { return blendMode_; }
+
+	Vector4 GetPosition() { return pos_; }
+	float GetSize() { return size_; }
+
 #pragma endregion 
 private:
 
@@ -68,6 +77,8 @@ private:
 	
 	list<Particle_param> particles_{};
 	BlendMode blendMode_ = BlendAdd;
+	Vector4 pos_ = { 0,0,0,1 };
+	float size_ = 0.5f;
 };
 
 

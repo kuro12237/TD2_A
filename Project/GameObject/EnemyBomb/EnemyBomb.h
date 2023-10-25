@@ -2,8 +2,9 @@
 #include"Model.h"
 #include"state/StateMoveEnemyBomb.h"
 #include"state/StateBreakEnemyBomb.h"
+#include"state/StateSpownEnemyBomb.h"
 #include"GameObject/Player/Player.h"
-
+#include"GameObject/Score/Score.h"
 
 class EnemyBomb: public Collider
 {
@@ -21,6 +22,7 @@ public:
 
 	Vector3 GetWorldPosition()override;
 	void OnCollision()override;
+	Vector3 GetVelocity()override;
 
 	void SetIsDead(bool f) { IsDead = f; }
 	bool GetIsDead() { return IsDead; }
@@ -33,6 +35,8 @@ public:
 
 	Player* GetPlayer() { return player_; }
 	Vector3 GetPlayerTranslate() { return player_->GetWorldPosition(); }
+
+	Model* GetModel() { return model.get(); }
 private:
 
 	IstateEnemyBomb* state_ = nullptr;
@@ -46,6 +50,7 @@ private:
 	bool IsDead = false;
 
 	float Radious = 0.5f;
+	bool SceneChangeFlag = false;
 };
 
 

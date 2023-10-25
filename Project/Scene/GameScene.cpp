@@ -30,6 +30,7 @@ void GameScene::Initialize()
 	player_->Initialize();
 
 	LoadEnemyDate();
+	enemyTexHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
 
 	MainCamera::Initialize();
 
@@ -49,7 +50,8 @@ void GameScene::Initialize()
 	hitparticle_ = make_unique<HitParticle>();
 	hitparticle_->Initialize();
 
-	enemyBombManager = make_unique<EnemyBombManager>();
+	
+	enemyBombManager = make_shared<EnemyBombManager>();
 	enemyBombManager->Initialize();
 
 
@@ -83,7 +85,6 @@ void GameScene::Update(GameManager* scene)
 				hitparticle_->Spown(player_->GetWorldTransform().translate);
 				MainCamera::SetIsShake(flag);
 			}
-
 
 
 			/* ---------- スタートカウント---------- */
@@ -177,6 +178,14 @@ void GameScene::Update(GameManager* scene)
 		}
 	}
 
+	enemys_.remove_if([](shared_ptr<Enemy>& enemy) {
+		if (enemy->IsDead()) {
+			enemy.reset();
+			return true;
+		}
+		return false;
+	});
+
 
 
 	/* ---------- フェード---------- */
@@ -188,7 +197,6 @@ void GameScene::Update(GameManager* scene)
 		scene->ChangeState(new ResultScene);
 		return;
 	}
-
 
 
 	//カメラ
@@ -246,6 +254,7 @@ void GameScene::Flont2dSpriteDraw()
 
 	// フェード 
 	TransitionProcess::Draw();
+	
 }
 
 void GameScene::Collision()
@@ -257,6 +266,7 @@ void GameScene::Collision()
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		collisionManager_->ClliderPush(enemy.get());
 	}
+	
 	for (shared_ptr<EnemyBomb>& enemy : enemyBombManager->GetEnemys())
 	{
 		collisionManager_->ClliderPush(enemy.get());
@@ -337,7 +347,7 @@ void GameScene::UpdateEnemyCommands() {
 void GameScene::EnemySpawn(const Vector3& position) {
 
 	shared_ptr<Enemy> enemy = make_shared<Enemy>();
-	enemy->Initialize(position);
+	enemy->Initialize(position, enemyTexHandle_);
 	enemy->SetPlayer(player_.get());
 	player_->SetEnemy(enemys_);
 	enemys_.push_back(enemy);
@@ -348,9 +358,8 @@ void GameScene::EnemyReset() {
 	if (Input::GetInstance()->PushKeyPressed(DIK_R)) {
 		enemys_.clear();
 		for (shared_ptr<Enemy>& enemy : enemys_) {
-
 			enemy = make_shared<Enemy>();
-			enemy->Initialize({ 0,0.5,0 });
+			enemy->Initialize({ 0,0.5,0 }, enemyTexHandle_);
 		}
 
 		LoadEnemyDate();

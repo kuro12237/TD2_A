@@ -160,8 +160,29 @@
     <Filter Include="Project\GameObject\ShamWall\State">
       <UniqueIdentifier>{872faede-5097-4797-b96e-3f3d3e3ea16b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Project\GameObject\StartCount">
-      <UniqueIdentifier>{fc5a9255-13c9-42b9-bc9b-202677d68a6f}</UniqueIdentifier>
+    <Filter Include="CLEYERA\Particle\ParticleSprite">
+      <UniqueIdentifier>{7fe1395e-b8f2-41d0-85c8-6946004dd205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\Particle\ParticlePlane">
+      <UniqueIdentifier>{c073a108-c039-4bd3-9fbf-37b30c3aeafc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\Particles\SmokeParticle">
+      <UniqueIdentifier>{86956721-58e1-400f-874d-f0d20ca39a0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\Particles\HitParticle">
+      <UniqueIdentifier>{54ddcb04-4bde-42e6-af68-53bc2496a131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\Particles\PlayerSmoke">
+      <UniqueIdentifier>{e0b6299e-fa2d-4c34-a72d-2545627dbc84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\EnemyBomb">
+      <UniqueIdentifier>{2efa12d9-f8ec-43b8-9d0e-8319dc024cbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CLEYERA\Model\Cube">
+      <UniqueIdentifier>{e412e551-47a5-42ed-ae39-05603aeb4f80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Project\GameObject\EnemyBomb\State">
+      <UniqueIdentifier>{5b274d61-da68-4486-b9de-d68131ce6f28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -304,9 +325,6 @@
     <ClCompile Include="CLEYERA\Particle\Particle.cpp">
       <Filter>CLEYERA\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="CLEYERA\Particle\state\ParticlePlaneState.cpp">
-      <Filter>CLEYERA\Particle</Filter>
-    </ClCompile>
     <ClCompile Include="Project\GameObject\MapWall\MapWall.cpp">
       <Filter>Project\MapWall</Filter>
     </ClCompile>
@@ -315,12 +333,6 @@
     </ClCompile>
     <ClCompile Include="CLEYERA\Graphics\DescripterManager\DescriptorManager.cpp">
       <Filter>CLEYERA\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Project\GameObject\HitParticle\HitParticle.cpp">
-      <Filter>Project\GameObject\Particles</Filter>
-    </ClCompile>
-    <ClCompile Include="Project\GameObject\Player\PlayerParticle.cpp">
-      <Filter>Project\GameObject\Particles</Filter>
     </ClCompile>
     <ClCompile Include="Project\GameObject\TimeCount\TimeCount.cpp">
       <Filter>Project\GameObject\TimeCount</Filter>
@@ -364,13 +376,32 @@
     <ClCompile Include="Project\GameObject\ShamWall\State\CalcGreen.cpp">
       <Filter>Project\GameObject\ShamWall\State</Filter>
     </ClCompile>
-    <ClCompile Include="CLEYERA\Model\State\ModelCubeState.cpp" />
-    <ClCompile Include="Project\GameObject\EnemyBomb\EnemyBomb.cpp" />
-    <ClCompile Include="Project\GameObject\EnemyBomb\EnemyBombManager.cpp" />
-    <ClCompile Include="Project\GameObject\EnemyBomb\state\StateBreakEnemyBomb.cpp" />
-    <ClCompile Include="Project\GameObject\EnemyBomb\state\stateMoveEnemyBomb.cpp" />
-    <ClCompile Include="Project\GameObject\StartCount\StartCount.cpp">
-      <Filter>Project\GameObject\StartCount</Filter>
+    <ClCompile Include="CLEYERA\Particle\state\ParticlePlaneState.cpp">
+      <Filter>CLEYERA\Particle\ParticlePlane</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\HitParticle\HitParticle.cpp">
+      <Filter>Project\GameObject\Particles\HitParticle</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\Player\PlayerParticle.cpp">
+      <Filter>Project\GameObject\Particles\PlayerSmoke</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\EnemyBomb\EnemyBomb.cpp">
+      <Filter>Project\GameObject\EnemyBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\EnemyBomb\EnemyBombManager.cpp">
+      <Filter>Project\GameObject\EnemyBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="CLEYERA\Model\State\ModelCubeState.cpp">
+      <Filter>CLEYERA\Model\Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\EnemyBomb\state\StateBreakEnemyBomb.cpp">
+      <Filter>Project\GameObject\EnemyBomb\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\EnemyBomb\state\stateMoveEnemyBomb.cpp">
+      <Filter>Project\GameObject\EnemyBomb\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Project\GameObject\EnemyBomb\state\StateSpownEnemyBomb.cpp">
+      <Filter>Project\GameObject\EnemyBomb\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -539,9 +570,6 @@
     <ClInclude Include="CLEYERA\Particle\Particle.h">
       <Filter>CLEYERA\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="CLEYERA\Particle\state\ParticlePlaneState.h">
-      <Filter>CLEYERA\Particle</Filter>
-    </ClInclude>
     <ClInclude Include="CLEYERA\Particle\state\IParticleState.h">
       <Filter>CLEYERA\Particle</Filter>
     </ClInclude>
@@ -559,12 +587,6 @@
     </ClInclude>
     <ClInclude Include="CLEYERA\Graphics\DescripterManager\DescriptorManager.h">
       <Filter>CLEYERA\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\GameObject\HitParticle\HitParticle.h">
-      <Filter>Project\GameObject\Particles</Filter>
-    </ClInclude>
-    <ClInclude Include="Project\GameObject\Player\PlayerParticle.h">
-      <Filter>Project\GameObject\Particles</Filter>
     </ClInclude>
     <ClInclude Include="Project\GameObject\TimeCount\TimeCount.h">
       <Filter>Project\GameObject\TimeCount</Filter>
@@ -611,14 +633,35 @@
     <ClInclude Include="Project\GameObject\ShamWall\State\WallColorState.h">
       <Filter>Project\GameObject\ShamWall\State</Filter>
     </ClInclude>
-    <ClInclude Include="CLEYERA\Model\State\ModelCubeState.h" />
-    <ClInclude Include="Project\GameObject\EnemyBomb\EnemyBomb.h" />
-    <ClInclude Include="Project\GameObject\EnemyBomb\EnemyBombManager.h" />
-    <ClInclude Include="Project\GameObject\EnemyBomb\state\IstateEnemyBomb.h" />
-    <ClInclude Include="Project\GameObject\EnemyBomb\state\StateBreakEnemyBomb.h" />
-    <ClInclude Include="Project\GameObject\EnemyBomb\state\StateMoveEnemyBomb.h" />
-    <ClInclude Include="Project\GameObject\StartCount\StartCount.h">
-      <Filter>Project\GameObject\StartCount</Filter>
+    <ClInclude Include="CLEYERA\Particle\state\ParticlePlaneState.h">
+      <Filter>CLEYERA\Particle\ParticlePlane</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\HitParticle\HitParticle.h">
+      <Filter>Project\GameObject\Particles\HitParticle</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\Player\PlayerParticle.h">
+      <Filter>Project\GameObject\Particles\PlayerSmoke</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\EnemyBomb\EnemyBomb.h">
+      <Filter>Project\GameObject\EnemyBomb</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\EnemyBomb\EnemyBombManager.h">
+      <Filter>Project\GameObject\EnemyBomb</Filter>
+    </ClInclude>
+    <ClInclude Include="CLEYERA\Model\State\ModelCubeState.h">
+      <Filter>CLEYERA\Model\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\EnemyBomb\state\IstateEnemyBomb.h">
+      <Filter>Project\GameObject\EnemyBomb\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\EnemyBomb\state\StateBreakEnemyBomb.h">
+      <Filter>Project\GameObject\EnemyBomb\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\EnemyBomb\state\StateMoveEnemyBomb.h">
+      <Filter>Project\GameObject\EnemyBomb\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Project\GameObject\EnemyBomb\state\StateSpownEnemyBomb.h">
+      <Filter>Project\GameObject\EnemyBomb\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

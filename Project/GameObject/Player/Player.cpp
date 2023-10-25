@@ -37,6 +37,7 @@ void Player::Initialize()
 
 void Player::Update()
 {
+	HitFlag = false;
 	Reticle();
 	SetVelosity(Velocity);
 	Move();
@@ -55,12 +56,12 @@ void Player::Draw(ViewProjection view)
 {
 	model_->Draw(worldTransform_, view);
 	LineModel_->Draw(worldTransform_, view);
-	reticleTestModel->Draw(reticleWorldTransform, view);
 	MoveEffect->Draw(view);
 }
 
 void Player::OnCollision()
 {
+	HitFlag = true;
 	isMove_ = true;
 }
 

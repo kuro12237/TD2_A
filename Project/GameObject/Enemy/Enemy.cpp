@@ -3,12 +3,11 @@
 /// <summary>
 /// 
 /// </summary>
-void Enemy::Initialize(const Vector3& position) {
+void Enemy::Initialize(const Vector3& position, uint32_t texHandle) {
 
 	model_ = make_unique<Model>();
 	model_->Initialize(new ModelCubeState);
-	texHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
-	model_->SetTexHandle(texHandle_);
+	model_->SetTexHandle(texHandle);
 	model_->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
@@ -71,20 +70,37 @@ void Enemy::EnemyMove() {
 
 void Enemy::RandomMove(){
 
-	randomX = -10 + rand() % (10 - (-1 + 10));
-	randomZ = -10 + rand() % (10 - (-1 + 10));
 	
+	int max = 20;
+	int min = -20;
+
+	randomX = min + rand() % (max - (min + 1));
+	randomZ = min + rand() % (max - (min + 1));
+
+	randomX = randomX / 10;
+	randomZ = randomZ / 10;
+
 
 	++count_;
-	if (count_ >= 480) {
-		worldTransform_.translate.x += randomX;
-		worldTransform_.translate.z += randomZ;
+	//480/510
+	if (count_ >= 0 && speed_.x == 0.0f && speed_.z == 0.0f) {
+		if (!RandFlag)
+		{
+			randomSpeed.x = float(randomX);
+			randomSpeed.z = float(randomZ);
+			randomSpeed = VectorTransform::Multiply(randomSpeed, 0.1f);
+			randomSpeed.y = 0;
+			RandFlag = true;
+		}
 	}
+	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, randomSpeed);
 
-	if (count_ >= 482) {
+	if (count_ >= 120 && RandFlag) {
 		randomX = 0;
 		randomZ = 0;
 		count_ = 0;
+		randomSpeed = { 0,0,0 };
+		RandFlag = false;
 	}
 
 }
@@ -116,7 +132,8 @@ void Enemy::OnTopWall()
 	{
 		worldTransform_.translate.z = worldTransform_.translate.z - 0.1f;
 	}
-	speed_.z = speed_.z * -1;
+	isDead_ = true;
+	Score::AddScore(10);
 }
 
 void Enemy::OnBottomWall()
@@ -125,7 +142,8 @@ void Enemy::OnBottomWall()
 	{
 		worldTransform_.translate.z = worldTransform_.translate.z + 0.1f;
 	}
-	speed_.z = speed_.z * -1;
+	isDead_ = true;
+	Score::AddScore(10);
 	//velocity.z = velocity.z * -1;
 }
 
@@ -136,7 +154,8 @@ void Enemy::OnLeftWall()
 		worldTransform_.translate.x = worldTransform_.translate.x + 0.1f;
 	}
 	//velocity.x = velocity.x * -1;
-	speed_.x = speed_.x * -1;
+	Score::AddScore(10);
+	isDead_ = true;
 }
 
 void Enemy::OnRightWall()
@@ -146,7 +165,7 @@ void Enemy::OnRightWall()
 		worldTransform_.translate.x = worldTransform_.translate.x - 0.1f;
 	}
 
-	speed_.x = speed_.x * -1;
-	
+	isDead_ = true;
+	Score::AddScore(10);
 	//velocity.x = velocity.x * -1;
 }

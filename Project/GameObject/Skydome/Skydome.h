@@ -55,7 +55,7 @@ public:
 
 private:
 
-	SkydomeElemnt skydome_;
+	SkydomeElemnt skydome_ = {};
 
 	float initScale_ = 7000.0f;
 
@@ -63,5 +63,5 @@ private:
 
 
 	// RGBÉJÉâÅ[
-	Vector3 color_;
+	Vector3 color_ = {};
 };
