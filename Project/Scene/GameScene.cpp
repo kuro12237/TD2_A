@@ -102,7 +102,7 @@ void GameScene::Update(GameManager* scene)
 	if (!timeCount_->GetIsTimeUp())
 	{
 		//GameObjectの基本更新
-		//時間切れになったらifを抜ける     
+		//時間切れになったらifを抜ける
 	}
 
 	player_->SetEnemy(enemys_);
