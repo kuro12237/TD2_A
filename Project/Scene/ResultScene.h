@@ -8,7 +8,7 @@
 #include "Graphics/TextureManager/TextureManager.h"
 #include "GameObject/TransitionProcess/TransitionProcess.h"
 #include "GameObject/Score/Score.h"
-
+#include"GameObject/KillCounter/KillCounter.h"
 
 
 struct ResultElement {

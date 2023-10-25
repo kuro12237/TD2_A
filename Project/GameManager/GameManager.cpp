@@ -30,7 +30,9 @@ void GameManager::Run()
 		Scene_->Back2dSpriteDraw();
 		Scene_->Object3dDraw();
 		Scene_->Flont2dSpriteDraw();
-
+		ImGui::Begin("killCount");
+		ImGui::Text("count %d", KillCounter::GetCount());
+		ImGui::End();
 		Cleyera::EndFlame();
 	}
 }

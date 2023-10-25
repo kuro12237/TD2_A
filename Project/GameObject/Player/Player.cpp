@@ -30,7 +30,7 @@ void Player::Initialize()
 
 	isMove_ = false;
 	SetCollosionAttribute(kCollisionAttributePlayer);
-	SetCollisionMask(kCollisionAttributeEnemy);
+	SetCollisionMask(kCollisionMaskPlayer);
 	
 	SetSize(model_->GetSize());
 }
@@ -131,6 +131,7 @@ void Player::Move()
 	//覇者
 	if (!MoveFlag && Input::GetInstance()->PushKey(DIK_SPACE))
 	{
+		GameAudio::PlayShotSound();
 		MoveFlag = true;
 		Velocity = RPNormalize;
 		Velocity = VectorTransform::Multiply(Velocity, speed);
@@ -146,13 +147,22 @@ void Player::Move()
 		//回転
 		Rvelocity.x = 0.0f;
 		Rvelocity.z = 0.0f;
-		Rvelocity.y = float(joyState.Gamepad.sThumbLX / SHRT_MAX);
-		Rvelocity.y = Rvelocity.y * 0.1f;
+		Rvelocity.y = 0.0f;
+		if (joyState.Gamepad.wButtons& XINPUT_GAMEPAD_DPAD_LEFT)
+		{
+			Rvelocity.y = -0.05f;
+		}
+		if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
+		{
+			Rvelocity.y = 0.05f;
+		}
+		//Rvelocity.y = Rvelocity.y * 0.1f;
 		worldTransform_.rotation = VectorTransform::Add(worldTransform_.rotation, Rvelocity);
 		
 		//発射処理
 		if (!MoveFlag && joyState.Gamepad.wButtons &XINPUT_GAMEPAD_A)
 		{
+			GameAudio::PlayShotSound();
 			MoveFlag = true;
 			Velocity = RPNormalize;
 			Velocity = VectorTransform::Multiply(Velocity, speed);
@@ -162,54 +172,46 @@ void Player::Move()
 #pragma endregion 
     
 	//フラグ切り替え
-	if (abs(Velocity.x)<0.05f && abs(Velocity.y)<0.05f && abs(Velocity.z)<0.05f)
+	if (abs(Velocity.x)<0.5f && abs(Velocity.y)<0.5f && abs(Velocity.z)<0.5f)
 	{
 		MoveFlag = false;
 	}
   
-	if (MoveCoolTime > MAX_MOVE_COOLTIME)
-	{
-		MoveCoolTime = 0;
-		
-		//MoveFlag = false;
-	}
 
 	// 敵に衝突した後の処理 ↓
 	list<shared_ptr<Enemy>>& enemys = enemys_;
 
-	for (shared_ptr<Enemy>& enemy : enemys) {
+	if (isMove_) {
 
-		enemyPos_ = enemy->GetWorldPosition();
-		angle = atan2((worldTransform_.translate.z - enemyPos_.z), (worldTransform_.translate.x, enemyPos_.x));
-		angle2 = atan2((enemyPos_.z - worldTransform_.translate.z), (enemyPos_.x - worldTransform_.translate.x));
-		angle = angle * 180.0f / (float)M_PI;
-		angle2 = angle2 * 180.0f / (float)M_PI;
+		for (shared_ptr<Enemy>& enemy : enemys) {
 
-			if (isMove_) {
+			pos_ = GetWorldPosition();
+			enemyPos_ = enemy->GetWorldPosition();
+			angle2 = atan2((worldTransform_.matWorld.m[3][2] - enemyPos_.z), (worldTransform_.matWorld.m[3][0] - enemyPos_.x));
+			angle = atan2((enemyPos_.z - worldTransform_.matWorld.m[3][2]), (enemyPos_.x - worldTransform_.matWorld.m[3][0]));
+			angle = angle * 180.0f / (float)M_PI;
+			angle2 = angle2 * 180.0f / (float)M_PI;
 
-				velocity_ = PhysicsFunc::SpeedComposition(enemyPos_, worldTransform_.translate, angle, angle2);
-				HitVelo = get<0>(velocity_);
-				HitVelo = VectorTransform::Normalize(HitVelo);
-				Velocity = HitVelo;
-				isMove_ = false;
-			}
+			velocity_ = PhysicsFunc::SpeedComposition(pos_, enemyPos_, angle, angle2);
+			HitVelo = get<0>(velocity_);
+			Velocity = HitVelo;
 			
-		
+		}
 
+		isMove_ = false;
+
+		
 	}
+
 	// ここまで ↑
   
 	//摩擦
 	FancFrictionCoefficient();
 	//加算処理
-	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
-
 	
-	ImGui::Begin("Player_param");
-	ImGui::Text("WorldPos : %f %f %f", worldTransform_.translate.x, worldTransform_.translate.y, worldTransform_.translate.z);
-	ImGui::Text("Normalize : %f %f %f", RPNormalize.x, RPNormalize.y, RPNormalize.z);
-	ImGui::Text("Velocity : %f %f %f", Velocity.x, Velocity.y, Velocity.z);
-	ImGui::End();
+	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
+	
+	
 
 }
 

@@ -8,6 +8,7 @@
 #include"GameObject/MapWall/MapWall.h"
 #include"GameObject/MapWall/IMapWall.h"
 #include"PlayerParticle.h"
+#include"GameObject/GameAudio/GameAudio.h"
 
 #define MAX_MOVE_COOLTIME 300
 
@@ -88,6 +89,7 @@ private:
 	Vector3 enemyPos_ = {};
 	float angle = 0.0f;
 	float angle2 = 0.0f;
+	Vector3 pos_ = {};
 	
 	/// <summary>
 	/// reticleƒgplayer‚ÌƒxƒNƒgƒ‹

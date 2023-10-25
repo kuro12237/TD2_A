@@ -2,11 +2,11 @@
 
 void GameScene::Initialize()
 {
-	DebugCamera* debugcamera = new DebugCamera();
-	debugcamera->Initialize();
-	DebugTools::addCommand(debugcamera, "DebugCamera");
+	//カウンターをリセット
+	KillCounter::ClearCount();
 
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
+	GameAudio::Initialize();
 
 	timeCount_ = make_unique<TimeCount>();
 	timeCount_->Initialize();
@@ -62,8 +62,6 @@ void GameScene::Initialize()
 void GameScene::Update(GameManager* scene)
 {
 	scene;
-	DebugTools::UpdateExecute(0);
-
 
 	///// ゲームの処理に入る
 	if (isGame_) {
@@ -79,8 +77,7 @@ void GameScene::Update(GameManager* scene)
 
 			/* ---------- スタートカウント---------- */
 
-			
-
+		
 
 			/* ---------- 制限時間 --------- */
 
@@ -221,7 +218,6 @@ void GameScene::Update(GameManager* scene)
 
 	viewProjection.UpdateMatrix();
 	viewProjection = MainCamera::GetViewProjection();
-	viewProjection = DebugTools::ConvertViewProjection(viewProjection);
 }
 
 void GameScene::Back2dSpriteDraw()
@@ -230,8 +226,6 @@ void GameScene::Back2dSpriteDraw()
 
 void GameScene::Object3dDraw()
 {
-	DebugTools::DrawExecute(0);
-
 	// 天球
 	skydome_->Draw(viewProjection);
 

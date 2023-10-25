@@ -13,11 +13,6 @@ void HitParticle::Update()
 {
 	ListParticle_ = particle_->begin();
 
-	ImGui::Begin("hitPatticle");
-	ImGui::Text("%d", ListParticle_.size());
-	ImGui::Text("%d", ListParticle_.max_size());
-	ImGui::End();
-	
 	for (Particle_param particle : ListParticle_)
 	{
 		particle.worldTransform_.translate = VectorTransform::Add(particle.worldTransform_.translate, particle.Velocity);
@@ -65,7 +60,6 @@ void HitParticle::Spown(Vector3 position)
 		p1.worldTransform_.scale = { 0.8f,0.8f,0.8f };
 		
 		p1.color_ = colorRand;
-
 
 		particle_->PushList(p1);
 
