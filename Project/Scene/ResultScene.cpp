@@ -40,6 +40,11 @@ void ResultScene::Initialize() {
 	Score::GetInstance()->GetBG_Sprite1()->SetTexHandle(scoreTexHD_);
 	Score::GetInstance()->GetBG_Sprite2()->SetTexHandle(scoreTexHD_);
 	Score::GetInstance()->GetBG_Sprite3()->SetTexHandle(scoreTexHD_);
+
+	count_ = KillCounter::GetInstance()->GetCount();
+	KillCounter::Initialize();
+	KillCounter::GetInstance()->GetBG_Sprite0()->SetTexHandle(scoreTexHD_);
+	KillCounter::GetInstance()->GetBG_Sprite1()->SetTexHandle(scoreTexHD_);
 }
 
 
@@ -48,7 +53,7 @@ void ResultScene::Initialize() {
 void ResultScene::Update(GameManager* scene) {
 
 	Score::UpdateResult(score_);
-	
+	KillCounter::Update(count_);
 
 	// シーン遷移
 	XINPUT_STATE joyState{};
@@ -98,6 +103,7 @@ void ResultScene::Flont2dSpriteDraw()
 		result_.sprite[Index]->Draw(result_.worldTransform[Index]);
 	}
 	Score::DrawResult();
+	KillCounter::Draw();
 	TransitionProcess::Draw();
 }
 

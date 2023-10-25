@@ -64,6 +64,28 @@ void Score::Initialize() {
 		Score::GetInstance()->scoreUseResultSprite_[Index]->SetTexHandle(scoreTexHD_);
 		Score::GetInstance()->scoreUseResultSprite_[Index]->SetColor(Score::GetInstance()->texColor_);
 	}
+	for (int Index = 0; Index < 4; Index++) {
+
+		// 座標
+		Score::GetInstance()->scoreWorldTransform_[Index].Initialize();
+		Score::GetInstance()->scoreUseResultWorldTransform_[Index].Initialize();
+
+		Score::GetInstance()->scorePosition_[Index] = { 20.0f + (85.0f * Index), 550.0f };
+		Score::GetInstance()->scoreUseResultPosition_[Index] = { 760.0f + (85.0f * Index), 115.0f };
+
+		// スプライト
+		Score::GetInstance()->scoreSprite_[Index] = make_unique<Sprite>();
+		Score::GetInstance()->scoreSprite_[Index]->SetSrc(src[0].RightTop, src[0].RightBottom, src[0].LeftTop, src[0].LeftBottom);
+		Score::GetInstance()->scoreSprite_[Index]->Initialize(new SpriteBoxState, Score::GetInstance()->scorePosition_[Index], { 128.0f, 128.0f });
+		Score::GetInstance()->scoreSprite_[Index]->SetTexHandle(scoreTexHD_);
+		Score::GetInstance()->scoreSprite_[Index]->SetColor(Score::GetInstance()->texColor_);
+
+		Score::GetInstance()->scoreUseResultSprite_[Index] = make_unique<Sprite>();
+		Score::GetInstance()->scoreUseResultSprite_[Index]->SetSrc(src[0].RightTop, src[0].RightBottom, src[0].LeftTop, src[0].LeftBottom);
+		Score::GetInstance()->scoreUseResultSprite_[Index]->Initialize(new SpriteBoxState, Score::GetInstance()->scoreUseResultPosition_[Index], { 128.0f, 128.0f });
+		Score::GetInstance()->scoreUseResultSprite_[Index]->SetTexHandle(scoreTexHD_);
+		Score::GetInstance()->scoreUseResultSprite_[Index]->SetColor(Score::GetInstance()->texColor_);
+	}
 
 	Score::GetInstance()->scoreBgWorldTransform_.Initialize();
 	Score::GetInstance()->scoreBgPosition_ = { 0.0f, 0.0f };
