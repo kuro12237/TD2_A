@@ -51,7 +51,7 @@ void GameScene::Initialize()
 	hitparticle_ = make_unique<HitParticle>();
 	hitparticle_->Initialize();
 
-	
+
 	enemyBombManager = make_shared<EnemyBombManager>();
 	enemyBombManager->Initialize();
 
@@ -115,8 +115,8 @@ void GameScene::Update(GameManager* scene)
 			else if (!timeCount_->GetIsTimeUp()) {
 
 				/* ---------- プレイヤー ---------- */
-
-			// プレイヤーの更新処理
+				
+				// プレイヤーの更新処理
 				player_->Update();
 
 				// プレイヤーにエネミーを送る 
@@ -191,7 +191,7 @@ void GameScene::Update(GameManager* scene)
 			return true;
 		}
 		return false;
-	});
+		});
 
 
 
@@ -261,7 +261,7 @@ void GameScene::Flont2dSpriteDraw()
 
 	// フェード 
 	TransitionProcess::Draw();
-	
+
 }
 
 void GameScene::Collision()
@@ -273,7 +273,7 @@ void GameScene::Collision()
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		collisionManager_->ClliderPush(enemy.get());
 	}
-	
+
 	for (shared_ptr<EnemyBomb>& enemy : enemyBombManager->GetEnemys())
 	{
 		collisionManager_->ClliderPush(enemy.get());
