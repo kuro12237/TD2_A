@@ -89,68 +89,6 @@ void GameScene::Update(GameManager* scene)
 
 
 
-			/* ---------- プレイヤー ---------- */
-
-			// プレイヤーの更新処理
-			player_->Update();
-
-			// プレイヤーにエネミーを送る 
-			player_->SetEnemy(enemys_);
-
-			// プレイヤーのスコアの処理
-			Score::Update();
-			player_->SetEnemy(enemys_);
-
-			// 多分プレイヤーのパーティクル
-			hitparticle_->Update();
-
-
-
-			/* ---------- エネミー ---------- */
-
-			// エネミーの更新処理諸々
-			for (shared_ptr<Enemy>& enemy : enemys_) {
-				enemy->RandomMove();
-				enemy->SetPlayer(player_.get());
-				enemy->Update();
-			}
-
-			// これは何かしらん
-			enemyBombManager->Update(player_.get());
-
-			// これも何か知らん
-			EnemyReset();
-
-			// 多分CSV読んでエネミーをリスさせてる
-			UpdateEnemyCommands();
-
-
-
-			/* ---------- 壁 --------- */
-
-			//マップの壁との当たり判定
-			MapWallCollision();
-
-			//壁のupdate
-			mapWallManager_->Update();
-			shamWall_->Update();
-
-
-
-			/* ---------- 床 --------- */
-
-			// 床の更新処理
-			mapGround_->Updatea();
-
-
-
-			/* ---------- 天球 --------- */
-
-			// 天球の更新処理
-			skydome_->Update();
-
-
-
 			/* ---------- 制限時間 --------- */
 
 			// 制限時間の処理
@@ -158,18 +96,92 @@ void GameScene::Update(GameManager* scene)
 			// 時間切れ時の処理
 			if (timeCount_->GetIsTimeUp())
 			{
+				XINPUT_STATE joyState{};
+				Input::NoneJoyState(joyState);
+				if (Input::GetInstance()->GetJoystickState(joyState))
+				{
+					//発射処理
+					if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+					{
+						TransitionProcess::Fade_In_Init();
+					}
+
+				}
 				if (Input::GetInstance()->PushKeyPressed(DIK_SPACE))
 				{
 					TransitionProcess::Fade_In_Init();
 				}
 			}
+			else if (!timeCount_->GetIsTimeUp()) {
+
+				/* ---------- プレイヤー ---------- */
+
+			// プレイヤーの更新処理
+				player_->Update();
+
+				// プレイヤーにエネミーを送る 
+				player_->SetEnemy(enemys_);
+
+				// プレイヤーのスコアの処理
+				Score::Update();
+				player_->SetEnemy(enemys_);
+
+				// 多分プレイヤーのパーティクル
+				hitparticle_->Update();
 
 
 
-			/* ---------- 当たり判定 --------- */
+				/* ---------- エネミー ---------- */
 
-			//当たり判定
-			Collision();
+				// エネミーの更新処理諸々
+				for (shared_ptr<Enemy>& enemy : enemys_) {
+					enemy->RandomMove();
+					enemy->SetPlayer(player_.get());
+					enemy->Update();
+				}
+
+				// これは何かしらん
+				enemyBombManager->Update(player_.get());
+
+				// これも何か知らん
+				EnemyReset();
+
+				// 多分CSV読んでエネミーをリスさせてる
+				UpdateEnemyCommands();
+
+
+
+				/* ---------- 壁 --------- */
+
+				//マップの壁との当たり判定
+				MapWallCollision();
+
+				//壁のupdate
+				mapWallManager_->Update();
+				shamWall_->Update();
+
+
+
+				/* ---------- 床 --------- */
+
+				// 床の更新処理
+				mapGround_->Updatea();
+
+
+
+				/* ---------- 天球 --------- */
+
+				// 天球の更新処理
+				skydome_->Update();
+
+
+
+				/* ---------- 当たり判定 --------- */
+
+				//当たり判定
+				Collision();
+
+			}
 		}
 	}
 

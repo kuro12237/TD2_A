@@ -6,20 +6,28 @@
 void TitleScene::Initialize() {
 
 	// テクスチャの読み込み
-	title_TexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/Title_BagGround.png");
+	titleBg_.TexHD = TextureManager::LoadTexture("Resources/Texture/BackGround/Title/Title.png");
+	pushBg_.TexHD = TextureManager::LoadTexture("Resources/Texture/BackGround/Title/titlePush.png");
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
 
 	// 座標
-	title_Position_ = { 0.0f, 0.0f };
-	title_WorldTransform_.Initialize();
-	title_WorldTransform_.translate = { title_Position_.x, title_Position_.y, 0.0f };
+	titleBg_.worldTransform.Initialize();
+	titleBg_.Position = { 0.0f, 0.0f };
+	pushBg_.worldTransform.Initialize();
+	titleBg_.Position = { 0.0f, 0.0f };
+
 
 	// スプライト
-	title_Sprite_ = make_unique<Sprite>();
-	title_Sprite_->Initialize(new SpriteBoxState, title_Position_, { 1280,720 });
-	title_Sprite_->SetTexHandle(title_TexHD_);
-	title_Sprite_->SetColor(title_TexColor_);
+	titleBg_.Sprite = make_unique<Sprite>();
+	titleBg_.Sprite->Initialize(new SpriteBoxState, titleBg_.Position, { 1280.0f, 720.0f });
+	titleBg_.Sprite->SetTexHandle(titleBg_.TexHD);
+	titleBg_.Sprite->SetColor(TexColor_);
+	pushBg_.Sprite = make_unique<Sprite>();
+	pushBg_.Sprite->Initialize(new SpriteBoxState, pushBg_.Position, { 1280.0f, 720.0f });
+	pushBg_.Sprite->SetTexHandle(pushBg_.TexHD);
+	pushBg_.Sprite->SetColor(TexColor_);
+
 
 	// フェードの処理
 	TransitionProcess::Initialize();
@@ -56,24 +64,34 @@ void TitleScene::Update(GameManager* scene) {
 	// 床
 	mapGround_->Updatea();
 
+	titleBg_.worldTransform.UpdateMatrix();
+
+	pushBg_.worldTransform.UpdateMatrix();
+
 	CenterWorldTransform.rotation.y+=0.001f;
 
 	viewProjection_.UpdateMatrix();
 	MainCamera::Update(CenterWorldTransform);
 	viewProjection_= MainCamera::GetViewProjection();
-	// シーン遷移
-	if (Input::GetInstance()->PushKeyPressed(DIK_9))
-	{
-		scene->ChangeState(new GameScene);
-		return;
-	}
-	
-	
+
+
 	// フェードが明ける処理
 	TransitionProcess::Fade_Out();
 	if (TransitionProcess::Fade_Out()) {
 
+		// シーン遷移
 		// スペースでフェードスタート
+		XINPUT_STATE joyState{};
+		Input::NoneJoyState(joyState);
+		if (Input::GetInstance()->GetJoystickState(joyState))
+		{
+			//発射処理
+			if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
+			{
+				TransitionProcess::Fade_In_Init();
+			}
+
+		}
 		if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
 			TransitionProcess::Fade_In_Init();
 		}
@@ -111,6 +129,7 @@ void TitleScene::Object3dDraw()
 }
 void TitleScene::Flont2dSpriteDraw()
 {
-	//title_Sprite_->Draw(title_WorldTransform_);
+	titleBg_.Sprite->Draw(titleBg_.worldTransform);
+	pushBg_.Sprite->Draw(pushBg_.worldTransform);
 	TransitionProcess::Draw();
 }

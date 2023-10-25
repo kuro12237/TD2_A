@@ -12,6 +12,17 @@
 #include"GameObject/Skydome/Skydome.h"
 #include"GameObject/MapGround/MapGround.h"
 
+
+
+
+struct TitleBgElement {
+	unique_ptr<Sprite>Sprite = nullptr;
+	uint32_t TexHD;
+	Vector2 Position;
+	WorldTransform worldTransform{};
+};
+
+
 /// <summary>
 /// タイトルシーンクラス
 /// </summary>
@@ -45,20 +56,13 @@ private:
 	
 	WorldTransform CenterWorldTransform{};
 
-	/* ----- テクスチャ ----- */
-	unique_ptr<Sprite>title_Sprite_=nullptr;
-	// ハンドル
-	uint32_t title_TexHD_{};
-	// ハンドル
-	Vector4 title_TexColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-	/* ----- 座標系 ----- */
-	// ２次元座標
-	Vector2 title_Position_{};
-	// ワールドトランスフォーム
-	WorldTransform title_WorldTransform_{};
 
 	unique_ptr<ShamWall>shamWall_ = nullptr;
 	unique_ptr<Skydome>skydome_ = nullptr;
 	unique_ptr<MapGround>mapGround_ = nullptr;
+
+
+	TitleBgElement titleBg_;
+	TitleBgElement pushBg_;
+	Vector4 TexColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
 };
