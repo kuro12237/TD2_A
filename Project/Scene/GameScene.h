@@ -2,7 +2,7 @@
 #include"IScene.h"
 #include"GameManager.h"
 
-#include "GameObject/TimeCount/TimeCount.h"
+#include"GameObject/TimeCount/TimeCount.h"
 #include"GameObject/Player/Player.h"
 #include"GameObject/Enemy/Enemy.h"
 #include"GameObject/Camera/MainCamera.h"
@@ -14,12 +14,11 @@
 #include"GameObject/TransitionProcess/TransitionProcess.h"
 #include"GameObject/HitParticle/HitParticle.h"
 #include"GameObject/EnemyBomb/EnemyBomb.h"
-#include "GameObject/Score/Score.h"
-#include "GameObject/ShamWall/ShamWall.h"
-#include "GameObject/Skydome/Skydome.h"
-#include "GameObject/MapGround/MapGround.h"
+#include"GameObject/Score/Score.h"
+#include"GameObject/ShamWall/ShamWall.h"
+#include"GameObject/Skydome/Skydome.h"
+#include"GameObject/MapGround/MapGround.h"
 #include"GameObject/EnemyBomb/EnemyBombManager.h"
-
 
 class GameScene : public IScene
 {
@@ -52,7 +51,7 @@ private:
 	unique_ptr<TimeCount>timeCount_ = nullptr;
 	unique_ptr<Player>player_ = nullptr;
 	unique_ptr<HitParticle>hitparticle_ = nullptr;
-
+	
 	std::list<shared_ptr<Enemy>>enemys_;
 	bool wait = false; 
 	uint32_t waitTimer = 0;

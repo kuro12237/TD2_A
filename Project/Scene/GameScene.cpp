@@ -55,6 +55,7 @@ void GameScene::Initialize()
 	hitparticle_ = make_unique<HitParticle>();
 	hitparticle_->Initialize();
 
+	
 	enemyBombManager = make_shared<EnemyBombManager>();
 	enemyBombManager->Initialize();
 
@@ -131,7 +132,7 @@ void GameScene::Update(GameManager* scene)
 
 	// 床
 	mapGround_->Updatea();
-
+	
 	//当たり判定
 	Collision();
 	//カメラ
@@ -171,10 +172,11 @@ void GameScene::Object3dDraw()
 
 void GameScene::Flont2dSpriteDraw()
 {
+	
 	timeCount_->Draw();
 	Score::Draw();
-	
 	TransitionProcess::Draw();
+	
 }
 
 void GameScene::Collision()

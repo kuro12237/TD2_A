@@ -18,7 +18,6 @@ public:
 
 	void Draw(Particle* state, list<Particle_param>param, ViewProjection viewprojection)override;
 
-
 private:
 
 	SPSOProperty Get3dParticlePipeline(Particle* state);
@@ -35,9 +34,6 @@ private:
 
 	Vector4 testColor = { 1,1,1,1 };
 
-	Vector3 testRotate = { };
-	Vector3 testTrans = {0,3,0};
-
 	Vector4 pos = { 0,0,0,1 };
 	float size = 0.5f;
 
@@ -47,7 +43,6 @@ private:
 	
 
 	Matrix4x4 billboardMatrix{};
-
 
 	Matrix4x4 sMat{};
 	Matrix4x4 tMat{};

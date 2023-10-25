@@ -11,11 +11,13 @@ EnemyBombManager::~EnemyBombManager()
 
 void EnemyBombManager::Initialize()
 {
-	texHandle = TextureManager::LoadTexture("Resources/uvChecker.png");
+	texHandle = TextureManager::LoadTexture("Resources/EnemyBomb.png");
+
 }
 
 void EnemyBombManager::Update(Player* player)
 {
+	SpownFanc();
 	enemys_.remove_if([](std::shared_ptr<EnemyBomb>& e) {
 		if (e->GetIsDead())
 		{
@@ -56,10 +58,13 @@ void EnemyBombManager::SpownFanc()
 
 	if (spownTimer_>MaxSpownTimer_)
 	{
+		mt19937 randomEngine(seedGenerator());
+		uniform_real_distribution<float>distribution(-30.0f, 30.0f);
 		shared_ptr<EnemyBomb>enemy = nullptr;
 		enemy = make_shared<EnemyBomb>();
-		enemy->Initialize({ 0,0,20.0f }, texHandle);
+		enemy->Initialize({ float(distribution(randomEngine)),-10,float(distribution(randomEngine))}, texHandle);
 		enemys_.push_back(enemy);
+		spownTimer_ = 0;
 	}
 
 }

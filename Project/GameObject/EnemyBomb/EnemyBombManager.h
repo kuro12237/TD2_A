@@ -18,6 +18,8 @@ public:
 
 	list<shared_ptr<EnemyBomb>>GetEnemys() { return enemys_; }
 
+	void SetSpownMax(uint32_t t) { spownTimer_ = t; }
+
 private:
 
 	uint32_t spownTimer_ = 0;
@@ -25,5 +27,7 @@ private:
 
 	uint32_t texHandle = 0;
 	list<shared_ptr<EnemyBomb>>enemys_;
+
+	random_device seedGenerator;
 };
 
