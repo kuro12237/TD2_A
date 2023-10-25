@@ -38,7 +38,7 @@ public:
 	void LoadEnemyDate();
 	void UpdateEnemyCommands();
 	void EnemySpawn(const Vector3& position);
-	void EnemyReset();
+	void RandomSpawn();
 	
 private:
 	
@@ -68,6 +68,8 @@ private:
 	unique_ptr<ShamWall>shamWall_ = nullptr;
 	unique_ptr<Skydome>skydome_ = nullptr;
 	unique_ptr<MapGround>mapGround_ = nullptr;
+	random_device seedGenerator;
+	uint32_t spawnTimer_ = 0;
 
 };
 

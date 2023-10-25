@@ -32,15 +32,8 @@ void GameScene::Initialize()
 	player_->Initialize();
 
 	LoadEnemyDate();
-
 	enemyTexHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
-	shared_ptr<StoppedEnemy> stpEnemy = make_shared<StoppedEnemy>();
-	stpEnemy->Initialize({0.0f,0.0f,0.0f},enemyTexHandle_);
-	stpEnemy->SetPlayer(player_.get());
-	player_->SetStpEnemy(stpEnemys_);
-	stpEnemys_.push_back(stpEnemy);
-
-
+	
 	MainCamera::Initialize();
 
 	collisionManager_ = make_unique<CollisionManager>();
@@ -120,6 +113,8 @@ void GameScene::Update(GameManager* scene)
 
 	}
 
+	player_->SetStpEnemy(stpEnemys_);
+
 	for (shared_ptr<StoppedEnemy>& stpEnemy : stpEnemys_) {
 		stpEnemy->SetPlayer(player_.get());
 		stpEnemy->Update();
@@ -154,8 +149,6 @@ void GameScene::Update(GameManager* scene)
 	player_->Update();
 	
 	hitparticle_->Update();
-
-	EnemyReset();
 
 	UpdateEnemyCommands();
 	//マップの壁との当たり判定
@@ -201,6 +194,8 @@ void GameScene::Object3dDraw()
 	for (shared_ptr<Enemy>& enemy : enemys_) {
 		enemy->Draw(viewProjection);
 	}
+
+	RandomSpawn();
 
 	for (shared_ptr<StoppedEnemy>& stpEnemy : stpEnemys_) {
 		stpEnemy->Draw(viewProjection);
@@ -326,16 +321,19 @@ void GameScene::EnemySpawn(const Vector3& position) {
 	enemys_.push_back(enemy);
 }
 
-// enemyのreset
-void GameScene::EnemyReset() {
-	if (Input::GetInstance()->PushKeyPressed(DIK_R)) {
-		enemys_.clear();
-		for (shared_ptr<Enemy>& enemy : enemys_) {
-			enemy = make_shared<Enemy>();
-			enemy->Initialize({ 0,0.5,0 }, enemyTexHandle_);
-		}
+void GameScene::RandomSpawn()
+{
 
-		LoadEnemyDate();
+	spawnTimer_++;
+
+	if (spawnTimer_ >= 180) {
+		mt19937 randomEngine(seedGenerator());
+		uniform_real_distribution<float>distribution(-25.0f, 25.0f);
+		shared_ptr<StoppedEnemy>enemy = nullptr;
+		enemy = make_shared<StoppedEnemy>();
+		enemy->Initialize({ float(distribution(randomEngine)),-6.0,float(distribution(randomEngine)) }, enemyTexHandle_);
+		stpEnemys_.push_back(enemy);
+		spawnTimer_ = 0;
 	}
+	
 }
-

@@ -1,6 +1,7 @@
 #include "GameObject/Enemy/StoppedEnemy.h"
 
-void StoppedEnemy::Initialize(const Vector3& position, uint32_t texHandle){
+
+void StoppedEnemy::Initialize(const Vector3& pos, uint32_t texHandle){
 
 	model_ = make_unique<Model>();
 	model_->Initialize(new ModelCubeState);
@@ -8,12 +9,10 @@ void StoppedEnemy::Initialize(const Vector3& position, uint32_t texHandle){
 	model_->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 	worldTransform_.Initialize();
 	worldTransform_.scale = { 1.0f,1.0f,1.0f };
-	worldTransform_.translate = position;
+	worldTransform_.translate = pos;
 	worldTransform_.UpdateMatrix();
-	srand(static_cast<unsigned>(time(nullptr)));
 	SetCollosionAttribute(kCollisionAttributeEnemy);
 	SetCollisionMask(kCollisionAttributePlayer);
-
 }
 
 void StoppedEnemy::Update(){
@@ -26,13 +25,14 @@ void StoppedEnemy::Draw(ViewProjection viewProjection){
 	model_->Draw(worldTransform_, viewProjection);
 }
 
-void StoppedEnemy::RandomSpawn(){
-
-	
-
-}
-
 void StoppedEnemy::Move(){
+
+	if (worldTransform_.translate.y <= 0.4f) {
+		worldTransform_.translate.y += 0.05f;
+	}
+	else if (worldTransform_.translate.y >= 0.4f) {
+		worldTransform_.translate.y = 0.5f;
+	}
 
 	playerPos_ = player_->GetWorldPosition();
 	angle = atan2((worldTransform_.translate.z - playerPos_.z), (worldTransform_.translate.x - playerPos_.x));
@@ -73,4 +73,48 @@ Vector3 StoppedEnemy::GetVelocity()
 void StoppedEnemy::OnCollision()
 {
 	isMove_ = true;
+}
+
+void StoppedEnemy::OnTopWall()
+{
+	if (worldTransform_.translate.z > static_cast<float>(FILD_MAP_SIZE_Z))
+	{
+		worldTransform_.translate.z = worldTransform_.translate.z - 0.1f;
+	}
+	isDead_ = true;
+	Score::AddScore(10);
+}
+
+void StoppedEnemy::OnBottomWall()
+{
+	if (worldTransform_.translate.z > static_cast<float>(FILD_MAP_SIZE_Z))
+	{
+		worldTransform_.translate.z = worldTransform_.translate.z + 0.1f;
+	}
+	isDead_ = true;
+	Score::AddScore(10);
+	//velocity.z = velocity.z * -1;
+}
+
+void StoppedEnemy::OnLeftWall()
+{
+	if (worldTransform_.translate.x > static_cast<float>(FILD_MAP_SIZE_X))
+	{
+		worldTransform_.translate.x = worldTransform_.translate.x + 0.1f;
+	}
+	//velocity.x = velocity.x * -1;
+	Score::AddScore(10);
+	isDead_ = true;
+}
+
+void StoppedEnemy::OnRightWall()
+{
+	if (worldTransform_.translate.x > -static_cast<float>(FILD_MAP_SIZE_X))
+	{
+		worldTransform_.translate.x = worldTransform_.translate.x - 0.1f;
+	}
+
+	isDead_ = true;
+	Score::AddScore(10);
+	//velocity.x = velocity.x * -1;
 }
