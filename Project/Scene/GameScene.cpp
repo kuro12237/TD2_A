@@ -113,6 +113,13 @@ void GameScene::Update(GameManager* scene)
 
 	}
 
+	enemyCount_++;
+
+	if (enemyCount_ >= 900) {
+		LoadEnemyDate();
+		enemyCount_ = 0;
+	}
+
 	enemys_.remove_if([](shared_ptr<Enemy>& enemy) {
 		if (enemy->IsDead()) {
 			enemy.reset();

@@ -59,6 +59,7 @@ private:
 	
 	shared_ptr<EnemyBombManager>enemyBombManager = nullptr;
 	uint32_t enemyTexHandle_;
+	uint32_t enemyCount_ = 0;
 
 	unique_ptr<MapWallManager>mapWallManager_ = nullptr;
 	unique_ptr<ShamWall>shamWall_ = nullptr;
