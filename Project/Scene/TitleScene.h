@@ -8,6 +8,9 @@
 #include "Graphics/TextureManager/TextureManager.h"
 #include "GameObject/TransitionProcess/TransitionProcess.h"
 
+#include"GameObject/ShamWall/ShamWall.h"
+#include"GameObject/Skydome/Skydome.h"
+#include"GameObject/MapGround/MapGround.h"
 
 /// <summary>
 /// タイトルシーンクラス
@@ -38,6 +41,8 @@ public:
 
 private:
 
+	ViewProjection viewProjection_{};
+
 	/* ----- テクスチャ ----- */
 	unique_ptr<Sprite>title_Sprite_=nullptr;
 	// ハンドル
@@ -50,4 +55,8 @@ private:
 	Vector2 title_Position_{};
 	// ワールドトランスフォーム
 	WorldTransform title_WorldTransform_{};
+
+	unique_ptr<ShamWall>shamWall_ = nullptr;
+	unique_ptr<Skydome>skydome_ = nullptr;
+	unique_ptr<MapGround>mapGround_ = nullptr;
 };

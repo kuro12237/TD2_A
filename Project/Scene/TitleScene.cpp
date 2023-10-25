@@ -29,13 +29,35 @@ void TitleScene::Initialize() {
 	TransitionProcess::GetInstance()->GetBG_Sprite()->SetColor({ 0.0f, 0.0f, 0.0f, 1.0f });
 	// フェードが明ける処理
 	TransitionProcess::Fade_Out_Init();
+
+	viewProjection_.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
+	
+	shamWall_ = make_unique<ShamWall>();
+	shamWall_->Initialize();
+
+	// 天球
+	skydome_ = make_unique<Skydome>();
+	skydome_->Initialize();
+
+	// 床
+	mapGround_ = make_unique<MapGround>();
+	mapGround_->Initialize();
+
 }
-
-
 
 // 更新処理
 void TitleScene::Update(GameManager* scene) {
 
+	shamWall_->Update();
+
+	// 天球
+	skydome_->Update();
+
+	// 床
+	mapGround_->Updatea();
+
+
+	viewProjection_.UpdateMatrix();
 	// シーン遷移
 	if (Input::GetInstance()->PushKeyPressed(DIK_9))
 	{
@@ -60,7 +82,6 @@ void TitleScene::Update(GameManager* scene) {
 	}
 
 
-
 #ifdef _DEBUG
 
 	ImGui::Begin("TitleScene");
@@ -79,9 +100,13 @@ void TitleScene::Back2dSpriteDraw()
 }
 void TitleScene::Object3dDraw()
 {
+	skydome_->Draw(viewProjection_);
+
+	mapGround_->Draw(viewProjection_);
+	shamWall_->Draw(viewProjection_);
 }
 void TitleScene::Flont2dSpriteDraw()
 {
-	title_Sprite_->Draw(title_WorldTransform_);
+	//title_Sprite_->Draw(title_WorldTransform_);
 	TransitionProcess::Draw();
 }
