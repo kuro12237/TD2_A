@@ -89,6 +89,7 @@ private:
 	Vector3 enemyPos_ = {};
 	float angle = 0.0f;
 	float angle2 = 0.0f;
+	Vector3 pos_ = {};
 	
 	/// <summary>
 	/// reticleƒgplayer‚ÌƒxƒNƒgƒ‹

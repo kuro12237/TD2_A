@@ -181,29 +181,37 @@ void Player::Move()
 	// 敵に衝突した後の処理 ↓
 	list<shared_ptr<Enemy>>& enemys = enemys_;
 
-	for (shared_ptr<Enemy>& enemy : enemys) {
+	if (isMove_) {
 
-		enemyPos_ = enemy->GetWorldPosition();
-		angle = atan2((worldTransform_.translate.z - enemyPos_.z), (worldTransform_.translate.x, enemyPos_.x));
-		angle2 = atan2((enemyPos_.z - worldTransform_.translate.z), (enemyPos_.x - worldTransform_.translate.x));
-		angle = angle * 180.0f / (float)M_PI;
-		angle2 = angle2 * 180.0f / (float)M_PI;
+		for (shared_ptr<Enemy>& enemy : enemys) {
 
-		if (isMove_) {
+			pos_ = GetWorldPosition();
+			enemyPos_ = enemy->GetWorldPosition();
+			angle2 = atan2((worldTransform_.matWorld.m[3][2] - enemyPos_.z), (worldTransform_.matWorld.m[3][0] - enemyPos_.x));
+			angle = atan2((enemyPos_.z - worldTransform_.matWorld.m[3][2]), (enemyPos_.x - worldTransform_.matWorld.m[3][0]));
+			angle = angle * 180.0f / (float)M_PI;
+			angle2 = angle2 * 180.0f / (float)M_PI;
 
-			velocity_ = PhysicsFunc::SpeedComposition(enemyPos_, worldTransform_.translate, angle, angle2);
+			velocity_ = PhysicsFunc::SpeedComposition(pos_, enemyPos_, angle, angle2);
 			HitVelo = get<0>(velocity_);
-			HitVelo = VectorTransform::Normalize(HitVelo);
 			Velocity = HitVelo;
-			isMove_ = false;
+			
+		}
+
+		isMove_ = false;
+
 		}
 	}
+
 	// ここまで ↑
   
 	//摩擦
 	FancFrictionCoefficient();
 	//加算処理
+	
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, Velocity);
+	
+	
 
 }
 

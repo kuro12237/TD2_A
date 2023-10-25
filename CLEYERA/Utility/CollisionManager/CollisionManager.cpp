@@ -34,66 +34,50 @@ void CollisionManager::CheckCollisionPair(Collider* cA, Collider* cB) {
 	float cAradious = cA->GetRadious();
 	float cBradious = cB->GetRadious();
 
-	if (CheckBallCollosion(cApos, cAradious,cAVelo, cBpos, cBradious, cBVelo)) {
+	if (CheckBallCollision(cApos, cAradious,cAVelo, cBpos, cBradious, cBVelo)) {
 		cA->OnCollision();
 		cB->OnCollision();
 	}
 }
 
 
-bool CollisionManager::CheckBallCollosion(Vector3 v1, float v1Radious,Vector3 velo, Vector3 v2, float v2Radious, Vector3 velo2) {
+bool CollisionManager::CheckBallCollision(Vector3 v1, float radius1, Vector3 velocity1, Vector3 v2, float radius2, Vector3 velocity2) {
+	// 時間刻みを設定
+	float deltaTime = 0.01f;
 
-	//当たってる時のフレームを求める
-	float a = (velo.x * velo.x) - (2.0f * (velo.x * velo2.x)) + (velo2.x * velo2.x) +
-		(velo.z * velo.z) - (2.0f * (velo.z * velo2.z)) + (velo2.z * velo2.z);
+	// 初期位置
+	Vector3 currentPos1 = v1;
+	Vector3 currentPos2 = v2;
 
-	float b = (2.0f * (v1.x * velo.x)) - (2.0f * (v1.x * velo2.x)) - (2.0f * (velo.x * v2.x)) +
-		(2.0f * (v2.x * velo2.x)) + (2.0f * (v1.z * velo.z)) - (2.0f * (v1.z * velo2.z))
-		- (2.0f * (velo.z * v2.z)) + (2.0f * (v2.z * velo2.z));
+	// 衝突判定フラグ
+	bool collision = false;
 
-	float c = (v1.x * v1.x) - (2.0f * (v1.x * v2.x)) + (v2.x * v2.x) + (v1.z * v1.z) - (2.0f * (v1.z * v2.z)) +
-		(v2.z * v2.z) - ((v1Radious + v2Radious) * (v1Radious + v2Radious));
+	for (float t = 0; t <= 1.0f; t += deltaTime) {
 
-	float d = (b * b) - 4.0f * a * c;
+		// オブジェクトの位置を時間刻み内で補間
+		Vector3 newPos1 = VectorTransform::Add(currentPos1 , VectorTransform::Multiply(velocity1 , deltaTime));
+		Vector3 newPos2 = VectorTransform::Add(currentPos2, VectorTransform::Multiply(velocity2, deltaTime));
 
-	bool Flag = false;
+		// 2つの球の中心間の距離を計算
+		Vector3 centerDelta = VectorTransform::Subtruct( newPos2 , newPos1);
+		float distanceSquared = VectorTransform::Dot(centerDelta, centerDelta);
 
-	if (d <= 0) {
-	
-	}
-	else {
+		// 2つの球の半径の合計
+		float combinedRadius = radius1 + radius2;
 
-		d = sqrt(d);
-
-		float f0 = (-b - d) / (2.0f * a); // 当たる瞬間のf
-		//float f1 = (b + d) / (2.0f * a); // 離れる瞬間のf
-
-		velo.x = velo.x * f0;
-		velo.y = velo.y * f0;
-		velo.z = velo.z * f0;
-
-		velo2.x = velo2.x * f0;
-		velo2.y = velo2.y * f0;
-		velo2.z = velo2.z * f0;
-
-		float x = (v2.x - v1.x);
-		float y = (v2.y - v1.y);
-		float z = (v2.z - v1.z);
-
-		float resultPos = (x * x) + (y * y) + (z * z);
-
-		float resultRadious = v1Radious + v2Radious;
-
-
-		if (resultPos <= (resultRadious * resultRadious)) {
-
-			Flag = true;
-
+		if (distanceSquared <= combinedRadius * combinedRadius) {
+			// 衝突が発生
+			collision = true;
+			break;
 		}
 
+		// 位置と速度を更新
+		currentPos1 = newPos1;
+		currentPos2 = newPos2;
 	}
 
-	return Flag;
+	return collision;
 }
+
 
 
