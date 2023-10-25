@@ -93,6 +93,11 @@ void Enemy::RandomMove(){
 			RandFlag = true;
 		}
 	}
+
+	if (worldTransform_.translate.x >= 30 || worldTransform_.translate.x <= -30 || worldTransform_.translate.z >= 30 || worldTransform_.translate.z <= -30) {
+		randomSpeed = VectorTransform::Multiply(randomSpeed, -1.0f);
+	}
+
 	worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, randomSpeed);
 
 	if (count_ >= 120 && RandFlag) {
