@@ -8,6 +8,7 @@
 #include"GameObject/MapWall/MapWall.h"
 #include"GameObject/MapWall/IMapWall.h"
 #include"PlayerParticle.h"
+#include"GameObject/GameAudio/GameAudio.h"
 
 #define MAX_MOVE_COOLTIME 300
 

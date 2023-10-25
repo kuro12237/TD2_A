@@ -14,8 +14,6 @@ void MainCamera::Initialize()
 
 void MainCamera::Update(WorldTransform w)
 {
-	
-
 	//’Ç]‚·‚éobj‚Ìrt‚ðGet
 	MainCamera::GetInstance()->viewProjection.translation_ = w.translate;
 	MainCamera::GetInstance()->viewProjection.rotation_ = w.rotation;
@@ -32,9 +30,6 @@ void MainCamera::Update(WorldTransform w)
 	Matrix4x4 rotateMatrix = MatrixTransform::Multiply(rotateXMatrix, MatrixTransform::Multiply(rotateYMatrix, rotateZMatrix));
 	//ƒIƒtƒZƒbƒg‚ðƒJƒƒ‰‚Ì‰ñ“]‚É‡‚í‚¹‚Ä‰ñ“]‚³‚¹‚é
 	offset = VectorTransform::TransformNormal(offset, rotateMatrix);
-
-	
-
 	MainCamera::GetInstance()->viewProjection.translation_ = VectorTransform::Add(Lerp ,offset);
 	Shake();
 	MainCamera::GetInstance()->viewProjection.UpdateMatrix();

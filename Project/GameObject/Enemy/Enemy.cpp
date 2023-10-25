@@ -16,7 +16,7 @@ void Enemy::Initialize(const Vector3& position, uint32_t texHandle) {
 	worldTransform_.UpdateMatrix();
 	srand(static_cast<unsigned>(time(nullptr)));
 	SetCollosionAttribute(kCollisionAttributeEnemy);
-	SetCollisionMask(kCollisionAttributePlayer);
+	SetCollisionMask(kCollisionMaskEnemy);
 }
 
 /// <summary>
@@ -53,22 +53,19 @@ void Enemy::EnemyMove() {
 	angle = angle * 180.0f / (float)M_PI;
 	angle2 = angle2 * 180.0f / (float)M_PI;
 
-		if (isMove_) {
-			velocity_ = PhysicsFunc::SpeedComposition(playerPos_, worldTransform_.translate, angle, angle2);
-			speed_ = get<1>(velocity_);
-			speed_ = VectorTransform::Normalize(speed_);
-			isMove_ = false;
-			
-		}
-		else {
-			worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, speed_);
-		}
-	
+	if (isMove_) {
+		velocity_ = PhysicsFunc::SpeedComposition(playerPos_, worldTransform_.translate, angle, angle2);
+		speed_ = get<1>(velocity_);
+		speed_ = VectorTransform::Normalize(speed_);
+		isMove_ = false;	
+	}
+	else {
+		worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, speed_);
+	}
 }
 
 void Enemy::RandomMove(){
 
-	
 	int max = 20;
 	int min = -20;
 
@@ -77,7 +74,6 @@ void Enemy::RandomMove(){
 
 	randomX = randomX / 10;
 	randomZ = randomZ / 10;
-
 
 	++count_;
 	//480/510
@@ -127,6 +123,7 @@ Vector3 Enemy::GetVelocity()
 
 void Enemy::OnCollision(){
 	isMove_ = true;
+	GameAudio::PlayHitSound();
 }
 
 void Enemy::OnTopWall()
