@@ -88,6 +88,7 @@ private:
 	Vector3 enemyPos_ = {};
 	float angle = 0.0f;
 	float angle2 = 0.0f;
+	Vector3 pos_ = {};
 	
 	/// <summary>
 	/// reticleƒgplayer‚ÌƒxƒNƒgƒ‹
@@ -102,7 +103,7 @@ private:
 	uint32_t MoveCoolTime = 0;
 	bool MoveFlag = false;
 
-	const float speed = 2.0f;
+	const float speed = 1.0f;
 	const float rotateSpeed = 0.1f;
 	Vector3 Rvelocity{};
 
