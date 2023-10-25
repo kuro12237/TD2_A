@@ -55,11 +55,6 @@ void GameScene::Initialize()
 	enemyBombManager = make_shared<EnemyBombManager>();
 	enemyBombManager->Initialize();
 
-
-	startCount_ = make_unique<StartCount>();
-	startCount_->Initialize();
-
-
 	isGame_ = true;
 	TransitionProcess::Fade_Out_Init();
 }
@@ -84,9 +79,7 @@ void GameScene::Update(GameManager* scene)
 
 			/* ---------- スタートカウント---------- */
 
-			// 更新処理
-			//startCount_->Update();
-
+			
 
 
 			/* ---------- プレイヤー ---------- */
