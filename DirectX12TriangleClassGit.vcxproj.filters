@@ -406,6 +406,7 @@
     <ClCompile Include="Project\GameObject\Enemy\StoppedEnemy.cpp">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Project\GameObject\StartCount\StartCount.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Utility\Pch\Pch.h">
@@ -669,6 +670,7 @@
     <ClInclude Include="Project\GameObject\Enemy\StoppedEnemy.h">
       <Filter>Project\GameObject\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Project\GameObject\StartCount\StartCount.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\ShapeObject3d.PS.hlsl">

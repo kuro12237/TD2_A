@@ -19,10 +19,13 @@ public:
 	static void SetParent(const WorldTransform* worldTransform) { MainCamera::GetInstance()->worldTransform_.parent = worldTransform; }
 
 	static void SetIsShake(bool isFlag) { MainCamera::GetInstance()->IsShake = isFlag;}
+
+	static void SetOffset(Vector3 offset) { MainCamera::GetInstance()->offset_ = offset;}
 private:
 
 	static void Shake();
 
+	Vector3 offset_{};
 
 	ViewProjection viewProjection{};
 	WorldTransform worldTransform_{};

@@ -71,6 +71,11 @@ private:
 	random_device seedGenerator;
 	uint32_t spawnTimer_ = 0;
 
+	unique_ptr<StartCount> startCount_ = nullptr;
+
+
+	bool isGame_;
+	int startGameSceneTimer_;
 };
 
 

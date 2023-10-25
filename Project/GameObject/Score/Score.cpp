@@ -14,6 +14,7 @@ void Score::Initialize() {
 
 	// テクスチャの読み込み
 	uint32_t scoreTexHD_ = TextureManager::LoadTexture("Resources/Texture/UI/Score.png");
+	uint32_t scoreBgTexHD = TextureManager::LoadTexture("Resources/Texture/BackGround/ScoreBg.png");
 
 	// 画像の上下左右の座標を決める
 	int column = 0;
@@ -50,10 +51,19 @@ void Score::Initialize() {
 		// スプライト
 		Score::GetInstance()->scoreSprite_[Index] = make_unique<Sprite>();
 		Score::GetInstance()->scoreSprite_[Index]->SetSrc(src[0].RightTop, src[0].RightBottom, src[0].LeftTop, src[0].LeftBottom);
-		Score::GetInstance()->scoreSprite_[Index]->Initialize(new SpriteBoxState, Score::GetInstance()->scorePosition_[Index], {128.0f, 128.0f});
+		Score::GetInstance()->scoreSprite_[Index]->Initialize(new SpriteBoxState, Score::GetInstance()->scorePosition_[Index], { 128.0f, 128.0f });
 		Score::GetInstance()->scoreSprite_[Index]->SetTexHandle(scoreTexHD_);
 		Score::GetInstance()->scoreSprite_[Index]->SetColor(Score::GetInstance()->texColor_);
 	}
+
+	Score::GetInstance()->scoreBgWorldTransform_.Initialize();
+	Score::GetInstance()->scoreBgPosition_ = { 0.0f, 0.0f };
+
+	Score::GetInstance()->scoreBgSprite_ = make_unique<Sprite>();
+	Score::GetInstance()->scoreBgSprite_->Initialize(new SpriteBoxState, Score::GetInstance()->scoreBgPosition_, { 1280.0f, 720.0f });
+	Score::GetInstance()->scoreBgSprite_->SetTexHandle(scoreBgTexHD);
+	Score::GetInstance()->scoreBgSprite_->SetColor(Score::GetInstance()->texColor_);
+
 }
 
 
@@ -66,19 +76,14 @@ void Score::Update() {
 
 	Score::CalcScorePlace(Score::GetInstance()->acquisitionScore_);
 	Score::SetSrc();
-
-	ImGui::Begin("sukoa");
-	ImGui::DragFloat3("scale1", &Score::GetInstance()->scoreWorldTransform_[0].scale.x, 0.01f);
-	ImGui::DragFloat3("scale2", &Score::GetInstance()->scoreWorldTransform_[1].scale.x, 0.01f);
-	ImGui::DragFloat3("scale3", &Score::GetInstance()->scoreWorldTransform_[2].scale.x, 0.01f);
-	ImGui::DragFloat3("scale4", &Score::GetInstance()->scoreWorldTransform_[3].scale.x, 0.01f);
-	ImGui::End();
+	Score::GetInstance()->scoreBgWorldTransform_.UpdateMatrix();
 }
 
 
 // 描画処理
 void Score::Draw() {
-	
+
+	Score::GetInstance()->scoreBgSprite_->Draw(Score::GetInstance()->scoreBgWorldTransform_);
 	for (int Index = 0; Index < 4; Index++) {
 		Score::GetInstance()->scoreSprite_[Index]->Draw(Score::GetInstance()->scoreWorldTransform_[Index]);
 	}
@@ -89,14 +94,14 @@ void Score::Draw() {
 void Score::AddScore(uint32_t addVale) {
 
 	uint32_t nowScore = Score::GetInstance()->acquisitionScore_;
-
 	Score::GetInstance()->acquisitionScore_ = nowScore + addVale;
+
 }
 
 
 // スコアの各値を求める
 void Score::CalcScorePlace(uint32_t nowScore) {
-	
+
 	// 1000の位
 	Score::GetInstance()->eachTime_[0] = (nowScore % 10000) / 1000;
 	// 100の位
@@ -127,5 +132,4 @@ void Score::SetSrc() {
 	Score::GetInstance()->scoreSprite_[2]->SetSrc(src[eachTime[2]].RightTop, src[eachTime[2]].RightBottom, src[eachTime[2]].LeftTop, src[eachTime[2]].LeftBottom);
 	Score::GetInstance()->scoreSprite_[3]->SetSrc(src[eachTime[2]].RightTop, src[eachTime[2]].RightBottom, src[eachTime[2]].LeftTop, src[eachTime[2]].LeftBottom);
 }
-
 
