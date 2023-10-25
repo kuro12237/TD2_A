@@ -25,7 +25,7 @@ void StartCount::Initialize() {
 
 	eachCount_ = 0;
 	frame_ = 0;
-
+	isStartCount_ = false;
 }
 
 
@@ -53,6 +53,10 @@ void StartCount::Update() {
 
 void StartCount::Draw() {
 
+	if (isStartCount_) {
+
+		startCount_.sprite->Draw(startCount_.worldTransform);
+	}
 }
 
 
