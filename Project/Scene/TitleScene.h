@@ -42,6 +42,8 @@ public:
 private:
 
 	ViewProjection viewProjection_{};
+	
+	WorldTransform CenterWorldTransform{};
 
 	/* ----- テクスチャ ----- */
 	unique_ptr<Sprite>title_Sprite_=nullptr;

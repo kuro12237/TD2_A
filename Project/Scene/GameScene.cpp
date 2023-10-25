@@ -34,6 +34,7 @@ void GameScene::Initialize()
 	LoadEnemyDate();
 
 	MainCamera::Initialize();
+	MainCamera::SetOffset({ 0.0f,3.0f,-50.0f });
 
 	collisionManager_ = make_unique<CollisionManager>();
 	mapWallManager_ = make_unique<MapWallManager>();

@@ -22,7 +22,7 @@ void MainCamera::Update(WorldTransform w)
 	MainCamera::GetInstance()->viewProjection.rotation_.x = w.rotation.x + 0.3f;
 
 	//ƒJƒƒ‰‚ğobj‚©‚ç‚Ç‚ÌˆÊ‚Ì‹——£‚É’u‚­‚©
-	Vector3 offset = { 0.0f,3.0f,-50.0f };
+	Vector3 offset = MainCamera::GetInstance()->offset_;
 	Vector3 Lerp = VectorTransform::Lerp(w.translate, MainCamera::GetInstance()->viewProjection.translation_,1.0f);
 
 	//‰ñ“]s—ñ‚Ì‡¬
