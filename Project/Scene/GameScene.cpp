@@ -235,7 +235,7 @@ void GameScene::Flont2dSpriteDraw()
 	if (TransitionProcess::Fade_Out()) {
 
 		// スタート時のカウント
-		startCount_->Draw();
+		//startCount_->Draw();
 
 		// スコアの描画
 		Score::Draw();
