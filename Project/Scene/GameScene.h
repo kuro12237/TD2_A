@@ -20,6 +20,7 @@
 #include"GameObject/MapGround/MapGround.h"
 #include"GameObject/EnemyBomb/EnemyBombManager.h"
 #include "GameObject/Enemy/StoppedEnemy.h"
+#include"GameObject/KillCounter/KillCounter.h"
 
 class GameScene : public IScene
 {

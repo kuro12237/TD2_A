@@ -26,6 +26,13 @@ void Enemy::Update() {
 
 	EnemyMove();
 	RandomMove();
+	if (SoundFlag&&!SoundLock)
+	{
+		GameAudio::PlayHitSound();
+		KillCounter::AddCount();
+		SoundLock = true;
+	}
+
 	worldTransform_.UpdateMatrix();
 }
 
@@ -54,6 +61,7 @@ void Enemy::EnemyMove() {
 	angle2 = angle2 * 180.0f / (float)M_PI;
 
 	if (isMove_) {
+		
 		velocity_ = PhysicsFunc::SpeedComposition(playerPos_, worldTransform_.translate, angle, angle2);
 		speed_ = get<1>(velocity_);
 		speed_ = VectorTransform::Normalize(speed_);
@@ -123,7 +131,7 @@ Vector3 Enemy::GetVelocity()
 
 void Enemy::OnCollision(){
 	isMove_ = true;
-	GameAudio::PlayHitSound();
+	SoundFlag = true;
 }
 
 void Enemy::OnTopWall()

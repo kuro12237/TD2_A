@@ -48,6 +48,7 @@ void ResultScene::Initialize() {
 void ResultScene::Update(GameManager* scene) {
 
 	Score::UpdateResult(score_);
+	
 
 	// シーン遷移
 	XINPUT_STATE joyState{};

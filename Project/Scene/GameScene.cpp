@@ -2,6 +2,9 @@
 
 void GameScene::Initialize()
 {
+	//カウンターをリセット
+	KillCounter::ClearCount();
+
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
 	GameAudio::Initialize();
 
@@ -74,8 +77,7 @@ void GameScene::Update(GameManager* scene)
 
 			/* ---------- スタートカウント---------- */
 
-			
-
+		
 
 			/* ---------- 制限時間 --------- */
 

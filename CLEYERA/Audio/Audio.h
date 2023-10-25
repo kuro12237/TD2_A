@@ -50,6 +50,7 @@ public:
 	static void SoundUnLoad();
 
 	static void AudioPlayWave(uint32_t soundHandle);
+	static void AudioStopWave(uint32_t soundHandle);
 
 private:
 
@@ -58,7 +59,9 @@ private:
 	uint32_t soundDataCount_{};
 
 	static const uint32_t kSoundDataMax = 4;
-    soundData soundData_[kSoundDataMax]{};
+	IXAudio2SourceVoice* pSourcevoice[kSoundDataMax] = {};
+
+	soundData soundData_[kSoundDataMax]{};
 	bool InitializeFlag = false;
 };
 
