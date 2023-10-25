@@ -132,14 +132,9 @@ void GameScene::Update(GameManager* scene)
 					enemy->SetPlayer(player_.get());
 					enemy->Update();
 				}
-			// 多分CSV読んでエネミーをリスさせてる
-			UpdateEnemyCommands();
 
 				// これは何かしらん
 				enemyBombManager->Update(player_.get());
-
-				// これも何か知らん
-				EnemyReset();
 
 				// 多分CSV読んでエネミーをリスさせてる
 				UpdateEnemyCommands();
