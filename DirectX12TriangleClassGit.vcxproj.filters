@@ -184,6 +184,9 @@
     <Filter Include="Project\GameObject\EnemyBomb\State">
       <UniqueIdentifier>{5b274d61-da68-4486-b9de-d68131ce6f28}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Project\GameObject\GameAudio">
+      <UniqueIdentifier>{0e21c79e-83d3-4bab-bded-dd8884f919c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="CLEYERA\Config\.editorconfig">
@@ -404,6 +407,9 @@
       <Filter>Project\GameObject\EnemyBomb\State</Filter>
     </ClCompile>
     <ClCompile Include="Project\GameObject\StartCount\StartCount.cpp" />
+    <ClCompile Include="Project\GameObject\GameAudio\GameAudio.cpp">
+      <Filter>Project\GameObject\GameAudio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLEYERA\Utility\Pch\Pch.h">
@@ -665,6 +671,9 @@
       <Filter>Project\GameObject\EnemyBomb\State</Filter>
     </ClInclude>
     <ClInclude Include="Project\GameObject\StartCount\StartCount.h" />
+    <ClInclude Include="Project\GameObject\GameAudio\GameAudio.h">
+      <Filter>Project\GameObject\GameAudio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\ShapeObject3d.PS.hlsl">

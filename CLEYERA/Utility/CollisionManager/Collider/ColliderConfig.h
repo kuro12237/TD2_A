@@ -1,6 +1,4 @@
 #pragma once
-
-
 #include<cstdint>
 
 const uint32_t kCollisionAttributePlayer = 0b0001;

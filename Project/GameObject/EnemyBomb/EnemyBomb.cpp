@@ -45,6 +45,7 @@ void EnemyBomb::OnCollision()
 {
 	if (!SceneChangeFlag)
 	{
+		GameAudio::PlayHitSound();
 		Score::AddScore(100);
 		ChangeState(new StateBreakEnemyBomb);
 		SceneChangeFlag = true;

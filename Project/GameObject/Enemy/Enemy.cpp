@@ -39,8 +39,6 @@ void Enemy::Draw(ViewProjection viewProjection){
 
 void Enemy::EnemyMove() {
 
-
-
 	if (worldTransform_.translate.y >= 0.6f) {
 		worldTransform_.translate.y -= (fallSpeed_ * gravity_) * dt;
 	}
@@ -55,22 +53,19 @@ void Enemy::EnemyMove() {
 	angle = angle * 180.0f / (float)M_PI;
 	angle2 = angle2 * 180.0f / (float)M_PI;
 
-		if (isMove_) {
-			velocity_ = PhysicsFunc::SpeedComposition(playerPos_, worldTransform_.translate, angle, angle2);
-			speed_ = get<1>(velocity_);
-			speed_ = VectorTransform::Normalize(speed_);
-			isMove_ = false;
-			
-		}
-		else {
-			worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, speed_);
-		}
-	
+	if (isMove_) {
+		velocity_ = PhysicsFunc::SpeedComposition(playerPos_, worldTransform_.translate, angle, angle2);
+		speed_ = get<1>(velocity_);
+		speed_ = VectorTransform::Normalize(speed_);
+		isMove_ = false;	
+	}
+	else {
+		worldTransform_.translate = VectorTransform::Add(worldTransform_.translate, speed_);
+	}
 }
 
 void Enemy::RandomMove(){
 
-	
 	int max = 20;
 	int min = -20;
 
@@ -79,7 +74,6 @@ void Enemy::RandomMove(){
 
 	randomX = randomX / 10;
 	randomZ = randomZ / 10;
-
 
 	++count_;
 	//480/510
@@ -124,6 +118,7 @@ Vector3 Enemy::GetVelocity()
 
 void Enemy::OnCollision(){
 	isMove_ = true;
+	GameAudio::PlayHitSound();
 }
 
 void Enemy::OnTopWall()

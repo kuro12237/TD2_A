@@ -3,6 +3,7 @@
 void GameScene::Initialize()
 {
 	viewProjection.Initialize({ 0.2f,-0.6f,0.0f }, { 11.0f,5.0f,-15 });
+	GameAudio::Initialize();
 
 	timeCount_ = make_unique<TimeCount>();
 	timeCount_->Initialize();

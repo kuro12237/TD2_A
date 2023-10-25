@@ -131,6 +131,7 @@ void Player::Move()
 	//覇者
 	if (!MoveFlag && Input::GetInstance()->PushKey(DIK_SPACE))
 	{
+		GameAudio::PlayShotSound();
 		MoveFlag = true;
 		Velocity = RPNormalize;
 		Velocity = VectorTransform::Multiply(Velocity, speed);
@@ -153,6 +154,7 @@ void Player::Move()
 		//発射処理
 		if (!MoveFlag && joyState.Gamepad.wButtons &XINPUT_GAMEPAD_A)
 		{
+			GameAudio::PlayShotSound();
 			MoveFlag = true;
 			Velocity = RPNormalize;
 			Velocity = VectorTransform::Multiply(Velocity, speed);
@@ -167,12 +169,6 @@ void Player::Move()
 		MoveFlag = false;
 	}
   
-	if (MoveCoolTime > MAX_MOVE_COOLTIME)
-	{
-		MoveCoolTime = 0;
-		
-		//MoveFlag = false;
-	}
 
 	// 敵に衝突した後の処理 ↓
 	list<shared_ptr<Enemy>>& enemys = enemys_;
