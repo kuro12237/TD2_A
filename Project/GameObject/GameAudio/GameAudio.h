@@ -15,11 +15,12 @@ public:
 
 	static void PlayShotSound();
 
+	static void PlaySelectSound();
 private:
 
 	uint32_t hitSoundHandle_ = 0;
 	uint32_t shotSoundHandle_ = 0;
-
+	uint32_t SelectsoundHandle = 0;
 
 };
 

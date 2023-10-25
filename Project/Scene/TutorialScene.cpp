@@ -1,10 +1,9 @@
 ﻿#include "TutorialScene.h"
 
-
-
 // 初期化処理
 void TutorialScene::Initialize() {
 
+	GameAudio::Initialize();
 	// テクスチャの読み込み
 	tutorial_TexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/Tutorial/Tutorial_BagGround.png");
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
@@ -54,17 +53,20 @@ void TutorialScene::Update(GameManager* scene) {
 			//発射処理
 			if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 			{
+				GameAudio::PlaySelectSound();
 				TransitionProcess::Fade_In_Init();
 			}
 
 		}
 		// スペースでフェードスタート
 		if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
+			GameAudio::PlaySelectSound();
 			TransitionProcess::Fade_In_Init();
 		}
 		TransitionProcess::Fade_In();
 		// フェードの処理が終わったらシーン遷移
 		if (TransitionProcess::Fade_In()) {
+			
 			scene->ChangeState(new GameScene);
 			return;
 		}

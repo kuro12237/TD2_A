@@ -5,6 +5,7 @@
 // 初期化処理
 void ResultScene::Initialize() {
 
+	GameAudio::Initialize();
 	// テクスチャの読み込み
 	result_.TexHD[0] = TextureManager::LoadTexture("Resources/Texture/BackGround/Result/Result_Back.png");
 	result_.TexHD[1] = TextureManager::LoadTexture("Resources/Texture/BackGround/Result/Result_front.png");

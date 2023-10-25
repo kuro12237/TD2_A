@@ -55,6 +55,7 @@ void GameScene::Initialize()
 	enemyBombManager = make_shared<EnemyBombManager>();
 	enemyBombManager->Initialize();
 
+
 	isGame_ = true;
 	TransitionProcess::Fade_Out_Init();
 }

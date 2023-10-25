@@ -5,6 +5,7 @@
 // 初期化処理
 void TitleScene::Initialize() {
 
+	GameAudio::Initialize();
 	// テクスチャの読み込み
 
 	//title_TexHD_ = TextureManager::LoadTexture("Resources/Title.png");
@@ -91,11 +92,13 @@ void TitleScene::Update(GameManager* scene) {
 			//発射処理
 			if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
 			{
+				GameAudio::PlaySelectSound();
 				TransitionProcess::Fade_In_Init();
 			}
 
 		}
 		if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
+			GameAudio::PlaySelectSound();
 			TransitionProcess::Fade_In_Init();
 		}
 		TransitionProcess::Fade_In();
