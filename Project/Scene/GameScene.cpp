@@ -32,6 +32,7 @@ void GameScene::Initialize()
 	player_->Initialize();
 
 	LoadEnemyDate();
+	enemyTexHandle_ = TextureManager::LoadTexture("Resources/uvChecker.png");
 
 	MainCamera::Initialize();
 
@@ -109,7 +110,16 @@ void GameScene::Update(GameManager* scene)
 		enemy->RandomMove();
 		enemy->SetPlayer(player_.get());
 		enemy->Update();
+
 	}
+
+	enemys_.remove_if([](shared_ptr<Enemy>& enemy) {
+		if (enemy->IsDead()) {
+			enemy.reset();
+			return true;
+		}
+		return false;
+	});
 
 
 	enemyBombManager->Update(player_.get());
@@ -269,7 +279,7 @@ void GameScene::UpdateEnemyCommands() {
 void GameScene::EnemySpawn(const Vector3& position) {
 
 	shared_ptr<Enemy> enemy = make_shared<Enemy>();
-	enemy->Initialize(position);
+	enemy->Initialize(position, enemyTexHandle_);
 	enemy->SetPlayer(player_.get());
 	player_->SetEnemy(enemys_);
 	enemys_.push_back(enemy);
@@ -280,9 +290,8 @@ void GameScene::EnemyReset() {
 	if (Input::GetInstance()->PushKeyPressed(DIK_R)) {
 		enemys_.clear();
 		for (shared_ptr<Enemy>& enemy : enemys_) {
-
 			enemy = make_shared<Enemy>();
-			enemy->Initialize({ 0,0.5,0 });
+			enemy->Initialize({ 0,0.5,0 }, enemyTexHandle_);
 		}
 
 		LoadEnemyDate();

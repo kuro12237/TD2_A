@@ -8,6 +8,7 @@
 #include"GameObject/Player/Player.h"
 #include"GameObject/PhysicsFunc/PhysicsFunc.h"
 #include"GameObject/MapWall/IMapWall.h"
+#include"GameObject/Score/Score.h"
 
 class Enemy : public Collider , public IMapWall
 {
@@ -19,7 +20,7 @@ public:
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>
-	void Initialize(const Vector3& position);
+	void Initialize(const Vector3& position, uint32_t texHundle);
 
 	/// <summary>
 	/// XV
@@ -40,6 +41,9 @@ public:
 	Vector3 GetVelocity()override;
 
 	void SetPlayer(Player* player) { player_ = player; }
+	
+	bool IsDead() const { return isDead_; }
+
 
 	void OnCollision()override;
 
@@ -61,7 +65,8 @@ private:
 	const float gravity_ = 9.8f;
 	const float fallSpeed_ = 1.0f;
 	int count_ = 0;
-	//Vector3 randomSpeed = {};
+	bool RandFlag = false;
+	Vector3 randomSpeed = {};
 	int randomX = 0;
 	int randomZ = 0;
 	float dt = 1.0f / 60.0f;
@@ -69,4 +74,5 @@ private:
 	float angle2 = 0;
 	Player* player_ = nullptr;
 	bool isMove_ = false;
+	bool isDead_ = false;
 };
