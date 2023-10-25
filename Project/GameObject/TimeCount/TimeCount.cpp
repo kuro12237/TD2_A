@@ -92,17 +92,6 @@ void TimeCount::Initialize() {
 
 #pragma region A
 
-	ATexHD_ = TextureManager::LoadTexture("Resources/Texture/UI/A.png");
-
-	// 初期化
-	ASprite_ = make_unique<Sprite>();
-	APosition_ = { 430.0f, 350.0f };
-	ASprite_->Initialize(new SpriteBoxState, APosition_, { 400.0f, 400.0f });
-	ASprite_->SetTexHandle(ATexHD_);
-	ASprite_->SetColor(textureColor_);
-
-	// ワールドトランスフォーム
-	ATransform_.Initialize();
 
 #pragma endregion
 }
@@ -122,9 +111,6 @@ void TimeCount::Update() {
 
 		// 制限時間の減算処理
 		SubtructTimer();
-
-		// 制限時間の加算処理
-		AddTimeCount();
 
 		// 制限時間の各位の値を求める
 		CalcTimerPlace(nowLimitTime_);
@@ -267,7 +253,6 @@ void TimeCount::Draw() {
 	}
 	if (isTimeUp_) {
 		timeUpUISprite_->Draw(timeUpUIWorldTransform_);
-		ASprite_->Draw(timerUIBGWorldTransform_);
 	}
 }
 

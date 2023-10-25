@@ -8,7 +8,6 @@ void TitleScene::Initialize() {
 	GameAudio::Initialize();
 	// テクスチャの読み込み
 
-	//title_TexHD_ = TextureManager::LoadTexture("Resources/Title.png");
 	titleBg_.TexHD = TextureManager::LoadTexture("Resources/Title.png");
 	pushBg_.TexHD = TextureManager::LoadTexture("Resources/Texture/BackGround/Title/titlePush.png");
 
@@ -109,15 +108,6 @@ void TitleScene::Update(GameManager* scene) {
 		}
 	}
 
-
-#ifdef _DEBUG
-
-	ImGui::Begin("TitleScene");
-	ImGui::Text("9 key = ChangeScene() -> GameScene");
-	ImGui::Text("space key = ChangeScene() -> TutorialScene");
-	ImGui::End();
-
-#endif
 }
 
 
@@ -135,8 +125,6 @@ void TitleScene::Object3dDraw()
 }
 void TitleScene::Flont2dSpriteDraw()
 {
-
-	//title_Sprite_->Draw(title_WorldTransform_);
 
 	titleBg_.Sprite->Draw(titleBg_.worldTransform);
 	pushBg_.Sprite->Draw(pushBg_.worldTransform);

@@ -76,6 +76,9 @@ private:
 
 	bool isGame_;
 	int startGameSceneTimer_;
+
+	bool fade_;
+	uint32_t timer;
 };
 
 

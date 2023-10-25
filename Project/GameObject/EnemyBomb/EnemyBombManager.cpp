@@ -27,15 +27,6 @@ void EnemyBombManager::Update(Player* player)
 		return false;
 	});
 
-	if (Input::GetInstance()->PushKeyPressed(DIK_U))
-	{
-		
-		shared_ptr<EnemyBomb>enemy = nullptr;
-		enemy = make_shared<EnemyBomb>();
-		enemy->Initialize({ 0,0,20.0f }, texHandle);
-		enemys_.push_back(enemy);
-		
-	}
 
 	for (shared_ptr<EnemyBomb>e:enemys_)
 	{

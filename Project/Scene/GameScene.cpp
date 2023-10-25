@@ -55,7 +55,8 @@ void GameScene::Initialize()
 	enemyBombManager = make_shared<EnemyBombManager>();
 	enemyBombManager->Initialize();
 
-
+	fade_ = false;
+	timer = 30;
 	isGame_ = true;
 	TransitionProcess::Fade_Out_Init();
 }
@@ -87,20 +88,22 @@ void GameScene::Update(GameManager* scene)
 			// 時間切れ時の処理
 			if (timeCount_->GetIsTimeUp())
 			{
+				timer--;
+
 				XINPUT_STATE joyState{};
 				Input::NoneJoyState(joyState);
 				if (Input::GetInstance()->GetJoystickState(joyState))
 				{
-					//発射処理
-					if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
-					{
-						TransitionProcess::Fade_In_Init();
+					if (timer <= 0) {
+						fade_ = true;
 					}
 
-				}
-				if (Input::GetInstance()->PushKeyPressed(DIK_SPACE))
-				{
-					TransitionProcess::Fade_In_Init();
+					if (fade_) {
+						if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A || Input::GetInstance()->PushKeyPressed(DIK_SPACE))
+						{
+							TransitionProcess::Fade_In_Init();
+						}
+					}
 				}
 			}
 			else if (!timeCount_->GetIsTimeUp()) {
@@ -209,7 +212,7 @@ void GameScene::Update(GameManager* scene)
 	TransitionProcess::Fade_In();
 	// フェードに入り終わったらシーンチェンジ
 	if (TransitionProcess::Fade_In()) {
-		GameAudio::PlaySelectSound();
+		//GameAudio::PlaySelectSound();
 		scene->ChangeState(new ResultScene);
 		return;
 	}

@@ -58,30 +58,19 @@ void TutorialScene::Update(GameManager* scene)
 			Input::NoneJoyState(joyState);
 			if (Input::GetInstance()->GetJoystickState(joyState))
 			{
-				//発射処理
-				if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A)
-				{
-					GameAudio::PlaySelectSound();
-					TransitionProcess::Fade_In_Init();
+				
+				TransitionProcess::Fade_In();
+				// フェードの処理が終わったらシーン遷移
+				if (TransitionProcess::Fade_In()) {
+
+					scene->ChangeState(new GameScene);
+					return;
 				}
-
-			}
-			// スペースでフェードスタート
-			if (Input::GetInstance()->PushKeyPressed(DIK_SPACE)) {
-				GameAudio::PlaySelectSound();
-				TransitionProcess::Fade_In_Init();
-			}
-			TransitionProcess::Fade_In();
-			// フェードの処理が終わったらシーン遷移
-			if (TransitionProcess::Fade_In()) {
-
-				scene->ChangeState(new GameScene);
-				return;
-			}
 				if (nowPage_ == 0) {
 
 					if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A || Input::GetInstance()->PushKeyPressed(DIK_SPACE))
 					{
+						GameAudio::PlaySelectSound();
 						nowPage_ = 1;
 						timer_ = 80;
 					}
@@ -100,6 +89,7 @@ void TutorialScene::Update(GameManager* scene)
 					{
 						if (joyState.Gamepad.wButtons & XINPUT_GAMEPAD_A || Input::GetInstance()->PushKeyPressed(DIK_SPACE))
 						{
+							GameAudio::PlaySelectSound();
 							TransitionProcess::Fade_In_Init();
 						}
 					}
@@ -110,16 +100,10 @@ void TutorialScene::Update(GameManager* scene)
 					return;
 				}
 
-
+			}
 			
 		}
 	}
-
-	ImGui::Begin("nowPage");
-	ImGui::Text("now = %d", nowPage_);
-	ImGui::Text("timer = %d", timer_);
-	ImGui::Text("fade = %d", fade_);
-	ImGui::End();
 }
 
 
