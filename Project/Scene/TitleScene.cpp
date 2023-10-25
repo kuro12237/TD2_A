@@ -6,7 +6,7 @@
 void TitleScene::Initialize() {
 
 	// テクスチャの読み込み
-	title_TexHD_ = TextureManager::LoadTexture("Resources/Texture/BackGround/Title_BagGround.png");
+	title_TexHD_ = TextureManager::LoadTexture("Resources/Title.png");
 	uint32_t useFade_BG = TextureManager::LoadTexture("Resources/Texture/BackGround/BackGround.png");
 
 
@@ -111,6 +111,6 @@ void TitleScene::Object3dDraw()
 }
 void TitleScene::Flont2dSpriteDraw()
 {
-	//title_Sprite_->Draw(title_WorldTransform_);
+	title_Sprite_->Draw(title_WorldTransform_);
 	TransitionProcess::Draw();
 }
